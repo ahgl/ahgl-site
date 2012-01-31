@@ -1,0 +1,13 @@
+
+syntax: regexp
+^ahgl/local_settings\.py$
+syntax: regexp
+\.sqlite$
+syntax: glob
+*.pyc
+ENV/
+.settings/org.eclipse.core.resources.prefs
+.pydevproject
+.project
+ahgl/site_media/*
+ahgl/.gondor/site_key
