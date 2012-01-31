@@ -1,0 +1,48 @@
+{% extends "theme_base.html" %}
+
+{% load metron_tags %}
+{% load i18n %}
+
+{% block extra_head_base %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/custom.css">
+{% block extra_head %}{% endblock %}
+{% endblock %}
+
+{% block nav %}
+    <ul>{% spaceless %}
+        {% if user.is_authenticated %}
+            <li id="tab_notices"><a href="{% url notification_notices %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
+            {% if user.get_profile.is_active %}
+              <li class="dropdown">
+              <a class="dropdown-toggle" href="#">Player Actions</a>
+              <ul class="dropdown-menu">
+            	<li id="tab_report"><a href="{% url report_match_list %}">{% trans "Report Match" %}</a></li>
+            	<li id="tab_viewlineup"><a href="{% url view_lineup %}">{% trans "View Lineup" %}</a></li>
+            {% if user.get_profile.is_captain %}
+            	<li id="tab_lineup"><a href="{% url submit_lineup %}">{% trans "Submit Lineup" %}</a></li>
+            {% endif %}
+              </ul>
+            </li>
+            {% endif %}
+        {% endif %}
+        {% for tournament in tournaments %}
+              <li class="dropdown">
+              <a class="dropdown-toggle" href="#">{{tournament.name}}</a>
+              <ul class="dropdown-menu">
+    <li><a href="{% url matches tournament.slug %}">{% trans "Matches" %}</a></li>
+    <li><a href="{% url standings tournament.slug %}">{% trans "Team Standings" %}</a></li>
+    <li><a href="{% url teams tournament.slug %}">{% trans "Teams" %}</a></li>
+              </ul>
+        {% endfor %}
+    {% endspaceless %}</ul>
+{% endblock %}
+
+
+{% block footer %}
+    {% include "_footer.html" %}
+{% endblock %}
+
+{% block extra_body_base %}
+    {% analytics %}
+    {% block extra_body %}{% endblock %}
+{% endblock %}

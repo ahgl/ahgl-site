@@ -1,0 +1,22 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% trans "Select Match to Report" %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Select Match to Report" %}</h1>
+    
+    {% autopaginate match_list %}
+    
+    <ul>
+    {% for match in match_list %}
+        <li><a href="{% url report_match match.pk %}">{{match.home_team}} vs {{match.away_team}}</a></li>
+    {% endfor %}
+    </ul>
+    
+    {% paginate %}
+    
+{% endblock %}

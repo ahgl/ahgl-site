@@ -1,0 +1,29 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% trans "Submit Lineup" %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Submit Lineup" %}</h1>
+{% if form %}
+<h2>Team: {{team}}</h2>
+<h3>Match: {{match}}</h3>    
+<form action="" method="post">{% csrf_token %}
+<table>
+    {% for f in form %}
+		<tr><th>{{f.instance.map}}</th><th></th></tr>
+       {{f}}
+    {% endfor %}
+    {% for ace_game in aces %}
+    <tr><th>Ace: {{ace_game.map}}</th><th></th></tr>
+    {% endfor %}
+    {{ form.management_form }}
+</table>
+<input type="submit" value="Submit" />
+</form>
+{% endif %}
+
+{% endblock %}

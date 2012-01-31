@@ -1,0 +1,22 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% trans "Teams" %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Teams" %}</h1>
+    
+    {% autopaginate team_list %}
+    
+    <ul class="media-grid">
+    {% for team in team_list %}
+        <li><a href="{% url team_page team.tournament.slug team.slug %}"><img src="{{ MEDIA_URL }}{{team.thumbnail}}" alt="{{team.name}}" /><br>{{team.name}}</a></li>
+    {% endfor %}
+    </ul>
+    
+    {% paginate %}
+    
+{% endblock %}

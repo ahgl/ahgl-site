@@ -1,0 +1,8 @@
+[gondor]
+vcs = hg
+
+[app]
+wsgi_entry_point = deploy.wsgi:application
+requirements_file = requirements/project.txt
+migrations = south
+staticfiles = on

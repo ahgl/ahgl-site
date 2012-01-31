@@ -1,0 +1,22 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% trans "Matches" %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Matches" %}</h1>
+    
+    {% autopaginate match_list %}
+    
+    <ul>
+    {% for match in match_list %}
+        <li><a href="{% url match_page match.pk %}">{{match.home_team}} vs {{match.away_team}}</a> {{match.publish_date|default_if_none:""}}</li>
+    {% endfor %}
+    </ul>
+    
+    {% paginate %}
+    
+{% endblock %}

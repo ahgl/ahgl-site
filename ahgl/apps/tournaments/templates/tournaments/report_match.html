@@ -1,0 +1,25 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% trans "Report Match" %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Report Match" %}</h1>
+{% if form %}
+<h2>Match: {{match}}</h2>    
+<form action="" method="post">{% csrf_token %}
+<table>
+    {% for f in form %}
+		<tr><th>{{f.instance.map}}</th><th>{% if not f.instance.is_ace %}{{f.instance.home_player}} ({{f.instance.get_home_race_display}}) vs {{f.instance.away_player}} ({{f.instance.get_away_race_display}}){% endif %}</th></tr>
+       {{f}}
+    {% endfor %}
+    {{ form.management_form }}
+</table>
+<input type="submit" value="Submit" />
+</form>
+{% endif %}
+
+{% endblock %}

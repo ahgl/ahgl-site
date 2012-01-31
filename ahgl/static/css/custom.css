@@ -1,0 +1,19 @@
+#modal-popup {
+	top:10pt;
+	position:fixed;
+	margin-top:0;
+}
+
+form table ul {
+	list-style-type:none;
+	display:inline;
+	margin:0;
+}
+form table ul > li {
+	margin:0;
+	padding:0;
+}
+form table ul > li label {
+	margin:0;
+	padding:0;
+}

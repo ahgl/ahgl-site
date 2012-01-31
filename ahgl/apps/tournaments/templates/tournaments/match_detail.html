@@ -1,0 +1,40 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{{match.home_team}} vs {{match.away_team}}{% endblock %}
+
+{% block body %}
+    <h1>{{match.home_team}} vs {{match.away_team}}</h1>
+    
+    {% autopaginate match.games_played %}
+    
+    <table>
+    {% for game in match.games_played %}
+    <tr>
+    <td>
+    <img src="{{ MEDIA_URL }}{{game.home_player.thumbnail}}" />
+    <h4>{{game.home_player}}</h4>
+    <a href="{% url profile_detail game.home_player.user %}">More about {{game.home_player}}</a>
+    </td>
+    <td>
+    {% if game.vod %}
+    <iframe src="{{game.vod}}" width="480" height="279" frameborder="0" allowfullscreen></iframe><embed type="application/x-shockwave-flash" src="{{game.vod}}" style="display:none"></embed>
+    {% endif %}
+    <br>Game {{game.order}} – {{game.map}}<br>
+    <a href="{{game.replay}}">Get the replay</a>
+    </td>
+    <td>
+    <img src="{{ MEDIA_URL }}{{game.away_player.thumbnail}}" />
+    <h4>{{game.away_player}}</h4>
+    <a href="{% url profile_detail game.away_player.user %}">More about {{game.away_player}}</a>
+    </td>
+    </tr>
+    {% endfor %}
+    </table>
+    
+    {% paginate %}
+    
+{% endblock %}

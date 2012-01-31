@@ -1,0 +1,14 @@
+# project.txt is a pip requirements file which describes the distributions
+# required by your project to run.
+
+--requirement=base.txt
+
+# Put project-specific requirements here.
+# See http://pip-installer.org/requirement-format.html for more information.
+
+gondor==1.0
+psycopg2==2.4.1
+PIL==1.1.7
+south==0.7.3
+
+django-imagekit==1.1

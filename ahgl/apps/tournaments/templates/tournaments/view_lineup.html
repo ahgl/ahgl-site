@@ -1,0 +1,37 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% trans "Matches" %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Matches" %}</h1>
+    
+    {% autopaginate match_list %}
+    
+    
+    {% for match in match_list %}
+    <h2>{{match.home_team}} vs {{match.away_team}}</h2>
+    
+    {% autopaginate match.games_in_order %}
+    
+    <table>
+    {% for game in match.games_in_order %}
+    <tr><th>Game {{game.order}} – {{game.map}}</th>
+    {% if game.is_ace %}
+    <td>ACE</td><td></td><td></td>
+    {% else %}
+    <td><a href="{% url profile_detail game.home_player.user %}">{{game.home_player}}.{{game.home_player.char_code|default_if_none:"xxx"}}</a> as {{game.get_home_race_display}}</td>
+    <td>vs</td>
+    <td><a href="{% url profile_detail game.away_player.user %}">{{game.away_player}}.{{game.away_player.char_code|default_if_none:"xxx"}}</a> as {{game.get_away_race_display}}</td>
+    {% endif %}
+    {% endfor %}
+    </table>
+    
+    {% endfor %}
+    
+    {% paginate %}
+    
+{% endblock %}

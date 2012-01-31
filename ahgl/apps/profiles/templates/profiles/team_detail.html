@@ -1,0 +1,34 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{{team}}{% endblock %}
+
+{% block body %}
+    <h1>{{team}}</h1>
+	<img src="{{ MEDIA_URL }}{{team.photo}}" alt="{{team.name}}" />	
+    <div class="row">
+    <div class="span6">
+    Rank: {{team.rank}}<br>
+    Motto: {{team.motto}}
+    </div>
+    <div class="span10">
+    Charity: {{team.charity}}
+    </div>
+    </div>
+
+    
+    {% autopaginate team.members.all %}
+    
+    <ul class="media-grid">
+    {% for player in team.members.all %}
+        <li><a href="{% url profile_detail player.user %}"><img src="{{ MEDIA_URL }}{{player.thumbnail}}" /><br>
+        <b>{{player}}</b><br />{{player.name}}</a></li>
+    {% endfor %}
+    </ul>
+    
+    {% paginate %}
+    
+{% endblock %}
