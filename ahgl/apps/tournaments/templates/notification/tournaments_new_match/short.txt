@@ -1,0 +1,2 @@
+{% load i18n %}
+{% trans "A new match has been created " %}{{match}}

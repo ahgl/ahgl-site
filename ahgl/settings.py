@@ -42,7 +42,7 @@ DATABASES = {
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = "US/Eastern"
+TIME_ZONE = "US/Pacific"
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -101,9 +101,11 @@ TEMPLATE_LOADERS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "django.middleware.transaction.TransactionMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django_openid.consumer.SessionConsumer",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -111,6 +113,7 @@ MIDDLEWARE_CLASSES = [
     "pagination.middleware.PaginationMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
 ROOT_URLCONF = "ahgl.urls"
@@ -135,6 +138,9 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     
     "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
+    "messages.context_processors.inbox",
+    
+    "pybb.context_processors.processor",
     
     "apps.tournaments.context_processors.tournaments",
 ]
@@ -167,8 +173,13 @@ INSTALLED_APPS = [
     "idios",
     "metron",
     'south',
-    'imagekit',
-    
+    'sorl.thumbnail',
+    'social_auth',
+    'pybb',
+    'pytils',
+    'pure_pagination',
+    'messages',
+
     # Pinax
     "pinax.apps.account",
     "pinax.apps.signup_codes",
@@ -179,15 +190,19 @@ INSTALLED_APPS = [
     "tournaments",
 ]
 
-FIXTURE_DIRS = [
+"""FIXTURE_DIRS = [
     os.path.join(PROJECT_ROOT, "fixtures"),
-]
+]"""
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
 }
+
+PYBB_TEMPLATE = "pybb_base.html"
+
+CONTACT_EMAIL = "support@ahgl.tv"
 
 AUTH_PROFILE_MODULE = "profiles.Profile"
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
@@ -201,41 +216,73 @@ ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 
 AUTHENTICATION_BACKENDS = [
     "pinax.apps.account.auth_backends.AuthenticationBackend",
+    "social_auth.backends.facebook.FacebookBackend",
 ]
+
+SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook',)
+
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+
+SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
+SOCIAL_AUTH_CHANGE_SIGNAL_ONLY = True
+
+FACEBOOK_APP_ID              = ''  # REMOVED BECAUSE SECRET
+FACEBOOK_API_SECRET          = ''  # REMOVED BECAUSE SECRET
+FACEBOOK_EXTENDED_PERMISSIONS = ('email',)
 
 LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
 LOGIN_REDIRECT_URLNAME = "what_next"
 LOGOUT_REDIRECT_URLNAME = "home"
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
+
+#Cache settings
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 # Email info
 # REMOVED BECAUSE INCLUDES PASSWORDS
+
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
 }
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "simple": {
+            "format": "%(levelname)s %(message)s"
+        },
     },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
+    "handlers": {
+        "console":{
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple"
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler"
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["console"],
+            "propagate": True,
+            "level": "INFO",
+        },
+        "django.request": {
+            "handlers": ["mail_admins"],
+            "level": "ERROR",
+            "propagate": True,
         },
     }
 }
+
+# Gondor Settings Should Always Be Right BEFORE local_settings Import
+GONDOR_LOCAL_SETTINGS = False
+GONDOR_REDIS_HOST = None
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
@@ -243,3 +290,22 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
+if GONDOR_LOCAL_SETTINGS:
+    if GONDOR_REDIS_HOST:
+        # Caching
+        CACHES = {
+            "default": {
+                "BACKEND": "redis_cache.RedisCache",
+                "LOCATION": ":".join([GONDOR_REDIS_HOST, str(GONDOR_REDIS_PORT)]),
+                "OPTIONS": {
+                    "DB": 0,
+                    "PASSWORD": GONDOR_REDIS_PASSWORD,
+                }
+            }
+        }
+        THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
+        THUMBNAIL_REDIS_DB = 0
+        THUMBNAIL_REDIS_PASSWORD = GONDOR_REDIS_PASSWORD
+        THUMBNAIL_REDIS_HOST = GONDOR_REDIS_HOST
+        THUMBNAIL_REDIS_PORT = GONDOR_REDIS_PORT

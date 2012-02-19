@@ -25,44 +25,11 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('profiles', ['Profile'])
 
-        # Adding model 'Team'
-        db.create_table('profiles_team', (
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, primary_key=True, db_index=True)),
-            ('photo', self.gf('imagekit.models.ProcessedImageField')(max_length=100, null=True, blank=True)),
-            ('charity', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('motto', self.gf('django.db.models.fields.CharField')(max_length=70)),
-            ('tournament', self.gf('django.db.models.fields.related.ForeignKey')(related_name='teams', to=orm['tournaments.Tournament'])),
-            ('captain', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='captain_of', null=True, to=orm['profiles.Profile'])),
-            ('rank', self.gf('django.db.models.fields.IntegerField')()),
-        ))
-        db.send_create_signal('profiles', ['Team'])
-
-        # Adding unique constraint on 'Team', fields ['name', 'tournament']
-        db.create_unique('profiles_team', ['name', 'tournament_id'])
-
-        # Adding M2M table for field members on 'Team'
-        db.create_table('profiles_team_members', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('team', models.ForeignKey(orm['profiles.team'], null=False)),
-            ('profile', models.ForeignKey(orm['profiles.profile'], null=False))
-        ))
-        db.create_unique('profiles_team_members', ['team_id', 'profile_id'])
-
 
     def backwards(self, orm):
         
-        # Removing unique constraint on 'Team', fields ['name', 'tournament']
-        db.delete_unique('profiles_team', ['name', 'tournament_id'])
-
         # Deleting model 'Profile'
         db.delete_table('profiles_profile')
-
-        # Deleting model 'Team'
-        db.delete_table('profiles_team')
-
-        # Removing M2M table for field members on 'Team'
-        db.delete_table('profiles_team_members')
 
 
     models = {

@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load account_tags %}
 {% load pagination_tags %}
+{% load thumbnail %}
 
 {% block head_title %}{% trans "Teams" %}{% endblock %}
 
@@ -11,9 +12,15 @@
     
     {% autopaginate team_list %}
     
-    <ul class="media-grid">
+    <ul class="thumbnails">
     {% for team in team_list %}
-        <li><a href="{% url team_page team.tournament.slug team.slug %}"><img src="{{ MEDIA_URL }}{{team.thumbnail}}" alt="{{team.name}}" /><br>{{team.name}}</a></li>
+        <li><a href="{% url team_page team.tournament.slug team.slug %}" class="thumbnail">
+	 	{% thumbnail team.photo "214x120" crop="center" as im %}
+	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{team.name}}" />
+		{% empty %}
+	    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{team.name}}" />
+		{% endthumbnail %}
+       <br>{{team.name}}</a></li>
     {% endfor %}
     </ul>
     

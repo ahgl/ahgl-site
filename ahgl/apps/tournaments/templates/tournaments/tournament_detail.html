@@ -1,0 +1,33 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+{% load thumbnail %}
+
+{% block head_title %}{{match.home_team}} vs {{match.away_team}}{% endblock %}
+
+{% block body %}
+    <h1>{{tournament.name}}</h1>
+    <ul class="nav nav-pills">
+    <li><h3>Meet the teams</h3></li>
+    {% for team in tournament.random_teams %}
+    <li><a href="{% url team_page tournament.slug team.slug %}">{{team.name}}</a></li>
+    {% endfor %}
+    </ul>
+    {% if tournament.featured_game %}
+    {% with game=tournament.featured_game %}
+    <h3>Featured Game</h3>
+    <table class="table">
+    {% include "tournaments/game_detail.html" %}
+    </table>
+    {% endwith %}
+    {% endif %}
+
+	<h3>Map Pool</h3>
+    <ul class="unstyled">
+    {% for map in tournament.map_pool.all %}
+    <li>{{map}}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

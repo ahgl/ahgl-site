@@ -7,7 +7,7 @@
 {% block head_title %}{% trans "Matches" %}{% endblock %}
 
 {% block body %}
-    <h1>{% trans "Matches" %}</h1>
+    <h1>{% trans "Lineup" %}</h1>
     
     {% autopaginate match_list %}
     
@@ -15,10 +15,10 @@
     {% for match in match_list %}
     <h2>{{match.home_team}} vs {{match.away_team}}</h2>
     
-    {% autopaginate match.games_in_order %}
+    {% autopaginate match.games.all %}
     
-    <table>
-    {% for game in match.games_in_order %}
+    <table class="table">
+    {% for game in match.games.all %}
     <tr><th>Game {{game.order}} – {{game.map}}</th>
     {% if game.is_ace %}
     <td>ACE</td><td></td><td></td>
@@ -30,6 +30,8 @@
     {% endfor %}
     </table>
     
+    {% empty %}
+    	<li>Lineup not yet set</li>
     {% endfor %}
     
     {% paginate %}

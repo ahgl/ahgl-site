@@ -1,0 +1,30 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% trans "Matches" %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Past Tournaments" %}</h1>
+    
+    {% autopaginate tournament_list %}
+    
+    <ul class="unstyled">
+    {% for tournament in tournament_list %}
+        <li><h3><a href="{% url tournament tournament.slug %}">{{ tournament.name }}</a></h3>
+              <ul>
+			    <li><a href="{% url matches tournament.slug %}">{% trans "Matches" %}</a></li>
+			    <li><a href="{% url standings tournament.slug %}">{% trans "Team Standings" %}</a></li>
+			    <li><a href="{% url teams tournament.slug %}">{% trans "Teams" %}</a></li>
+              </ul>
+        </li>
+    {% empty %}
+    	<li>No past tournaments</li>
+    {% endfor %}
+    </ul>
+    
+    {% paginate %}
+    
+{% endblock %}

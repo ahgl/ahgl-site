@@ -1,19 +1,70 @@
 #modal-popup {
-	top:10pt;
-	position:fixed;
 	margin-top:0;
+	top:20px;
+	bottom:20px;
+	max-height: none;
+	overflow:none;
+}
+	
+.modal-footer {
+	position:fixed;
+	bottom:20px;
+	width:528px;
+}
+.modal-body {
+	position:fixed;
+	overflow:auto;
+	top:68px;
+	bottom:78px;
+	width:528px;
+}
+.modal-body > fieldset {
+	margin:0;
+	padding:0;
+}
+.modal .close {
+	margin-top:-10px;
+	margin-right:-3px;
 }
 
-form table ul {
+form  ul {
 	list-style-type:none;
+	margin:0;
+}
+form  ul > li {
+	margin:0;
+	padding:0;
 	display:inline;
-	margin:0;
 }
-form table ul > li {
-	margin:0;
+form  ul > li label {
+	margin:0 1em;
 	padding:0;
+	display:inline;
 }
-form table ul > li label {
-	margin:0;
-	padding:0;
+legend {
+	margin-bottom:10px;
+}
+
+li > label {
+	width:auto;
+}
+
+div > label, .input > label {
+	width:auto;
+	float:none;
+	display:inline;
+}
+
+
+/* Special */
+.video-link {
+	display:block;
+	background: url("../images/video-play-icon.png") no-repeat scroll center 53px transparent;
+}
+.video-link:hover {
+	background-position:center -85px;
+}
+.video-link img {
+	z-index:-1;
+	position:relative;
 }

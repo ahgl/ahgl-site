@@ -1,5 +1,6 @@
 {% extends "site_base.html" %}
 
+{% load bootstrap_tags %}
 {% load i18n %}
 {% load account_tags %}
 {% load pagination_tags %}
@@ -7,19 +8,24 @@
 {% block head_title %}{% trans "Report Match" %}{% endblock %}
 
 {% block body %}
-    <h1>{% trans "Report Match" %}</h1>
+    <h2>Match: {{match}}</h2>
 {% if form %}
-<h2>Match: {{match}}</h2>    
-<form action="" method="post">{% csrf_token %}
-<table>
+<form enctype="multipart/form-data" method="post" class="form-horizontal well">
     {% for f in form %}
-		<tr><th>{{f.instance.map}}</th><th>{% if not f.instance.is_ace %}{{f.instance.home_player}} ({{f.instance.get_home_race_display}}) vs {{f.instance.away_player}} ({{f.instance.get_away_race_display}}){% endif %}</th></tr>
-       {{f}}
+    <fieldset>
+        <legend class="row-fluid"><div class="span2">{{f.instance.map}}</div>
+        <div class="span">{% if not f.instance.is_ace %}{{f.instance.home_player}} ({{f.instance.get_home_race_display}}) vs {{f.instance.away_player}} ({{f.instance.get_away_race_display}}){% endif %}</div>
+        </legend>
+        {{ f|as_bootstrap }}
+    </fieldset>
     {% endfor %}
     {{ form.management_form }}
-</table>
-<input type="submit" value="Submit" />
+{% csrf_token %}
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
 </form>
+
 {% endif %}
 
 {% endblock %}

@@ -11,9 +11,11 @@
     
     {% autopaginate match_list %}
     
-    <ul>
+    <ul class="unstyled">
     {% for match in match_list %}
         <li><a href="{% url report_match match.pk %}">{{match.home_team}} vs {{match.away_team}}</a></li>
+    {% empty %}
+    	<li>No matches to report</li>
     {% endfor %}
     </ul>
     

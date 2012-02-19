@@ -1,0 +1,57 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block title %}Create new round of matches{% endblock %}
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+     <a href="../../../../">{% trans "Home" %}</a> &rsaquo;
+     <a href="../../../">Tournaments</a> &rsaquo;
+     <a href="../../">Tournaments</a> &rsaquo;
+     <a href="../">{{tournament}}</a> &rsaquo;
+     New Round Stage {{stage}}
+</div>
+{% endif %}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <h1>Create new round of matches for {{tournament}}</h1>
+  <form method="post" class="form-horizontal well">
+	{% for formset in form %}
+	
+	{{ formset.non_field_errors }}
+	<fieldset class="module">
+	<h2>{{formset.prefix}}</h2>
+	<table style="width:100%;">
+	<thead>
+	<tr>
+	{% with form=formset|first %}
+	{% for field in form.visible_fields %}
+	<th>{{field.label}}</th>
+	{% endfor %}
+	{% endwith %}
+	</tr>
+	</thead>
+	<tbody>
+	{% for form in formset %}
+	{{ form.non_field_errors }}
+	<tr>
+	{% for field in form.visible_fields %}
+	<td>{{field.errors}}{{field}}</td>
+	{% endfor %}
+	{% for field in form.hidden_fields %}
+	{{field}}
+	{% endfor %}
+	</tr>
+	{% endfor %}
+	</tbody>
+	</table>
+	</fieldset>
+	{{ formset.management_form }}
+	{% endfor %}
+    <div class="submit-row">
+      <input type="submit" class="default" value="Create Matches">
+    </div>
+{% csrf_token %}
+	</form>
+</div>
+{% endblock %}

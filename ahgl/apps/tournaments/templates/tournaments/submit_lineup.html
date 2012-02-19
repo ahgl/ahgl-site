@@ -1,5 +1,6 @@
 {% extends "site_base.html" %}
 
+{% load bootstrap_tags %}
 {% load i18n %}
 {% load account_tags %}
 {% load pagination_tags %}
@@ -7,23 +8,28 @@
 {% block head_title %}{% trans "Submit Lineup" %}{% endblock %}
 
 {% block body %}
-    <h1>{% trans "Submit Lineup" %}</h1>
 {% if form %}
 <h2>Team: {{team}}</h2>
 <h3>Match: {{match}}</h3>    
-<form action="" method="post">{% csrf_token %}
-<table>
+<form method="post" class="form-horizontal well">
     {% for f in form %}
-		<tr><th>{{f.instance.map}}</th><th></th></tr>
-       {{f}}
+    <fieldset>
+        <legend>{{f.instance.map}}</legend>
+        {{ f|as_bootstrap }}
+    </fieldset>
     {% endfor %}
     {% for ace_game in aces %}
-    <tr><th>Ace: {{ace_game.map}}</th><th></th></tr>
+    <fieldset>
+        <legend>Ace: {{ace_game.map}}</legend>
+    </fieldset>
     {% endfor %}
     {{ form.management_form }}
-</table>
-<input type="submit" value="Submit" />
+    {% csrf_token %}
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
 </form>
+
 {% endif %}
 
 {% endblock %}

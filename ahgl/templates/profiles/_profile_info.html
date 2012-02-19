@@ -1,14 +1,22 @@
 {% load i18n %}
+{% load thumbnail %}
 <div class="profile_info row">
 	<div class="span4">
-	<img src="{{ MEDIA_URL }}{{profile.photo}}" />
+	{% thumbnail profile.photo "352x450" upscale=False as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{profile.name}}" />
+	{% empty %}
+    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{profile.name}}" />
+	{% endthumbnail %}
+	{{ profile.render_photo }}
     {% if profile.name %}<p><b>{% trans "Name" %}</b>: {{ profile.name }}</p>{% endif %}
     {% if profile.captain_of.count %}<p><b>{% trans "Captain" %}</b>: {% for team in profile.captain_of.all %}{{ team }} {% endfor %}</p>{% endif %}
-    {% if profile.team %}<p><b>{% trans "Company" %}</b>: {{ profile.team }}</p>{% endif %}
+    {% if profile.teams.count %}<p><b>{% trans "Company" %}</b>: {% for team in profile.teams.all %}<a href="{% url team_page team.tournament.slug team.slug %}">{{ team }}</a> {% endfor %}</p>{% endif %}
     {% if profile.title %}<p><b>{% trans "Title" %}</b>: {{ profile.title }}</p>{% endif %}
     {% if profile.char_name %}<p><b>{% trans "Ingame Name" %}</b>: <a href="{{profile.bnet_profile}}">{{ profile.char_name }}{%if user.get_profile.is_active %}.{{ profile.char_code|default_if_none:"xxx" }}{% endif %}</a></p>{% endif %}
     {% if profile.race %}<p><b>{% trans "Race" %}</b>: {{ profile.get_race_display }}</p>{% endif %}
     {% if profile.website %}<p><b>{% trans "Website" %}</b>: <a href="{{ profile.website }}">{{ profile.website }}</a></p>{% endif %}
+    <p><b>{% trans "Record" %}</b>: {{profile.wins}}W : {{profile.losses}}L</p>
+    {% if profile != request.user.get_profile %}<a href="{% url messages_compose_to profile.user %}" class="btn">Send Message</a>{% endif %}
     </div>
 {% if profile.questions_answers %}<div class="span8">{{profile.questions_answers}}</div>{% endif %}
 </div>

@@ -3,28 +3,54 @@
 {% load i18n %}
 {% load account_tags %}
 {% load pagination_tags %}
+{% load thumbnail %}
 
 {% block head_title %}{{team}}{% endblock %}
 
 {% block body %}
-    <h1>{{team}}</h1>
-	<img src="{{ MEDIA_URL }}{{team.photo}}" alt="{{team.name}}" />	
+    <h1 style="text-align:center;">{{team}}</h1>
+    <div style="text-align:center;">
+	{% thumbnail team.photo "920x450" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{team.name}}" />
+	{% empty %}
+    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{team.name}}" />
+	{% endthumbnail %}
+	</div>
     <div class="row">
-    <div class="span6">
-    Rank: {{team.rank}}<br>
-    Motto: {{team.motto}}
+    <div class="span3">
+    <ul>
+    <li>Rank: {{team.rank}}</li>
+    <li>Win/Loss: {{team.wins}}/{{team.losses}}</li>
+    <li>Tiebreaker: {{team.tiebreaker}}</li>
+    {% if team.motto %}<li>Motto: {{team.motto}}</li>{% endif %}
+    </ul>
     </div>
-    <div class="span10">
-    Charity: {{team.charity}}
+    <div class="span5">
+    <h3>Charity:</h3>
+    <p>
+    {% if team.charity.link %}<a href="{{team.charity.link}}">{% endif %}{{team.charity}}{% if team.charity.link %}</a>{% endif %}
+    {% if team.charity.desc %} - {{team.charity.desc}}{% endif %}
+    </p>
+    </div>
+    <div class="span4">
+	{% thumbnail team.charity.logo "300x300" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{team.charity}}" />
+	{% endthumbnail %}
     </div>
     </div>
 
     
     {% autopaginate team.members.all %}
     
-    <ul class="media-grid">
+    <ul class="thumbnails">
     {% for player in team.members.all %}
-        <li><a href="{% url profile_detail player.user %}"><img src="{{ MEDIA_URL }}{{player.thumbnail}}" /><br>
+        <li><a href="{% url profile_detail player.user %}" class="thumbnail">
+		{% thumbnail player.thumbnail "150x170" as im %}
+	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{player.name}}" />
+		{% empty %}
+	    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{player.name}}" />
+		{% endthumbnail %}
+		<br>
         <b>{{player}}</b><br />{{player.name}}</a></li>
     {% endfor %}
     </ul>

@@ -9,15 +9,18 @@
 {% block body %}
     <h1>{% trans "Standings" %}</h1>
     
-    {% autopaginate team_list %}
-    
-    <table>
+    {% autopaginate object_list %}
+
+    <table class="table">
     <thead><tr><th>Rank</th><th>Team</th><th>Wins/Losses</th><th>Tiebreaker Points</th><th>Learn more about the Team</th></tr></thead>
-    {% for team in team_list %}
+    {% for round in object_list %}
+    <tr><th>Division {{round.name}}</th><td></td><td></td><td></td><td></td></tr>
+    {% for team in round.participants %}
         <tr>
-        <td>{{team.rank}}</td><td>{{team.name}}</td><td>{{team.wins}}/{{team.losses}}</td><td>{{team.tiebreaker}}</td>
+        <td>{{forloop.counter}}</td><td>{{team.name}}</td><td>{{team.wins}}/{{team.losses}}</td><td>{{team.tiebreaker}}</td>
         <td><a href="{% url team_page team.tournament.slug team.slug %}">{{team.name}} Team Link</a></td>
         </tr>
+    {% endfor %}
     {% endfor %}
     </table>
     

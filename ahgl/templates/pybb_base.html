@@ -1,0 +1,49 @@
+{% extends "site_base.html" %}
+
+
+{% block extra_head_base %}
+{{ block.super }}
+	<link rel="stylesheet" href="{{ STATIC_URL }}pybb.css" type='text/css'>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/i18n/jquery-ui-i18n.min.js"></script>
+    <script src="http://yandex.st/json2/2011-01-18/json2.min.js"></script>
+    <script src="{{ STATIC_URL }}csrf.js"></script>
+    <style type="text/css">
+        body {
+            padding-top: 0;
+        }
+    </style>
+    <title>{% block title %}{% endblock %}</title>
+
+    {% block head %}{% endblock %}
+{% endblock %}
+
+
+{% block body_base %}
+
+<div class="container">
+
+    <!-- Main hero unit for a primary marketing message or call to action -->
+    <div class="main-block">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if request.path != '/' %}
+            <div id="breadcrumb">
+                {% block breadcrumb %}
+                    <a href="{% url pybb:index %}">Main</a>
+                {% endblock breadcrumb %}
+            </div>
+        {% endif %}
+        <div id="content">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+
+</div> <!-- /container -->{% endblock body_base %}

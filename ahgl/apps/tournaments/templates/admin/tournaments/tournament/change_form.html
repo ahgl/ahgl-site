@@ -1,0 +1,23 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+  
+   <li style="background:none;"><form action="new_round/" method="get"><label for="stage">Stage:</label>
+                        
+<select name="stage" id="stage">
+{% for stage in original.stages %}
+<option value="{{stage}}" selected="selected">{{stage}}</option>
+{% endfor %}
+</select>
+    <button class="btn" type="submit">New Round</button></form></li>
+    <li><a href="history/" class="historylink">{% trans "History" %}</a></li>
+    {% if has_absolute_url %}
+        <li><a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="viewsitelink">
+            {% trans "View on site" %}</a>
+        </li>
+    {% endif%}
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}

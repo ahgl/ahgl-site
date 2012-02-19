@@ -30,48 +30,9 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('tournaments', ['Map'])
 
-        # Adding model 'Match'
-        db.create_table('tournaments_match', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('home_team', self.gf('django.db.models.fields.related.ForeignKey')(related_name='home_matches', to=orm['profiles.Team'])),
-            ('away_team', self.gf('django.db.models.fields.related.ForeignKey')(related_name='away_matches', to=orm['profiles.Team'])),
-            ('tournament', self.gf('django.db.models.fields.related.ForeignKey')(related_name='matches', to=orm['tournaments.Tournament'])),
-            ('published', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('publish_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('creation_date', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-            ('referee', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['profiles.Profile'], null=True, blank=True)),
-            ('home_submitted', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('away_submitted', self.gf('django.db.models.fields.BooleanField')(default=False)),
-        ))
-        db.send_create_signal('tournaments', ['Match'])
-
-        # Adding model 'Game'
-        db.create_table('tournaments_game', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('match', self.gf('django.db.models.fields.related.ForeignKey')(related_name='games', to=orm['tournaments.Match'])),
-            ('map', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tournaments.Map'])),
-            ('order', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
-            ('home_player', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='home_games', null=True, to=orm['profiles.Profile'])),
-            ('home_race', self.gf('django.db.models.fields.CharField')(max_length=1, blank=True)),
-            ('away_player', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='away_games', null=True, to=orm['profiles.Profile'])),
-            ('away_race', self.gf('django.db.models.fields.CharField')(max_length=1, blank=True)),
-            ('winner', self.gf('django.db.models.fields.CharField')(max_length=1, blank=True)),
-            ('forfeit', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('replay', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True)),
-            ('vod', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('is_ace', self.gf('django.db.models.fields.BooleanField')(default=False)),
-        ))
-        db.send_create_signal('tournaments', ['Game'])
-
-        # Adding unique constraint on 'Game', fields ['order', 'match']
-        db.create_unique('tournaments_game', ['order', 'match_id'])
-
 
     def backwards(self, orm):
         
-        # Removing unique constraint on 'Game', fields ['order', 'match']
-        db.delete_unique('tournaments_game', ['order', 'match_id'])
-
         # Deleting model 'Tournament'
         db.delete_table('tournaments_tournament')
 
@@ -80,12 +41,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Map'
         db.delete_table('tournaments_map')
-
-        # Deleting model 'Match'
-        db.delete_table('tournaments_match')
-
-        # Deleting model 'Game'
-        db.delete_table('tournaments_game')
 
 
     models = {

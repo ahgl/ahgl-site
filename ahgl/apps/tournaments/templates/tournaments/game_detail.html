@@ -1,0 +1,40 @@
+{% load thumbnail %}
+    <tr>
+    <td>
+	<a href="{% url profile_detail game.home_player.user %}">
+	{% thumbnail game.home_player.thumbnail "150x170" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.home_player.name}}" />
+	{% empty %}
+    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{game.home_playername}}" />
+	{% endthumbnail %}
+	</a>
+    <h4>{{game.home_player}}</h4>
+    <a href="{% url profile_detail game.home_player.user %}">More about {{game.home_player}}</a>
+    </td>
+    <td style="text-align:center;">
+    {% if game.vod %}
+    <a href="{{game.vod}}" style="width:595;height:170;" class="video-link">
+    {% endif %}
+    {% thumbnail game.map.photo "595x170" as im %}
+    <image src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+    {% endthumbnail %}
+    {% if game.vod %}
+    </a>
+    {% endif %}
+    <h4>Game {{game.order}} – {{game.map}}</h4>
+    {% if game.replay %}
+    <a href="{{ MEDIA_URL }}{{game.replay}}">Get the replay</a>
+    {% endif %}
+    </td>
+    <td style="text-align:right;">
+	<a href="{% url profile_detail game.away_player.user %}">
+	{% thumbnail game.away_player.thumbnail "150x170" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.away_player.name}}" />
+	{% empty %}
+    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{game.away_player}}" />
+	{% endthumbnail %}
+	</a>
+    <h4>{{game.away_player}}</h4>
+    <a href="{% url profile_detail game.away_player.user %}">More about {{game.away_player}}</a>
+    </td>
+    </tr>
