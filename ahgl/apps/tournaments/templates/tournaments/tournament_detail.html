@@ -18,7 +18,7 @@
     {% if tournament.featured_game %}
     {% with game=tournament.featured_game %}
     <h3>Featured Game</h3>
-    <table class="table">
+    <table class="table table-nohover">
     {% include "tournaments/game_detail.html" %}
     </table>
     {% endwith %}

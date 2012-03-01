@@ -15,13 +15,14 @@
     {% for match in match_list %}
     <h2>{{match.home_team}} vs {{match.away_team}} ({{match.creation_date}})</h2>
     
-    {% autopaginate match.games.all %}
+    {% with games=match.games_with_map %}
     
     <ul>
-    {% for game in match.games.all %}
-    <li>Game {{game.order}} – {{game.map}} {% if game.is_ace %}(ACE){% endif %}</li>
+    {% for game in games %}
+    <li>Game {{forloop.counter}} – {{game.map}} {% if game.is_ace %}(ACE){% endif %}</li>
     {% endfor %}
     </ul>
+    {% endwith %}
     
     {% empty %}
     	<li>Map list not ready yet</li>

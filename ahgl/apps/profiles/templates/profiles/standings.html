@@ -8,22 +8,36 @@
 
 {% block body %}
     <h1>{% trans "Standings" %}</h1>
-    
-    {% autopaginate object_list %}
 
-    <table class="table">
-    <thead><tr><th>Rank</th><th>Team</th><th>Wins/Losses</th><th>Tiebreaker Points</th><th>Learn more about the Team</th></tr></thead>
-    {% for round in object_list %}
-    <tr><th>Division {{round.name}}</th><td></td><td></td><td></td><td></td></tr>
-    {% for team in round.participants %}
-        <tr>
-        <td>{{forloop.counter}}</td><td>{{team.name}}</td><td>{{team.wins}}/{{team.losses}}</td><td>{{team.tiebreaker}}</td>
-        <td><a href="{% url team_page team.tournament.slug team.slug %}">{{team.name}} Team Link</a></td>
-        </tr>
-    {% endfor %}
-    {% endfor %}
-    </table>
-    
-    {% paginate %}
-    
+	{% regroup object_list by stage as stage_list %}
+    {% for stage in stage_list %}
+    <div class="accordion-group">
+      <h3 class="accordion-heading">
+        <a data-toggle="collapse" href="#stage{{stage.grouper}}" class="accordion-toggle" >
+          Stage {{stage.grouper}}
+        </a>
+      </h3>
+      <div id="stage{{stage.grouper}}" class="accordion-body{% if forloop.first %} in{% endif %} collapse">
+        <div class="accordion-inner">
+          <table class="table">
+		    <thead><tr><th>Rank</th><th>Team</th><th>Wins/Losses</th><th>Tiebreaker Points</th><th>Learn more about the Team</th></tr></thead>
+		    <tbody>
+		    {% for round in stage.list %}
+		    <tr><th colspan="5">Division {{round.name}}</th></tr>
+              {% for team_roundmembership in round.participants %}
+              {% with team=team_roundmembership.team %}
+                  <tr>
+                  <td>{{forloop.counter}}</td><td>{{team.name}}</td><td>{{team_roundmembership.wins}}/{{team_roundmembership.losses}}</td><td>{{team_roundmembership.tiebreaker}}</td>
+                  <td><a href="{% url team_page tournament_slug team.slug %}">{{team.name}} Team Link</a></td>
+                  </tr>
+              {% endwith %}
+              {% endfor %}
+		    {% endfor %}
+		    </tbody>
+          </table>
+        </div>
+      </div>
+     </div>
+     {% endfor %}
+
 {% endblock %}

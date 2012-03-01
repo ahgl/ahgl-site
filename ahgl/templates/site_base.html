@@ -41,6 +41,7 @@
               </a>
               <ul class="dropdown-menu">
               	<li><a href="{{tournament.get_absolute_url}}">{% trans "Feature" %}</a></li>
+			    <li><a href="{% url games %}?vod_only=1">{% trans "Videos" %}</a></li>
 			    <li><a href="{% url matches tournament.slug %}">{% trans "Matches" %}</a></li>
 			    <li><a href="{% url standings tournament.slug %}">{% trans "Team Standings" %}</a></li>
 			    <li><a href="{% url teams tournament.slug %}">{% trans "Teams" %}</a></li>

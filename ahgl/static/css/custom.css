@@ -57,6 +57,9 @@ div > label, .input > label {
 
 
 /* Special */
+.table-nohover tbody tr:hover td, .table tbody tr:hover th {
+	background:none;
+}
 .video-link {
 	display:block;
 	background: url("../images/video-play-icon.png") no-repeat scroll center 53px transparent;

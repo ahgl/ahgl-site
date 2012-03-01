@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.utils.functional import curry
 from django.contrib import admin
 from django import forms
@@ -5,7 +7,7 @@ from django.conf.urls.defaults import patterns, url
 
 from .views import NewTournamentRoundView
 from .models import Tournament, TournamentRound, Map, Match, Game
-from apps.profiles.models import Team, Game
+from apps.profiles.models import Team, Profile
 
 class TournamentRoundInline(admin.TabularInline):
     model = TournamentRound
@@ -20,7 +22,6 @@ class TournamentRoundInline(admin.TabularInline):
                 kwargs["queryset"] = Team.objects.filter(tournament=self.parent)
         return super(TournamentRoundInline, self).formfield_for_manytomany(db_field, request, **kwargs)
 
-
 class TournamentAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('__unicode__', 'active',)
@@ -34,9 +35,9 @@ class TournamentAdmin(admin.ModelAdmin):
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "featured_game":
-            kwargs["queryset"] = Game.objects.filter(match__published=True, match__tournament=self.obj).order_by('match__publish_date')
+            kwargs["queryset"] = Game.objects.filter(match__published=True, match__tournament=self.obj).order_by('match__publish_date').select_related('home_player', 'away_player', 'map')
         return super(TournamentAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-    
+
     def get_urls(self):
         urls = super(TournamentAdmin, self).get_urls()
         my_urls = patterns('',
@@ -46,19 +47,39 @@ class TournamentAdmin(admin.ModelAdmin):
 
 class GameInline(admin.TabularInline):
     model = Game
-
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if "player" in db_field.name or db_field.name == "winner":
+            if hasattr(request, "profile_queryset"):
+                kwargs["queryset"] = request.profile_queryset
+            else:
+                request.profile_queryset = kwargs["queryset"] = Profile.objects.select_related('user')
+        return super(GameInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+    def queryset(self, request):
+        return super(GameInline, self).queryset(request).select_related()
 
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'tournament', 'home_team','away_team', 'published',)
+    list_display = ('__unicode__', 'creation_date', 'tournament', 'home_team','away_team', 'published',)
     list_filter = ('tournament',)
     search_fields = ('home_team__name','away_team__name',)
     inlines = [
         GameInline,
     ]
     actions = ['publish_match']
+    date_hierarchy = 'creation_date'
     
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if "team" in db_field.name:
+            if hasattr(request, "team_queryset"):
+                kwargs["queryset"] = request.team_queryset
+            else:
+                request.team_queryset = kwargs["queryset"] = Team.objects.all()
+        return super(MatchAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+        
     def publish_match(self, request, queryset):
-        rows_updated = queryset.update(published=True)
+        rows_updated = queryset.update(published=True, publish_date=datetime.now())
+        for match in queryset.all():
+            match.update_winloss()
+            match.update_tiebreaker()
         if rows_updated == 1:
             message_bit = "1 match was"
         else:

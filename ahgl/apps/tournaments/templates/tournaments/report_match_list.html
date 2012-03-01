@@ -9,10 +9,12 @@
 {% block body %}
     <h1>{% trans "Select Match to Report" %}</h1>
     
+    {% with match_list=match_list %}
     {% autopaginate match_list %}
     
     <ul class="unstyled">
     {% for match in match_list %}
+    	{% ifchanged %}<h3>{{ match.creation_date }}</h3>{% endifchanged %}
         <li><a href="{% url report_match match.pk %}">{{match.home_team}} vs {{match.away_team}}</a></li>
     {% empty %}
     	<li>No matches to report</li>
@@ -20,5 +22,6 @@
     </ul>
     
     {% paginate %}
+    {% endwith %}
     
 {% endblock %}

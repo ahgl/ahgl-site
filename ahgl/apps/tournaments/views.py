@@ -20,6 +20,8 @@ from django.forms.models import BaseModelFormSet
 from django import forms
 from django.forms.models import ModelFormOptions
 from django.forms.formsets import formset_factory
+from django.http import Http404
+from django.shortcuts import get_object_or_404
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
 else:
@@ -58,6 +60,7 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
                 return super(TeamSelectionForm, self).clean()
             def save(self, *args, **kwargs):
                 self.instance.tournament = tournament
+                self.instance.tournament_round = tournament_round
                 return super(TeamSelectionForm, self).save(*args, **kwargs)
         return TeamSelectionForm
         
@@ -81,7 +84,7 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
                 for match_formset in self.forms[1:]:
                     for match_form in match_formset:
                         if match_form.instance.id:
-                            for i, map_form in enumerate(map_formset):
+                            for i, map_form in enumerate(map_formset, start=1):
                                 if 'map' in map_form.cleaned_data:
                                     match_form.instance.games.create(order=i, **map_form.cleaned_data)
                 return ret
@@ -106,27 +109,108 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
 
 
 class TournamentDetailView(DetailView):
-    queryset = Tournament.objects.all()
+    queryset = Tournament.objects.all().select_related('featured_game__map', 'featured_game__home_player', 'featured_game__away_player')
+    
+class GameListView(ListView):
+    template_name="tournaments/game_list.html"
+    def get_context_data(self, **kwargs):
+        context = super(GameListView, self).get_context_data(**kwargs)
+        if self.request.GET.get('vod_only'):
+            context['vod_only'] = True
+        try:
+            context['player'] = Profile.objects.get(slug=self.request.GET.get('player'))
+        except Profile.DoesNotExist:
+            pass
+        else:
+            wins, losses = [], []
+            for game in self.object_list:
+                if game.winner==context['player']:
+                    wins.append(game)
+                else:
+                    losses.append(game)
+            context['game_list'] = wins + losses
+        return context
+    def get_queryset(self):
+        queryset = Game.objects.exclude(winner__isnull=True) \
+                                       .order_by('match__publish_date', 'match', 'order') \
+                                       .select_related('map', 'home_player', 'away_player', 'match__home_team', 'match__away_team', 'winner')
+        if (not self.request.user.is_authenticated() or not self.request.user.get_profile().is_active()):
+            queryset = queryset.filter(match__published=True)
+        if self.request.GET.get('player'):
+            queryset = queryset.filter(Q(home_player__slug=self.request.GET.get('player')) | Q(away_player__slug=self.request.GET.get('player')))
+        if self.request.GET.get('vod_only'):
+            queryset = queryset.filter(vod__isnull=False)
+        return queryset
     
 class MatchListView(ListView):
-    def get_queryset(self):
-        return Match.objects.filter(tournament=self.kwargs['tournament'], published=True).order_by('publish_date')
+    def get_context_data(self, **kwargs):
+        context = super(MatchListView, self).get_context_data(**kwargs)
+        context['tournament_slug'] = self.kwargs.get('tournament')
+        return context
 
-class MatchDetailView(ListView):
+    def get_queryset(self):
+        queryset = Match.objects.filter(tournament=self.kwargs['tournament']) \
+                                       .order_by('publish_date', 'creation_date', 'tournament_round') \
+                                       .select_related('home_team', 'away_team', 'tournament_round')
+        if (not self.request.user.is_authenticated() or not self.request.user.get_profile().is_active(self.kwargs.get('tournament'))):
+            queryset = queryset.filter(published=True)
+        if self.request.GET.get('team'):
+            queryset = queryset.filter(Q(home_team__slug=self.request.GET.get('team')) | Q(away_team__slug=self.request.GET.get('team')))
+        return queryset
+
+class MatchDetailView(DetailView):
+    model=Match
+    queryset=Match.objects.select_related('home_team', 'away_team')
+    def get_context_data(self, **kwargs):
+        context = super(MatchDetailView, self).get_context_data(**kwargs)
+        context['home_team_url'] = self.object.home_team.get_absolute_url(self.kwargs.get('tournament'))
+        context['away_team_url'] = self.object.away_team.get_absolute_url(self.kwargs.get('tournament'))
+        context['games_played'] = list(self.object.games_played())
+        try:
+            context['first_vod'] = context['games_played'][0].vod
+        except IndexError:
+            return context
+        return context
+    
+    def get_object(self):
+        return self.object
+    
+    def dispatch(self, request, *args, **kwargs):
+        # Try to dispatch to the right method; if a method doesn't exist,
+        # defer to the error handler. Also defer to the error handler if the
+        # request method isn't on the approved list.
+        if request.method.lower() in self.http_method_names:
+            handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+        else:
+            handler = self.http_method_not_allowed
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+        self.object = super(MatchDetailView, self).get_object()
+        if not self.object.published and (not request.user.is_authenticated() or not request.user.get_profile().is_active(self.kwargs.get('tournament'))):
+            raise Http404
+        return handler(request, *args, **kwargs)
+
+class VerboseMatchDetailView(MatchDetailView): 
     def get_object(self):
         return Match.objects.filter(tournament=self.kwargs['tournament'],
                                     publish_date=self.kwargs['date'],
                                     home_team=self.kwargs['home'],
-                                    away_team=self.kwargs['away'])
+                                    away_team=self.kwargs['away']).select_related('home_team', 'away_team')
 
 class MatchReportListView(ListView):
     model = Match
     template_name="tournaments/report_match_list.html"
     def get_queryset(self):
-        return Match.objects.filter(home_submitted=True, away_submitted=True, published=False, tournament__teams__members__pk=self.request.user.get_profile().pk)
-    
+        return Match.objects.filter(home_submitted=True, away_submitted=True, published=False, tournament__teams__members__pk=self.request.user.get_profile().pk) \
+                            .order_by('-creation_date') \
+                            .select_related('home_team', 'away_team')
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MatchReportListView, self).dispatch(request, *args, **kwargs)
+
 class MatchReportView(UpdateView):
-    queryset = Match.objects.filter(home_submitted=True, away_submitted=True, published=False)
+    queryset = Match.objects.filter(home_submitted=True, away_submitted=True, published=False).select_related('home_team', 'away_team')
     template_name = "tournaments/report_match.html"
     
     def get_form_class(self):
@@ -144,6 +228,7 @@ class MatchReportView(UpdateView):
                 winner_field = self.fields.get('winner')
                 if not self.instance.is_ace:
                     assert(self.instance.home_player and self.instance.away_player)
+                    #TODO: figure out how to not issue a query since we know the exact set...maybe artificialy spoof a queryset object
                     winner_field.queryset = winner_field.queryset.filter(pk__in=(self.instance.home_player.pk, self.instance.away_player.pk,))
                     winner_field.choices = (("", "Not played"), (self.instance.home_player.pk, str(self.instance.home_player)), (self.instance.away_player.pk, str(self.instance.away_player)))
                     del self.fields['home_player']
@@ -162,13 +247,18 @@ class MatchReportView(UpdateView):
         """
         Returns the keyword arguments for instanciating the form.
         """
-        kwargs = {'instance':self.get_object(), 'queryset':Game.objects.all()}
+        kwargs = {'instance':self.object, 'queryset':Game.objects.select_related('map', 'home_player__user', 'away_player__user')}
         if self.request.method in ('POST', 'PUT'):
             kwargs.update({
                 'data': self.request.POST,
                 'files': self.request.FILES,
             })
         return kwargs
+
+    def form_valid(self, form):
+        self.object.referee = self.user
+        self.object.remove_extra_victories()
+        return super(MatchReportView, self).form_valid(form)
     
     def get_success_url(self):
         return reverse("report_match_list")
@@ -177,6 +267,7 @@ class MatchReportView(UpdateView):
     def dispatch(self, request, pk, *args, **kwargs):
         if not request.user.get_profile().teams.filter(tournament__matches__pk=pk).count():
             return HttpResponseForbidden("You are not a participant in this tournament.")
+        self.user = request.user
         return super(MatchReportView, self).dispatch(request, pk=pk, *args, **kwargs)
 
 class LineupView(ListView):
@@ -185,7 +276,10 @@ class LineupView(ListView):
         return "tournaments/view_lineup.html"
     def get_queryset(self):
         profile = self.request.user.get_profile()
-        return Match.objects.filter(Q(home_submitted=True) & Q(away_submitted=True) & Q(published=False) & (Q(home_team__captain=profile) | Q(away_team__captain=profile)))
+        return Match.objects.filter(Q(home_submitted=True) & Q(away_submitted=True) & Q(published=False) & (Q(home_team__captain=profile) | Q(away_team__captain=profile))).select_related('home_team', 'away_team')
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(LineupView, self).dispatch(request, *args, **kwargs)
 
 class MapListView(ListView):
     model = Match
@@ -193,7 +287,10 @@ class MapListView(ListView):
         return "tournaments/map_list.html"
     def get_queryset(self):
         profile = self.request.user.get_profile()
-        return Match.objects.filter(Q(published=False) & (Q(home_team__members__pk=profile.pk) | Q(away_team__members__pk=profile.pk))).all()
+        return Match.objects.filter(Q(published=False) & (Q(home_team__members__pk=profile.pk) | Q(away_team__members__pk=profile.pk))).distinct().select_related('home_team', 'away_team')
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MapListView, self).dispatch(request, *args, **kwargs)
 
 class SubmitLineupView(UpdateView):
     def get_template_names(self):
@@ -203,7 +300,7 @@ class SubmitLineupView(UpdateView):
         context = super(SubmitLineupView, self).get_context_data(**kwargs)
         if self.team:
             context['team'] = self.team
-        context['aces'] = Game.objects.filter(match=self.obj, is_ace=True)
+        context['aces'] = self.object.games.filter(is_ace=True).select_related('map')
         return context
 
     def get_form_class(self):
@@ -223,25 +320,25 @@ class SubmitLineupView(UpdateView):
     
     def form_valid(self, *args, **kwargs):
         if self.home_team:
-            self.obj.home_submitted = True
+            self.object.home_submitted = True
         else:
-            self.obj.away_submitted = True
-        self.obj.save()
-        if notification and self.obj.home_submitted and self.obj.away_submitted:
-            notification.send(User.objects.filter(profile__teams__pk__in=(self.obj.home_team.pk, self.obj.away_team.pk)),
+            self.object.away_submitted = True
+        self.object.save()
+        if notification and self.object.home_submitted and self.object.away_submitted:
+            notification.send(User.objects.filter(profile__teams__pk__in=(self.object.home_team.pk, self.object.away_team.pk)),
                               "tournaments_lineup_ready",
-                              {'match': self.obj,
+                              {'match': self.object,
                                })
         return super(SubmitLineupView, self).form_valid(*args, **kwargs)
     
     def get_object(self):
-        return self.obj
+        return self.object
     
     def get_form_kwargs(self):
         """
         Returns the keyword arguments for instanciating the form.
         """
-        kwargs = {'instance':self.get_object(), 'queryset':Game.objects.filter(is_ace=False)}
+        kwargs = {'instance':self.object, 'queryset':Game.objects.filter(is_ace=False).select_related('map')}
         if self.request.method in ('POST', 'PUT'):
             kwargs.update({
                 'data': self.request.POST,
@@ -255,16 +352,16 @@ class SubmitLineupView(UpdateView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         profile = request.user.get_profile()
-        submit_matchlist = Match.objects.filter((Q(home_submitted=False) | Q(away_submitted=False)) & Q(published=False) & (Q(home_team__captain=profile) | Q(away_team__captain=profile))).all()
+        submit_matchlist = Match.objects.filter((Q(home_submitted=False) | Q(away_submitted=False)) & Q(published=False) & (Q(home_team__captain=profile) | Q(away_team__captain=profile)))
         if not submit_matchlist.count():
             messages.add_message(request, messages.ERROR, "No lineups to submit.")
             self.request = request
             return self.render_to_response(context={})
-        self.obj = submit_matchlist[0]
+        self.object = submit_matchlist[0]
         self.home_team = False
-        if profile == self.obj.home_team.captain:
+        if profile == self.object.home_team.captain:
             self.home_team = True
-            self.team = self.obj.home_team
-        elif profile == self.obj.away_team.captain:
-            self.team = self.obj.away_team
+            self.team = self.object.home_team
+        elif profile == self.object.away_team.captain:
+            self.team = self.object.away_team
         return super(SubmitLineupView, self).dispatch(request, *args, **kwargs)

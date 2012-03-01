@@ -1,15 +1,15 @@
 {% load thumbnail %}
     <tr>
     <td>
-	<a href="{% url profile_detail game.home_player.user %}">
+	<a href="{{game.home_player.get_absolute_url}}">
 	{% thumbnail game.home_player.thumbnail "150x170" as im %}
     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.home_player.name}}" />
 	{% empty %}
-    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{game.home_playername}}" />
+    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{game.home_player.name}}" />
 	{% endthumbnail %}
 	</a>
-    <h4>{{game.home_player}}</h4>
-    <a href="{% url profile_detail game.home_player.user %}">More about {{game.home_player}}</a>
+    <h4>{{game.home_player}}{% if game.winner == game.home_player %} *{% endif %} ({{game.home_race}})</h4>
+    <a href="{{game.home_player.get_absolute_url}}">More about {{game.home_player}}</a>
     </td>
     <td style="text-align:center;">
     {% if game.vod %}
@@ -27,14 +27,14 @@
     {% endif %}
     </td>
     <td style="text-align:right;">
-	<a href="{% url profile_detail game.away_player.user %}">
+	<a href="{{game.away_player.get_absolute_url}}">
 	{% thumbnail game.away_player.thumbnail "150x170" as im %}
     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.away_player.name}}" />
 	{% empty %}
-    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{game.away_player}}" />
+    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{game.away_player.name}}" />
 	{% endthumbnail %}
 	</a>
-    <h4>{{game.away_player}}</h4>
-    <a href="{% url profile_detail game.away_player.user %}">More about {{game.away_player}}</a>
+    <h4>({{game.away_race}}) {{game.away_player}}{% if game.winner == game.away_player %} *{% endif %}</h4>
+    <a href="{{game.away_player.get_absolute_url}}">More about {{game.away_player}}</a>
     </td>
     </tr>

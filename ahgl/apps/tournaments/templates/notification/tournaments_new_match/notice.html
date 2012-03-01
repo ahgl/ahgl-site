@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <p>{% trans "A new match has been created " %}{{match}}<br>
-{% if match.home_team.captain.pk == recipient.get_profile.pk or match.away_team.captain.pk == recipient.get_profile.pk %}
+{% if home_team_captain == recipient.get_profile.pk or home_team_captain == recipient.get_profile.pk %}
 {% trans "Submit lineup:" %} <a href="{% url submit_lineup %}">http://{{current_site}}{% url submit_lineup %}</a>
 {% else %}
 {% trans "View map list:" %} <a href="{% url map_list %}">http://{{current_site}}{% url map_list %}</a>

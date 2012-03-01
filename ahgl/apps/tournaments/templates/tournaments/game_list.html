@@ -1,0 +1,36 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}Games{% endblock %}
+{% block extra_head %}
+{% if player %}
+<style>.table td {border-top:none;}</style>
+{% endif %}
+{% endblock %}
+
+{% block body %}
+	<h1>{{player}}</h1>
+
+	{% autopaginate game_list 10 %}
+    <div id="main-content">
+    <table class="table table-nohover">
+
+    {% for game in game_list %}
+    {% if player %}
+    {% ifchanged %}<tr><th colspan="3"><h3>{% if game.winner == player %}WINS{% else %}LOSSES{% endif %}</h3></th></tr>{% endifchanged %}
+    {% ifchanged %}<tr><th colspan="3" style="text-align:center;border-bottom:none;">{{game.match}}</th></tr>{% endifchanged %}
+    {% else %}
+    {% ifchanged %}<tr><th colspan="3"><h2>{{game.match.publish_date}}</h2></th></tr>{% endifchanged %}
+    {% ifchanged %}<tr><th colspan="3"><h2>{{game.match}}</h2></th></tr>{% endifchanged %}
+    {% endif %}
+    {% include "tournaments/game_detail.html" %}
+    {% endfor %}
+    </table>
+    {% paginate %}
+    
+    
+    </div>
+{% endblock %}

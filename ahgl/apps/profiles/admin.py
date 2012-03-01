@@ -11,7 +11,8 @@ class TeamAdmin(admin.ModelAdmin):
    
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'name', 'char_name',)
-    list_filter = ('teams',)
+    list_filter = ('teams','race',)
+    search_fields = ('name','char_name',)
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Team, TeamAdmin)

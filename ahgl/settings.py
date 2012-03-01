@@ -3,6 +3,9 @@
 
 import os.path
 import posixpath
+import djcelery
+
+gettext = lambda s: s
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -12,9 +15,11 @@ TEMPLATE_DEBUG = DEBUG
 # tells Pinax to serve media through the staticfiles app.
 SERVE_MEDIA = DEBUG
 
+djcelery.setup_loader()
+
 # django-compressor is turned off by default due to deployment overhead for
 # most users. See <URL> for more information
-COMPRESS = False
+COMPRESS = True
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -47,6 +52,9 @@ TIME_ZONE = "US/Pacific"
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = "en-us"
+LANGUAGES = (
+    ('en', gettext('English')),
+)
 
 SITE_ID = 1
 
@@ -179,6 +187,7 @@ INSTALLED_APPS = [
     'pytils',
     'pure_pagination',
     'messages',
+    "djcelery",
 
     # Pinax
     "pinax.apps.account",
@@ -219,6 +228,16 @@ AUTHENTICATION_BACKENDS = [
     "social_auth.backends.facebook.FacebookBackend",
 ]
 
+SOCIAL_AUTH_PIPELINE = (
+                        'social_auth.backends.pipeline.social.social_auth_user',
+                        'social_auth.backends.pipeline.associate.associate_by_email',
+                        'apps.profiles.pipeline.user.get_username',
+                        'apps.profiles.pipeline.user.create_user',
+                        'social_auth.backends.pipeline.social.associate_user',
+                        'social_auth.backends.pipeline.social.load_extra_data',
+                        'social_auth.backends.pipeline.user.update_user_details',
+                        )
+
 SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook',)
 
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
@@ -241,7 +260,6 @@ CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 # Email info
 # REMOVED BECAUSE INCLUDES PASSWORDS
-
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
@@ -309,3 +327,14 @@ if GONDOR_LOCAL_SETTINGS:
         THUMBNAIL_REDIS_PASSWORD = GONDOR_REDIS_PASSWORD
         THUMBNAIL_REDIS_HOST = GONDOR_REDIS_HOST
         THUMBNAIL_REDIS_PORT = GONDOR_REDIS_PORT
+        
+    BROKER_TRANSPORT = "redis"
+    BROKER_HOST = GONDOR_REDIS_HOST
+    BROKER_PORT = GONDOR_REDIS_PORT
+    BROKER_VHOST = "0"
+    BROKER_PASSWORD = GONDOR_REDIS_PASSWORD
+    
+    CELERY_RESULT_BACKEND = "redis"
+    CELERY_REDIS_HOST = GONDOR_REDIS_HOST
+    CELERY_REDIS_PORT = GONDOR_REDIS_PORT
+    CELERY_REDIS_PASSWORD = GONDOR_REDIS_PASSWORD

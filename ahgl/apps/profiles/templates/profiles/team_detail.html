@@ -20,9 +20,10 @@
     <div class="span3">
     <ul>
     <li>Rank: {{team.rank}}</li>
-    <li>Win/Loss: {{team.wins}}/{{team.losses}}</li>
+    <li>Win/Loss: <a href="{% url matches tournament_slug %}?team={{team.slug}}">{{team.wins}}/{{team.losses}}</a></li>
     <li>Tiebreaker: {{team.tiebreaker}}</li>
     {% if team.motto %}<li>Motto: {{team.motto}}</li>{% endif %}
+    {% if team.captain %}<li>Captain: <a href="{{team.captain.get_absolute_url}}">{{team.captain.char_name}}</a></li>{% endif %}
     </ul>
     </div>
     <div class="span5">
@@ -39,22 +40,23 @@
     </div>
     </div>
 
-    
-    {% autopaginate team.members.all %}
+    {% with members=team.members.all %}
+    {% autopaginate members 12 %}
     
     <ul class="thumbnails">
-    {% for player in team.members.all %}
-        <li><a href="{% url profile_detail player.user %}" class="thumbnail">
+    {% for player in members %}
+        <li><a href="{{player.get_absolute_url}}" class="thumbnail">
 		{% thumbnail player.thumbnail "150x170" as im %}
 	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{player.name}}" />
 		{% empty %}
 	    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{player.name}}" />
 		{% endthumbnail %}
 		<br>
-        <b>{{player}}</b><br />{{player.name}}</a></li>
+        <b>{{player.char_name}}{% if player == team.captain %} *{% endif %}</b><br />{{player.name}}</a></li>
     {% endfor %}
     </ul>
     
     {% paginate %}
+    {% endwith %}
     
 {% endblock %}

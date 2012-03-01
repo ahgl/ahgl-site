@@ -1,19 +1,19 @@
 {% load account_tags %}
 {% load thumbnail %}
-<div class="profile-item">
+<li class="profile-item">
+	<a href="{{profile.get_absolute_url}}" class="thumbnail" style="width:150px;height:225px;">
+	{% thumbnail profile.thumbnail "150x170" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{profile.name}}" />
+	{% empty %}
+    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{profile.name}}" />
+	{% endthumbnail %}
     <div class="name">
-    	<a href="{% url profile_detail profile.user.username %}">
-		{% thumbnail profile.thumbnail "150x170" as im %}
-	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{profile.name}}" />
-		{% empty %}
-	    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{profile.name}}" />
-		{% endthumbnail %}
         {% if profile.name %}
             {{ profile.name }}{% if profile.char_name %} ({{ profile.char_name }}){% endif %}
         {% else %}
             {% user_display profile.user %}
         {% endif %}
-        </a>
+        
     </div>
     <div class="details">
         {% if profile.title %}{{ profile.title }}{% endif %}
@@ -21,4 +21,5 @@
         {% if profile.race %}{{ profile.get_race_display }}{% endif %}
     </div>
     <div class="clear"></div>
-</div>
+    </a>
+</li>

@@ -8,7 +8,7 @@
 {% block body %}
     {% user_display page_user as page_user_display %}
     
-    <h1>Back to {% for team in profile.active_teams %}<a href="{% url team_page team.tournament.slug team.slug %}">{{ team }}</a> {% endfor %} Team</h1>
+    <h1>Back to {% for team in profile.active_teams %}<a href="{{ team.get_absolute_url }}">{{ team }}</a> {% endfor %} Team</h1>
     
     {% include "profiles/_profile_info.html" %}
     

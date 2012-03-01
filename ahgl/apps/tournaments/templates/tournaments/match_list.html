@@ -13,7 +13,14 @@
     
     <ul class="unstyled">
     {% for match in match_list %}
-        <li><a href="{{match.get_absolute_url}}">{{match.home_team}} vs {{match.away_team}}</a> {{match.publish_date|default_if_none:""}}</li>
+    	{% if match.publish_date %}
+    	{% ifchanged %}<h3>{{ match.publish_date }}</h3>{% endifchanged %}
+    	{% else %}
+    	{% ifchanged %}<h3>Not published</h3>{% endifchanged %}
+    	{% ifchanged %}<h3>{{ match.creation_date }}</h3>{% endifchanged %}
+    	{% endif %}
+    	{% ifchanged %}<h4>Division {{match.tournament_round.name}}</h4>{% endifchanged %}
+        <li><a href="{% url match_page tournament_slug match.pk %}">{{match.home_team}} vs {{match.away_team}}</a></li>
     {% empty %}
     	<li>No matches yet</li>
     {% endfor %}

@@ -5,17 +5,32 @@ from django.http import HttpResponseForbidden
 from django.views.generic import DetailView, ListView, UpdateView
 from django.forms import models as model_forms
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
+from django.http import Http404
+
+from idios.views import ProfileDetailView
+from idios.utils import get_profile_model
 
 from .models import Team
 from apps.tournaments.models import TournamentRound
 
+class TournamentSlugContextView(object):
+    def get_context_data(self, **kwargs):
+        context = super(TournamentSlugContextView, self).get_context_data(**kwargs)
+        context['tournament_slug'] = self.kwargs.get('tournament')
+        return context
+
 class TeamDetailView(DetailView):
+    def get_context_data(self, **kwargs):
+        context = super(TeamDetailView, self).get_context_data(**kwargs)
+        context['tournament_slug'] = self.kwargs.get('tournament')
+        return context
     def get_queryset(self):
-        return Team.objects.filter(tournament=self.kwargs['tournament']).select_related('charity', 'members')
+        return Team.objects.filter(tournament=self.kwargs['tournament']).select_related('charity', 'captain')
     
 class TeamUpdateView(UpdateView):
     def get_queryset(self):
-        return Team.objects.filter(tournament=self.kwargs['tournament'])
+        return Team.objects.filter(tournament=self.kwargs['tournament']).select_related('charity')
     
     def get_form_class(self):
         return model_forms.modelform_factory(Team, exclude=('slug','tournament','rank','seed',))
@@ -33,13 +48,28 @@ class TeamUpdateView(UpdateView):
             return HttpResponseForbidden("You are not captain of this team.")
         return super(TeamUpdateView, self).dispatch(request, *args, **kwargs)
     
-class TeamListView(ListView):
+class TeamListView(TournamentSlugContextView, ListView):
     def get_queryset(self):
         return Team.objects.filter(tournament=self.kwargs['tournament'])
     
-class StandingsView(ListView):
+class StandingsView(TournamentSlugContextView, ListView):
     def get_queryset(self):
-        return TournamentRound.objects.filter(tournament=self.kwargs['tournament']).select_related('teams')
+        return TournamentRound.objects.filter(tournament=self.kwargs['tournament'])
 
     def get_template_names(self):
         return "profiles/standings.html"
+    
+    
+class MyProfileDetailView(ProfileDetailView):
+    def get_object(self):
+        profile_class = get_profile_model()
+        slug = self.kwargs.get("slug")
+        try:
+            if slug:
+                profile = get_object_or_404(profile_class, slug=slug)
+                self.page_user = profile.user
+                return profile
+        except:
+            self.kwargs['username'] = slug
+            return super(MyProfileDetailView, self).get_object()
+    
