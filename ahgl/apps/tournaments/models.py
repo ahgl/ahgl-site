@@ -13,6 +13,7 @@ from django.contrib.sites.models import Site
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
+from celery.execute import send_task
 if "sorl.thumbnail" in settings.INSTALLED_APPS:
     from sorl.thumbnail import ImageField
 else:
@@ -24,7 +25,6 @@ else:
 
 from apps.profiles import RACES
 
-from .tasks import notify_match_creation
 
 logger = logging.getLogger(__name__)
 
@@ -179,12 +179,12 @@ class Match(models.Model):
             self.creation_date = datetime.datetime.now()
         super(Match, self).save(*args, **kwargs)
         if "notification" in settings.INSTALLED_APPS and notification and created and notify:
-            notify_match_creation.delay(unicode(self),
-                                        self.home_team.pk,
-                                        self.away_team.pk,
-                                        getattr(self.home_team.captain, "pk", None),
-                                        getattr(self.away_team.captain, "pk", None)
-                                        )
+            send_task("tournaments.tasks.notify_match_creation", [unicode(self),
+                                                      self.home_team_id,
+                                                      self.away_team_id,
+                                                      self.home_team.captain_id,
+                                                      self.away_team.captain_id
+                                                      ])
 
     def games_with_map(self):
         return self.games.select_related('map')
@@ -203,10 +203,8 @@ class Match(models.Model):
         return u" ".join((u" vs ".join((unicode(self.home_team), unicode(self.away_team))), str(self.creation_date)))
     
     @models.permalink
-    def get_absolute_url(self, tournament_slug=None):
-        if not tournament_slug:
-            tournament_slug = self.tournament.slug
-        return ('match_page', (), {'tournament': tournament_slug,
+    def get_absolute_url(self):
+        return ('match_page', (), {'tournament': self.tournament_id,
                                   'pk': self.pk,
                                   }
                 )

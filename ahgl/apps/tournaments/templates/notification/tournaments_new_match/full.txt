@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% trans "A new match has been created " %}{{match}}
-{% if home_team_captain == recipient.get_profile.pk or home_team_captain == recipient.get_profile.pk %}
+{% if home_team_captain == recipient.get_profile_id or home_team_captain == recipient.get_profile_id %}
 {% trans "Submit lineup:" %} http://{{current_site}}{% url submit_lineup %}
 {% else %}
 {% trans "View map list:" %} http://{{current_site}}{% url map_list %}

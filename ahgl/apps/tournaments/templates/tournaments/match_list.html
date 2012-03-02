@@ -20,7 +20,7 @@
     	{% ifchanged %}<h3>{{ match.creation_date }}</h3>{% endifchanged %}
     	{% endif %}
     	{% ifchanged %}<h4>Division {{match.tournament_round.name}}</h4>{% endifchanged %}
-        <li><a href="{% url match_page tournament_slug match.pk %}">{{match.home_team}} vs {{match.away_team}}</a></li>
+        <li><a href="{{match.get_absolute_url}}">{{match.home_team}} vs {{match.away_team}}</a></li>
     {% empty %}
     	<li>No matches yet</li>
     {% endfor %}

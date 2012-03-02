@@ -28,7 +28,7 @@
               {% with team=team_roundmembership.team %}
                   <tr>
                   <td>{{forloop.counter}}</td><td>{{team.name}}</td><td>{{team_roundmembership.wins}}/{{team_roundmembership.losses}}</td><td>{{team_roundmembership.tiebreaker}}</td>
-                  <td><a href="{% url team_page tournament_slug team.slug %}">{{team.name}} Team Link</a></td>
+                  <td><a href="{{team.get_absolute_url}}">{{team.name}} Team Link</a></td>
                   </tr>
               {% endwith %}
               {% endfor %}

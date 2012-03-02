@@ -163,11 +163,9 @@ class MatchDetailView(DetailView):
     queryset=Match.objects.select_related('home_team', 'away_team')
     def get_context_data(self, **kwargs):
         context = super(MatchDetailView, self).get_context_data(**kwargs)
-        context['home_team_url'] = self.object.home_team.get_absolute_url(self.kwargs.get('tournament'))
-        context['away_team_url'] = self.object.away_team.get_absolute_url(self.kwargs.get('tournament'))
-        context['games_played'] = list(self.object.games_played())
+        context['games'] = list(self.object.games_played()) if self.object.published else list(self.object.games_with_related())
         try:
-            context['first_vod'] = context['games_played'][0].vod
+            context['first_vod'] = context['games'][0].vod
         except IndexError:
             return context
         return context
@@ -220,8 +218,8 @@ class MatchReportView(UpdateView):
                                             queryset=Profile.objects.all(),
                                             widget=forms.RadioSelect,
                                             empty_label="Not played")
-            home_player = forms.ModelChoiceField(required=False, queryset=Profile.objects.filter(teams__pk=match.home_team.pk))
-            away_player = forms.ModelChoiceField(required=False, queryset=Profile.objects.filter(teams__pk=match.away_team.pk))
+            home_player = forms.ModelChoiceField(required=False, queryset=Profile.objects.filter(teams__pk=match.home_team_id))
+            away_player = forms.ModelChoiceField(required=False, queryset=Profile.objects.filter(teams__pk=match.away_team_id))
             
             def __init__(self, *args, **kwargs):
                 super(ReportMatchForm, self).__init__(*args, **kwargs)
@@ -229,14 +227,14 @@ class MatchReportView(UpdateView):
                 if not self.instance.is_ace:
                     assert(self.instance.home_player and self.instance.away_player)
                     #TODO: figure out how to not issue a query since we know the exact set...maybe artificialy spoof a queryset object
-                    winner_field.queryset = winner_field.queryset.filter(pk__in=(self.instance.home_player.pk, self.instance.away_player.pk,))
-                    winner_field.choices = (("", "Not played"), (self.instance.home_player.pk, str(self.instance.home_player)), (self.instance.away_player.pk, str(self.instance.away_player)))
+                    winner_field.queryset = winner_field.queryset.filter(pk__in=(self.instance.home_player_id, self.instance.away_player_id,))
+                    winner_field.choices = (("", "Not played"), (self.instance.home_player_id, str(self.instance.home_player)), (self.instance.away_player_id, str(self.instance.away_player)))
                     del self.fields['home_player']
                     del self.fields['home_race']
                     del self.fields['away_player']
                     del self.fields['away_race']
                 else:
-                    winner_field.queryset = winner_field.queryset.filter(teams__pk__in=(match.home_team.pk,match.away_team.pk,))
+                    winner_field.queryset = winner_field.queryset.filter(teams__pk__in=(match.home_team_id,match.away_team_id,))
                     #winner_field.widget = forms.Select
             class Meta:
                 model = Game
@@ -325,7 +323,7 @@ class SubmitLineupView(UpdateView):
             self.object.away_submitted = True
         self.object.save()
         if notification and self.object.home_submitted and self.object.away_submitted:
-            notification.send(User.objects.filter(profile__teams__pk__in=(self.object.home_team.pk, self.object.away_team.pk)),
+            notification.send(User.objects.filter(profile__teams__pk__in=(self.object.home_team_id, self.object.away_team_id)),
                               "tournaments_lineup_ready",
                               {'match': self.object,
                                })

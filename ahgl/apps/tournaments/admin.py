@@ -4,10 +4,13 @@ from django.utils.functional import curry
 from django.contrib import admin
 from django import forms
 from django.conf.urls.defaults import patterns, url
+from django.db import transaction
 
 from .views import NewTournamentRoundView
-from .models import Tournament, TournamentRound, Map, Match, Game
+from .models import Tournament, TournamentRound, Map, Match, Game, TeamRoundMembership
 from apps.profiles.models import Team, Profile
+
+from .tasks import update_round_stats
 
 class TournamentRoundInline(admin.TabularInline):
     model = TournamentRound
@@ -37,6 +40,17 @@ class TournamentAdmin(admin.ModelAdmin):
         if db_field.name == "featured_game":
             kwargs["queryset"] = Game.objects.filter(match__published=True, match__tournament=self.obj).order_by('match__publish_date').select_related('home_player', 'away_player', 'map')
         return super(TournamentAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+    
+    @transaction.commit_manually
+    def save_model(self, request, obj, form, change):
+        try:
+            super(TournamentAdmin, self).save_model(request, obj, form, change)
+        except:
+            transaction.rollback()
+            raise
+        else:
+            transaction.commit()
+            update_round_stats.delay(obj.pk)
 
     def get_urls(self):
         urls = super(TournamentAdmin, self).get_urls()

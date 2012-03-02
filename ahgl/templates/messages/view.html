@@ -14,7 +14,7 @@
 </dl>
 <div class="well">{{ message.body|linebreaksbr }}</div>
 
-{% ifequal message.recipient.pk user.pk %}
+{% ifequal message.recipient_id user.pk %}
 <a href="{% url messages_reply message.id %}" class="btn btn-primary">{% trans "Reply" %}</a>
 {% endifequal %}
 <a href="{% url messages_delete message.id %}" class="btn btn-danger">{% trans "Delete" %}</a>

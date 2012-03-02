@@ -12,7 +12,7 @@
     <ul class="nav nav-pills">
     <li><h3>Meet the teams</h3></li>
     {% for team in tournament.random_teams %}
-    <li><a href="{% url team_page tournament.slug team.slug %}">{{team.name}}</a></li>
+    <li><a href="{{team.get_absolute_url}}">{{team.name}}</a></li>
     {% endfor %}
     </ul>
     {% if tournament.featured_game %}

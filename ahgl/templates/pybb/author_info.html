@@ -3,7 +3,7 @@
 <div class="author"><a href="{{ post.user.get_profile.get_absolute_url }}">{{ post.user.get_profile }}</a>
 <p>
 {% trans "Posts" %}: {{ post.user.get_profile.post_count }}
-{% if post.user.get_profile.teams.count %}<br />{% trans "Team" %}: {% for team in post.user.get_profile.teams.all %}<a href="{% url team_page team.tournament.slug team.slug %}">{{ team }}</a> {% endfor %}{% endif %}
+{% if post.user.get_profile.teams.count %}<br />{% trans "Team" %}: {% for team in post.user.get_profile.teams.all %}<a href="{{team.get_absolute_url}}">{{ team }}</a> {% endfor %}{% endif %}
 {% if post.user != request.user %}<br /><a href="{% url messages_compose_to post.user %}">PM</a>{% endif %}
 
 </p>

@@ -25,6 +25,11 @@ class Command(BaseCommand):
     args = '<tournament_slug ahgl_url>'
     help = 'Parses ahgl site and loads the data'
     option_list = BaseCommand.option_list + (
+        make_option('--whole-team',
+            action='store_true',
+            dest='whole_team',
+            default=False,
+            help='Game involves the whole team playing in a game at once'),
         make_option('--team',
             action='store_true',
             dest='team',
@@ -45,6 +50,7 @@ class Command(BaseCommand):
     first_week_match = datetime.date(2012, 1, 6)
     a_week = datetime.timedelta(weeks=1)
     master_user = User.objects.get(username='master')
+    unknown_photo = '/wp-content/themes/AHGL/images/the-unknown.png'
     
     _map_map = {u"Tal’darim Altar": "Tal'Darim Altar", "Tal'Darim Altar":"Tal'Darim Altar", "The Shattered Temple": "Shattered Temple"}
     def coerse_mapname(self, mapname):
@@ -77,8 +83,9 @@ class Command(BaseCommand):
         print(created, file=self.stdout)
         profile.name = profile_name
         member_photo_url = info_ps[0].cssselect('img')[0].get('src')
-        filename = slugify(profile.name) + posixpath.splitext(member_photo_url)[1]
-        profile.photo.save(filename, ContentFile(urllib2.urlopen(member_photo_url).read()))
+        if member_photo_url != self.unknown_photo:
+            filename = slugify(profile.name) + posixpath.splitext(member_photo_url)[1]
+            profile.photo.save(filename, ContentFile(urllib2.urlopen(member_photo_url).read()))
         if info_ps[3].text:
             profile.title = info_ps[3].text
         if info_ps[5].text: # deal with blank race
@@ -127,6 +134,11 @@ class Command(BaseCommand):
             profile = self.load_player(member_url)
             if profile:
                 team.members.add(profile)
+                member_thumbnail_url = member_a.cssselect('img')[0].get('src')
+                if member_thumbnail_url != self.unknown_photo:
+                    filename = slugify(profile.name) + posixpath.splitext(member_thumbnail_url)[1]
+                    profile.custom_thumb.save(filename, ContentFile(urllib2.urlopen(member_thumbnail_url).read()))
+
         team.full_clean()
         team.save()
         return team
@@ -153,9 +165,7 @@ class Command(BaseCommand):
         match.save(notify=False)
         # add games
         for order, game_li in enumerate(match_d.cssselect('li.cf'), start=1):
-            home_player = game_li.cssselect('.video-player-link-container h3')[0].text
             map = " ".join(game_li.cssselect('.video-link-container h3')[0].text.split()[3:])
-            away_player = game_li.cssselect('.video-player-link-container.last h3')[0].text
             map = self.coerse_mapname(map.strip())
             # Map creation
             map, created = Map.objects.get_or_create(name=map)
@@ -173,27 +183,33 @@ class Command(BaseCommand):
             game.map = map # just assure the current coersed version
             #if game_created:
             #    print("Created game {order}".format(order=order), file=self.stdout)
-            
-            try:
-                game.home_player = Profile.objects.get(char_name__iexact=home_player)
-            except Profile.DoesNotExist:
-                player_url = game_li.cssselect('.video-player-link-container a')[0].get('href')
-                if home_player == "???" or "#" in player_url: 
-                    print("Player {0} not found...ignoring".format(home_player), file=self.stderr)
-                else:
-                    game.home_player = self.load_player(player_url)
-                    if game.home_player:
-                        match.home_team.members.add(game.home_player)
-            try:
-                game.away_player = Profile.objects.get(char_name__iexact=away_player)
-            except Profile.DoesNotExist:
-                player_url = game_li.cssselect('.video-player-link-container.last a')[0].get('href')
-                if away_player == "???" or "#" in player_url: 
-                    print("Player {0} not found...ignoring".format(away_player), file=self.stderr)
-                else:
-                    game.away_player = self.load_player(player_url)
-                    if game.away_player:
-                        match.away_team.members.add(game.away_player)
+
+            # only load players if players play individual games            
+            if not self.options['whole_team']:
+                home_player = game_li.cssselect('.video-player-link-container h3')[0].text
+                away_player = game_li.cssselect('.video-player-link-container.last h3')[0].text
+                try:
+                    game.home_player = Profile.objects.get(char_name__iexact=home_player)
+                except Profile.DoesNotExist:
+                    player_url = game_li.cssselect('.video-player-link-container a')[0].get('href')
+                    if home_player == "???" or "#" in player_url:
+                        if home_player != "???":
+                            print("Player {0} not found...ignoring".format(home_player), file=self.stderr)
+                    else:
+                        game.home_player = self.load_player(player_url)
+                        if game.home_player:
+                            match.home_team.members.add(game.home_player)
+                try:
+                    game.away_player = Profile.objects.get(char_name__iexact=away_player)
+                except Profile.DoesNotExist:
+                    player_url = game_li.cssselect('.video-player-link-container.last a')[0].get('href')
+                    if away_player == "???" or "#" in player_url: 
+                        if away_player != "???":
+                            print("Player {0} not found...ignoring".format(away_player), file=self.stderr)
+                    else:
+                        game.away_player = self.load_player(player_url)
+                        if game.away_player:
+                            match.away_team.members.add(game.away_player)
             
             vod = game_li.cssselect('.video-link-container > a.video-link')[0].get('href')
             if vod and not "afterhoursgaming.tv" in vod:
@@ -435,6 +451,7 @@ class Command(BaseCommand):
             match.remove_extra_victories()
 
     def handle(self, *args, **options):
+        self.options = options
         try:
             self.tournament = Tournament.objects.get(slug=args[0])
         except Tournament.DoesNotExist:
@@ -458,7 +475,11 @@ class Command(BaseCommand):
             if options['match']:
                 # load groups
                 schedule_d = self.visit_url("schedule", site_url)
-                for i, group_li in enumerate(schedule_d.cssselect('#week-1-schedule li.season-list-item'), start=1):
+                if options['whole_team']:
+                    round_lis = schedule_d.cssselect(".season-list-item")[0].cssselect(".week-list-1 .week-list-1")
+                else:
+                    round_lis = schedule_d.cssselect('#week-1-schedule li.season-list-item')
+                for i, group_li in enumerate(round_lis, start=1):
                     round, created = TournamentRound.objects.get_or_create(name=str(i), stage=1, tournament=self.tournament)
                     print("Round {0} retrieved, adding members".format(i), file=self.stdout)
                     for team_span in group_li.cssselect('.week-list-link > span.f2'):

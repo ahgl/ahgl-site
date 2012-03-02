@@ -137,10 +137,8 @@ class Team(models.Model):
         return self.name
     
     @models.permalink
-    def get_absolute_url(self, tournament_slug=None):
-        if not tournament_slug:
-            tournament_slug = self.tournament.slug
-        return ('team_page', (), {'tournament': tournament_slug,
+    def get_absolute_url(self):
+        return ('team_page', (), {'tournament': self.tournament_id,
                                   'slug': self.slug,
                                   }
                 )
@@ -150,7 +148,7 @@ class Team(models.Model):
         ordering = ('name',)
 
 class Charity(models.Model):
-    name = models.CharField(_("name"), max_length=50)
+    name = models.CharField(_("name"), max_length=60)
     desc = models.TextField(blank=True)
     link = models.URLField(blank=True)
     logo = ImageField(upload_to='charity_logos', null=True, blank=True)
