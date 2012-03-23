@@ -1,40 +1,44 @@
 {% load thumbnail %}
-    <tr>
-    <td>
-	<a href="{{game.home_player.get_absolute_url}}">
-	{% thumbnail game.home_player.thumbnail "150x170" as im %}
-    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.home_player.name}}" />
-	{% empty %}
-    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{game.home_player.name}}" />
-	{% endthumbnail %}
-	</a>
-    <h4>{{game.home_player}}{% if game.winner == game.home_player %} *{% endif %} ({{game.home_race}})</h4>
-    <a href="{{game.home_player.get_absolute_url}}">More about {{game.home_player}}</a>
-    </td>
-    <td style="text-align:center;">
-    {% if game.vod %}
-    <a href="{{game.vod}}" style="width:595;height:170;" class="video-link">
-    {% endif %}
-    {% thumbnail game.map.photo "595x170" as im %}
-    <image src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
-    {% endthumbnail %}
-    {% if game.vod %}
-    </a>
-    {% endif %}
-    <h4>Game {{game.order}} – {{game.map}}</h4>
-    {% if game.replay %}
-    <a href="{{ MEDIA_URL }}{{game.replay}}">Get the replay</a>
-    {% endif %}
-    </td>
-    <td style="text-align:right;">
-	<a href="{{game.away_player.get_absolute_url}}">
-	{% thumbnail game.away_player.thumbnail "150x170" as im %}
-    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.away_player.name}}" />
-	{% empty %}
-    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{game.away_player.name}}" />
-	{% endthumbnail %}
-	</a>
-    <h4>({{game.away_race}}) {{game.away_player}}{% if game.winner == game.away_player %} *{% endif %}</h4>
-    <a href="{{game.away_player.get_absolute_url}}">More about {{game.away_player}}</a>
-    </td>
-    </tr>
+
+{% if match.home_submitted and match.away_submitted and game.home_player %}
+{% with player=game.home_player thumb_size="150x170" width=150 %}
+{% include "tournaments/_player_preview.html" %}
+{% endwith %}
+{% else %}
+{% with player=match.home_team thumb_size="214x120" width=214 %}
+{% include "tournaments/_player_preview.html" %}
+{% endwith %}
+{% endif %}
+
+<div class="video-link-container">
+{% if game.vod %}
+<a href="{{game.vod}}" style="width:595;height:170;" class="video-link"><br>
+{% endif %}
+{% if match.home_submitted and match.away_submitted and game.home_player %}
+{% thumbnail game.map.photo "595x170" as im %}
+<image src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.map.name}}" /><br>
+{% endthumbnail %}
+{% else %}
+{% thumbnail game.map.photo "470x160" as im %}
+<image src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.map.name}}" /><br>
+{% endthumbnail %}
+{% endif %}
+{% if game.vod %}
+</a>
+{% endif %}
+<p></p>
+<h3 class="t3">Game {{game.order}} – {{game.map}}{% if match.home_submitted and match.away_submitted and game.home_race %} – {{game.home_race}}v{{game.away_race}}{% endif %}</h3>
+{% if game.replay %}
+<p><a href="{{ MEDIA_URL }}{{game.replay}}">Get the replay</a></p>
+{% endif %}
+</div>
+
+{% if match.home_submitted and match.away_submitted and game.home_player %}
+{% with player=game.away_player thumb_size="150x170" width=150 last="last" %}
+{% include "tournaments/_player_preview.html" %}
+{% endwith %}
+{% else %}
+{% with player=match.away_team thumb_size="214x120" width=214 last="last" %}
+{% include "tournaments/_player_preview.html" %}
+{% endwith %}
+{% endif %}

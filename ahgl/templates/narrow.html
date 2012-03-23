@@ -1,0 +1,21 @@
+{% extends "site_base.html" %}
+{% load cms_tags %}
+{% load menu_tags %}
+
+{% block head_title %}{{ request.current_page.get_title }}{% endblock %}
+
+{% block content-class %}static-page narrow-page-template{% endblock %}
+
+{% block tournament_nav %}
+{% show_menu 0 0 0 0 "_static_menu.html" %}
+{% endblock %}
+
+
+{% block body %}
+<h2 class="title title-1 t1">
+{{ request.current_page.get_title }}
+</h2>
+<div class="content-section-1">
+{% placeholder content %}
+</div>
+{% endblock %}

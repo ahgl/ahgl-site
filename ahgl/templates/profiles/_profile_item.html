@@ -2,14 +2,14 @@
 {% load thumbnail %}
 <li class="profile-item">
 	<a href="{{profile.get_absolute_url}}" class="thumbnail" style="width:150px;height:225px;">
-	{% thumbnail profile.thumbnail "150x170" as im %}
+	{% thumbnail profile.thumbnail "150x170" crop="center" as im %}
     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{profile.name}}" />
 	{% empty %}
     <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{profile.name}}" />
 	{% endthumbnail %}
     <div class="name">
         {% if profile.name %}
-            {{ profile.name }}{% if profile.char_name %} ({{ profile.char_name }}){% endif %}
+            {{ profile.name }}
         {% else %}
             {% user_display profile.user %}
         {% endif %}
@@ -17,8 +17,6 @@
     </div>
     <div class="details">
         {% if profile.title %}{{ profile.title }}{% endif %}
-        {% if profile.title and profile.race %}&bull;{% endif %}
-        {% if profile.race %}{{ profile.get_race_display }}{% endif %}
     </div>
     <div class="clear"></div>
     </a>

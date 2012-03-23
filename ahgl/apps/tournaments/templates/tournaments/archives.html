@@ -7,15 +7,15 @@
 {% block head_title %}{% trans "Matches" %}{% endblock %}
 
 {% block body %}
-    <h1>{% trans "Past Tournaments" %}</h1>
+    <h2 class="title title-1 t1">{% trans "Past Tournaments" %}</h2>
     
     {% autopaginate tournament_list %}
     
     <ul class="unstyled">
     {% for tournament in tournament_list %}
-        <li><h3><a href="{% url tournament tournament.slug %}">{{ tournament.name }}</a></h3>
+        <li><h3 class="t2"><a href="/{{tournament.slug}}">{{ tournament.name }}</a></h3>
               <ul>
-			    <li><a href="{% url matches tournament.slug %}">{% trans "Matches" %}</a></li>
+			    <li><a href="{% url schedule tournament.slug %}">{% trans "Schedule" %}</a></li>
 			    <li><a href="{% url standings tournament.slug %}">{% trans "Team Standings" %}</a></li>
 			    <li><a href="{% url teams tournament.slug %}">{% trans "Teams" %}</a></li>
               </ul>

@@ -1,5 +1,5 @@
 # Create your views here.
-import logging
+import logging, datetime
 
 from django.views.generic import DetailView, ListView, UpdateView
 from django.views.generic.detail import TemplateResponseMixin
@@ -28,7 +28,9 @@ else:
     notification = None
 from django.utils.datastructures import SortedDict
 
-from apps.profiles.models import Profile, RACES
+from utils.views import ObjectPermissionsCheckMixin
+from apps.profiles.models import Profile, RACES, TeamMembership, Team
+from apps.profiles.views import TournamentSlugContextView
 
 from .models import Tournament, Map, Match, Game, TournamentRound
 from .forms import BaseMatchFormSet, MultipleFormSetBase
@@ -37,13 +39,14 @@ logger = logging.getLogger(__name__)
 
 
 class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
+    """Admin tool for batch match creation"""
     template_name = "admin/tournaments/tournament/new_round.html"
     def get_success_url(self):
         return reverse("admin:tournaments_match_changelist")
     def map_selection_form(self):
         tournament = self.tournament
         class MapSelectionForm(forms.Form):
-            map = forms.ModelChoiceField(queryset=tournament.map_pool.all(), required=True)
+            map = forms.ModelChoiceField(queryset=tournament.map_pool.all(), required=False)
             is_ace = forms.BooleanField(initial=False, required=False)
         return MapSelectionForm
     def team_selection_form(self, tournament_round):
@@ -68,7 +71,7 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
         tournament = self.tournament
         stage = self.stage
         map_form_class = [('Maps',formset_factory(self.map_selection_form(), extra=tournament.games_per_match))]
-        match_form_classes = [("Division "+tournament_round.name, modelformset_factory(Match, formset=BaseMatchFormSet, form=self.team_selection_form(tournament_round), extra=tournament_round.teams.count()//2))
+        match_form_classes = [("Division "+str(tournament_round.order), modelformset_factory(Match, formset=BaseMatchFormSet, form=self.team_selection_form(tournament_round), extra=tournament_round.teams.count()//2))
                               for tournament_round in self.tournament_rounds]
         class NewTournamentRoundForm(MultipleFormSetBase):
             form_classes = SortedDict(map_form_class+match_form_classes)
@@ -79,13 +82,18 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
                 if len(self.maps_formset.forms) > 1:
                     self.maps_formset.forms[-1].fields['is_ace'].initial=True
             def save(self, *args, **kwargs):
+                if tournament.structure == "T": # Team games don't need to submit lineup, so skip this stage
+                    for match_formset in self.forms[1:]:
+                        for match_form in match_formset:
+                            match_form.instance.home_submitted = True
+                            match_form.instance.away_submitted = True
                 ret = super(NewTournamentRoundForm, self).save(*args, **kwargs)
                 map_formset = self.forms[0]
                 for match_formset in self.forms[1:]:
                     for match_form in match_formset:
                         if match_form.instance.id:
                             for i, map_form in enumerate(map_formset, start=1):
-                                if 'map' in map_form.cleaned_data:
+                                if 'map' in map_form.cleaned_data and map_form.cleaned_data['map']:
                                     match_form.instance.games.create(order=i, **map_form.cleaned_data)
                 return ret
         return NewTournamentRoundForm
@@ -104,50 +112,67 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
     def dispatch(self, request, *args, **kwargs):
         self.stage = int(kwargs.get('stage') or request.GET.get('stage'))
         self.tournament = Tournament.objects.get(slug=kwargs.get('tournament'))
-        self.tournament_rounds = TournamentRound.objects.filter(tournament=self.tournament, stage=self.stage)
+        self.tournament_rounds = TournamentRound.objects.filter(tournament=self.tournament, stage_order=self.stage)
         return super(NewTournamentRoundView, self).dispatch(request, *args, **kwargs)
-
-
-class TournamentDetailView(DetailView):
-    queryset = Tournament.objects.all().select_related('featured_game__map', 'featured_game__home_player', 'featured_game__away_player')
     
-class GameListView(ListView):
+class GameListView(TournamentSlugContextView, ListView):
     template_name="tournaments/game_list.html"
     def get_context_data(self, **kwargs):
         context = super(GameListView, self).get_context_data(**kwargs)
         if self.request.GET.get('vod_only'):
             context['vod_only'] = True
-        try:
-            context['player'] = Profile.objects.get(slug=self.request.GET.get('player'))
-        except Profile.DoesNotExist:
-            pass
-        else:
-            wins, losses = [], []
-            for game in self.object_list:
-                if game.winner==context['player']:
-                    wins.append(game)
-                else:
-                    losses.append(game)
-            context['game_list'] = wins + losses
+        is_win = None
+        if hasattr(self, 'member'):
+            context['player'] = self.member
+            is_win = lambda game:game.winner_id == self.member.pk
+        elif hasattr(self, 'player'):
+            context['player'] = self.player
+            is_win = lambda game:game.winner.profile_id == self.player.pk
+        if is_win:
+            context['game_list'] = list(self.object_list)
+            context['game_list'].sort(key=is_win, reverse=True)
+            context['loss_i'] = len(filter(is_win, context['game_list']))+1
         return context
     def get_queryset(self):
-        queryset = Game.objects.exclude(winner__isnull=True) \
-                                       .order_by('match__publish_date', 'match', 'order') \
-                                       .select_related('map', 'home_player', 'away_player', 'match__home_team', 'match__away_team', 'winner')
+        related_members = ['map', 'home_player__profile', 'away_player__profile', 'home_player__team', 'away_player__team', 'match__home_team', 'match__away_team']
+        used_fields = Game.fields_for_game_detail + [
+                       'match__home_team__name',
+                       'match__home_team__photo',
+                       'match__away_team__name',
+                       'match__away_team__photo',
+                       'match__creation_date',
+                       'match__publish_date',
+                       'match__home_submitted',
+                       'match__away_submitted',
+                       ]
+        queryset = Game.objects.exclude(winner_team__isnull=True) \
+                                       .order_by('match__publish_date', 'match', 'order')
         if (not self.request.user.is_authenticated() or not self.request.user.get_profile().is_active()):
             queryset = queryset.filter(match__published=True)
-        if self.request.GET.get('player'):
-            queryset = queryset.filter(Q(home_player__slug=self.request.GET.get('player')) | Q(away_player__slug=self.request.GET.get('player')))
+        if self.kwargs.get('tournament'):
+            queryset = queryset.filter(match__tournament=self.kwargs.get('tournament'))
+        if self.kwargs.get('team') and self.kwargs.get('profile'):
+            self.member = TeamMembership.get(**self.kwargs).only('profile__slug', 'team__slug', 'team__tournament', 'char_name').get()
+            queryset = queryset.filter(Q(home_player=self.member) | Q(away_player=self.member))
+        else:
+            if self.request.GET.get('player'):
+                queryset = queryset.filter(Q(home_player__profile__slug=self.request.GET.get('player')) | Q(away_player__profile__slug=self.request.GET.get('player')))
+                related_members.append('winner')
+                try:
+                    self.player = Profile.objects.get(slug=self.request.GET.get('player'))
+                except Profile.DoesNotExist:
+                    pass
+            elif self.request.GET.get('s'): # using the search field
+                queryset = queryset.filter(Q(home_player__char_name__icontains=self.request.GET.get('s'))
+                                           | Q(home_player__profile__name__icontains=self.request.GET.get('s'))
+                                           | Q(away_player__char_name__icontains=self.request.GET.get('s'))
+                                           | Q(away_player__profile__name__icontains=self.request.GET.get('s'))
+                                           )
         if self.request.GET.get('vod_only'):
-            queryset = queryset.filter(vod__isnull=False)
-        return queryset
+            queryset = queryset.exclude(vod="")
+        return queryset.select_related(*related_members).only(*used_fields)
     
-class MatchListView(ListView):
-    def get_context_data(self, **kwargs):
-        context = super(MatchListView, self).get_context_data(**kwargs)
-        context['tournament_slug'] = self.kwargs.get('tournament')
-        return context
-
+class MatchListView(TournamentSlugContextView, ListView):
     def get_queryset(self):
         queryset = Match.objects.filter(tournament=self.kwargs['tournament']) \
                                        .order_by('publish_date', 'creation_date', 'tournament_round') \
@@ -158,7 +183,7 @@ class MatchListView(ListView):
             queryset = queryset.filter(Q(home_team__slug=self.request.GET.get('team')) | Q(away_team__slug=self.request.GET.get('team')))
         return queryset
 
-class MatchDetailView(DetailView):
+class MatchDetailView(ObjectPermissionsCheckMixin, TournamentSlugContextView, DetailView):
     model=Match
     queryset=Match.objects.select_related('home_team', 'away_team')
     def get_context_data(self, **kwargs):
@@ -168,26 +193,13 @@ class MatchDetailView(DetailView):
             context['first_vod'] = context['games'][0].vod
         except IndexError:
             return context
+        if "blip.tv/play" not in context['first_vod']:
+            del context['first_vod']
         return context
     
-    def get_object(self):
-        return self.object
-    
-    def dispatch(self, request, *args, **kwargs):
-        # Try to dispatch to the right method; if a method doesn't exist,
-        # defer to the error handler. Also defer to the error handler if the
-        # request method isn't on the approved list.
-        if request.method.lower() in self.http_method_names:
-            handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
-        else:
-            handler = self.http_method_not_allowed
-        self.request = request
-        self.args = args
-        self.kwargs = kwargs
-        self.object = super(MatchDetailView, self).get_object()
-        if not self.object.published and (not request.user.is_authenticated() or not request.user.get_profile().is_active(self.kwargs.get('tournament'))):
+    def check_permissions(self):
+        if not self.object.published and (not self.request.user.is_authenticated() or not self.request.user.get_profile().is_active(self.kwargs.get('tournament'))):
             raise Http404
-        return handler(request, *args, **kwargs)
 
 class VerboseMatchDetailView(MatchDetailView): 
     def get_object(self):
@@ -196,56 +208,90 @@ class VerboseMatchDetailView(MatchDetailView):
                                     home_team=self.kwargs['home'],
                                     away_team=self.kwargs['away']).select_related('home_team', 'away_team')
 
-class MatchReportListView(ListView):
+
+############## Player admin tools follow ###############
+
+class PlayerAdminView(ListView):
     model = Match
-    template_name="tournaments/report_match_list.html"
+    template_name = "tournaments/player_admin.html"
+    context_object_name = "report_match_list"
+    
+    def get_context_data(self, **kwargs):
+        context = super(PlayerAdminView, self).get_context_data(**kwargs)
+        if self.request.user.is_superuser:
+            context['team_matches'] = self.match_list
+        else:
+            teams = Team.objects.filter(members__user=self.request.user)
+            context['team_matches'] = self.match_list.filter(Q(home_team__in=teams)
+                                                             | Q(away_team__in=teams))
+        return context
+
     def get_queryset(self):
-        return Match.objects.filter(home_submitted=True, away_submitted=True, published=False, tournament__teams__members__pk=self.request.user.get_profile().pk) \
-                            .order_by('-creation_date') \
-                            .select_related('home_team', 'away_team')
+        self.match_list = Match.objects.filter(published=False) \
+                                          .order_by('-creation_date') \
+                                          .select_related('home_team', 'away_team')
+        if not self.request.user.is_superuser:
+            self.match_list = self.match_list.filter(tournament__teams__members__user=self.request.user)
+        return self.match_list.filter(home_submitted=True, away_submitted=True)
+    
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super(MatchReportListView, self).dispatch(request, *args, **kwargs)
+        return super(PlayerAdminView, self).dispatch(request, *args, **kwargs)
 
 class MatchReportView(UpdateView):
-    queryset = Match.objects.filter(home_submitted=True, away_submitted=True, published=False).select_related('home_team', 'away_team')
+    queryset = Match.objects.filter(home_submitted=True, away_submitted=True, published=False).select_related('home_team', 'away_team', 'tournament')
     template_name = "tournaments/report_match.html"
     
     def get_form_class(self):
         match = self.object
-        class ReportMatchForm(ModelForm):
-            winner = forms.ModelChoiceField(required=False,
-                                            queryset=Profile.objects.all(),
-                                            widget=forms.RadioSelect,
-                                            empty_label="Not played")
-            home_player = forms.ModelChoiceField(required=False, queryset=Profile.objects.filter(teams__pk=match.home_team_id))
-            away_player = forms.ModelChoiceField(required=False, queryset=Profile.objects.filter(teams__pk=match.away_team_id))
+        if match.tournament.structure == "I":
+            class ReportMatchForm(ModelForm):
+                winner = forms.ModelChoiceField(required=False,
+                                                queryset=TeamMembership.objects.all(),
+                                                widget=forms.RadioSelect,
+                                                empty_label="Not played")
+                home_player = forms.ModelChoiceField(required=False, queryset=TeamMembership.objects.filter(team=match.home_team, active=True))
+                away_player = forms.ModelChoiceField(required=False, queryset=TeamMembership.objects.filter(team=match.away_team, active=True))
+                
+                def __init__(self, *args, **kwargs):
+                    super(ReportMatchForm, self).__init__(*args, **kwargs)
+                    winner_field = self.fields.get('winner')
+                    if not self.instance.is_ace:
+                        assert(self.instance.home_player and self.instance.away_player)
+                        #TODO: figure out how to not issue a query since we know the exact set...maybe artificialy spoof a queryset object
+                        winner_field.queryset = winner_field.queryset.filter(pk__in=(self.instance.home_player_id, self.instance.away_player_id,))
+                        winner_field.choices = (("", "Not played"), (self.instance.home_player_id, str(self.instance.home_player)), (self.instance.away_player_id, str(self.instance.away_player)))
+                        del self.fields['home_player']
+                        del self.fields['home_race']
+                        del self.fields['away_player']
+                        del self.fields['away_race']
+                    else:
+                        winner_field.queryset = winner_field.queryset.filter(active=True, team__pk__in=(match.home_team_id, match.away_team_id,))
+                        #winner_field.widget = forms.Select
+                class Meta:
+                    model = Game
+                    fields=('replay','home_player','home_race','away_player','away_race','winner','forfeit',)
+        else:
+            class ReportMatchForm(ModelForm):
+                winner_team = forms.ModelChoiceField(required=False,
+                                                     queryset=Team.objects.all(),
+                                                     widget=forms.RadioSelect,
+                                                     empty_label="Not played")
+                def __init__(self, *args, **kwargs):
+                    super(ReportMatchForm, self).__init__(*args, **kwargs)
+                    winner_field = self.fields.get('winner_team')
+                    winner_field.queryset = winner_field.queryset.filter(pk__in=(match.home_team_id, match.away_team_id,)).only('name')
+                class Meta:
+                    model = Game
+                    fields=('winner_team','forfeit',)
             
-            def __init__(self, *args, **kwargs):
-                super(ReportMatchForm, self).__init__(*args, **kwargs)
-                winner_field = self.fields.get('winner')
-                if not self.instance.is_ace:
-                    assert(self.instance.home_player and self.instance.away_player)
-                    #TODO: figure out how to not issue a query since we know the exact set...maybe artificialy spoof a queryset object
-                    winner_field.queryset = winner_field.queryset.filter(pk__in=(self.instance.home_player_id, self.instance.away_player_id,))
-                    winner_field.choices = (("", "Not played"), (self.instance.home_player_id, str(self.instance.home_player)), (self.instance.away_player_id, str(self.instance.away_player)))
-                    del self.fields['home_player']
-                    del self.fields['home_race']
-                    del self.fields['away_player']
-                    del self.fields['away_race']
-                else:
-                    winner_field.queryset = winner_field.queryset.filter(teams__pk__in=(match.home_team_id,match.away_team_id,))
-                    #winner_field.widget = forms.Select
-            class Meta:
-                model = Game
-                fields=('replay','home_player','home_race','away_player','away_race','winner','forfeit',)
         return inlineformset_factory(Match, Game, extra=0, can_delete=False, form=ReportMatchForm)
     
     def get_form_kwargs(self):
         """
         Returns the keyword arguments for instanciating the form.
         """
-        kwargs = {'instance':self.object, 'queryset':Game.objects.select_related('map', 'home_player__user', 'away_player__user')}
+        kwargs = {'instance':self.object, 'queryset':Game.objects.select_related('map', 'home_player', 'away_player')}
         if self.request.method in ('POST', 'PUT'):
             kwargs.update({
                 'data': self.request.POST,
@@ -254,45 +300,22 @@ class MatchReportView(UpdateView):
         return kwargs
 
     def form_valid(self, form):
-        self.object.referee = self.user
+        self.object.referee = self.user.get_profile()
         self.object.remove_extra_victories()
         return super(MatchReportView, self).form_valid(form)
     
     def get_success_url(self):
-        return reverse("report_match_list")
+        return reverse("player_admin")
     
     @method_decorator(login_required)
     def dispatch(self, request, pk, *args, **kwargs):
-        if not request.user.get_profile().teams.filter(tournament__matches__pk=pk).count():
+        if not request.user.is_superuser and not request.user.get_profile().teams.filter(tournament__matches__pk=pk).count():
             return HttpResponseForbidden("You are not a participant in this tournament.")
         self.user = request.user
         return super(MatchReportView, self).dispatch(request, pk=pk, *args, **kwargs)
 
-class LineupView(ListView):
-    model = Match
-    def get_template_names(self):
-        return "tournaments/view_lineup.html"
-    def get_queryset(self):
-        profile = self.request.user.get_profile()
-        return Match.objects.filter(Q(home_submitted=True) & Q(away_submitted=True) & Q(published=False) & (Q(home_team__captain=profile) | Q(away_team__captain=profile))).select_related('home_team', 'away_team')
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(LineupView, self).dispatch(request, *args, **kwargs)
-
-class MapListView(ListView):
-    model = Match
-    def get_template_names(self):
-        return "tournaments/map_list.html"
-    def get_queryset(self):
-        profile = self.request.user.get_profile()
-        return Match.objects.filter(Q(published=False) & (Q(home_team__members__pk=profile.pk) | Q(away_team__members__pk=profile.pk))).distinct().select_related('home_team', 'away_team')
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(MapListView, self).dispatch(request, *args, **kwargs)
-
-class SubmitLineupView(UpdateView):
-    def get_template_names(self):
-        return "tournaments/submit_lineup.html"
+class SubmitLineupView(ObjectPermissionsCheckMixin, UpdateView):
+    template_name = "tournaments/submit_lineup.html"
 
     def get_context_data(self, **kwargs):
         context = super(SubmitLineupView, self).get_context_data(**kwargs)
@@ -306,7 +329,7 @@ class SubmitLineupView(UpdateView):
             side = "home"
         else:
             side = "away"
-        player = forms.ModelChoiceField(queryset=Profile.objects.filter(teams__pk=self.team.pk), label='Player')
+        player = forms.ModelChoiceField(queryset=TeamMembership.objects.filter(team=self.team, active=True), label='Player')
         race = forms.ChoiceField(label='Race', choices=[('','---------')]+list(RACES))
         namespace = {'base_fields':{side+'_player': player, side+'_race': race},
                      '_meta':ModelFormOptions({'model':Game,
@@ -318,8 +341,14 @@ class SubmitLineupView(UpdateView):
     
     def form_valid(self, *args, **kwargs):
         if self.home_team:
+            # upon first submission, set date
+            if not self.object.home_submission_date:
+                self.object.home_submission_date = datetime.datetime.now()
             self.object.home_submitted = True
         else:
+            # upon first submission, set date
+            if not self.object.away_submission_date:
+                self.object.away_submission_date = datetime.datetime.now()
             self.object.away_submitted = True
         self.object.save()
         if notification and self.object.home_submitted and self.object.away_submitted:
@@ -329,8 +358,8 @@ class SubmitLineupView(UpdateView):
                                })
         return super(SubmitLineupView, self).form_valid(*args, **kwargs)
     
-    def get_object(self):
-        return self.object
+    def get_queryset(self):
+        return Match.objects.filter((Q(home_submitted=False) | Q(away_submitted=False)) & Q(published=False)).select_related('home_team', 'away_team')
     
     def get_form_kwargs(self):
         """
@@ -345,21 +374,19 @@ class SubmitLineupView(UpdateView):
         return kwargs
     
     def get_success_url(self):
-        return reverse("view_lineup")
+        return reverse("player_admin")
     
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        profile = request.user.get_profile()
-        submit_matchlist = Match.objects.filter((Q(home_submitted=False) | Q(away_submitted=False)) & Q(published=False) & (Q(home_team__captain=profile) | Q(away_team__captain=profile)))
-        if not submit_matchlist.count():
-            messages.add_message(request, messages.ERROR, "No lineups to submit.")
-            self.request = request
-            return self.render_to_response(context={})
-        self.object = submit_matchlist[0]
-        self.home_team = False
-        if profile == self.object.home_team.captain:
+    def check_permissions(self):
+        self.captain_teams=[role.team_id for role in TeamMembership.objects.filter(profile__user=self.request.user, captain=True)]
+        if self.object.home_team_id in self.captain_teams:
             self.home_team = True
             self.team = self.object.home_team
-        elif profile == self.object.away_team.captain:
+        elif self.object.away_team_id in self.captain_teams:
+            self.home_team = False
             self.team = self.object.away_team
+        else:
+            return HttpResponseForbidden("You are not captain of either of the teams in this match.")
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
         return super(SubmitLineupView, self).dispatch(request, *args, **kwargs)

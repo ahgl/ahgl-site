@@ -80,7 +80,7 @@ class Migration(DataMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'photo': ('sorl.thumbnail.fields.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'post_count': ('django.db.models.fields.IntegerField', [], {'default': '0', 'blank': 'True'}),
-            'questions_answers': ('profiles.fields.HTMLField', [], {'blank': 'True'}),
+            'questions_answers': ('profiles.fields.HTMLField', [], {'attributes': '[]', 'blank': 'True', 'tags': "['ol', 'ul', 'li', 'strong', 'em', 'p']"}),
             'race': ('django.db.models.fields.CharField', [], {'max_length': '1', 'null': 'True', 'blank': 'True'}),
             'show_signatures': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'signature': ('django.db.models.fields.TextField', [], {'max_length': '1024', 'blank': 'True'}),

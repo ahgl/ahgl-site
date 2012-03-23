@@ -1,0 +1,12 @@
+{% load bootstrap_tags %}
+
+<form method="POST">
+    <fieldset>
+        {% csrf_token %}
+        {{ profile_form|as_bootstrap }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{{profile.get_absolute_url}}" class="btn">Cancel</a>
+        </div>
+    </fieldset>
+</form>

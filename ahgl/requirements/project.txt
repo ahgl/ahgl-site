@@ -12,6 +12,7 @@ psycopg2==2.4.1
 PIL==1.1.7
 html5lib==0.90
 bleach>=1.0
+slimit==0.6
 south==0.7.3
 
 django-celery==2.3.3
@@ -19,5 +20,6 @@ django-redis-cache==0.9.2
 sorl-thumbnail==11.12
 django-social-auth==0.6.1
 django-messages==0.4.4
+-e git+https://github.com/divio/django-cms.git#egg=django-cms
 
 -e git+https://github.com/natmaster/pybbm.git#egg=pybbm

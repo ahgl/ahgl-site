@@ -1,0 +1,53 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% trans "Matches" %}{% endblock %}
+
+{% block content-class %}static-page schedule-page-template{% endblock %}
+{% block body %}
+    <h2 class="title title-1 t1">{% trans "Schedule" %}</h2>
+    <p>Live cast by Day[9] at <a href="http://day9.tv/live/" title="http://day9.tv/live/">http://day9.tv/live/</a> every Wednesday at 8:15pm PST. Videos of matches covered by other casters will be up by Friday of each week and embedded on the site. Follow us on Twitter  <a href="https://twitter.com/ahgltv" title="https://twitter.com/ahgltv">https://twitter.com/ahgltv</a>  or Facebook at <a href="https://www.facebook.com/AHGLtv" title="https://www.facebook.com/AHGLtv">https://www.facebook.com/AHGLtv</a> to be notified when casts go live and VODs are posted!<p>
+
+
+<div class="content-section-1">
+  {% regroup match_list by publish_date as date_list %}
+    {% for date in date_list %}
+   <div>
+      <h3 class="f5 bold">
+        <a data-toggle="collapse" href="#stage{{date.grouper|date:"dMY"}}" class="accordion-toggle" >
+          {% firstof date.grouper|date:"M d, Y" "Not Published" %} +
+        </a>
+      </h3>
+      <p></p>
+      <div id="stage{{date.grouper|date:"dMY"}}" class="collapse">
+        <div class="">
+          <ul class="season-list-1">
+            {% regroup date.list by tournament_round as round_list %}
+            {% for round in round_list %}
+            <li class="season-list-item">
+            <h3 class="f5 bold">Division {{round.grouper.order}} ({{round.grouper.stage_name}})</h3>
+            <ul class="week-list-1">
+              {% for match in round.list %}
+                <li class="week-list-item">
+                  <a class="week-list-link alt-link-2 cf" href="{{match.get_absolute_url}}"><br />
+                  <span class="week-matchup-number f6">Matchup {{forloop.counter}}</span><br />
+                  <span class="week-team-1 f2 bold">{{match.home_team}}</span><br />
+                  <span class="versus t12">vs</span><br />
+                  <span class="week-team-2 f2 bold">{{match.away_team}}</span><br />
+                  <span class="week-view-games f6">View games »</span><br />
+                  </a>
+                </li>
+              {% endfor %}
+              </ul></li>
+            {% endfor %}
+          </ul>
+        </div>
+      <p>&nbsp;</p>
+      </div>
+     </div>
+     {% endfor %}
+</div>
+{% endblock %}

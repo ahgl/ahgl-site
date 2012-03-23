@@ -14,8 +14,8 @@ from django.core.files.base import ContentFile
 from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand, CommandError
 from django.template.defaultfilters import slugify
-from django.template.defaultfilters import slugify
 from django.conf import settings
+from django.db.models import Q
 
 from apps.tournaments.models import *
 from apps.profiles.models import *
@@ -65,21 +65,32 @@ class Command(BaseCommand):
         d.make_links_absolute()
         return d
 
-    def load_player(self, member_url):
+    def load_player(self, member_url, team):
+        """ Loads player and team membership data, and adds as member to team. Return profile, membership """
         member_d = self.visit_url(member_url)
         
         if "Player not found in database" in tostring(member_d):
             print("Player not found...skipping", file=self.stdout)
             return
         info_ps = member_d.cssselect('.content-section-1 p')
+        info_h3s = member_d.cssselect('.content-section-1 h3')
         profile_name = info_ps[1].text
         char_name = info_ps[4].text
         if "." in char_name:
             char_name = char_name.split(".", 1)[0]
         if Profile.objects.filter(name=profile_name).count():
             profile, created = Profile.objects.get(name=profile_name), False
-            profile.char_name = char_name
-        profile, created = Profile.objects.get_or_create(char_name__iexact=char_name, defaults={'char_name':char_name, 'user':self.master_user})
+            membership, membership_created = TeamMembership.objects.get_or_create(team=team, profile=profile, defaults={'char_name': char_name})
+            membership.char_name = char_name
+        else:
+            try:
+                membership = TeamMembership.objects.get(team=team, char_name=char_name)
+                profile, created = membership.profile, False
+            except TeamMembership.DoesNotExist:
+                # create profile and membership
+                profile, created = Profile(name=profile_name, user=self.master_user), True
+                profile.save()
+                membership = TeamMembership(team=team, profile=profile, char_name=char_name)
         print(created, file=self.stdout)
         profile.name = profile_name
         member_photo_url = info_ps[0].cssselect('img')[0].get('src')
@@ -88,20 +99,24 @@ class Command(BaseCommand):
             profile.photo.save(filename, ContentFile(urllib2.urlopen(member_photo_url).read()))
         if info_ps[3].text:
             profile.title = info_ps[3].text
-        if info_ps[5].text: # deal with blank race
-            try:
-                profile.race = info_ps[5].text[0].upper()
-                profile.clean_fields()
-            except ValidationError:
-                profile.race = None
-        profile.questions_answers = tostring(member_d.cssselect('div.content-section-2 ol')[0])
+        if info_ps[-1].text: # deal with blank race
+            if info_h3s[-1].text.strip().lower() == "champion":
+                membership.champion = info_ps[-1].text.strip()
+            else:
+                try:
+                    membership.race = info_ps[-1].text[0].upper()
+                    membership.clean_fields()
+                except ValidationError:
+                    membership.race = None
+        membership.questions_answers = tostring(member_d.cssselect('div.content-section-2 ol')[0])
         try:
             profile.full_clean()
         except ValidationError as e:
             print("Profile did not validate! {profile_name} {e}".format(profile_name=profile_name.encode('ascii', 'ignore'), e=e), file=self.stderr)
         else:
             profile.save()
-        return profile
+            membership.save()
+        return profile, membership
     def load_team(self, team_url, team_name):
         team_d = self.visit_url(team_url)
        
@@ -131,9 +146,9 @@ class Command(BaseCommand):
         # load profiles of members
         for member_a in team_d.cssselect("ul.player-list-1.cf li > a"):
             member_url = member_a.get("href")
-            profile = self.load_player(member_url)
-            if profile:
-                team.members.add(profile)
+            player = self.load_player(member_url, team)
+            if player:
+                profile, membership = player
                 member_thumbnail_url = member_a.cssselect('img')[0].get('src')
                 if member_thumbnail_url != self.unknown_photo:
                     filename = slugify(profile.name) + posixpath.splitext(member_thumbnail_url)[1]
@@ -142,6 +157,14 @@ class Command(BaseCommand):
         team.full_clean()
         team.save()
         return team
+    def find_round(self, home_team, away_team, creation_date):
+        for round in TournamentRound.objects.filter(teams__pk=home_team.pk).filter(teams__pk=away_team.pk).order_by('stage_order'):
+            previous_matchup_count = round.matches.filter(creation_date__lt=creation_date) \
+                                                  .filter((Q(home_team=home_team) & Q(away_team=away_team)) | (Q(home_team=away_team) & Q(away_team=home_team))) \
+                                                  .count()
+            if not previous_matchup_count:
+                break
+        return round
     def load_match(self, match_url):
         match_d = self.visit_url(match_url)
         
@@ -153,12 +176,10 @@ class Command(BaseCommand):
         week = int(re.search('week[^/]*([\d]+)[^/]*/', match_url).group(1)) - 1
         print("{0} week".format(week), file=self.stdout)
         creation_date = self.first_week_match + self.a_week*week
-        for round in TournamentRound.objects.filter(teams__pk=home_team.pk).filter(teams__pk=away_team.pk).order_by('-stage'):
-            if not round.matches.count() or round.matches.filter(creation_date__gte=creation_date).count():
-                break
+        round = self.find_round(home_team, away_team, creation_date)
         match, match_created = Match.objects.get_or_create(home_team=home_team, away_team=away_team, creation_date=creation_date, tournament=self.tournament, defaults={'tournament_round':round})
         match.published = True
-        match.publish_date = match.creation_date + self.a_week
+        match.publish_date = match.creation_date + self.a_week + datetime.timedelta(days=5)
         match.home_submitted = True
         match.away_submitted = True
         
@@ -188,28 +209,22 @@ class Command(BaseCommand):
             if not self.options['whole_team']:
                 home_player = game_li.cssselect('.video-player-link-container h3')[0].text
                 away_player = game_li.cssselect('.video-player-link-container.last h3')[0].text
-                try:
-                    game.home_player = Profile.objects.get(char_name__iexact=home_player)
-                except Profile.DoesNotExist:
-                    player_url = game_li.cssselect('.video-player-link-container a')[0].get('href')
-                    if home_player == "???" or "#" in player_url:
-                        if home_player != "???":
-                            print("Player {0} not found...ignoring".format(home_player), file=self.stderr)
-                    else:
-                        game.home_player = self.load_player(player_url)
-                        if game.home_player:
-                            match.home_team.members.add(game.home_player)
-                try:
-                    game.away_player = Profile.objects.get(char_name__iexact=away_player)
-                except Profile.DoesNotExist:
-                    player_url = game_li.cssselect('.video-player-link-container.last a')[0].get('href')
-                    if away_player == "???" or "#" in player_url: 
-                        if away_player != "???":
-                            print("Player {0} not found...ignoring".format(away_player), file=self.stderr)
-                    else:
-                        game.away_player = self.load_player(player_url)
-                        if game.away_player:
-                            match.away_team.members.add(game.away_player)
+                home_player_url = game_li.cssselect('.video-player-link-container a')[0].get('href')
+                away_player_url = game_li.cssselect('.video-player-link-container.last a')[0].get('href')
+                members = ("home", "away")
+                for team, char_name, url, member in zip((match.home_team, match.away_team), (home_player, away_player), (home_player_url, away_player_url), members):
+                    # team based games don't need to load player data per game
+                    if posixpath.join(self.site_url, "teams") not in url:
+                        try:
+                            setattr(game, "_".join((member, "player")), TeamMembership.objects.get(team=team, char_name__iexact=char_name))
+                        except TeamMembership.DoesNotExist:
+                            if char_name == "???" or "#" in url:
+                                if char_name != "???":
+                                    print("Player {0} not found...ignoring".format(char_name), file=self.stderr)
+                            else:
+                                profile, membership = self.load_player(url, team)
+                                setattr(game, "_".join((member, "player")), membership)
+
             
             vod = game_li.cssselect('.video-link-container > a.video-link')[0].get('href')
             if vod and not "afterhoursgaming.tv" in vod:
@@ -231,17 +246,18 @@ class Command(BaseCommand):
         except urllib2.HTTPError:
             print("Replay not found {replay_url}...ignoring".format(replay_url=replay_url), file=self.stderr)
 
-    def create_player(self, team, *args, **kwargs):
-        if not 'defaults' in kwargs.keys():
-            kwargs['defaults'] = {}
-        kwargs['defaults']["user"] = self.master_user
-        kwargs['teams__pk'] = team.pk
-        profile, created = Profile.objects.get_or_create(*args, **kwargs)
-        if created:
-            print("Creating player {0}".format(profile.char_name), file=self.stdout)
-            profile.save()
-            team.members.add(profile)
-        return profile, created
+    def create_membership(self, team, char_name, active=True):
+        try:
+            return TeamMembership.objects.get(team=team, char_name__iexact=char_name), False
+        except TeamMembership.DoesNotExist:
+            if active:
+                profile, created = Profile(name=char_name, user=self.master_user), True #have to use fake name since admin doesn't have names
+                profile.save()
+                membership = TeamMembership(team=team, profile=profile, char_name=char_name)
+                print("Creating player {0}".format(membership.char_name), file=self.stdout)
+                membership.save()
+                return membership, created
+        return None, False
 
     re_lineup = re.compile(r"((?P<home_name>[^\.]+)\.(?P<home_code>[^\s]+) \((?P<home_race>[\w])\))? \< (?P<map>[^\>]+) \> (\((?P<away_race>[\w])\) (?P<away_name>[^\.]+)\.(?P<away_code>[^\s]+))?")
     re_captain = re.compile(r"(?P<name>[^,]+), (?P<email>[^@]+@[^\.]+\.[^,]+), (?P<char_name>[^\.]+)\.(?P<char_code>[\d]+)")
@@ -255,40 +271,37 @@ class Command(BaseCommand):
             home_team = Team.objects.get(name=home_team, tournament=self.tournament)
             away_team = Team.objects.get(name=away_team, tournament=self.tournament)
             
-            # add captains to team
-            captain_matchers = (self.re_captain.search(text) for text in captains_h3.text_content().split("Captains: ", 1)[1].split(" AND ", 1))
-            captains = []
-            for cmatch in captain_matchers:
+            # set captain flag
+            captain_matchers = ((self.re_captain.search(text), team) for text, team in zip(captains_h3.text_content().split("Captains: ", 1)[1].split(" AND ", 1), (home_team, away_team)))
+            for cmatch, team in captain_matchers:
                 try:
                     try:
-                        captain = Profile.objects.get(char_name__iexact=cmatch.group('char_name'))
-                    except Profile.MultipleObjectsReturned:
-                        captain = Profile.objects.get(char_name__iexact=cmatch.group('char_name'), user=self.master_user)
-                except Profile.DoesNotExist: # if there is no captain account, create one
+                        captain = TeamMembership.objects.get(team=team, char_name__iexact=cmatch.group('char_name'))
+                    except TeamMembership.MultipleObjectsReturned:
+                        captain = TeamMembership.objects.get(team=team, char_name__iexact=cmatch.group('char_name'), profile__user=self.master_user)
+                except TeamMembership.DoesNotExist: # if there is no captain account, create one
                     username = get_username({}, {'name':cmatch.group('name')}, None)['username']
                     cap_user, created = User.objects.get_or_create(email=cmatch.group('email'), defaults={'username':username, 'password':'!'})
                     if created:
                         print("Created new captain user {0}".format(cmatch.group('name')), file=self.stdout)
                     cap_user.first_name, cap_user.last_name = cmatch.group('name').split(None, 1)
                     cap_user.save()
-                    captain = cap_user.get_profile()
-                    captain.name = cmatch.group('name')
+                    captain_profile = cap_user.get_profile()
+                    captain_profile.name = cmatch.group('name')
+                    captain_profile.save()
+                    captain, membership_created = TeamMembership.objects.get_or_create(team=team, profile=captain_profile)
                     captain.char_name = cmatch.group('char_name')
                     captain.char_code = int(cmatch.group('char_code'))
                     captain.save()
-                captains.append(captain)            
-            home_team.captain, away_team.captain = captains
-            home_team.save()
-            away_team.save()
+                captain.captain = True
+                captain.save()
             
             creation_date = self.first_week_match + self.a_week*week
             try: # ug, inconsistencies in ordering....
                 match = Match.objects.get(home_team=away_team, away_team=home_team, creation_date=creation_date, tournament=self.tournament)
             except Match.DoesNotExist:
                 reverse_order = False
-                for round in TournamentRound.objects.filter(teams__pk=home_team.pk).filter(teams__pk=away_team.pk).order_by('-stage'):
-                    if not round.matches.count() or round.matches.filter(creation_date__gte=creation_date).count():
-                        break
+                round = self.find_round(home_team, away_team, creation_date)
                 match, match_created = Match.objects.get_or_create(home_team=home_team, away_team=away_team, creation_date=creation_date, tournament=self.tournament, defaults={'tournament_round':round})
                 if match_created:
                     print("Creating new match {0} vs {1}".format(home_team, away_team), file=self.stdout)
@@ -321,8 +334,8 @@ class Command(BaseCommand):
                     print("  Creating new game {0} {1} {2}".format(home_team.name, map_name, away_team.name), file=self.stdout)
                     match.games.add(game)
                 if game_matcher.group("away_race"): #not ace match, load up player data
-                    p1, p1_created = self.create_player(team=home_team, char_name__iexact=game_matcher.group("home_name"), defaults={"char_name":game_matcher.group("home_name")})
-                    p2, p2_created = self.create_player(team=away_team, char_name__iexact=game_matcher.group("away_name"), defaults={"char_name":game_matcher.group("away_name")})
+                    p1, p1_created = self.create_membership(team=home_team, char_name=game_matcher.group("home_name"))
+                    p2, p2_created = self.create_membership(team=away_team, char_name=game_matcher.group("away_name"))
                     p1race = game_matcher.group("home_race").upper()
                     p2race = game_matcher.group("away_race").upper()
                     if reverse_order:
@@ -394,6 +407,7 @@ class Command(BaseCommand):
             else:
                 reverse_order = True
 
+            match.publish_date = match.creation_date + self.a_week + datetime.timedelta(days=5)
             p_string = tostring(matchup_p)[3:-4]
             for order, game_text in enumerate(p_string.split("<br>")[:-1], start=1):
                 if "Not played" not in game_text:
@@ -409,15 +423,15 @@ class Command(BaseCommand):
                     try:
                         home_code = int(game_matcher.group("home_code").strip())
                     except ValueError:
-                        home_player = Profile.objects.get(char_name__iexact=game_matcher.group("home_name").strip())
+                        home_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("home_name").strip())
                     else:
-                        home_player = Profile.objects.get(char_name__iexact=game_matcher.group("home_name").strip(), char_code=home_code)
+                        home_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("home_name").strip(), char_code=home_code)
                     try:
                         away_code = int(game_matcher.group("away_code").strip())
                     except ValueError:
-                        away_player = Profile.objects.get(char_name__iexact=game_matcher.group("away_name").strip())
+                        away_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("away_name").strip())
                     else:
-                        away_player = Profile.objects.get(char_name__iexact=game_matcher.group("away_name").strip(), char_code=away_code)
+                        away_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("away_name").strip(), char_code=away_code)
                     home_race = game_matcher.group("home_race").upper()
                     away_race = game_matcher.group("away_race").upper()
                     if reverse_order:
@@ -456,7 +470,7 @@ class Command(BaseCommand):
             self.tournament = Tournament.objects.get(slug=args[0])
         except Tournament.DoesNotExist:
             raise CommandError("Tournament {0} does not exist".format(args[0]))
-        site_url = args[1] if len(args)>1 else "http://afterhoursgaming.tv/sc2/"
+        self.site_url = args[1] if len(args)>1 else "http://afterhoursgaming.tv/sc2/"
         admin_url = "http://ahgl.thatsnotanimprovement.com/"
         
         
@@ -465,7 +479,7 @@ class Command(BaseCommand):
         try:
             if options['team']:
                 # Load teams
-                teams_d = self.visit_url("teams", site_url)
+                teams_d = self.visit_url("teams", self.site_url)
                 for team_li in teams_d.cssselect('.result-list li'):
                     team_a = team_li.cssselect('a')[0]
                     team_url = team_a.get('href')
@@ -474,13 +488,13 @@ class Command(BaseCommand):
                 
             if options['match']:
                 # load groups
-                schedule_d = self.visit_url("schedule", site_url)
+                schedule_d = self.visit_url("schedule", self.site_url)
                 if options['whole_team']:
                     round_lis = schedule_d.cssselect(".season-list-item")[0].cssselect(".week-list-1 .week-list-1")
                 else:
                     round_lis = schedule_d.cssselect('#week-1-schedule li.season-list-item')
                 for i, group_li in enumerate(round_lis, start=1):
-                    round, created = TournamentRound.objects.get_or_create(name=str(i), stage=1, tournament=self.tournament)
+                    round, created = TournamentRound.objects.get_or_create(order=i, stage_order=1, tournament=self.tournament, default={'stage_name':"Group"})
                     print("Round {0} retrieved, adding members".format(i), file=self.stdout)
                     for team_span in group_li.cssselect('.week-list-link > span.f2'):
                         team_slug = slugify(team_span.text.strip())
@@ -514,14 +528,19 @@ class Command(BaseCommand):
                         team, player, active = (td.text.strip() for td in tr.cssselect('td')[:3])
                     except ValueError: # on the th line
                         continue
-                    if active=="0":
-                        continue
                     char_name, char_code = player.split(".")
                     team = Team.objects.get(name=team, tournament=self.tournament)
-                    profile, created = self.create_player(team=team, char_name__iexact=char_name)
+                    if active=="0":
+                        active = False
+                    else:
+                        active = True
+                    membership, created = self.create_membership(team=team, char_name=char_name, active=active)
+                    if membership is None:
+                        continue
+                    membership.active = active
                     try:
-                        profile.char_code = int(char_code)
-                        profile.save()
+                        membership.char_code = int(char_code)
+                        membership.save()
                     except ValueError:
                         pass
                 

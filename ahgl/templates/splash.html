@@ -1,0 +1,14 @@
+{% extends "theme_base.html" %}
+{% load cms_tags %}
+{% load cache %}
+
+{% block head_title_base %}{{ request.current_page.get_title }}{% endblock%}
+
+{% block body_base %}
+{% cache 600 splash request.path %}
+<div id="wrapper" class="splash">
+        {% placeholder "content" or %}        
+        {% endplaceholder %}
+</div>
+{% endcache %}
+{% endblock %}

@@ -1,0 +1,1502 @@
+/* ============================================================================================ */
+/* ======================================================= html5 reset.css ==================== */
+/* ============================================================================================ */
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+	margin:0;
+	padding:0;
+	border:0;
+	outline:0;
+	font-size:100%;
+	vertical-align:baseline;
+	background:transparent;
+}
+
+body {
+	line-height:1;
+}
+
+br {
+	display:none;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+	display:block;
+}
+
+nav ul {
+	list-style:none;
+}
+
+blockquote, q {
+	quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content:'';
+	content:none;
+}
+
+a {
+	margin:0;
+	padding:0;
+	font-size:100%;
+	vertical-align:baseline;
+	background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+	background-color:#ff9;
+	color:#000;
+	text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+	background-color:#ff9;
+	color:#000; 
+	font-style:italic;
+	font-weight:bold;
+}
+
+del {
+	text-decoration:line-through;
+}
+
+abbr[title], dfn[title] {
+	border-bottom:1px dotted;
+	cursor:help;
+}
+
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+	display:block;
+	height:1px;
+	border:0;   
+	border-top:1px solid #cccccc;
+	margin:1em 0;
+	padding:0;
+}
+
+input, select {
+	vertical-align:middle;
+}
+/* ============================================================================================ */
+/* ======================================================= base element styles ================ */
+/* ============================================================================================ */
+/*
+COLOR PALETTE
+#b6b6b6 - light grey, base text color
+#ff5b47 - Red
+#828282 - light grey, used in search box
+#212121 - dark grey, used in search box:focus color
+#d2d2d2 - light grey, used in .t3 header style
+*/
+html, body {
+	height:100%;
+}
+body {
+	background:#000 url(../images/background/global/bkg.jpg) repeat-y center top;
+	color:#b6b6b6;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	
+}
+a {
+	color:#ff5b47;
+	text-decoration:none;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight:normal;
+}
+h1 {
+	position:relative;
+}
+h3 {
+	margin:0 0 7px 0;
+}
+p {
+	margin:0 0 25px 0;
+	line-height: 22px;
+}
+
+/* ============================================================================================ */
+/* ======================================================= global id based styles ============= */
+/* ============================================================================================ */
+#wrapper {
+	padding-top: 56px;
+	min-height:100%;
+}
+#main-header {
+	background:url(../images/background/global/header-bkg.jpg) no-repeat center top;
+	height:292px;
+	margin:0 0 -57px 0; /* compensates for large background header by pulling up the main-content area */
+}
+
+#main-header-ahgl2 {
+	background:url(../images/background/global/header-bkg.jpg) no-repeat center top;
+	height:292px;
+	margin:0 0 -157px 0; /* compensates for large background header by pulling up the main-content area */
+}
+
+#logo-link {
+	width:180px;
+	background:url(../images/background/global/logo.jpg) no-repeat 0 0;
+	height:216px;
+	left:50%;
+	position:absolute;
+	margin:0 0 0 -90px;
+	top:0;
+}
+#logo-link:hover {
+	background-position:0 -216px;
+}
+
+#main-navigation {
+	width:920px;
+	list-style:none;
+	margin:0 auto 0 auto;
+	padding:56px 40px 0 40px;
+	text-transform:uppercase;
+}
+#main-navigation li {
+	width:290px;
+	margin:0 0 16px 0;
+}
+#main-navigation a {
+	filter:alpha(opacity=78);
+    opacity:0.78;
+}
+#main-navigation a:hover {
+	filter:alpha(opacity=1);
+    opacity:1.00;
+}
+
+#main-content {
+	width:920px;
+	margin:0 auto;
+	overflow:auto;
+	padding:0 40px 240px 40px;
+}
+
+#main-content ul > li {
+	list-style:  none;
+	list-style-position:  outside;
+	list-style-image: none;
+}
+.splash li, li.season-list-item {
+	display: inline;
+	float: left;
+}
+
+#main-content .openersc2 a {
+	display: block;
+	width: 450px;
+	height: 768px;
+	position: relative;
+}
+
+#main-content .openersc2 a .rollover {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 450px;
+	height: 768px;
+	background: url(../images/ahgl2-openingscreen-sc2side.png);
+}
+#main-content .openerlol a {
+	display: block;
+	width: 450px;
+	height: 768px;
+	position: relative;
+}
+
+#main-content .openerlol a .rollover {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 450px;
+	height: 768px;
+	background: url(../images/ahgl2-openingscreen-lolside.png);
+}
+
+#main-footer {
+	/*background:url(../images/background/global/footer-bkg.jpg) no-repeat center top;*/
+	margin:35px 0 0 0;
+}
+#main-footer-inner {
+	width:920px;
+	height:147px;
+	margin:-240px auto 0 auto;
+	padding:58px 40px 0 40px;
+}
+
+#copyright {
+	clear:both;
+	margin:50px 0 0 0;
+	text-align:center;
+}
+
+#credit {
+	margin:0;
+	text-align:center;
+}
+
+#search-form {
+	padding-right:30px;
+	float:left;
+}
+#s {
+	width:175px;
+	border:1px solid #fff;
+	color:#828282;
+	height:25px;
+	margin:0;
+	padding:5px;
+}
+#s.focused {
+	color:#212121;
+}
+#go-button {
+	width:37px;
+	background:#fff;
+	border:none;
+	cursor:pointer;
+	height:37px;
+	margin:0;
+	padding:0;
+}
+#go-button:hover,
+#go-button:focus {
+	background:#ff5b47;
+	color:#fff;
+}
+
+/* ============================================================================================ */
+/* ======================================================= global helper classes ============== */
+/* ============================================================================================ */
+/* apply to element to position it off screen, such that it is accessible for screen readers */
+.off-screen {
+	height:0;
+	left:-10000px;
+	overflow:hidden;
+	position:absolute;
+}
+
+/* apply to parent element which has floating children to prevent it's height from collapsing to zero */
+.cf:after {
+	content:"";
+	display:block;
+	clear:both;
+	visibility:hidden;
+	line-height:0;
+	height:0;
+	font-size:0;
+}
+.cf {
+	display:block;
+}
+
+/* apply to element for bold text */
+.bold {
+	font-weight:bold;
+}
+
+/* apply to element to ensure text does not wrap; example: <span class="no-wrap">Starcraft 2</span> */
+.no-wrap {
+	white-space:nowrap;
+}
+
+/* list used on player page for questionare */
+.ordered-list-1 {}
+.ordered-list-1 li, ol li {
+	font-weight:bold;
+		margin:0 0 25px 0;
+}
+.ordered-list-1 p, ol p {
+	margin:0;
+}
+ol p:first-child {
+	color:#fff;
+}
+
+/* ============================================================================================ */
+/* ======================================================= footer styles ====================== */
+/* ============================================================================================ */
+/* list used in the main footer */
+.footer-list-1 {
+	float:left;
+	list-style:none;
+}
+.footer-list-1 li {
+	float:left;
+	line-height:37px;
+	margin:0 25px 0 0;
+}
+/* list used in the main footer for the social links */
+.social-links-list-1 {
+	float:right;
+	list-style:none;
+	margin:0 8px 0 0;
+}
+.social-links-list-1 .social-links-header {
+	margin:0 25px 0 0;
+}
+.social-links-list-1 a {
+	width:37px;
+	display:block;
+	height:37px;
+}
+.social-links-list-1 li {
+	float:left;
+	line-height:37px;
+	margin:0 4px 0 0;
+}
+.social-links-list-1 .twitter-link,
+.social-links-list-1 .facebook-link,
+.social-links-list-1 .youtube-link {
+	background:url(../images/background/global/social-links-bkg.png) no-repeat;
+}
+.social-links-list-1 .twitter-link {
+	background-position:0 0;
+}
+.social-links-list-1 .twitter-link:hover {
+	background-position:0 -37px;
+}
+.social-links-list-1 .facebook-link {
+	background-position:-37px 0;
+}
+.social-links-list-1 .facebook-link:hover {
+	background-position:-37px -37px;
+}
+.social-links-list-1 .youtube-link {
+	background-position:-74px 0;
+}
+.social-links-list-1 .youtube-link:hover {
+	background-position:-74px -37px;
+}
+.social-links-list-1 .last {
+	margin:0;
+}
+/* ============================================================================================ */
+/* ======================================================= generic social link list styles ==== */
+/* ============================================================================================ */
+
+.social-links-list-2 {
+	display:table;
+	list-style:none;
+	margin:10px auto 0 auto;
+}
+.social-links-list-2 a {
+	width:20px;
+	display:block;
+	float:left;
+	height:20px;
+}
+.social-links-list-2 a:hover {
+	opacity:.5;
+}
+.social-links-list-2 li {
+	float:left;
+	line-height:20px;
+	margin:0 10px 0 0;
+}
+.social-links-list-2 li.last {
+	margin:0;
+}
+.social-links-list-2 .social-links-title {
+	line-height:20px;
+	margin:0;
+}
+.social-links-list-2 .twitter-link {
+	width:25px;
+}
+.social-links-list-2 .twitter-link,
+.social-links-list-2 .facebook-link,
+.social-links-list-2 .reddit-link,
+.social-links-list-2 .stumble-upon-link,
+.social-links-list-2 .email-link,
+.social-links-list-2 .more-link {
+	background:url(../images/background/global/social-icons-small-bkg.png) no-repeat;
+}
+.social-links-list-2 .twitter-link {
+	background-position:0 0;
+}
+.social-links-list-2 .facebook-link {
+	background-position:-30px 0;
+}
+.social-links-list-2 .reddit-link {
+	background-position:-60px 0;
+}
+.social-links-list-2 .stumble-upon-link {
+	background-position:-90px 0;
+}
+.social-links-list-2 .email-link {
+	background-position:-120px 0;
+}
+.social-links-list-2 .more-link {
+	background-position:-150px 0;
+}
+
+/* ============================================================================================ */
+/* ======================================================= result styles ====================== */
+/* ============================================================================================ */
+/* used on results pages for the match/video/team list */
+.result-list {
+	list-style:none;
+}
+/* used on video results page for match/video items */
+.result-excerpt {
+	width:214px;
+	float:left;
+	margin:0 21px 50px 0;
+}
+.result-excerpt.first-in-row {
+	clear:left;
+}
+.result-excerpt.last-in-row {
+	margin-right:0;
+}
+.result-excerpt p {
+	margin:0;
+}
+.result-excerpt-title {
+	background:url(../images/background/match/video-tile-bkg.png) no-repeat 0 0;
+}
+.result-excerpt-link {
+	background:url(../images/background/match/video-tile-bkg.png) no-repeat 0 0;
+	display:block;
+	height:120px;
+	position:relative;
+}
+.result-excerpt-link-effect:hover:before {
+	background:url(../images/background/match/video-tile-bkg.png) no-repeat -214px 0;
+	left:0;
+	top:0;
+	width:214px;
+	height:120px;
+	position:absolute;
+	content:"";
+}
+.result-excerpt-title span {
+	display:block;
+	line-height:40px;
+	text-align:center;
+}
+
+/* ============================================================================================ */
+/* ======================================================= global navigation styles =========== */
+/* ============================================================================================ */
+/* used for global navigation columns */
+.nav-column-1 {
+	clear:left;
+	float:left;
+	text-align:right;
+}
+.nav-column-2 {
+	float:right;
+	clear: right;
+}
+
+/* ============================================================================================ */
+/* ======================================================= title styles ======================= */
+/* ============================================================================================ */
+/* apply to element to get the trapazoidal header, can be used on different element types: h2, span, a, etc */
+.title,
+.title:before,
+.title:after {
+	background-image:url(../images/background/global/title-bkg.png);
+}
+.title {
+	background-position:0 0;
+	background-repeat:repeat-x;
+	display:block;
+	line-height:103px;
+	margin:0 103px 50px 103px;
+	position:relative;
+	text-align:center;
+}
+.title:before,
+.title:after {
+	width:103px;
+	background-repeat:no-repeat;
+	content:"";
+	height:103px;
+	left:-103px;
+	position:absolute;
+	top:0;
+}
+.title:after {
+	left:auto;
+	right:-103px;
+}
+a.title:hover {
+	background-position:0 -103px;
+}
+
+/* title-1 styles: standard white trapazoid banner */
+.title-1:before {
+	background-position:-103px -206px;
+}
+.title-1:after {
+	background-position:-103px -309px;
+}
+a.title-1:hover:before {
+	background-position:0 -206px;
+}
+a.title-1:hover:after {
+	background-position:0 -309px;
+}
+
+/* title-2 styles: used on match page when there are two trapazoid headers on the same row */
+.title-2 {
+	width:200px;
+	float:left;
+}
+.first-title:before {
+	background-position:-103px -206px;
+}
+.first-title:after {
+	background-position:-103px -412px;
+}
+a.first-title:hover:before {
+	background-position:0 -206px;
+}
+a.first-title:hover:after {
+	background-position:0 -412px;
+}
+.second-title:before {
+	background-position:-103px -515px;
+}
+.second-title:after {
+	background-position:-103px -309px;
+}
+a.second-title:hover:before {
+	background-position:0 -515px;
+}
+a.second-title:hover:after {
+	background-position:0 -309px;
+}
+
+/* title-3 styles: used on home page, this does not use title sprite */
+.title-3 {
+	background:#ff5b47;
+	float:left;
+	line-height:42px;
+	margin:0 42px 0 0;
+	min-width:130px;
+	padding:0 12px;
+	position:relative;
+}
+.title-3:before {
+	width:0;
+	background:none;
+	border-color:transparent transparent #ff5b47 #ff5b47;
+	border-style:solid;
+	border-width:21px;
+	content:"";
+	height:0;
+	left:auto;
+	position:absolute;
+	right:-42px;
+	top:0;
+}
+.title-3:after {
+	background:none;
+	height:0;
+	width:0;
+}
+
+/* ============================================================================================ */
+/* ======================================================= @font-face styles ================== */
+/* ============================================================================================ */
+@font-face {
+    font-family: 'PublicGothicSquareRegular';
+    src: url('fonts/public_gothic_square-webfont.eot');
+    src: url('fonts/public_gothic_square-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/public_gothic_square-webfont.woff') format('woff'),
+         url('fonts/public_gothic_square-webfont.ttf') format('truetype'),
+         url('fonts/public_gothic_square-webfont.svg#PublicGothicSquareRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TheinhardtMedium';
+    src: url('fonts/theinhardtmed-webfont.eot');
+    src: url('fonts/theinhardtmed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/theinhardtmed-webfont.woff') format('woff'),
+         url('fonts/theinhardtmed-webfont.ttf') format('truetype'),
+         url('fonts/theinhardtmed-webfont.svg#TheinhardtMedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ============================================================================================ */
+/* ======================================================= font styles ======================== */
+/* ============================================================================================ */
+/* header fonts */
+.heading1 {
+	color:#fff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:25px;
+	text-transform:uppercase;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-top: 0;
+}
+.t1 {
+	color:#FFFFFF;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:30px;
+	text-transform:uppercase;
+}
+.t2 {
+	color:#fff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:28px;
+	text-transform:uppercase;
+}
+.t3 {
+	color:#d2d2d2;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:30px;
+	text-transform:uppercase;
+}
+a.t1:hover,
+a:hover .t1,
+a.t3:hover,
+a:hover .t3 {
+	color:#fff;
+}
+/* used for team ranking */
+.t4 {
+	color:#fff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:122px;
+	text-transform:uppercase;
+}
+/* used for team points/record */
+.t5 {
+	color:#fff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:40px;
+	text-transform:uppercase;
+}
+/* used for "VS" on match page */
+.t6 {
+	color:#ff5b47;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:50px;
+	text-transform:uppercase;
+}
+.t7 {
+	color:#ff5b47;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:45px;
+	text-transform:uppercase;
+}
+.t8 {
+	color:#fff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:20px;
+	text-transform:uppercase;
+}
+.t9 {
+	color:#fff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:56px;
+	text-transform:uppercase;
+}
+.t10 {
+	color:#fff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:27px;
+	text-transform:uppercase;
+}
+.t11 {
+	color:#fff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:18px;
+	text-transform:uppercase;
+}
+/* used for "VS" on schedule page */
+.t12 {
+	color:#ff5b47;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:30px;
+	text-transform:uppercase;
+}
+.t13, .latest-twitter h2 {
+	color:#ff5b47;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-size:17px;
+	text-transform:uppercase;
+}
+
+/* body/standard text fonts */
+.f1 {
+	color:#b6b6b6;
+	font-size:13px;
+}
+.f2 {
+	color:#fff;
+	font-size:13px;
+}
+.f3, .footer-list-1 a {
+	font-family:"TheinhardtMedium", Arial, Sans-Seriff;
+	font-size:13px;
+	letter-spacing:.5px;
+}
+.f4 {
+	font-family:"TheinhardtMedium", Arial, Sans-Seriff;
+	font-size:22px;
+	letter-spacing:.5px;
+}
+.f5 {
+	color:#fff;
+	font-family:Arial, Sans-Seriff;
+	font-size:20px;
+}
+.f6 {
+	color:#595959;
+	font-family:Arial, Sans-Seriff;
+	font-size:20px;
+	text-transform:uppercase;
+}
+.f7 {
+	color:#ff5b47;
+	font-family:Arial, Sans-Seriff;
+	font-size:20px;
+}
+
+/* ============================================================================================ */
+/* ====================================== alternate link styles =============================== */
+/* ============================================================================================ */
+/* apply to links to reverse the color palette */
+.alt-link, .footer-list-1 a {
+	color:#fff;
+}
+.alt-link:hover, .footer-list-1 a:hover {
+	color:#ff5b47;
+}
+
+/* apply to links for grey links */
+.alt-link-2 {
+	color:#595959;
+}
+.alt-link-2:hover{
+	color:#ff5b47;
+}
+
+
+/* ============================================================================================ */
+/* ====================================== page template based styles ========================== */
+/* ============================================================================================ */
+
+/* =========================================================================== */
+/* ====================================== home page styles =================== */
+/* =========================================================================== */
+/* used for hero on home page */
+.hero-container {
+	background:url(../images/background/global/hero-bkg.jpg) no-repeat 0 0;
+	min-height:170px;
+	/*min-height:370px;*/
+	text-align:center;
+}
+.hero-title {
+	line-height:1;
+	height:100px;
+	padding:5px 0 0 0;
+}
+.hero-sub-title {
+	display:block;
+}
+
+/* used for team list on home page */
+.team-list-container {
+	background:url(../images/background/global/team-list-bkg.jpg) no-repeat 0 0;
+	margin:40px 0 0 0;
+}
+.team-list-1 {
+	list-style:none;
+	float:left;
+}
+.team-list-item:first-child {
+	margin:0 0 0 15px;
+}
+.team-list-item {
+	float:left;
+	line-height:42px;
+	padding:0 0 0 30px;
+}
+
+/* used for featured game on home page */
+.featured-game-container {
+	padding:50px 0 0 0;
+}
+.featured-game {
+	clear:left;
+	padding:4px 0 0 0;
+}
+
+/* =========================================================================== */
+/* ====================================== static template styles ============= */
+/* =========================================================================== */
+.static-page .column-1 {
+	width:415px;
+	float:left;
+	text-align:center;
+}
+.static-page .column-2 {
+	width:505px;
+	float:right;
+}
+
+/* =========================================================================== */
+/* ====================================== team template styles =============== */
+/* =========================================================================== */
+.team-template .content-section-1 {
+	margin:0 0 50px 0;
+}
+.team-template .content-section-1 img {
+	display:block;
+}
+.team-template .content-section-2 {
+	width:230px;
+	float:left;
+}
+.team-template .content-section-3,
+.team-template .content-section-4 {
+	width:300px;
+	float:left;
+	margin:0 0 0 40px;
+}
+.team-template .content-section-5 {
+	margin:35px 0 0 0;
+}
+/* list used to link to players' pages on the team page */
+.player-list-1 {
+	list-style:none;
+}
+.player-list-1 a {
+	background:url(../images/background/team/player-bunny-ears.png) no-repeat 117px 0;
+	display:block;
+}
+.player-list-1 a:hover {
+	background-position:right top;
+}
+.player-list-1 img {
+	display:block;
+	position:relative;
+	margin:0 0 10px 0;
+	z-index:-1;
+}
+.player-list-1 li {
+	width:150px;
+	float:left;
+	margin:0 4px 0 0;
+}
+.player-list-1 .last {
+	margin:0;
+}
+
+/* =========================================================================== */
+/* ====================================== player template styles ============= */
+/* =========================================================================== */
+.player-template .content-section-1 {
+	width:352px;
+	float:left;
+}
+.player-template .content-section-1 h2,
+.player-template .content-section-1 h3 {
+	line-height:1.2em;
+	margin:0;
+}
+.player-template .content-section-1 p {
+	margin:0 0 15px 0;
+}
+.player-template .content-section-2 {
+	width:520px;
+	float:right;
+}
+
+/* =========================================================================== */
+/* ====================================== narrow page template styles ======== */
+/* =========================================================================== */
+.narrow-page-template .content-section-1 {
+	width:570px;
+	margin:0 auto;
+}
+
+/* =========================================================================== */
+/* ====================================== standings template styles ========== */
+/* =========================================================================== */
+.standings-page-template .content-section-1 {
+	padding:0 65px;
+}
+.standings-page-template .standings-table {
+	width:100%;
+	text-align:left;
+}
+.standings-page-template .standings-table tr {
+	height:45px;
+}
+.standings-page-template .standings-table thead tr {
+	height:55px;
+}
+.standings-page-template .standings-table-rank {
+	width:100px;
+}
+.standings-page-template .standings-table-team {
+	width:200px;
+}
+.standings-page-template .standings-table-points {
+	width:150px;
+}
+.standings-page-template .standings-table-record {
+	width:150px;
+}
+.standings-page-template .standings-table-link {
+	/* width set by other 4 columns */
+}
+
+/* =========================================================================== */
+/* ====================================== match template styles ============== */
+/* =========================================================================== */
+.match-post-template .versus {
+	width:108px;
+	float:left;
+	line-height:80px;
+	text-align:center;
+}
+.match-post-template .post-title-tag {
+	margin:0;
+	position:relative;
+	text-align:center;
+	top:-72px;
+}
+
+/* list used on match page for rows of video links */
+.video-link-list {
+	list-style:none;
+	margin:50px 0 0 0;
+}
+.video-link-list img {
+	display:block;
+	margin:0 0 15px 0;
+}
+.video-link-list li {
+	margin:0 0 30px 0;
+}
+
+/* used on match page for player link containers */
+.video-player-link-container {
+	float:left;
+	margin:0 12px 0 0;
+}
+.video-player-link-container.last {
+	float:right;
+	margin:0;
+	text-align:right;
+}
+/* used on match page for video link containers */
+.video-link-container {
+	float:left;
+	margin:0 4px 0 0;
+	text-align:center;
+}
+/* used on match page for video links */
+.video-link {
+	background:url(../images/background/match/video-play-icon.png) no-repeat center 53px;
+	display:block;
+}
+.video-link:hover {
+	background-position:center -85px;
+}
+.video-link img {
+	position:relative;
+	z-index:-1;
+}
+
+/* =========================================================================== */
+/* ====================================== schedule template styles =========== */
+/* =========================================================================== */
+.schedule-page-template .content-section-1 {
+	width:760px;
+	margin:0 auto;
+}
+.season-list-1 {
+	list-style:none;
+}
+.season-list-item {
+	border-bottom:1px solid #2c2c2c;
+	padding:25px 30px;
+}
+.season-list-item:first-child {
+	padding-top:0;
+}
+
+.week-list-1 {
+	list-style:none;
+}
+.week-list-link {
+	padding:0 5px;
+}
+.week-list-link:hover {
+	background:#000;
+}
+.week-list-item span {
+	float:left;
+	line-height:45px;
+}
+.week-matchup-number {
+	width:175px;
+}
+.week-team-1 {
+	width:140px;
+}
+.versus {
+	width:30px;
+	text-align:center;
+}
+.week-team-2 {
+	width:140px;
+	text-align:right;
+}
+.week-view-games {
+	width:205px;
+	text-align:right;
+}
+
+/* =========================================================================== */
+/* ====================================== archive template styles ============ */
+/* =========================================================================== */
+/* used for archive pagination links */
+.pagination-list {
+	float:right;
+	list-style:none;
+}
+.pagination-item {
+	min-width:22px;
+	float:left;
+	line-height:22px;
+	margin-left:5px;
+}
+.pagination-number,
+.prev,
+.next {
+	display:block;
+}
+.pagination-number {
+	text-align:center;
+}
+.current {
+	background:#000;
+}
+.prev {
+	text-align:right;
+}
+.next {
+	text-align:left;
+}
+
+/* used for tags on archive template */
+.tags {
+	display:block;
+	text-transform:uppercase;
+}
+
+/* =========================================================================== */
+/* ====================================== search template styles ============= */
+/* =========================================================================== */
+.search-page-template .page,
+.search-page-template .post {
+	border-bottom:1px solid #2c2c2c;
+	padding:10px 0 0 0;
+}
+.search-page-template .last-search-result {
+	border:none;
+	margin:0 0 40px 0;
+}
+.search-page-template .entry p,
+.search-page-template .postmetadata {
+	margin:0 0 10px 0;
+}
+.search-page-template .result-title {
+	line-height:1.4;
+}
+.search-page-template .result-title a {
+	display:block;
+	padding:0 5px;
+}
+.search-page-template .result-title a:hover {
+	background:#000;
+}
+
+/* =========================================================================== */
+/* ====================================== schedule template styles =========== */
+/* =========================================================================== */
+/* list used to display rank/points/record on team page */
+.team-rank-list-1 {
+	list-style:none;
+}
+.team-rank-list-1 h2 {
+	text-transform:uppercase;
+}
+.team-rank-list-1 p {
+	line-height:.8;
+}
+.team-rank-list-1 .record {
+	width:80px;
+	margin:0 10px 0 0;
+}
+.team-rank-list-1 .points,
+.team-rank-list-1 .record {
+	float:left;
+}
+
+/* =========================================================================== */
+/* ====================================== contact template styles ============ */
+/* =========================================================================== */
+.contact-page-template .content-section-1 {
+	width:600px;
+	margin:0 auto;
+}
+.contact-form .field {
+	margin:25px 0 0 0;
+}
+.contact-form .field-label {
+	width:185px;
+	display:block;
+	float:left;
+	text-align:right;
+}
+.contact-form .field-label-security {
+	width:400px;
+	float:right;
+	margin:0 0 5px 0;
+	text-align:left;
+}
+.contact-form .text {
+	width:394px;
+	border-width:1px;
+	display:block;
+	float:right;
+	padding:2px;
+}
+.contact-form .text:active,
+.contact-form .text:focus {
+	border-color:#ff5b47;
+}
+.contact-form .field-button-container {
+	width:400px;
+	float:right;
+}
+.contact-form .button {
+	width:190px;
+	background:#ff5b47;
+	border:solid 2px transparent;
+	cursor:pointer;
+	display:block;
+	height:34px;
+	line-height:34px;
+	margin:20px auto 0 auto;
+	padding:0;
+}
+.contact-form .button:active,
+.contact-form .button:focus,
+.contact-form .button:hover {
+	border-color:#000;
+}
+
+
+#poweredbyday9tv {
+	width: 920px;
+	text-align: center;
+}
+#poweredbyday9tv p {
+	font-weight:  bold;
+	margin: 0;
+}
+#poweredbyday9tv a { 
+	margin-left: auto;
+	margin-right: auto;
+	width:333px;
+	height:117px;
+	display:block;
+	text-indent:-9999px;
+	background:url("../images/day9-logo.png") no-repeat;
+}
+
+div#static-navheader {
+  background: url("../images/topnav_bg.png") repeat-x;
+  height: 56px;
+  position:absolute;
+  margin: 0;
+  padding: 0;
+  width:100%;
+  text-align: center;
+  font-size: 0;
+}
+div#static-navheader ul {
+	list-style-type: none;
+	display: inline;
+	height: 56px;
+	overflow: hidden;
+}
+div#static-navheader li {
+	display: inline-block;
+	height: 56px;
+	*zoom: 1;
+	*display: inline;
+}
+div#static-navheader a {
+	text-indent: -9999px;
+}
+.ahgl2-sc2 .teams {
+	display: block;
+	width: 50px;
+	height: 56px;
+	background: url("../images/topnav-sc2.png") 0 0px;
+}
+.ahgl2-sc2 .teams:hover {
+	background: url("../images/topnav-sc2.png") 0 -56px;
+}
+.ahgl2-sc2 .schedule {
+	display: block;
+	width: 50px;
+	height: 56px;
+	background: url("../images/topnav-sc2.png") -50px 0px;
+}
+.ahgl2-sc2 .schedule:hover {
+	background: url("../images/topnav-sc2.png") -50px -56px;
+}
+.ahgl2-sc2 .replays {
+	display: block;
+	width: 50px;
+	height: 56px;
+	background: url("../images/topnav-sc2.png") -100px 0px;
+}
+.ahgl2-sc2 .replays:hover {
+	background: url("../images/topnav-sc2.png") -100px -56px;
+}
+.ahgl2-sc2 .standings {
+	display: block;
+	width: 50px;
+	height: 56px;
+	background: url("../images/topnav-sc2.png") -150px 0px;
+}
+.ahgl2-sc2 .standings:hover {
+	background: url("../images/topnav-sc2.png") -150px -56px;
+}
+.ahgl2-sc2 .game {
+	display: block;
+	width: 197px;
+	height: 56px;
+	background: url("../images/topnav-sc2.png") -200px 0px;
+}
+.ahgl2-sc2 .game:hover {
+	background: url("../images/topnav-sc2.png") -200px -56px;
+} 
+.ahgl2-day9tv .beabettergamer {
+	display: block;
+	width: 139px;
+	height: 56px;
+	background: url("../images/topnav_day9tv.png") no-repeat;
+}
+
+.ahgl2-lol .teams {
+	display: block;
+	width: 50px;
+	height: 56px;
+	background: url("../images/topnav-lol.png") 50px 0px;
+}
+.ahgl2-lol .teams:hover {
+	background: url("../images/topnav-lol.png") 50px -56px;
+}
+.ahgl2-lol .schedule {
+	display: block;
+	width: 50px;
+	height: 56px;
+	background: url("../images/topnav-lol.png") 100px 0px;
+}
+.ahgl2-lol .schedule:hover {
+	background: url("../images/topnav-lol.png") 100px -56px;
+}
+.ahgl2-lol .replays {
+	display: block;
+	width: 50px;
+	height: 56px;
+	background: url("../images/topnav-lol.png") 150px 0px;
+}
+.ahgl2-lol .replays:hover {
+	background: url("../images/topnav-lol.png") 150px -56px;
+}
+.ahgl2-lol .standings {
+	display: block;
+	width: 50px;
+	height: 56px;
+	background: url("../images/topnav-lol.png") 200px 0px;
+}
+.ahgl2-lol .standings:hover {
+	background: url("../images/topnav-lol.png") 200px -56px;
+}
+.ahgl2-lol .game {
+	display: block;
+	width: 217px;
+	height: 56px;
+	background: url("../images/topnav-lol.png") 0px 0px;
+}
+.ahgl2-lol .game:hover {
+	background: url("../images/topnav-lol.png") 0px -56px;
+}  
+.ahgl2-opener {
+	height: 150px;
+	background:url("../images/homepage-opener.png") no-repeat;
+	border-bottom: #333 1px solid;
+	padding-top: 95px;
+	padding-bottom: 50px;
+}
+.ahgl2-opener.lol {
+	background:url("../images/homepage-opener_lol.png") no-repeat;
+}
+.ahgl2-opener .entry {
+	padding-right: 450px;
+}
+div#homepage-linkbar {
+	clear: both;
+	border-top: #333 1px solid;
+	margin-top: 10px;
+	height: 120px;
+	padding-top: 25px;
+
+}
+div#homepage-linkbar .latest-twitter {
+	float: left;
+	width: 50%;
+}
+div#homepage-linkbar .ahgl-tshirt-link {
+	float: right;
+	width: 50%;
+}
+div#homepage-linkbar .clear {
+	clear: both;
+}
+div#homepage-linkbar .tweet {
+	color: #666;
+	list-style-type: none;
+	font-size: 12px;
+	padding-bottom: 10px;
+	line-height: 22px;
+	margin-bottom: 10px;
+	font-style: italic;
+	border-bottom: #252525 1px dashed ;
+}
+div#homepage-linkbar .ahgl-tshirt-link a {
+	display: block;
+	background: url(../images/ahgl-tshirt-order.png);
+	text-indent: -9999px;
+	height: 114px;
+	width: 442px;
+	opacity:1.0;
+	filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+div#homepage-linkbar .ahgl-tshirt-link a:hover {
+	opacity:0.4;
+	filter:alpha(opacity=40); /* For IE8 and earlier */
+}
+div#homepage-linkbar .ahgl-facebook-page a {
+	display: block;
+	background: url(../images/ahgl-on-facebook.png);
+	text-indent: -9999px;
+	height: 114px;
+	width: 254px;
+	opacity:1.0;
+	filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+div#homepage-linkbar .ahgl-facebook-page a:hover {
+	opacity:0.4;
+	filter:alpha(opacity=40); /* For IE8 and earlier */
+
+}
+/*  --------  PRESS  -------- */
+		.d9press ul { width: 100%; }
+		.d9press li { margin:0; list-style-type: none; height: 38px; border-bottom: 1px solid #282728; padding-top: 20px; font-size: 10px; width: 680px;  }
+		.d9press .pdate { text-align: right; float: left; padding-right: 20px;  font-weight: bold; width: 80px; display: block; }
+		.d9press .plink { text-align: left; display:  block; }
+
+.inactive {
+	opacity:0.5;
+}
+
+.bracket {
+	display:-moz-box;
+	display:-webkit-box;
+	display:-ms-box;
+	-moz-box-orient:horitontal;
+	-webkit-box-orient:horizontal;
+	-ms-box-orient:horizontal;
+	width:100%;
+}
+.bracket-round {
+	-moz-box-flex:2;
+	-webkit-box-flex:2;
+	-ms-box-flex:2;
+	max-width:150px;
+	display:-moz-box;
+	display:-webkit-box;
+	display:-ms-box;
+	-moz-box-orient:vertical;
+	-webkit-box-orient:vertical;
+	-ms-box-orient:vertical;
+}
+.bracket-item {
+	-moz-box-flex:2;
+	-webkit-box-flex:2;
+	-ms-box-flex:2;
+	display:-moz-box;
+	display:-webkit-box;
+	display:-ms-box;
+	-moz-box-orient:vertical;
+	-webkit-box-orient:vertical;
+	-ms-box-orient:vertical;
+	-moz-box-pack:center;
+	-webkit-box-pack:center;
+	-ms-box-pack:center;
+}
+.bracket-item > a {
+	border-radius: 6px;  
+	color:white;
+	font-weight:bold;
+	display:block;
+	margin:1px 0;
+	padding:1.5ex 1em 1.5ex 1.5em;
+	background:rgba(100,100,100, 0.2);
+}
+.bracket-item > a:hover {
+	background:rgba(100,100,100,0.6);
+}
+.bracket-item .winner {
+	background:rgba(100,100,100, 0.4);
+}

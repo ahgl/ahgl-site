@@ -17,10 +17,6 @@ SERVE_MEDIA = DEBUG
 
 djcelery.setup_loader()
 
-# django-compressor is turned off by default due to deployment overhead for
-# most users. See <URL> for more information
-COMPRESS = True
-
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -96,8 +92,16 @@ STATICFILES_FINDERS = [
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = posixpath.join(STATIC_URL, "admin/")
 
+# django-compressor is turned off by default due to deployment overhead for
+# most users. See <URL> for more information
+COMPRESS = True
+COMPRESS_STORAGE = "staticfiles.storage.StaticFileStorage"
 # Subdirectory of COMPRESS_ROOT to store the cached media files in
 COMPRESS_OUTPUT_DIR = "cache"
+
+COMPRESS_PARSER = "compressor.parser.Html5LibParser"
+COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.CSSMinFilter']
+COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.SlimItFilter']
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = "aaaa" #change this - the open source version just has something dumb
@@ -110,6 +114,7 @@ TEMPLATE_LOADERS = [
 
 MIDDLEWARE_CLASSES = [
     "django.middleware.cache.UpdateCacheMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -120,6 +125,9 @@ MIDDLEWARE_CLASSES = [
     "pinax.apps.account.middleware.LocaleMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
 ]
@@ -135,6 +143,8 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
+    "cms.context_processors.media",
+    "sekizai.context_processors.sekizai",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
     
@@ -150,7 +160,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     
     "pybb.context_processors.processor",
     
-    "apps.tournaments.context_processors.tournaments",
+    #"apps.tournaments.context_processors.tournament",
 ]
 
 INSTALLED_APPS = [
@@ -188,13 +198,28 @@ INSTALLED_APPS = [
     'pure_pagination',
     'messages',
     "djcelery",
+    
+    # cms
+    'cms',
+    'mptt',
+    'menus',
+    'sekizai',
+    'cms.plugins.text',
+    'cms.plugins.picture',
+    'cms.plugins.link',
+    'cms.plugins.file',
+    'cms.plugins.snippet',
+    'cms.plugins.teaser',
+    'cms.plugins.video',
+    'cms.plugins.googlemap',
+    'cms.plugins.twitter',
+
 
     # Pinax
     "pinax.apps.account",
     "pinax.apps.signup_codes",
     
     # project
-    "about",
     "profiles",
     "tournaments",
 ]
@@ -208,6 +233,13 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
 }
+
+CMS_TEMPLATES = (
+    ('splash.html', 'Splash Screen'),
+    ('tourney_index.html', 'Tournament Index'),
+    ('simple.html', 'Simple'),
+    ('narrow.html', 'Narrow'),
+)
 
 PYBB_TEMPLATE = "pybb_base.html"
 
@@ -251,8 +283,7 @@ FACEBOOK_API_SECRET          = ''  # REMOVED BECAUSE SECRET
 FACEBOOK_EXTENDED_PERMISSIONS = ('email',)
 
 LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
-LOGIN_REDIRECT_URLNAME = "what_next"
-LOGOUT_REDIRECT_URLNAME = "home"
+LOGIN_REDIRECT_URLNAME = "acct_email"
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
 
 #Cache settings
@@ -260,6 +291,7 @@ CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 # Email info
 # REMOVED BECAUSE INCLUDES PASSWORDS
+
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
@@ -308,6 +340,11 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
+CMS_MEDIA_PATH = "cms/"
+CMS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, CMS_MEDIA_PATH)
+CMS_MEDIA_URL = posixpath.join(MEDIA_URL, CMS_MEDIA_PATH)
+CMS_PAGE_MEDIA_PATH = "cms_page_media/"
 
 if GONDOR_LOCAL_SETTINGS:
     if GONDOR_REDIS_HOST:

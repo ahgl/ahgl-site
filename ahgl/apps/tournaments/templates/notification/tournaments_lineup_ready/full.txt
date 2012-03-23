@@ -1,4 +1,4 @@
 {% load i18n %}
 
 {% trans "Lineup is ready for " %}{{match}}
-{% trans "Link to lineup:" %} http://{{current_site}}{% url view_lineup %}
+{% trans "Link to lineup:" %} http://{{current_site}}{% url player_admin %}

@@ -4,59 +4,102 @@
 {% load account_tags %}
 {% load pagination_tags %}
 {% load thumbnail %}
+{% load cache %}
 
 {% block head_title %}{{team}}{% endblock %}
 
+{% block content-class %}static-page team-template{% endblock %}
 {% block body %}
-    <h1 style="text-align:center;">{{team}}</h1>
-    <div style="text-align:center;">
+{% cache 600 team_detail team.pk request.GET %}
+    <h2 class="title title-1 t1">{{team}}</h2>
+    <div class="content-section-1">
+    <p>
 	{% thumbnail team.photo "920x450" as im %}
     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{team.name}}" />
 	{% empty %}
-    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{team.name}}" />
+    <img src="{{ STATIC_URL }}images/no-team-photo.jpg" alt="{{team.name}}" />
 	{% endthumbnail %}
-	</div>
-    <div class="row">
-    <div class="span3">
-    <ul>
-    <li>Rank: {{team.rank}}</li>
-    <li>Win/Loss: <a href="{% url matches tournament_slug %}?team={{team.slug}}">{{team.wins}}/{{team.losses}}</a></li>
-    <li>Tiebreaker: {{team.tiebreaker}}</li>
-    {% if team.motto %}<li>Motto: {{team.motto}}</li>{% endif %}
-    {% if team.captain %}<li>Captain: <a href="{{team.captain.get_absolute_url}}">{{team.captain.char_name}}</a></li>{% endif %}
-    </ul>
-    </div>
-    <div class="span5">
-    <h3>Charity:</h3>
-    <p>
-    {% if team.charity.link %}<a href="{{team.charity.link}}">{% endif %}{{team.charity}}{% if team.charity.link %}</a>{% endif %}
-    {% if team.charity.desc %} - {{team.charity.desc}}{% endif %}
     </p>
-    </div>
-    <div class="span4">
-	{% thumbnail team.charity.logo "300x300" as im %}
-    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{team.charity}}" />
-	{% endthumbnail %}
-    </div>
-    </div>
+	</div>
 
-    {% with members=team.members.all %}
-    {% autopaginate members 12 %}
-    
-    <ul class="thumbnails">
-    {% for player in members %}
-        <li><a href="{{player.get_absolute_url}}" class="thumbnail">
-		{% thumbnail player.thumbnail "150x170" as im %}
-	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{player.name}}" />
+<div class="cf">
+
+            <div class="content-section-2">
+
+              <ul class="team-rank-list-1 cf">
+<li class="record">
+<h2>Win/Loss</h2>
+<p class="t5"><a href="{% url matches tournament_slug %}?team={{team.slug}}">{{team.wins}}/{{team.losses}}</a></p>
+</li>
+<li class="points">
+<h2 class="points">Tiebreaker</h2>
+<p class="t5">{{team.tiebreaker}}</p>
+</li>
+<li style="float:none;display:block;clear:both;"> <br></li>
+{% if team.motto %}
+<li>
+<h2>Motto</h2>
+<p class="t5">{{team.motto}}</p>
+</li>
+{% endif %}
+{% for captain in team.captains %}
+{% if forloop.first %}<li>
+<h2>Captain</h2><p class="t5">{% endif %}
+<a href="{% url player_profile tournament=tournament_slug team=team.slug profile=captain.profile.slug %}">{{captain}}</a>
+{% if forloop.first %}</p></li>{% endif %}
+{% endfor %}
+</ul>
+
+            </div>
+
+            <div class="content-section-3">
+
+              <p><span class="bold f2">What charity would your team like to play for and why?</span>
+              <p><strong>{% if team.charity.link %}<a href="{{team.charity.link}}">{% endif %}{{team.charity}}{% if team.charity.link %}</a>{% endif %}</strong>{% if team.charity.desc %} - {{team.charity.desc}}{% endif %}</p>
+              {% comment %}TODO:<p><span class="bold f2">What is the name of your team?</span> Adobe Content-Aware Kill</p>{% endcomment %}
+
+            </div>
+
+            <div class="content-section-4">
+
+              <p>{% if team.charity.link %}<a href="{{team.charity.link}}">{% endif %}
+  {% thumbnail team.charity.logo "300x300" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{team.charity}}" />
+  {% endthumbnail %}
+{% if team.charity.link %}</a>{% endif %}
+              </p>
+
+            </div>
+
+          </div>
+
+    {% with memberships=team.membership_queryset %}
+    {% autopaginate memberships 12 %}
+<div class="content-section-5">
+    <ul class="player-list-1 cf">
+    {% for membership in memberships %}
+    {% with player=membership.profile %}
+        <li class="{% if forloop.counter|divisibleby:"6" %}last{% endif %}{% if not membership.active %} inactive{% endif %}"><a href="{% url player_profile tournament=tournament_slug team=team.slug profile=membership.profile.slug %}">
+		{% thumbnail player.thumbnail "150x170" crop="center" as im %}
+	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{player.name}}" class="alignnone size-full" />
 		{% empty %}
-	    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{player.name}}" />
+	    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{player.name}}" class="alignnone size-full" />
 		{% endthumbnail %}
-		<br>
-        <b>{{player.char_name}}{% if player == team.captain %} *{% endif %}</b><br />{{player.name}}</a></li>
+        </a>
+        <h2 class="t2"><span style="font-size:22px">{{membership.char_name}}{% if membership.captain %} *{% endif %}</span></h2>
+        <p>{{player.name}}</p>
+        </li>
+    {% endwith %}
     {% endfor %}
     </ul>
+</div>
     
     {% paginate %}
     {% endwith %}
-    
+{% endcache %}
+{% if is_captain %}
+    <div style="clear:both;text-align:center;margin-top:20px;">
+        <p><a id="edit-profile-box" href="{% url edit_team tournament=tournament_slug slug=team.slug %}" class="btn">Edit Team</a></p>
+    </div>
+{% endif %}
 {% endblock %}

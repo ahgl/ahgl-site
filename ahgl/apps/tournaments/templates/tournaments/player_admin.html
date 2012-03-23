@@ -1,0 +1,65 @@
+{% extends "site_base.html" %}
+
+{% load pagination_tags %}
+
+{% block head_title %}Player Admin{% endblock %}
+
+{% block content-class %}static-page{% endblock %}
+
+{% block body %}
+<h2 class="title title-1 t1">
+Player Admin
+</h2>
+<h3 class="t2">Your Matches</h3>
+{% for match in team_matches %}
+<p>{% ifchanged %}<h4 class="f4">{{match.creation_date}}</h4>{% endifchanged %}<h4 class="f2 bold"><a href="{{match.home_team.get_absolute_url}}">{{match.home_team}}</a>{% if match.home_submitted %} (Submitted: {{match.home_submission_date|default_if_none:"Yes"}}){% endif %} vs <a href="{{match.away_team.get_absolute_url}}">{{match.away_team}}</a>{% if match.away_submitted %} (Submitted: {{match.away_submission_date|default_if_none:"Yes"}}){% endif %}</h2>
+<h3 class="bold">Channel: AHGL-{{match.home_team|slugify}}-{{match.away_team|slugify}}</h3>
+
+{% if match.home_submitted and match.away_submitted %}
+  {% with games=match.games_for_lineup %}
+    <table class="table">
+    {% for game in games %}
+      <tr><th>Game {{game.order}} – {{game.map}}</th>
+      {% if game.is_ace or not game.home_player %}
+        <td>ACE</td><td></td><td></td>
+      {% else %}
+        <td><a href="{{game.home_player.get_absolute_url}}">{{game.home_player}}.{{game.home_player.char_code|default_if_none:"xxx"}}</a> as {{game.get_home_race_display}}</td>
+        <td>vs</td>
+        <td><a href="{{game.away_player.get_absolute_url}}">{{game.away_player}}.{{game.away_player.char_code|default_if_none:"xxx"}}</a> as {{game.get_away_race_display}}</td>
+      {% endif %}
+    {% endfor %}
+    </table>
+  {% endwith %}
+{% else %}
+  {% with games=match.games_with_map %}
+    <ul>
+    {% for game in games %}
+      <li>Game {{forloop.counter}} – {{game.map}} {% if game.is_ace %}(ACE){% endif %}</li>
+    {% endfor %}
+    </ul>
+  {% endwith %}
+  <a href="{% url submit_lineup pk=match.id %}">Submit Lineup</a>
+{% endif %}
+</p>
+{% empty %}
+  <p>No upcoming matches</p>
+{% endfor %}
+
+
+{% with match_list=report_match_list %}
+{% autopaginate match_list %}
+
+<h3 class="t2">Report a match</h3>
+<ul class="unstyled">
+{% for match in match_list %}
+  {% ifchanged %}<h3>{{ match.creation_date }}</h3>{% endifchanged %}
+    <li><a href="{% url report_match match.pk %}">{{match.home_team}} vs {{match.away_team}}</a></li>
+{% empty %}
+  <li>No matches to report</li>
+{% endfor %}
+</ul>
+
+{% paginate %}
+{% endwith %}
+
+{% endblock %}

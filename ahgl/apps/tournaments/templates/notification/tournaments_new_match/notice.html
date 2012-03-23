@@ -1,9 +1,5 @@
 {% load i18n %}
 
 <p>{% trans "A new match has been created " %}{{match}}<br>
-{% if home_team_captain == recipient.get_profile_id or home_team_captain == recipient.get_profile_id %}
-{% trans "Submit lineup:" %} <a href="{% url submit_lineup %}">http://{{current_site}}{% url submit_lineup %}</a>
-{% else %}
-{% trans "View map list:" %} <a href="{% url map_list %}">http://{{current_site}}{% url map_list %}</a>
-{% endif %}
+{% trans "Player admin:" %} <a href="{% url player_admin %}">http://{{current_site}}{% url player_admin %}</a>
 </p>

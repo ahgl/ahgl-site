@@ -1,0 +1,8 @@
+<div class="team-list-container t11 cf">
+<h3 class="title title-3">meet the teams</h3>
+<ul class="team-list-1">
+{% for team in tournament.random_teams|dictsort:"name" %}
+<li class="team-list-item"><a class="alt-link" href="{{team.get_absolute_url}}">{{team.name}}</a></li>
+{% endfor %}
+</ul>
+</div>

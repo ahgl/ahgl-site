@@ -6,24 +6,26 @@
 
 {% block head_title %}{{match.home_team}} vs {{match.away_team}}{% endblock %}
 
+{% block content-class %}match-post-template{% endblock %}
 {% block body %}
-    <h1 style="text-align:center;"><a href="{{match.home_team.get_absolute_url}}">{{match.home_team}}</a>{% if match.winner == match.home_team %}*{% endif %} vs <a href="{{match.away_team.get_absolute_url}}">{{match.away_team}}</a>{% if match.winner == match.away_team %}*{% endif %}</h1>
 
-    <div id="main-content">
+    <h2 class="cf"><a href="{{match.home_team.get_absolute_url}}" class="title title-2 first-title t1">{{match.home_team}}{% if user.is_authenticated and match.winner_id == match.home_team_id %}*{% endif %}</a> <span class="versus t6">vs</span> <a href="{{match.away_team.get_absolute_url}}" class="title title-2 second-title t1">{{match.away_team}}{% if user.is_authenticated and match.winner_id == match.away_team_id %}*{% endif %}</a></h2>
+
     {% if first_vod %}
     <div style="text-align:center;" id="main-video-container"><iframe src="{{first_vod}}" width="920" height="459" frameborder="0" allowfullscreen></iframe><embed type="application/x-shockwave-flash" src="{{first_vod}}" style="display:none"></embed></div>
     {% endif %}
     {% if not match.published %}
     <span>{{match.home_team}} submitted: {{match.home_submitted}}</span><span style="float:right;">{{match.away_team}} submitted: {{match.away_submitted}}</span>
     {% endif %}
-    <table class="table table-nohover">
+    <ul class="video-link-list">
     {% for game in games %}
+    <li class="cf">
     {% include "tournaments/game_detail.html" %}
+    </li>
     {% empty %}
-    <tr><td>No games</td></tr>
+    <li class="cf">No games</li>
     {% endfor %}
-    </table>
-    </div>
+    </ul>
     {% if first_vod %}
     <script src="{{STATIC_URL}}js/base.js"></script>
     {% endif %}

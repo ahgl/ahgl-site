@@ -7,23 +7,23 @@
 
 {% block head_title %}{% trans "Teams" %}{% endblock %}
 
+{% block content-class %}static-page{% endblock %} 
 {% block body %}
-    <h1>{% trans "Teams" %}</h1>
+    <h2 class="title title-1 t1">Teams</h2>
     
     {% autopaginate team_list %}
     
-    <ul class="thumbnails">
+    <ul class="result-list cf">
     {% for team in team_list %}
-        <li><a href="{{team.get_absolute_url}}" class="thumbnail">
+        <li class="result-excerpt{% if forloop.counter0|divisibleby:"4" %} first-in-row{% endif %}{% if forloop.counter|divisibleby:"4" %} last-in-row{% endif %}"><a href="{{team.get_absolute_url}}" class="result-excerpt-link alt-link">
 	 	{% thumbnail team.photo "214x120" crop="center" as im %}
-	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{team.name}}" />
+	    <img class="alignnone size-full" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{team.name}}" />
 		{% empty %}
-	    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{team.name}}" />
+	    <img class="alignnone size-full" src="{{ STATIC_URL }}images/no-team-photo.jpg" alt="{{team.name}}" />
 		{% endthumbnail %}
        <br>{{team.name}}</a></li>
     {% endfor %}
     </ul>
     
     {% paginate %}
-    
 {% endblock %}

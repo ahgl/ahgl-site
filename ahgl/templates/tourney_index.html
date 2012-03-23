@@ -1,0 +1,25 @@
+{% extends "site_base.html" %}
+{% load cms_tags %}
+{% load cache %}
+
+{% block head_title %}{{ request.current_page.get_title }}{% endblock %}
+
+{% block tournament_nav %}
+{% placeholder nav %}
+{% endblock %}
+{% block body %}
+{% placeholder top %}
+<div align="center" style="clear:both">
+{% placeholder video %}
+</div>
+<div id="homepage-linkbar">
+<div class="latest-twitter">
+{% placeholder twitter %}
+</div>
+{% placeholder shirt %}
+</div>
+<div class="clear">&nbsp;</div>   
+{% cache 600 tourney_index_bottom request.path user.is_authenticated %}
+{% placeholder bottom %}
+{% endcache %}
+{% endblock %}

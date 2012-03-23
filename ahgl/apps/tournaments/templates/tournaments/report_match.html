@@ -8,13 +8,13 @@
 {% block head_title %}{% trans "Report Match" %}{% endblock %}
 
 {% block body %}
-    <h2>Match: {{match}}</h2>
+    <h2 class="title title-1 t1">Match: {{match}}</h2>
 {% if form %}
 <form enctype="multipart/form-data" method="post" class="form-horizontal well">
     {% for f in form %}
     <fieldset>
         <legend class="row-fluid"><div class="span2">{{f.instance.map}}</div>
-        <div class="span">{% if not f.instance.is_ace %}{{f.instance.home_player}} ({{f.instance.get_home_race_display}}) vs {{f.instance.away_player}} ({{f.instance.get_away_race_display}}){% endif %}</div>
+        {% if f.instance.home_player %}<div class="span">{% if not f.instance.is_ace %}{{f.instance.home_player}} ({{f.instance.get_home_race_display}}) vs {{f.instance.away_player}} ({{f.instance.get_away_race_display}}){% endif %}</div>{% endif %}
         </legend>
         {{ f|as_bootstrap }}
     </fieldset>

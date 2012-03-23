@@ -1,22 +1,35 @@
 {% load i18n %}
 {% load thumbnail %}
-<div class="profile_info row">
-	<div class="span4">
-	{% thumbnail profile.photo "352x450" upscale=False as im %}
+
+
+          <div class="content-section-1">
+
+            <p>
+              {% thumbnail profile.photo "352x450" upscale=False as im %}
     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{profile.name}}" />
-	{% empty %}
+  {% empty %}
     <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{profile.name}}" />
-	{% endthumbnail %}
-	{{ profile.render_photo }}
-    {% if profile.name %}<p><b>{% trans "Name" %}</b>: {{ profile.name }}</p>{% endif %}
-    {% if profile.captain_of.count %}<p><b>{% trans "Captain" %}</b>: {% for team in profile.captain_of.all %}{{ team }} {% endfor %}</p>{% endif %}
-    {% if profile.teams.count %}<p><b>{% trans "Company" %}</b>: {% for team in profile.teams.all %}<a href="{{team.get_absolute_url}}">{{ team }}</a> {% endfor %}</p>{% endif %}
-    {% if profile.title %}<p><b>{% trans "Title" %}</b>: {{ profile.title }}</p>{% endif %}
-    {% if profile.char_name %}<p><b>{% trans "Ingame Name" %}</b>: {% if profile.bnet_profile %}<a href="{{profile.bnet_profile}}">{% endif %}{{ profile.char_name }}{%if user.get_profile.is_active %}.{{ profile.char_code|default_if_none:"xxx" }}{% endif %}{% if profile.bnet_profile %}</a>{% endif %}</p>{% endif %}
-    {% if profile.race %}<p><b>{% trans "Race" %}</b>: {{ profile.get_race_display }}</p>{% endif %}
-    {% if profile.website %}<p><b>{% trans "Website" %}</b>: <a href="{{ profile.website }}">{{ profile.website }}</a></p>{% endif %}
-    <p><b>{% trans "Record" %}</b>: <a href="{% url games %}?player={{profile.slug}}">{{profile.wins}}W : {{profile.losses}}L</a></p>
-    {% if profile != request.user.get_profile %}<a href="{% url messages_compose_to profile.user %}" class="btn">Send Message</a>{% endif %}
-    </div>
-{% if profile.questions_answers %}<div class="span8">{{profile.questions_answers}}</div>{% endif %}
+  {% endthumbnail %}
+            </p>
+<h3 class="t2">Record</h3>
+<p><a href="{% url games %}?player={{profile.slug}}">{{profile.wins}}W : {{profile.losses}}L</a></p>
+{% if profile.captain_of.count %}
+<h3 class="t2">Captain</h3>
+<p>{% for team in profile.captain_of.all %}{{ team }} {% endfor %}</p>
+{% endif %}
+{% if profile.title %}
+<h3 class="t2">Title</h3>
+<p>{{ profile.title }}</p>
+{% endif %}
+{% if profile.website %}
+<h3 class="t2">Website</h3>
+<p><a href="{{ profile.website }}">{{ profile.website }}</a></p>
+{% endif %}
+{% if request.user.is_authenticated and profile != request.user.get_profile %}<a href="{% url messages_compose_to profile.user %}" class="btn">Send Message</a>{% endif %}
 </div>
+<div class="content-section-2">
+{% for membership in profile.memberships %}
+<h3 class="t2"><a href="{% url player_profile tournament=membership.team.tournament_id team=membership.team.slug profile=profile.slug %}">{{membership.team.tournament}} : {{membership.team}}{% if membership.captain %}*{% endif %} : {{membership}}</a></h3>
+{% endfor %}
+</div>
+

@@ -6,38 +6,73 @@
 
 {% block head_title %}{% trans "Standings" %}{% endblock %}
 
+{% block content-class %}static-page standings-page-template{% endblock %}
 {% block body %}
-    <h1>{% trans "Standings" %}</h1>
-
-	{% regroup object_list by stage as stage_list %}
+    <h2 class="title title-1 t1">{% trans "Standings" %}</h2>
+<div class="content-section-1">
+	{% regroup object_list by stage_name as stage_list %}
     {% for stage in stage_list %}
-    <div class="accordion-group">
-      <h3 class="accordion-heading">
-        <a data-toggle="collapse" href="#stage{{stage.grouper}}" class="accordion-toggle" >
-          Stage {{stage.grouper}}
+        {% for round in stage.list %}
+            {% if round.has_matches %}
+{% if forloop.first %}
+{% if stage_list|length > 1 %}
+    <div class="">
+      <h3 class="f5 bold">
+        <a data-toggle="collapse" href="#stage{{stage.grouper|slugify}}" class="accordion-toggle" >
+          {{stage.grouper}} +
         </a>
       </h3>
-      <div id="stage{{stage.grouper}}" class="accordion-body{% if forloop.first %} in{% endif %} collapse">
-        <div class="accordion-inner">
-          <table class="table">
-		    <thead><tr><th>Rank</th><th>Team</th><th>Wins/Losses</th><th>Tiebreaker Points</th><th>Learn more about the Team</th></tr></thead>
-		    <tbody>
-		    {% for round in stage.list %}
-		    <tr><th colspan="5">Division {{round.name}}</th></tr>
+      <p></p>
+      <div id="stage{{stage.grouper|slugify}}" class="{% if forloop.parentloop.first %} in{% endif %} collapse">
+        <div class="">
+{% endif %}
+{% endif %}
+{% if round.structure == "G" %}
+            {% if forloop.first %}
+          <table class="standings-table">
+            <col class="standings-table-rank" />
+            <col class="standings-table-team" />
+            <col class="standings-table-record" />
+            {% if show_points %}<col class="standings-table-points" />{% endif %}
+            <col class="standings-table-link" />
+		    <thead><tr><th>Rank</th><th>Team</th><th>Wins/Losses</th>{% if show_points %}<th>Tiebreaker Points</th>{% endif %}<th>Learn more about the Team</th></tr></thead>
+		    <tbody class="f4">
+        {% endif %}
+        {% if stage.list|length > 1 %}
+		    <tr><th colspan="5" class="t2" style="text-align:left;">Division {{round.order}}</th></tr>
+        {% endif %}
               {% for team_roundmembership in round.participants %}
               {% with team=team_roundmembership.team %}
                   <tr>
-                  <td>{{forloop.counter}}</td><td>{{team.name}}</td><td>{{team_roundmembership.wins}}/{{team_roundmembership.losses}}</td><td>{{team_roundmembership.tiebreaker}}</td>
-                  <td><a href="{{team.get_absolute_url}}">{{team.name}} Team Link</a></td>
+                  <td>{{forloop.counter}}</td><td>{{team.name}}</td><td>{{team_roundmembership.wins}} / {{team_roundmembership.losses}}</td>{% if show_points %}<td>{{team_roundmembership.tiebreaker}}</td>{% endif %}
+                  <td class="f1"><a href="{{team.get_absolute_url}}">{{team.name}} Team Link</a></td>
                   </tr>
               {% endwith %}
               {% endfor %}
-		    {% endfor %}
-		    </tbody>
+{% else %}
+<div class="bracket">
+{% for row in round.elim_bracket %}
+<div class="bracket-round">
+{% for item in row %}
+<div class="bracket-item"><a href="{{item.0.team.get_absolute_url}}" class="{% if item.1 %}winner{% endif %}">{{item.0.team}}</a></div>
+{% endfor %}
+</div>
+{% endfor %}
+</div>
+{% endif %}
+              {% if forloop.last %}
+        </tbody>
           </table>
+          
         </div>
+{% if stage_list|length > 1 %}
       </div>
      </div>
+{% endif %}
+{% if not forloop.parentloop.last %}<hr />{% endif %}
+     {% endif %}
+            {% endif %}
+        {% endfor %}
      {% endfor %}
-
+</div>
 {% endblock %}

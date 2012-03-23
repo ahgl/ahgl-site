@@ -1,0 +1,12 @@
+{% load thumbnail %}
+<div class="video-player-link-container {{last}}" style="max-width:{{width}}px;">
+<p><a href="{{player.get_absolute_url}}">
+{% thumbnail player.thumbnail thumb_size crop="center" as im %}
+  <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{player}}" />
+{% empty %}
+  <img src="{{ STATIC_URL }}images/default_profile.png" />
+{% endthumbnail %}
+</a></p>
+<h3 class="t3">{{player}}{% if user.is_authenticated and game.winner_id == player.id or game.winner_team_id == player.id %}*{% endif %}</h3>
+<p><a href="{{.get_absolute_url}}">More about {{player}}</a></p>
+</div>

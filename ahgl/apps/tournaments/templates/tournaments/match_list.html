@@ -6,21 +6,21 @@
 
 {% block head_title %}{% trans "Matches" %}{% endblock %}
 
+{% block content-class %}static-page schedule-page-template{% endblock %}
 {% block body %}
-    <h1>{% trans "Matches" %}</h1>
-    
+    <h2 class="title title-1 t1">{% trans "Matches" %}</h2>
     {% autopaginate match_list %}
     
     <ul class="unstyled">
     {% for match in match_list %}
     	{% if match.publish_date %}
-    	{% ifchanged %}<h3>{{ match.publish_date }}</h3>{% endifchanged %}
+    	{% ifchanged %}<h3 class="t3">{{ match.publish_date|date:"M d, Y" }}</h3>{% endifchanged %}
     	{% else %}
-    	{% ifchanged %}<h3>Not published</h3>{% endifchanged %}
-    	{% ifchanged %}<h3>{{ match.creation_date }}</h3>{% endifchanged %}
+    	{% ifchanged %}<h3 class="t3">Not published</h3>{% endifchanged %}
+    	{% ifchanged %}<h3 class="t3">{{ match.creation_date|date:"M d, Y" }}</h3>{% endifchanged %}
     	{% endif %}
-    	{% ifchanged %}<h4>Division {{match.tournament_round.name}}</h4>{% endifchanged %}
-        <li><a href="{{match.get_absolute_url}}">{{match.home_team}} vs {{match.away_team}}</a></li>
+    	{% ifchanged %}<h4 class="bold">Division {{match.tournament_round.order}} ({{match.tournament_round.stage_name}})</h4>{% endifchanged %}
+        <li class="cf" style="float:none;"><a href="{{match.get_absolute_url}}">{{match.home_team}} vs {{match.away_team}}</a></li>
     {% empty %}
     	<li>No matches yet</li>
     {% endfor %}

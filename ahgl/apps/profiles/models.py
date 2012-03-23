@@ -28,6 +28,7 @@ else:
 
 from . import RACES
 from .fields import HTMLField
+from apps.tournaments.models import Game
 
 logger = logging.getLogger(__name__)
 
@@ -40,13 +41,6 @@ class Profile(PybbProfile):
     #about = models.TextField(_("about"), null=True, blank=True)
     #location = models.CharField(_("location"), max_length=40, null=True, blank=True)
     website = models.URLField(_("website"), null=True, blank=True, verify_exists=False)
-    questions_answers = HTMLField(tags=['ol','ul','li', 'strong', 'em', 'p'], blank=True)
-
-    #starcraft data
-    char_name = models.CharField(max_length=20, blank=True)
-    char_code = models.PositiveSmallIntegerField(null=True, blank=True)
-    bnet_profile = models.URLField(null=True, blank=True)
-    race = models.CharField(max_length=1, choices=RACES, null=True, blank=True)
 
     #company data
     title = models.CharField(max_length=70, blank=True)
@@ -60,23 +54,26 @@ class Profile(PybbProfile):
         return self.custom_thumb or self.photo
 
     def is_active(self, tournament=None): #TODO: make this check if they are active in that particular tournament
-        return self.user.is_superuser or self.teams.filter(tournament__active=True).count() > 0 or self.is_captain()
+        return self.user.is_superuser or self.teams.filter(tournament__active=True).count() > 0
     
     def is_captain(self):
-        return self.captain_of.filter(tournament__active=True).count() > 0
+        return self.team_membership.filter(captain=True, team__tournament__active=True).count() > 0
     
     def active_teams(self):
         return self.teams.filter(tournament__active=True).select_related('tournament')
     
+    def memberships(self):
+        return self.team_membership.select_related('team__tournament')
+
     @property
     def wins(self):
-        return self.game_wins.filter(match__published=True).count()
+        return Game.objects.filter(winner__profile=self, match__published=True).count()
     @property
     def losses(self):
-        return self.game_losses.filter(match__published=True).count()
+        return Game.objects.filter(loser__profile=self, match__published=True).count()
     
     def __unicode__(self):
-        return self.char_name or self.name or self.user.username
+        return self.name or self.user.username
     
     @models.permalink
     def get_absolute_url(self, group=None):
@@ -107,6 +104,62 @@ class Profile(PybbProfile):
                 i += 1
                 self.slug = '%s_%d' % (slug, i)
 
+class TeamMembership(models.Model):
+    """All team specific profile data goes here"""
+    #M2M data
+    team = models.ForeignKey('Team', db_index=True, related_name='team_membership')
+    profile = models.ForeignKey('Profile', db_index=True, related_name='team_membership')
+
+    #team specific profile data
+    char_name = models.CharField(max_length=20)
+    active = models.BooleanField(default=True)
+    captain = models.BooleanField(default=False)
+    questions_answers = HTMLField(tags=['ol','ul','li', 'strong', 'em', 'p'], blank=True)
+    game_profile = models.URLField(null=True, blank=True)
+    
+    #starcraft data
+    char_code = models.PositiveSmallIntegerField(null=True, blank=True)
+    race = models.CharField(max_length=1, choices=RACES, null=True, blank=True)
+    
+    #league of legends data
+    champion = models.CharField(max_length=60, blank=True)
+
+    @classmethod
+    def get(self, team, tournament, profile):
+        return TeamMembership.objects.select_related('team', 'profile') \
+                                     .filter(team__slug=team,
+                                             team__tournament=tournament,
+                                             profile__slug=profile)
+
+    @property
+    def photo(self):
+        return self.profile.photo
+    @property
+    def thumbnail(self):
+        return self.profile.thumbnail
+    @property
+    def wins(self):
+        return self.game_wins.filter(match__published=True).count()
+    @property
+    def losses(self):
+        return self.game_losses.filter(match__published=True).count()
+
+    @models.permalink
+    def get_absolute_url(self, group=None):
+        return ('player_profile', (), {'tournament': self.team.tournament_id,
+                                       'team': self.team.slug,
+                                       'profile': self.profile.slug,
+                                       }
+                )
+
+    def __unicode__(self):
+        return self.char_name
+
+    class Meta:
+        db_table = 'profiles_team_members'
+        unique_together = (('team', 'profile'),)
+        ordering = ('-active', '-captain', 'char_name',)
+
 class Team(models.Model):
     """Per Tournament"""
     name = models.CharField(_("name"), max_length=50)
@@ -114,9 +167,8 @@ class Team(models.Model):
     photo = ImageField(upload_to='team_photos', null=True, blank=True)
     charity = models.ForeignKey('profiles.Charity', null=True, blank=True, on_delete=models.SET_NULL, related_name='teams')
     motto = models.CharField(max_length=70, blank=True)
-    members = models.ManyToManyField('Profile', null=True, blank=True, related_name='teams')
+    members = models.ManyToManyField('Profile', null=True, blank=True, related_name='teams', through=TeamMembership)
     tournament = models.ForeignKey('tournaments.Tournament', related_name='teams', db_index=True)
-    captain = models.ForeignKey('Profile', null=True, blank=True, on_delete=models.SET_NULL, related_name='captain_of')
 
     #computed
     rank = models.IntegerField()
@@ -132,6 +184,18 @@ class Team(models.Model):
         self.losses = self.match_losses.filter(published=True).count()
         self.tiebreaker = self.game_wins.filter(match__published=True).count() - self.game_losses.filter(match__published=True).count()
         self.save()
+
+    @property
+    def thumbnail(self):
+        return self.photo
+    
+    @property
+    def membership_queryset(self):
+        self._team_membership_queryset = getattr(self, '_team_membership_queryset', None) or self.team_membership.all().select_related('profile')
+        return self._team_membership_queryset        
+    @property
+    def captains(self):
+        return [membership for membership in self.membership_queryset if membership.captain]
     
     def __unicode__(self):
         return self.name

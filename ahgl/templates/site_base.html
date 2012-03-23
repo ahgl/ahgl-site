@@ -3,32 +3,64 @@
 {% load metron_tags %}
 {% load i18n %}
 
-{% block extra_head_base %}
-{{ block.super }}
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/custom.css">
+{% block topbar_base %}
+  <div id="static-navheader">
+      <ul>
+        <li class="ahgl2-sc2"><a href="{% url teams "starcraft-2-season-2" %}" class="teams">Teams</a></li>
+            <li class="ahgl2-sc2"><a href="{% url schedule "starcraft-2-season-2" %}" class="schedule">Schedule</a></li>
+            <li class="ahgl2-sc2"><a href="{% url games "starcraft-2-season-2" %}?vod_only=1" class="replays">Videos</a></li>
+          <li class="ahgl2-sc2"><a href="{% url standings "starcraft-2-season-2" %}" class="standings">Standings</a></li>
+      <li class="ahgl2-sc2"><a href="/starcraft-2-season-2" class="game">StarCraft II</a></li>
+      </ul>
+        <ul>
+          <li class="ahgl2-day9tv"><a class="beabettergamer" href="http://day9.tv">day9tv</a></li>
+        </ul>
+        <ul>
+      <li class="ahgl2-lol"><a href="/league-legends" class="game" title="League of Legends">League of Legends</a></li>
+          <li class="ahgl2-lol"><a href="{% url standings "league-legends" %}" class="standings">Standings</a></li>
+      <li class="ahgl2-lol"><a href="{% url games "league-legends" %}?vod_only=1" class="replays">Videos</a></li>
+            <li class="ahgl2-lol"><a href="{% url schedule "league-legends" %}" class="schedule">Schedule</a></li>
+        <li class="ahgl2-lol"><a href="{% url teams "league-legends" %}" class="teams">Teams</a></li>
+      </ul>
+    </div>
+        <div class="navbar-inner">
+                        {% block account_bar %}{% include "_account_bar.html" %}{% endblock %}
+                        </div>
 {% endblock %}
 
+{% comment %}
+        <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                {% block topbar %}
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    {% block site_brand %}<a class="brand" href="/">{{ SITE_NAME }}</a>{% endblock %}
+                    <div class="nav-collapse">
 {% block nav %}
     <ul class="nav">{% spaceless %}
-    	<li><a href="{% url pybb:index %}">Forum</a></li>
+      <li><a href="{% url pybb:index %}">Forum</a></li>
         {% if user.is_authenticated %}
             {% if user.get_profile.is_active %}
               <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              	Player Actions
-              	<b class="caret"></b>
+                Player Actions
+                <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-            	<li id="tab_report"><a href="{% url report_match_list %}">{% trans "Report Match" %}</a></li>
-            	<li id="tab_viewlineup"><a href="{% url view_lineup %}">{% trans "View Lineup" %}</a></li>
-	            {% if user.get_profile.is_captain %}
-	            	<li id="tab_lineup"><a href="{% url submit_lineup %}">{% trans "Submit Lineup" %}</a></li>
-	            {% else %}
-            	<li><a href="{% url map_list %}">{% trans "Map List" %}</a></li>
-	            {% endif %}
-	           	{% for team in user.get_profile.captain_of.all %}
-            		<li><a href="{% url edit_team team.tournament_id team.slug %}">{% trans "Edit" %} {{team.name}}</a></li>
-            	{% endfor %}
+              <li id="tab_report"><a href="{% url report_match_list %}">{% trans "Report Match" %}</a></li>
+              <li id="tab_viewlineup"><a href="{% url view_lineup %}">{% trans "View Lineup" %}</a></li>
+              {% if user.get_profile.is_captain %}
+                <li id="tab_lineup"><a href="{% url submit_lineup %}">{% trans "Submit Lineup" %}</a></li>
+              {% else %}
+              <li><a href="{% url map_list %}">{% trans "Map List" %}</a></li>
+              {% endif %}
+              {% for team in user.get_profile.captain_of.all %}
+                <li><a href="{% url edit_team team.tournament_id team.slug %}">{% trans "Edit" %} {{team.name}}</a></li>
+              {% endfor %}
               </ul>
             </li>
             {% endif %}
@@ -36,26 +68,23 @@
         {% for tournament in tournaments %}
               <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              	{{tournament.name}}
-              	<b class="caret"></b>
+                {{tournament.name}}
+                <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-              	<li><a href="{{tournament.get_absolute_url}}">{% trans "Feature" %}</a></li>
-			    <li><a href="{% url games %}?vod_only=1">{% trans "Videos" %}</a></li>
-			    <li><a href="{% url matches tournament.slug %}">{% trans "Matches" %}</a></li>
-			    <li><a href="{% url standings tournament.slug %}">{% trans "Team Standings" %}</a></li>
-			    <li><a href="{% url teams tournament.slug %}">{% trans "Teams" %}</a></li>
+                <li><a href="{{tournament.get_absolute_url}}">{% trans "Feature" %}</a></li>
+          <li><a href="{% url games %}?vod_only=1">{% trans "Videos" %}</a></li>
+          <li><a href="{% url matches tournament.slug %}">{% trans "Matches" %}</a></li>
+          <li><a href="{% url standings tournament.slug %}">{% trans "Team Standings" %}</a></li>
+          <li><a href="{% url teams tournament.slug %}">{% trans "Teams" %}</a></li>
               </ul>
         {% endfor %}
     {% endspaceless %}</ul>
 {% endblock %}
-
-
-{% block footer %}
-    {% include "_footer.html" %}
-{% endblock %}
-
-{% block extra_body_base %}
-    {% analytics %}
-    {% block extra_body %}{% endblock %}
-{% endblock %}
+                        {% block account_bar %}{% include "_account_bar.html" %}{% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endcomment %}

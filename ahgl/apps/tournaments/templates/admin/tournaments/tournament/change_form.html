@@ -8,7 +8,7 @@
                         
 <select name="stage" id="stage">
 {% for stage in original.stages %}
-<option value="{{stage}}" selected="selected">{{stage}}</option>
+<option value="{{stage.stage_order}}" selected="selected">{{stage.stage_name}}</option>
 {% endfor %}
 </select>
     <button class="btn" type="submit">New Round</button></form></li>

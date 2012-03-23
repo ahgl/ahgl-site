@@ -1,0 +1,98 @@
+{% load sekizai_tags %}
+{% load staticfiles %}
+{% load metron_tags %}
+{% load i18n %}
+{% load compress %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block head_title_base %}{% if SITE_NAME %}{{ SITE_NAME }} &#8212; {% endif %}{% block head_title %}{% endblock %}{% endblock %}</title>
+        {% block viewport %}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
+
+        <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="shortcut icon" href="{% static "images/favicon.png" %}" type="image/x-icon" />
+
+        {% compress css %}
+        {% block style_base %}
+            <link href="{% static "css/bootstrap_extract.css" %}" rel="stylesheet">
+            <link href="{% static "css/layout.css" %}" rel="stylesheet">
+            {% block extra_style %}{% endblock %}
+        {% endblock %}
+        {% endcompress %}
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        {% block extra_head_base %}
+            {% block extra_head %}{% endblock %}
+        {% endblock %}
+        {% render_block "css" %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
+
+        {% block topbar_base %}
+        {% endblock %}
+
+        {% block body_base %}
+            <div id="wrapper">
+                <div style="width:920px;">{% include "_messages.html" %}</div>
+                {% block tournament_nav %}
+                {% include "tournaments/_tournament_nav.html" %}
+                {% endblock %}
+                
+                <div id="main-content" class="{% block content-class %}{% endblock %}">
+                {% block body %}
+                {% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block footer_base %}
+            <div id="main-footer">
+                <div id="main-footer-inner">
+                        {% block footer %}{% include "_footer.html" %}{% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block extra_body_base %}
+            {% analytics %}
+            {% block extra_body %}{% endblock %}
+        {% endblock %}
+        
+        
+        {% compress js %}
+        {% block script_base %}
+            <script src="{% static "pinax/js/jquery.form.js" %}"></script>
+            <script src="{% static "pinax/js/pinax.modal.js" %}"></script>
+            <script src="{% static "bootstrap/js/bootstrap-collapse.js" %}"></script>
+            <script src="{% static "bootstrap/js/bootstrap-dropdown.js" %}"></script>
+            <script type="text/javascript">
+            
+              var _gaq = _gaq || [];
+              _gaq.push(['_setAccount', 'UA-22414469-2']);
+              _gaq.push(['_trackPageview']);
+            
+              (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+              })();
+            </script>
+            {% block extra_script %}{% endblock %}
+        {% endblock %}
+        {% endcompress %}
+        {% render_block "js" %}
+        
+    <!--[if lt IE 9]>
+
+    <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+
+    <![endif]-->
+    <!-- Place this tag in your head or just before your close body tag -->
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    </body>
+</html>

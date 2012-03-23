@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Profile, Team, Charity
+from .models import Profile, Team, Charity, TeamMembership
 
 class TeamAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
@@ -9,11 +9,23 @@ class TeamAdmin(admin.ModelAdmin):
     ordering = ('tournament',)
     list_editable = ('seed',)
    
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'name', 'char_name',)
-    list_filter = ('teams','race',)
-    search_fields = ('name','char_name',)
+class TeamMembershipAdminInline(admin.TabularInline):
+    model = TeamMembership
+    extra = 1
+class TeamMembershipAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'active','captain',)
+    list_filter = ('team','race','champion','captain',)
+    search_fields = ('char_name',)
 
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', )
+    list_filter = ('teams',)
+    search_fields = ('name','team_membership__char_name','user__username',)
+    inlines = (TeamMembershipAdminInline,)
+    
+
+
+admin.site.register(TeamMembership, TeamMembershipAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Charity)
