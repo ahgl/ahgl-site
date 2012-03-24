@@ -1,6 +1,6 @@
 import posixpath
 import logging
-import random
+import random, math
 from itertools import chain, count, takewhile
 import datetime
 
@@ -78,8 +78,12 @@ class TournamentRound(models.Model):
     def elim_bracket(self):
         participants = list(self.participants())
         for wins_needed in takewhile(lambda x:participants, count(1)):
+            num_players = len(participants)
             yield [(team_membership, team_membership.wins>=wins_needed) for team_membership in participants]
             participants = [team_membership for team_membership in participants if team_membership.wins>=wins_needed]
+        while num_players:
+            num_players = num_players // 2
+            yield [(None, False)]*num_players
     
     def participants(self):
         queryset = self.team_membership.select_related('team')

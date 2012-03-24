@@ -6,7 +6,7 @@
 # Put project-specific requirements here.
 # See http://pip-installer.org/requirement-format.html for more information.
 
-gondor==1.0.1
+-e git+git://github.com/eldarion/gondor-client.git@dev#egg=gondor
 lxml==2.2.8
 psycopg2==2.4.1
 PIL==1.1.7

@@ -12,15 +12,15 @@
 
 <div class="video-link-container">
 {% if game.vod %}
-<a href="{{game.vod}}" style="width:595;height:170;" class="video-link"><br>
+<a href="{{game.vod}}" style="width:595;height:170;" class="video-link">
 {% endif %}
 {% if match.home_submitted and match.away_submitted and game.home_player %}
 {% thumbnail game.map.photo "595x170" as im %}
-<image src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.map.name}}" /><br>
+<image src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.map.name}}" />
 {% endthumbnail %}
 {% else %}
 {% thumbnail game.map.photo "470x160" as im %}
-<image src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.map.name}}" /><br>
+<image src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{game.map.name}}" />
 {% endthumbnail %}
 {% endif %}
 {% if game.vod %}

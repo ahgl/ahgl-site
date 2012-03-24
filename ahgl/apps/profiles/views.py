@@ -49,7 +49,7 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, UpdateView):
         return reverse("team_page", kwargs=self.kwargs)
 
     def check_permissions(self):
-        if not self.object.team_membership.filter(captain=True, profile__user=self.request.user).count():
+        if not self.request.user.is_superuser and not self.object.team_membership.filter(captain=True, profile__user=self.request.user).count():
             return HttpResponseForbidden("You are not captain of this team.")
         
     @method_decorator(login_required)
@@ -63,7 +63,7 @@ class TeamListView(TournamentSlugContextView, ListView):
 class StandingsView(TournamentSlugContextView, ListView):
     def get_context_data(self, **kwargs):
         ctx = super(StandingsView, self).get_context_data(**kwargs)
-        ctx["show_points"] = Tournament.objects.only('structure').get(pk=self.kwargs['tournament']).structure=="I"
+        ctx["show_points"] = get_object_or_404(Tournament.objects.only('structure'), pk=self.kwargs['tournament']).structure=="I"
         return ctx
     
     def get_queryset(self):

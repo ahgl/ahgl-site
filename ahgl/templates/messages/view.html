@@ -12,7 +12,7 @@
     <dt>{% trans "Recipient" %}</dt>
     <dd>{{ message.recipient }}</dd>
 </dl>
-<div class="well">{{ message.body|linebreaksbr }}</div>
+<div class="well">{{ message.body|linebreaksbr|urlize }}</div>
 
 {% ifequal message.recipient_id user.pk %}
 <a href="{% url messages_reply message.id %}" class="btn btn-primary">{% trans "Reply" %}</a>

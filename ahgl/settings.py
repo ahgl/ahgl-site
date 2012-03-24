@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Django settings for basic pinax project.
 
+import os
 import os.path
 import posixpath
 import djcelery
@@ -102,9 +103,6 @@ COMPRESS_OUTPUT_DIR = "cache"
 COMPRESS_PARSER = "compressor.parser.Html5LibParser"
 COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.CSSMinFilter']
 COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.SlimItFilter']
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = "aaaa" #change this - the open source version just has something dumb
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = [
@@ -278,8 +276,6 @@ SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
 SOCIAL_AUTH_CHANGE_SIGNAL_ONLY = True
 
-FACEBOOK_APP_ID              = ''  # REMOVED BECAUSE SECRET
-FACEBOOK_API_SECRET          = ''  # REMOVED BECAUSE SECRET
 FACEBOOK_EXTENDED_PERMISSIONS = ('email',)
 
 LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
@@ -290,8 +286,13 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 # Email info
-# REMOVED BECAUSE INCLUDES PASSWORDS
-
+EMAIL_HOST = "oxmail1.registrar-servers.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "support@afterhoursgaming.tv"
+SERVER_EMAIL = "support@afterhoursgaming.tv"
+DEFAULT_FROM_EMAIL = "support@afterhoursgaming.tv"
+EMAIL_CONFIRMATION_DAYS = 2
+EMAIL_DEBUG = DEBUG
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
@@ -334,12 +335,21 @@ LOGGING = {
 GONDOR_LOCAL_SETTINGS = False
 GONDOR_REDIS_HOST = None
 
+# Gondor stores secret settings in environ variables, load them up here
+SECRET_KEY = os.environ['SECRET_KEY']
+FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
+FACEBOOK_API_SECRET = os.environ['FACEBOOK_API_SECRET']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
 try:
     from local_settings import *
 except ImportError:
     pass
+
+SERVER_EMAIL = "support@afterhoursgaming.tv"
+DEFAULT_FROM_EMAIL = "support@afterhoursgaming.tv"
 
 CMS_MEDIA_PATH = "cms/"
 CMS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, CMS_MEDIA_PATH)
