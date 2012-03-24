@@ -335,12 +335,6 @@ LOGGING = {
 GONDOR_LOCAL_SETTINGS = False
 GONDOR_REDIS_HOST = None
 
-# Gondor stores secret settings in environ variables, load them up here
-SECRET_KEY = os.environ['SECRET_KEY']
-FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
-FACEBOOK_API_SECRET = os.environ['FACEBOOK_API_SECRET']
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
 try:
@@ -357,6 +351,12 @@ CMS_MEDIA_URL = posixpath.join(MEDIA_URL, CMS_MEDIA_PATH)
 CMS_PAGE_MEDIA_PATH = "cms_page_media/"
 
 if GONDOR_LOCAL_SETTINGS:
+    # Gondor stores secret settings in environ variables, load them up here
+    SECRET_KEY = os.environ['SECRET_KEY']
+    FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
+    FACEBOOK_API_SECRET = os.environ['FACEBOOK_API_SECRET']
+    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+    
     if GONDOR_REDIS_HOST:
         # Caching
         CACHES = {
