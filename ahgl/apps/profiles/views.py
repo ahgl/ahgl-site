@@ -24,7 +24,7 @@ class TournamentSlugContextView(object):
         context = super(TournamentSlugContextView, self).get_context_data(**kwargs)
         context['tournament_slug'] = self.kwargs.get('tournament')
         """try:
-            context['tournament'] = Tournament.objects.get(slug=context['tournament_slug'])
+            context['tournament'] = get_object_or_404(Tournament, slug=context['tournament_slug'])
         except Tournament.DoesNotExist:
             pass"""
         return context

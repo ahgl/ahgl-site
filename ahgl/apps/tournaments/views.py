@@ -111,7 +111,7 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
     
     def dispatch(self, request, *args, **kwargs):
         self.stage = int(kwargs.get('stage') or request.GET.get('stage'))
-        self.tournament = Tournament.objects.get(slug=kwargs.get('tournament'))
+        self.tournament = get_object_or_404(Tournament, slug=kwargs.get('tournament'))
         self.tournament_rounds = TournamentRound.objects.filter(tournament=self.tournament, stage_order=self.stage)
         return super(NewTournamentRoundView, self).dispatch(request, *args, **kwargs)
     
@@ -152,7 +152,7 @@ class GameListView(TournamentSlugContextView, ListView):
         if self.kwargs.get('tournament'):
             queryset = queryset.filter(match__tournament=self.kwargs.get('tournament'))
         if self.kwargs.get('team') and self.kwargs.get('profile'):
-            self.member = TeamMembership.get(**self.kwargs).only('profile__slug', 'team__slug', 'team__tournament', 'char_name').get()
+            self.member = get_object_or_404(TeamMembership.get(**self.kwargs).only('profile__slug', 'team__slug', 'team__tournament', 'char_name'))
             queryset = queryset.filter(Q(home_player=self.member) | Q(away_player=self.member))
         else:
             if self.request.GET.get('player'):
