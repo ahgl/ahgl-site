@@ -13,7 +13,7 @@
 	{% regroup object_list by stage_name as stage_list %}
     {% for stage in stage_list %}
         {% for round in stage.list %}
-            {% if round.has_matches %}
+            {% if round.structure == "E" or round.has_matches %}
 {% if forloop.first %}
 {% if stage_list|length > 1 %}
     <div class="">
