@@ -53,8 +53,9 @@
 <div class="bracket">
 {% for row in round.elim_bracket %}
 <div class="bracket-round">
-{% for item in row %}
-<div class="bracket-item"><a href="{{item.0.team.get_absolute_url}}" class="{% if item.1 %}winner{% endif %}">{{item.0.team|default:"-"}}</a></div>
+<h3>{{row.name}}</h3>
+{% for item in row.items %}
+<div class="bracket-item" {% if not forloop.parentloop.last %}style="-moz-box-pack:{% cycle 'end' 'start' %};"{% endif %}><a href="{{item.team_membership.team.get_absolute_url}}" class="{% if item.winner %}winner{% endif %}">{{item.team_membership.team|default:"-"}}</a></div>
 {% endfor %}
 </div>
 {% endfor %}

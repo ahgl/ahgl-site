@@ -1,3 +1,4 @@
+from collections import namedtuple
 import posixpath
 import logging
 import random, math
@@ -66,7 +67,9 @@ class Map(models.Model):
     
     class Meta:
         ordering = ('name',)
-    
+
+BracketRow = namedtuple("BracketRow", "items, name")
+TeamBracketRecord = namedtuple("TeamBracketRecord", "team_membership, winner")
 class TournamentRound(models.Model):
     order = models.IntegerField()
     tournament = models.ForeignKey('Tournament', related_name='rounds')
@@ -75,15 +78,18 @@ class TournamentRound(models.Model):
     stage_name = models.CharField(max_length=40)
     structure = models.CharField(max_length=1, choices=(('G', 'Group'),('E', 'Elimination'),), default='G')
     
+    def _round_name(self, count):
+        return {1:"Champion", 2:"Finals", 4:"Semi-finals"}.get(count) or "Round of {0}".format(count)
     def elim_bracket(self):
         participants = list(self.participants())
         for wins_needed in takewhile(lambda x:participants, count(1)):
             num_players = len(participants)
-            yield [(team_membership, team_membership.wins>=wins_needed) for team_membership in participants]
+            yield BracketRow([TeamBracketRecord(team_membership, team_membership.wins>=wins_needed) for team_membership in participants], self._round_name(num_players))
             participants = [team_membership for team_membership in participants if team_membership.wins>=wins_needed]
+        num_players = num_players // 2
         while num_players:
+            yield BracketRow([TeamBracketRecord(None, False)]*num_players, self._round_name(num_players))
             num_players = num_players // 2
-            yield [(None, False)]*num_players
     
     def participants(self):
         queryset = self.team_membership.select_related('team')
@@ -107,6 +113,7 @@ class TeamRoundMembership(models.Model):
     wins = models.IntegerField(default=0, editable=False)
     losses = models.IntegerField(default=0, editable=False)
     tiebreaker = models.IntegerField(default=0, editable=False)
+    #TODO: moving seeding here
     
     def update_stats(self):
         self.wins = self.team.match_wins.filter(published=True, tournament_round=self.tournamentround).count()
