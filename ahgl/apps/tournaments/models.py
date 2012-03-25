@@ -94,7 +94,7 @@ class TournamentRound(models.Model):
     def participants(self):
         queryset = self.team_membership.select_related('team')
         if self.structure=="G":
-            return queryset.order_by('-wins', '-tiebreaker')
+            return queryset.order_by('-wins', '-tiebreaker', 'team__seed')
         else:
             return queryset.order_by('team__seed')
     
