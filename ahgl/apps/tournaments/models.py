@@ -2,7 +2,7 @@ from collections import namedtuple
 import posixpath
 import logging
 import random, math
-from itertools import chain, count, takewhile
+from itertools import chain, count, takewhile, islice
 import datetime
 
 from django.db import models
@@ -68,6 +68,8 @@ class Map(models.Model):
     class Meta:
         ordering = ('name',)
 
+
+
 BracketRow = namedtuple("BracketRow", "items, name")
 TeamBracketRecord = namedtuple("TeamBracketRecord", "team_membership, winner")
 class TournamentRound(models.Model):
@@ -78,10 +80,26 @@ class TournamentRound(models.Model):
     stage_name = models.CharField(max_length=40)
     structure = models.CharField(max_length=1, choices=(('G', 'Group'),('E', 'Elimination'),), default='G')
     
-    def _round_name(self, count):
+    @staticmethod
+    def _round_name(count):
         return {1:"Champion", 2:"Finals", 4:"Semi-finals"}.get(count) or "Round of {0}".format(count)
+
+    @staticmethod
+    def _seed(bracket):
+        fbracket = [None]*len(bracket)
+        fbracket[0] = bracket[0]
+        stage_size = 2
+        next_step = len(bracket)
+        while stage_size <= len(bracket):
+            step = next_step
+            next_step = step // 2
+            for i in range(0, len(bracket), step):
+                fbracket[i+next_step] = bracket[stage_size - fbracket[i].team.seed]
+            stage_size *= 2
+        return fbracket
+
     def elim_bracket(self):
-        participants = list(self.participants())
+        participants = self._seed(list(self.participants()))
         for wins_needed in takewhile(lambda x:participants, count(1)):
             num_players = len(participants)
             yield BracketRow([TeamBracketRecord(team_membership, team_membership.wins>=wins_needed) for team_membership in participants], self._round_name(num_players))
