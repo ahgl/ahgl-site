@@ -86,6 +86,10 @@ class TournamentRound(models.Model):
 
     @staticmethod
     def _seed(bracket):
+        # this only works for multiples of two
+        len_base = math.log(len(bracket), 2)
+        if int(len_base) != len_base:
+            return []
         fbracket = [None]*len(bracket)
         fbracket[0] = bracket[0]
         stage_size = 2
@@ -100,6 +104,7 @@ class TournamentRound(models.Model):
 
     def elim_bracket(self):
         participants = self._seed(list(self.participants()))
+        num_players = 0
         for wins_needed in takewhile(lambda x:participants, count(1)):
             num_players = len(participants)
             yield BracketRow([TeamBracketRecord(team_membership, team_membership.wins>=wins_needed) for team_membership in participants], self._round_name(num_players))
