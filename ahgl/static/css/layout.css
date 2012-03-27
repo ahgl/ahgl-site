@@ -190,14 +190,16 @@ p {
 #main-content {
 	width:920px;
 	margin:0 auto;
-	overflow:auto;
-	padding:0 40px 240px 40px;
+	padding:0 40px 0 40px;
 }
 
 #main-content ul > li {
 	list-style:  none;
 	list-style-position:  outside;
 	list-style-image: none;
+}
+#wrapper.splash {
+	margin-bottom:-240px;
 }
 .splash li, li.season-list-item {
 	display: inline;
@@ -244,7 +246,7 @@ p {
 #main-footer-inner {
 	width:920px;
 	height:147px;
-	margin:-240px auto 0 auto;
+	margin:0 auto 0 auto;
 	padding:58px 40px 0 40px;
 }
 
@@ -1516,6 +1518,6 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
 	-ms-box-flex:1;
 }
 
-.well {
+.well, .main-block {
 	color:black;
 }
