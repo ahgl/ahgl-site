@@ -4,7 +4,7 @@ import logging, datetime
 from django.views.generic import DetailView, ListView, UpdateView
 from django.views.generic.detail import TemplateResponseMixin
 from django.views.generic.edit import FormMixin, ProcessFormView
-from django.forms.models import inlineformset_factory, modelformset_factory
+from django.forms.models import inlineformset_factory, modelformset_factory, modelform_factory
 from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -284,14 +284,16 @@ class MatchReportView(UpdateView):
                 class Meta:
                     model = Game
                     fields=('winner_team','forfeit',)
-            
-        return inlineformset_factory(Match, Game, extra=0, can_delete=False, form=ReportMatchForm)
+        ReportMatchForm.queryset = Game.objects.select_related('map', 'home_player', 'away_player')
+        form_classes = SortedDict([("Games",inlineformset_factory(Match, Game, extra=0, can_delete=False, form=ReportMatchForm)),
+                                   ("Match",modelform_factory(Match, fields=('description',)))])
+        return type("MatchReportForm", (MultipleFormSetBase,), {"form_classes":form_classes})
     
     def get_form_kwargs(self):
         """
         Returns the keyword arguments for instanciating the form.
         """
-        kwargs = {'instance':self.object, 'queryset':Game.objects.select_related('map', 'home_player', 'away_player')}
+        kwargs = {'instance':self.object}
         if self.request.method in ('POST', 'PUT'):
             kwargs.update({
                 'data': self.request.POST,

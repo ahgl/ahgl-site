@@ -11,13 +11,20 @@
     <h2 class="title title-1 t1">Match: {{match}}</h2>
 {% if form %}
 <form enctype="multipart/form-data" method="post" class="form-horizontal well">
-    {% for f in form %}
-    <fieldset>
-        <legend class="row-fluid"><div class="span2">{{f.instance.map}}</div>
-        {% if f.instance.home_player %}<div class="span">{% if not f.instance.is_ace %}{{f.instance.home_player}} ({{f.instance.get_home_race_display}}) vs {{f.instance.away_player}} ({{f.instance.get_away_race_display}}){% endif %}</div>{% endif %}
-        </legend>
-        {{ f|as_bootstrap }}
-    </fieldset>
+    {% for part in form %}
+      {% if part|length %}
+        {% for f in part %}
+        <fieldset>
+            <legend class="row-fluid"><div class="span2">{{f.instance.map}}</div>
+            {% if f.instance.home_player %}<div class="span">{% if not f.instance.is_ace %}{{f.instance.home_player}} ({{f.instance.get_home_race_display}}) vs {{f.instance.away_player}} ({{f.instance.get_away_race_display}}){% endif %}</div>{% endif %}
+            </legend>
+            {{ f|as_bootstrap }}
+        </fieldset>
+        {% endfor %}
+      {% else %}
+        {{part|as_bootstrap}}
+      {% endif %}
+      {{ part.management_form }}
     {% endfor %}
     {{ form.management_form }}
 {% csrf_token %}

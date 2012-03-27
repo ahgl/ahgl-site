@@ -158,6 +158,7 @@ class Match(models.Model):
     published = models.BooleanField(default=False)
     publish_date = models.DateField(blank=True, null=True) #set this when published
     creation_date = models.DateField()
+    description = models.TextField(blank=True)
     referee = models.ForeignKey('profiles.Profile', null=True, blank=True, editable=False)
     # submitted lineups yet?
     home_submitted = models.BooleanField(default=False)
