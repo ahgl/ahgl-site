@@ -17,12 +17,9 @@
 	{% autopaginate game_list 10 %}
     <ul class="video-link-list">
 
-    {% if player %}
-    <h3 class="t6">WINS</h3>
-    {% endif %}
     {% for game in game_list %}
     {% if player %}
-    {% if forloop.counter == loss_i %}<h3 class="t6">LOSSES</h3>{% endif %}
+    {% ifchanged %}<h3 class="t6">{% if game.winner_id == player.id or game.winner_team_id == player.id %}WINS{% else %}LOSSES{% endif %}</h3>{% endifchanged %}
     {% ifchanged %}<h4 class="t3">{{game.match}}</h4>{% endifchanged %}
     {% else %}
     {% ifchanged %}<h2 class="t2">{{game.match.publish_date}}</h2>{% endifchanged %}
