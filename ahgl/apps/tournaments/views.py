@@ -354,7 +354,7 @@ class SubmitLineupView(ObjectPermissionsCheckMixin, UpdateView):
             self.object.away_submitted = True
         self.object.save()
         if notification and self.object.home_submitted and self.object.away_submitted:
-            notification.send(User.objects.filter(profile__teams__pk__in=(self.object.home_team_id, self.object.away_team_id)),
+            notification.send(User.objects.exclude(username='master').filter(profile__teams__pk__in=(self.object.home_team_id, self.object.away_team_id)),
                               "tournaments_lineup_ready",
                               {'match': self.object,
                                })
