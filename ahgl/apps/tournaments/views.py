@@ -131,7 +131,6 @@ class GameListView(TournamentSlugContextView, ListView):
         if is_win:
             context['game_list'] = list(self.object_list)
             context['game_list'].sort(key=is_win, reverse=True)
-            context['loss_i'] = len(filter(is_win, context['game_list']))+1
         return context
     def get_queryset(self):
         related_members = ['map', 'home_player__profile', 'away_player__profile', 'home_player__team', 'away_player__team', 'match__home_team', 'match__away_team']
