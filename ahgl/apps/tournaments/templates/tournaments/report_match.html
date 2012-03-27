@@ -22,6 +22,7 @@
         </fieldset>
         {% endfor %}
       {% else %}
+        <legend class="row-fluid">{{part.prefix}}</legend>
         {{part|as_bootstrap}}
       {% endif %}
       {{ part.management_form }}
