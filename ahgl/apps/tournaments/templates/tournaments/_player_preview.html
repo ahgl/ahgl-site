@@ -8,5 +8,5 @@
 {% endthumbnail %}
 </a></p>
 <h3 class="t3">{{player}}{% if user.is_authenticated and game.winner_id == player.id or game.winner_team_id == player.id %}*{% endif %}</h3>
-<p><a href="{{.get_absolute_url}}">More about {{player}}</a></p>
+<p><a href="{{player.get_absolute_url}}">More about {{player}}</a></p>
 </div>
