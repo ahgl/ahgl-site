@@ -15,7 +15,7 @@
       {% if part|length %}
         {% for f in part %}
         <fieldset>
-            <legend class="row-fluid"><div class="span2">{{f.instance.map}}</div>
+            <legend class="row-fluid"><div class="span2">{{forloop.counter}}) {{f.instance.map}}</div>
             {% if f.instance.home_player %}<div class="span">{% if not f.instance.is_ace %}{{f.instance.home_player}} ({{f.instance.get_home_race_display}}) vs {{f.instance.away_player}} ({{f.instance.get_away_race_display}}){% endif %}</div>{% endif %}
             </legend>
             {{ f|as_bootstrap }}

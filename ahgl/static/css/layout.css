@@ -1521,3 +1521,7 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
 .well, .main-block {
 	color:black;
 }
+.table tbody tr:hover td, .table tbody tr:hover th {
+  background-color: inherit;
+}
+

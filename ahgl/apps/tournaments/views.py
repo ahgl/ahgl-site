@@ -303,6 +303,7 @@ class MatchReportView(UpdateView):
     def form_valid(self, form):
         self.object.referee = self.user.get_profile()
         self.object.remove_extra_victories()
+        messages.success(self.request, 'Result submission successful.')
         return super(MatchReportView, self).form_valid(form)
     
     def get_success_url(self):
@@ -357,6 +358,7 @@ class SubmitLineupView(ObjectPermissionsCheckMixin, UpdateView):
                               "tournaments_lineup_ready",
                               {'match': self.object,
                                })
+        messages.success(self.request, 'Lineup submission successful.')
         return super(SubmitLineupView, self).form_valid(*args, **kwargs)
     
     def get_queryset(self):
