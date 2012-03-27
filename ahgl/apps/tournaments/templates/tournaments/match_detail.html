@@ -15,7 +15,7 @@
     <div style="text-align:center;" id="main-video-container"><iframe src="{{first_vod}}" width="920" height="459" frameborder="0" allowfullscreen></iframe><embed type="application/x-shockwave-flash" src="{{first_vod}}" style="display:none"></embed></div>
     {% endif %}
     {% if not match.published %}
-    <span>{{match.home_team}} submitted: {{match.home_submitted}}</span><span style="float:right;">{{match.away_team}} submitted: {{match.away_submitted}}</span>
+    <span>{{match.home_team}} submitted: {% if match.home_submitted %}{{match.home_submission_date|default_if_none:"Yes"}}{% else %}No{% endif %}</span><span style="float:right;">{{match.away_team}} submitted: {% if match.away_submitted %}{{match.away_submission_date|default_if_none:"Yes"}}{% else %}No{% endif %}</span>
     {% endif %}
     <ul class="video-link-list">
     {% for game in games %}
