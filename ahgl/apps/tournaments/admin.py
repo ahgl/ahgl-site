@@ -104,7 +104,7 @@ class MatchAdmin(admin.ModelAdmin):
     ]
     actions = ['publish_match']
     date_hierarchy = 'creation_date'
-    readonly_fields = ('tournament', 'home_submission_date', 'away_submission_date',)
+    readonly_fields = ('tournament', 'home_submission_date', 'away_submission_date','referee',)
     
     def get_form(self, request, obj=None, **kwargs):
         self.obj = obj
