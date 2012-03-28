@@ -168,7 +168,7 @@ class GameListView(TournamentSlugContextView, ListView):
                                            | Q(away_player__profile__name__icontains=self.request.GET.get('s'))
                                            )
         if self.request.GET.get('vod_only'):
-            queryset = queryset.exclude(vod="")
+            queryset = queryset.exclude(vod="").order_by('-match__publish_date', 'match', 'order')
         return queryset.select_related(*related_members).only(*used_fields)
     
 class MatchListView(TournamentSlugContextView, ListView):
