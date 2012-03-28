@@ -123,10 +123,10 @@ class GameListView(TournamentSlugContextView, ListView):
             context['vod_only'] = True
         is_win = None
         if hasattr(self, 'member'):
-            context['player'] = self.member
+            context['member'] = context['player'] = self.member
             is_win = lambda game:game.winner_id == self.member.pk
         elif hasattr(self, 'player'):
-            context['player'] = self.player
+            context['profile'] = context['player'] = self.player
             is_win = lambda game:game.winner.profile_id == self.player.pk
         if is_win:
             context['game_list'] = list(self.object_list)

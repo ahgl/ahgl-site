@@ -19,7 +19,7 @@
 
     {% for game in game_list %}
     {% if player %}
-    {% ifchanged %}<h3 class="t6">{% if game.winner_id == player.id or game.winner_team_id == player.id %}WINS{% else %}LOSSES{% endif %}</h3>{% endifchanged %}
+    {% ifchanged %}<h3 class="t6">{% if game.winner_id == member.id or game.winner.profile_id == profile.id %}WINS{% else %}LOSSES{% endif %}</h3>{% endifchanged %}
     {% ifchanged %}<h4 class="t3">{{game.match}}</h4>{% endifchanged %}
     {% else %}
     {% ifchanged %}<h2 class="t2">{{game.match.publish_date}}</h2>{% endifchanged %}
