@@ -18,5 +18,10 @@
         {% csrf_token %}
     </fieldset>
 </form>
-
+<h2>Members</h2>
+<ul>
+{% for team_member in team.team_membership.all %}
+<li><a href="{% url membership_edit team_member.id %}">{{team_member}}</a></li>
+{% endfor %}
+</ul>
 {% endblock %}

@@ -114,7 +114,7 @@ class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
             return self.render_to_response(self.get_context_data(form=form))
 
     def check_permissions(self):
-        if self.object.profile.user != self.request.user:
+        if self.object.profile.user != self.request.user and not (self.object.profile.user.username=="master" and TeamMembership.objects.filter(profile__user=self.request.user, captain=True, team=self.object.team).count()):
             return HttpResponseForbidden("This is not your membership to edit.")
         
     @method_decorator(login_required)
