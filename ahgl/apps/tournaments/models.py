@@ -101,7 +101,7 @@ class TournamentRound(models.Model):
                 fbracket[i+next_step] = bracket[stage_size - fbracket[i].team.seed]
             stage_size *= 2
         return fbracket
-
+    
     def elim_bracket(self):
         participants = self._seed(list(self.participants()))
         num_players = 0
@@ -228,6 +228,8 @@ class Match(models.Model):
         created = self.id is None
         if created and not self.creation_date: # set creation date if it wasn't set already
             self.creation_date = datetime.datetime.now()
+        if self.published and not self.publish_date:
+            self.publish_date = datetime.datetime.now()
         super(Match, self).save(*args, **kwargs)
         if "notification" in settings.INSTALLED_APPS and notification and created and notify:
             send_task("tournaments.tasks.notify_match_creation", [unicode(self),
