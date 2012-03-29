@@ -191,7 +191,7 @@ class Team(models.Model):
     
     @property
     def membership_queryset(self):
-        self._team_membership_queryset = getattr(self, '_team_membership_queryset', None) or self.team_membership.all().select_related('profile')
+        self._team_membership_queryset = getattr(self, '_team_membership_queryset', None) or self.team_membership.select_related('profile').extra(select={'lower_char_name': 'lower(char_name)'}).order_by('-active', '-captain', 'lower_char_name')
         return self._team_membership_queryset        
     @property
     def captains(self):
