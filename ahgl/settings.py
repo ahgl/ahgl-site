@@ -127,6 +127,7 @@ MIDDLEWARE_CLASSES = [
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
@@ -170,6 +171,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    "django.contrib.redirects",
     
     "pinax.templatetags",
     
