@@ -149,12 +149,13 @@ class Command(BaseCommand):
         if not charity.desc:
             print("charity desc")
             charity.desc = charity_p.text_content().strip()[2:] #"".join(list(charity_p.itertext())[1:])
-        try:
-            charity_photo_url = team_d.cssselect('.content-section-4 img')[0].get('src')
-            filename = slugify(charity_name) + posixpath.splitext(charity_photo_url)[1]
-            charity.logo.save(filename, ContentFile(urllib2.urlopen(charity_photo_url).read()))
-        except IndexError:
-            print("{team} did not have expected image section for charity, leaving blank".format(team=team_name), file=self.stderr)
+        if not charity.logo:
+            try:
+                charity_photo_url = team_d.cssselect('.content-section-4 img')[0].get('src')
+                filename = slugify(charity_name) + posixpath.splitext(charity_photo_url)[1]
+                charity.logo.save(filename, ContentFile(urllib2.urlopen(charity_photo_url).read()))
+            except IndexError:
+                print("{team} did not have expected image section for charity, leaving blank".format(team=team_name), file=self.stderr)
         charity.full_clean()
         charity.save()
         team.charity = charity
