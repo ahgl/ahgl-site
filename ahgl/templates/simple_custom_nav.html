@@ -1,0 +1,15 @@
+{% extends "site_base.html" %}
+{% load cms_tags %}
+{% load menu_tags %}
+
+{% block head_title %}{{ request.current_page.get_title }}{% endblock %}
+
+{% block tournament_nav %}
+<div id="main-header">
+{% placeholder nav %}
+</div>
+{% endblock %}
+
+{% block body %}
+{% placeholder content %}
+{% endblock %}

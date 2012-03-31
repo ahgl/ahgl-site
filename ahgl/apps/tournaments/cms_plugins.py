@@ -55,6 +55,5 @@ class TournamentNavPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         context['tournament_slug'] = instance.tournament_id
-        context['extra_header_id'] = "-ahgl2"
         return context
 plugin_pool.register_plugin(TournamentNavPlugin)
