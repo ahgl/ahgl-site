@@ -198,6 +198,7 @@ INSTALLED_APPS = [
     'pure_pagination',
     'messages',
     "djcelery",
+    'tinymce',
     
     # cms
     'cms',
@@ -227,6 +228,13 @@ INSTALLED_APPS = [
 """FIXTURE_DIRS = [
     os.path.join(PROJECT_ROOT, "fixtures"),
 ]"""
+
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': "simple",
+    'custom_undo_redo_levels': 10,
+    'width':"100%",
+    'height':"480",
+}
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 

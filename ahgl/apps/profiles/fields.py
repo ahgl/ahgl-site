@@ -4,7 +4,12 @@ from django.conf import settings
 from django.db import models
 from django.utils.safestring import mark_safe
 
+from tinymce.widgets import TinyMCE
+
 class HTMLField(models.TextField):
+    """This stores HTML content to be displayed raw to the user.
+    The content is cleaned using bleach to restrict the set of HTML used.
+    The TinyMCE widget is used for form editing."""
     __metaclass__ = models.SubfieldBase
     
     def __init__(self, tags=None, attributes=None, *args, **kwargs):
@@ -21,6 +26,11 @@ class HTMLField(models.TextField):
             else:
                 self.attributes = []
         return super(HTMLField, self).__init__(*args, **kwargs)
+    
+    def formfield(self, **kwargs):
+        defaults = {'widget': TinyMCE()}
+        defaults.update(kwargs)
+        return super(HTMLField, self).formfield(**defaults)
     
     def to_python(self, value):
         value = super(HTMLField, self).to_python(value)
@@ -40,6 +50,6 @@ try:
         },
       )
     ]
-    add_introspection_rules(rules, ["^profiles\.fields\.HTMLField"])
+    add_introspection_rules(rules, ["^bloggy\.fields\.HTMLField"])
 except ImportError:
     pass

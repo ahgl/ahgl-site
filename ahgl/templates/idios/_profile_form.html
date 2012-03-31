@@ -1,6 +1,6 @@
 {% load bootstrap_tags %}
-
-<form method="POST">
+{{profile_form.media}}
+<form method="POST" class="well">
     <fieldset>
         {% csrf_token %}
         {{ profile_form|as_bootstrap }}

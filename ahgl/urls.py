@@ -35,6 +35,7 @@ urlpatterns = patterns("",
     url(r'^forum/', include('pybb.urls', namespace='pybb')),
     url(r'^messages/compose/(?P<recipient>[\+\w\.\-_]+)/$', compose, name='messages_compose_to'), #we allow periods
     url(r'^messages/', include('messages.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
     
     # player admin controls
     url(r'^player_admin/$', PlayerAdminView.as_view(), name="player_admin"),
