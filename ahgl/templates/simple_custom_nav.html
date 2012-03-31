@@ -1,6 +1,7 @@
 {% extends "site_base.html" %}
 {% load cms_tags %}
 {% load menu_tags %}
+{% load cache %}
 
 {% block head_title %}{{ request.current_page.get_title }}{% endblock %}
 
@@ -11,5 +12,7 @@
 {% endblock %}
 
 {% block body %}
+{% cache 300 cms_body request.path user.is_authenticated %}
 {% placeholder content %}
+{% endcache %}
 {% endblock %}

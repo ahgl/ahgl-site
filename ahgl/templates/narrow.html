@@ -1,6 +1,7 @@
 {% extends "site_base.html" %}
 {% load cms_tags %}
 {% load menu_tags %}
+{% load cache %}
 
 {% block head_title %}{{ request.current_page.get_title }}{% endblock %}
 
@@ -12,10 +13,12 @@
 
 
 {% block body %}
+{% cache 300 cms_body request.path %}
 <h2 class="title title-1 t1">
 {{ request.current_page.get_title }}
 </h2>
 <div class="content-section-1">
 {% placeholder content %}
 </div>
+{% endcache %}
 {% endblock %}
