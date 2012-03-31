@@ -33,7 +33,8 @@ class GamePlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         context['game'] = instance.game
-        context['match'] = instance.game.match
+        if instance.game:
+            context['match'] = instance.game.match
         return context
 plugin_pool.register_plugin(GamePlugin)
 
