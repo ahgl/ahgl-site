@@ -52,7 +52,7 @@ class Command(BaseCommand):
     master_user = User.objects.get(username='master')
     unknown_photo = '/wp-content/themes/AHGL/images/the-unknown.png'
     
-    _map_map = {u"Tal’darim Altar": "Tal'Darim Altar", "Tal'Darim Altar":"Tal'Darim Altar", "The Shattered Temple": "Shattered Temple"}
+    _map_map = {u"Xelnaga": "Xel'Naga Caverns", u"Xel’Naga Caverns": "Xel'Naga Caverns", u"Tal’Darim Altar": "Tal'Darim Altar", u"Tal’darim Altar": "Tal'Darim Altar", "Tal'Darim Altar":"Tal'Darim Altar", "The Shattered Temple": "Shattered Temple"}
     def coerse_mapname(self, mapname):
         if mapname in self._map_map.keys():
             return self._map_map[mapname]
@@ -216,7 +216,7 @@ class Command(BaseCommand):
                 map.photo.save(filename, ContentFile(urllib2.urlopen(map_photo_url).read()))
                 map.full_clean()
                 map.save()
-                self.tournament.map_pool.add(map)
+            self.tournament.map_pool.add(map)
             
             # Game creation
             game, game_created = Game.objects.get_or_create(match=match, order=order, defaults={"map":map})
