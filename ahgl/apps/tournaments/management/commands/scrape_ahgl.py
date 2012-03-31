@@ -65,9 +65,20 @@ class Command(BaseCommand):
         d.make_links_absolute()
         return d
 
-    def load_player(self, member_url, team):
+    def load_player(self, member_url, team, char_name=None):
         """ Loads player and team membership data, and adds as member to team. Return profile, membership """
-        member_d = self.visit_url(member_url)
+        try:
+            member_d = self.visit_url(member_url)
+        except IOError:
+            profile_name = " ".join((word.capitalize() for word in member_url.strip("/").split("/")[-1].split("-")))
+            print("Page not found, constructing from {0} name and {1} charname".format(profile_name, char_name))
+            # create profile and membership
+            profile, created = Profile(name=profile_name, user=self.master_user), True
+            profile.save()
+            membership = TeamMembership(team=team, profile=profile, char_name=char_name, active=False)
+            membership.save()
+            return profile, membership
+            
         
         if "Player not found in database" in tostring(member_d):
             print("Player not found...skipping", file=self.stdout)
@@ -75,9 +86,10 @@ class Command(BaseCommand):
         info_ps = member_d.cssselect('.content-section-1 p')
         info_h3s = member_d.cssselect('.content-section-1 h3')
         profile_name = info_ps[1].text
-        char_name = info_ps[4].text
-        if "." in char_name:
-            char_name = char_name.split(".", 1)[0]
+        if char_name is None:
+            char_name = info_ps[4].text
+            if "." in char_name:
+                char_name = char_name.split(".", 1)[0]
         if Profile.objects.filter(name=profile_name).count():
             profile, created = Profile.objects.get(name=profile_name), False
             membership, membership_created = TeamMembership.objects.get_or_create(team=team, profile=profile, defaults={'char_name': char_name})
@@ -108,7 +120,10 @@ class Command(BaseCommand):
                     membership.clean_fields()
                 except ValidationError:
                     membership.race = None
-        membership.questions_answers = tostring(member_d.cssselect('div.content-section-2 ol')[0])
+        try:
+            membership.questions_answers = tostring(member_d.cssselect('div.content-section-2 ol')[0])
+        except:
+            pass
         try:
             profile.full_clean()
         except ValidationError as e:
@@ -127,11 +142,12 @@ class Command(BaseCommand):
         filename = slugify(team_name) + posixpath.splitext(photo_url)[1]
         team.photo.save(filename, ContentFile(urllib2.urlopen(photo_url).read()))
         
-        charity_p = team_d.cssselect('.content-section-3 p')[1]
+        charity_p = team_d.cssselect('.content-section-3 p')[0 if self.tournament.slug == "starcraft-2-season-1" else 1]
         charity_name = charity_p.cssselect('a')[0].text
         charity, created = Charity.objects.get_or_create(name=charity_name)
         charity.link = charity_p.cssselect('a')[0].get('href')
         if not charity.desc:
+            print("charity desc")
             charity.desc = charity_p.text_content().strip()[2:] #"".join(list(charity_p.itertext())[1:])
         try:
             charity_photo_url = team_d.cssselect('.content-section-4 img')[0].get('src')
@@ -144,9 +160,11 @@ class Command(BaseCommand):
         team.charity = charity
 
         # load profiles of members
-        for member_a in team_d.cssselect("ul.player-list-1.cf li > a"):
+        for member_li in team_d.cssselect("ul.player-list-1.cf li"):
+            char_name = member_li.cssselect("h2")[0].text
+            member_a = member_li.cssselect("a")[0]
             member_url = member_a.get("href")
-            player = self.load_player(member_url, team)
+            player = self.load_player(member_url, team, char_name)
             if player:
                 profile, membership = player
                 member_thumbnail_url = member_a.cssselect('img')[0].get('src')
@@ -165,7 +183,7 @@ class Command(BaseCommand):
             if not previous_matchup_count:
                 break
         return round
-    def load_match(self, match_url):
+    def load_match(self, match_url, week=None):
         match_d = self.visit_url(match_url)
         
         if not match_d.cssselect('a.first-title'):
@@ -173,7 +191,8 @@ class Command(BaseCommand):
             return
         home_team = Team.objects.get(slug=slugify(match_d.cssselect('a.first-title')[0].text.strip()), tournament=self.tournament)
         away_team = Team.objects.get(slug=slugify(match_d.cssselect('a.second-title')[0].text.strip()), tournament=self.tournament)
-        week = int(re.search('week[^/]*([\d]+)[^/]*/', match_url).group(1)) - 1
+        if week is None:
+            week = int(re.search('week[^/]*([\d]+)[^/]*/', match_url).group(1)) - 1
         print("{0} week".format(week), file=self.stdout)
         creation_date = self.first_week_match + self.a_week*week
         round = self.find_round(home_team, away_team, creation_date)
@@ -213,17 +232,15 @@ class Command(BaseCommand):
                 away_player_url = game_li.cssselect('.video-player-link-container.last a')[0].get('href')
                 members = ("home", "away")
                 for team, char_name, url, member in zip((match.home_team, match.away_team), (home_player, away_player), (home_player_url, away_player_url), members):
-                    # team based games don't need to load player data per game
-                    if posixpath.join(self.site_url, "teams") not in url:
-                        try:
-                            setattr(game, "_".join((member, "player")), TeamMembership.objects.get(team=team, char_name__iexact=char_name))
-                        except TeamMembership.DoesNotExist:
-                            if char_name == "???" or "#" in url:
-                                if char_name != "???":
-                                    print("Player {0} not found...ignoring".format(char_name), file=self.stderr)
-                            else:
-                                profile, membership = self.load_player(url, team)
-                                setattr(game, "_".join((member, "player")), membership)
+                    try:
+                        setattr(game, "_".join((member, "player")), TeamMembership.objects.get(team=team, char_name__iexact=char_name))
+                    except TeamMembership.DoesNotExist:
+                        if char_name == "???" or "#" in url:
+                            if char_name != "???":
+                                print("Player {0} not found...ignoring".format(char_name), file=self.stderr)
+                        else:
+                            profile, membership = self.load_player(url, team, char_name)
+                            setattr(game, "_".join((member, "player")), membership)
 
             
             vod = game_li.cssselect('.video-link-container > a.video-link')[0].get('href')
@@ -472,6 +489,8 @@ class Command(BaseCommand):
             raise CommandError("Tournament {0} does not exist".format(args[0]))
         self.site_url = args[1] if len(args)>1 else "http://afterhoursgaming.tv/sc2/"
         admin_url = "http://ahgl.thatsnotanimprovement.com/"
+        if self.tournament.slug == "starcraft-2-season-1":
+            self.first_week_match = datetime.date(2011, 6, 24)
         
         
         settings.INSTALLED_APPS.remove("notification")
@@ -515,9 +534,10 @@ class Command(BaseCommand):
                                     break
                         
                 # load matches
-                for match_li in schedule_d.cssselect('li.week-list-item'):
-                    match_url = list(match_li.cssselect('a.week-list-link'))[-1].get('href')
-                    self.load_match(match_url)
+                for week, week_li in enumerate(schedule_d.cssselect("li.season-list-item")):
+                    for match_li in week_li.cssselect('li.week-list-item'):
+                        match_url = list(match_li.cssselect('a.week-list-link'))[-1].get('href')
+                        self.load_match(match_url, week)
                 
             # ----------- Admin site ------------------
             if options['admin']:
