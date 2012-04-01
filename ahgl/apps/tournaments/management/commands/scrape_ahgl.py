@@ -265,6 +265,7 @@ class Command(BaseCommand):
             print("Replay not found {replay_url}...ignoring".format(replay_url=replay_url), file=self.stderr)
 
     def create_membership(self, team, char_name, active=True):
+        #print(team,char_name)
         try:
             return TeamMembership.objects.get(team=team, char_name__iexact=char_name), False
         except TeamMembership.DoesNotExist:
@@ -277,42 +278,18 @@ class Command(BaseCommand):
                 return membership, created
         return None, False
 
-    re_lineup = re.compile(r"((?P<home_name>[^\.]+)\.(?P<home_code>[^\s]+) \((?P<home_race>[\w])\))? \< (?P<map>[^\>]+) \> (\((?P<away_race>[\w])\) (?P<away_name>[^\.]+)\.(?P<away_code>[^\s]+))?")
+    re_lineup = re.compile(r"((?P<home_name>[^\.\s]+)(\. ?(?P<home_code>[^\s]+))? +(\([^\)]+\) )?\((?P<home_race>[\w])\))? \< (?P<map>[^\>]+) \> (\((?P<away_race>[\w])\) (?P<away_name>[^\.]+)(\.(?P<away_code>[^\s]+))?)?")
     re_captain = re.compile(r"(?P<name>[^,]+), (?P<email>[^@]+@[^\.]+\.[^,]+), (?P<char_name>[^\.]+)\.(?P<char_code>[\d]+)")
     def load_lineup(self, lineup_url):
         lineup_d = self.visit_url(lineup_url)
         week = int(lineup_d.cssselect("h1")[0].text.strip().rsplit(None, 1)[-1]) - 1
         matches_needing_games = []
         map_pool = []
-        for match_h2, matchup_p, captains_h3 in zip(lineup_d.cssselect("h2"), lineup_d.cssselect("p"), lineup_d.cssselect("h3")[1::3]):
+        for match_h2, matchup_p in zip(lineup_d.cssselect("h2"), lineup_d.cssselect("p")):
             home_team, away_team = (s.strip() for s in match_h2.text.split(":")[1].split(" vs "))
             home_team = Team.objects.get(name=home_team, tournament=self.tournament)
             away_team = Team.objects.get(name=away_team, tournament=self.tournament)
-            
-            # set captain flag
-            captain_matchers = ((self.re_captain.search(text), team) for text, team in zip(captains_h3.text_content().split("Captains: ", 1)[1].split(" AND ", 1), (home_team, away_team)))
-            for cmatch, team in captain_matchers:
-                try:
-                    try:
-                        captain = TeamMembership.objects.get(team=team, char_name__iexact=cmatch.group('char_name'))
-                    except TeamMembership.MultipleObjectsReturned:
-                        captain = TeamMembership.objects.get(team=team, char_name__iexact=cmatch.group('char_name'), profile__user=self.master_user)
-                except TeamMembership.DoesNotExist: # if there is no captain account, create one
-                    username = get_username({}, {'name':cmatch.group('name')}, None)['username']
-                    cap_user, created = User.objects.get_or_create(email=cmatch.group('email'), defaults={'username':username, 'password':'!'})
-                    if created:
-                        print("Created new captain user {0}".format(cmatch.group('name')), file=self.stdout)
-                    cap_user.first_name, cap_user.last_name = cmatch.group('name').split(None, 1)
-                    cap_user.save()
-                    captain_profile = cap_user.get_profile()
-                    captain_profile.name = cmatch.group('name')
-                    captain_profile.save()
-                    captain, membership_created = TeamMembership.objects.get_or_create(team=team, profile=captain_profile)
-                    captain.char_name = cmatch.group('char_name')
-                    captain.char_code = int(cmatch.group('char_code'))
-                    captain.save()
-                captain.captain = True
-                captain.save()
+
             
             creation_date = self.first_week_match + self.a_week*week
             try: # ug, inconsistencies in ordering....
@@ -327,6 +304,7 @@ class Command(BaseCommand):
                     print("Processing match {0} vs {1}".format(home_team, away_team), file=self.stdout)
             else:
                 reverse_order = True
+                print("Processing match {0} vs {1}".format(home_team, away_team), file=self.stdout)
             match.home_submitted = True
             match.away_submitted = True
             
@@ -369,12 +347,12 @@ class Command(BaseCommand):
 
                     try:
                         p1.char_code = p1.char_code or int(game_matcher.group("home_code"))
-                    except ValueError:
+                    except (ValueError, TypeError):
                         pass
                     p1.race = p1.race or p1race
                     try:
                         p2.char_code = p2.char_code or int(game_matcher.group("away_code"))
-                    except ValueError:
+                    except (ValueError, TypeError):
                         pass
                     p2.race = p2.race or p2race
                     p1.save()
@@ -404,7 +382,7 @@ class Command(BaseCommand):
                 for match in matches_needing_games:
                     match.delete()
          
-    re_result = re.compile("\): (?P<home_name>[^\.:]+)\.(?P<home_code>[^\s]+) \((?P<home_race>[\w])\) (?P<win_ptr>&lt;|&gt;) \((?P<away_race>[\w])\) (?P<away_name>[^\.]+)\.(?P<away_code>[^\s]+)")
+    re_result = re.compile("\): (?P<home_name>[^\.:\s]+)(\. ?(?P<home_code>[^\s]+))? +(\([^\)]+\) )?\((?P<home_race>[\w])\) (?P<win_ptr>&lt;|&gt;) \((?P<away_race>[\w])\) (?P<away_name>[^\.]+)(\.(?P<away_code>[^\s]+))? +--")
     def load_result(self, result_url):
         result_d = self.visit_url(result_url)
         week = int(result_d.cssselect("h1")[0].text.strip().rsplit(None, 1)[-1]) - 1
@@ -423,6 +401,7 @@ class Command(BaseCommand):
                     continue
                 print("Processing match {0} vs {1}".format(home_team, away_team), file=self.stdout)
             else:
+                print("Processing match {0} vs {1}".format(home_team, away_team), file=self.stdout)
                 reverse_order = True
 
             match.publish_date = match.creation_date + self.a_week + datetime.timedelta(days=5)
@@ -439,17 +418,55 @@ class Command(BaseCommand):
                         print("Could not match on {0} ...skipping".format(game_text.strip()), file=self.stderr)
                         continue
                     try:
-                        home_code = int(game_matcher.group("home_code").strip())
-                    except ValueError:
-                        home_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("home_name").strip())
-                    else:
-                        home_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("home_name").strip(), char_code=home_code)
+                        try:
+                            home_code = int(game_matcher.group("home_code").strip())
+                        except (ValueError, AttributeError):
+                            home_code = None
+                            home_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("home_name").strip())
+                        else:
+                            try:
+                                home_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("home_name").strip(), char_code=home_code)
+                            except TeamMembership.DoesNotExist:
+                                print(game_matcher.group("home_name").strip())
+                                home_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("home_name").strip())
+                                home_player.char_code = home_code
+                                home_player.save()
+                    except TeamMembership.MultipleObjectsReturned:
+                        kwargs = dict(team=home_team, char_name__iexact=game_matcher.group("home_name").strip())
+                        if home_code:
+                            kwargs['char_code'] = home_code
+                        #print(kwargs)
+                        try:
+                            home_player = TeamMembership.objects.get(**kwargs)
+                        except TeamMembership.DoesNotExist:
+                            kwargs['team'] = away_team
+                            away_player = TeamMembership.objects.get(**kwargs)
                     try:
-                        away_code = int(game_matcher.group("away_code").strip())
-                    except ValueError:
-                        away_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("away_name").strip())
-                    else:
-                        away_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("away_name").strip(), char_code=away_code)
+                        try:
+                            away_code = int(game_matcher.group("away_code").strip())
+                        except (ValueError, AttributeError):
+                            away_code = None
+                            try:
+                                away_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("away_name").strip().encode('ascii', 'ignore'))
+                            except TeamMembership.DoesNotExist:
+                                print(">"+game_matcher.group("away_name").strip().encode('ascii', 'ignore')+"<", "did not match")
+                        else:
+                            try:
+                                away_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("away_name").strip(), char_code=away_code)
+                            except TeamMembership.DoesNotExist:
+                                away_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("away_name").strip())
+                                away_player.char_code = away_code
+                                away_player.save()
+                    except TeamMembership.MultipleObjectsReturned:
+                        kwargs = dict(team=away_team, char_name__iexact=game_matcher.group("away_name").strip())
+                        if away_code:
+                            kwargs['char_code'] = away_code
+                        try:
+                            away_player = TeamMembership.objects.get(**kwargs)
+                        except TeamMembership.DoesNotExist:
+                            kwargs['team'] = home_team
+                            home_player = TeamMembership.objects.get(**kwargs)
+                            
                     home_race = game_matcher.group("home_race").upper()
                     away_race = game_matcher.group("away_race").upper()
                     if reverse_order:
@@ -489,7 +506,7 @@ class Command(BaseCommand):
         except Tournament.DoesNotExist:
             raise CommandError("Tournament {0} does not exist".format(args[0]))
         self.site_url = args[1] if len(args)>1 else "http://afterhoursgaming.tv/sc2/"
-        admin_url = "http://ahgl.thatsnotanimprovement.com/"
+        admin_url = "http://ahgl.npinp.com/"
         if self.tournament.slug == "starcraft-2-season-1":
             self.first_week_match = datetime.date(2011, 6, 24)
         
@@ -542,28 +559,6 @@ class Command(BaseCommand):
                 
             # ----------- Admin site ------------------
             if options['admin']:
-                # Load char codes
-                roster_d = self.visit_url("view-rosters", admin_url)
-                for tr in roster_d.cssselect("table tr"):
-                    try:
-                        team, player, active = (td.text.strip() for td in tr.cssselect('td')[:3])
-                    except ValueError: # on the th line
-                        continue
-                    char_name, char_code = player.split(".")
-                    team = Team.objects.get(name=team, tournament=self.tournament)
-                    if active=="0":
-                        active = False
-                    else:
-                        active = True
-                    membership, created = self.create_membership(team=team, char_name=char_name, active=active)
-                    if membership is None:
-                        continue
-                    membership.active = active
-                    try:
-                        membership.char_code = int(char_code)
-                        membership.save()
-                    except ValueError:
-                        pass
                 
                 # load lineups (extra match info)
                 lineup_d = self.visit_url("show-lineup", admin_url)
