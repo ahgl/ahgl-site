@@ -13,7 +13,7 @@ from idios.views import ProfileUpdateView
 from messages.views import compose
 
 from apps.profiles.models import Profile
-from apps.profiles.views import TeamListView, TeamDetailView, StandingsView, TeamUpdateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView
+from apps.profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView
 from apps.tournaments.views import MatchDetailView, MatchListView, MatchReportView, SubmitLineupView, GameListView, PlayerAdminView
 from apps.tournaments.models import Match, Tournament
 
@@ -46,6 +46,7 @@ urlpatterns = patterns("",
     
     url(r'^archive/$', ListView.as_view(queryset=Tournament.objects.filter(active=False), template_name="tournaments/archives.html"), name="archives"),
     url(r'^games/$', GameListView.as_view(), name='games'),
+    url(r'^(?P<tournament>[\w_-]+)/mvp/$', MVPView.as_view(), name='mvp'),
     url(r'^(?P<tournament>[\w_-]+)/games/$', GameListView.as_view(), name='games'),
     url(r'^(?P<tournament>[\w_-]+)/teams/(?P<team>[\w_-]+)/(?P<profile>[\w\._-]+)/games/$', GameListView.as_view(), name='games'),
     url(r'^(?P<tournament>[\w_-]+)/teams/$', TeamListView.as_view(), name='teams'),

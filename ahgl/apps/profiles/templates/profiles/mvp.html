@@ -1,0 +1,28 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+{% load thumbnail %}
+
+{% block head_title %}{% trans "MVP" %}{% endblock %}
+
+{% block content-class %}static-page{% endblock %} 
+{% block body %}
+    <h2 class="title title-1 t1">MVP</h2>
+    
+    {% with players=players %}
+    {% autopaginate players %}
+    
+    <table class="standings-table">
+    <thead><tr><th>Name</th><th>Team</th><th>Wins</th><th>Losses</th></tr></thead>
+    <tbody>
+    {% for player in players %}
+    <tr><td><a href="{{player.get_absolute_url}}">{{player}}</a></td><td><a href="{{player.team.get_absolute_url}}">{{player.team}}</a></td><td>{{player.win_count}}</td><td>{{player.loss_count}}</td>
+    {% endfor %}
+    </tbody>
+    </table>
+    
+    {% paginate %}
+    {% endwith %}
+{% endblock %}
