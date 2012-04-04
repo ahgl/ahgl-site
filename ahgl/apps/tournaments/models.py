@@ -91,7 +91,7 @@ class TournamentRound(models.Model):
         len_base = math.log(len(bracket), 2)
         if int(len_base) != len_base:
             return []
-        fbracket = [None]*len(bracket)
+        fbracket = [(None,0)]*len(bracket)
         fbracket[0] = bracket[0]
         stage_size = 2
         next_step = len(bracket)
@@ -99,7 +99,7 @@ class TournamentRound(models.Model):
             step = next_step
             next_step = step // 2
             for i in range(0, len(bracket), step):
-                fbracket[i+next_step] = bracket[stage_size - fbracket[i].team.seed]
+                fbracket[i+next_step] = bracket[stage_size - fbracket[i][0]-1]
             stage_size *= 2
         return fbracket
     
@@ -110,7 +110,7 @@ class TournamentRound(models.Model):
         return dict((frozenset(key),makematch(match_group)) for key, match_group in groupby(queryset,keyfunc))
 
     def elim_bracket(self):
-        participants = self._seed(list(self.participants()))
+        positions, participants = zip(*self._seed(list(enumerate(self.participants()))))
         match_dict = self.match_dict()
         print(match_dict)
         num_players = 0
