@@ -1369,14 +1369,16 @@ div#static-navheader a {
 	background: url("../images/topnav-lol.png") 0px -56px;
 }  
 .ahgl2-opener {
-	height: 150px;
+	height: 160px;
 	background:url("../images/homepage-opener.png") no-repeat;
 	border-bottom: #333 1px solid;
-	padding-top: 95px;
-	padding-bottom: 50px;
+	padding-top: 135px;
+	padding-bottom: 15px;
 }
 .ahgl2-opener.lol {
 	background:url("../images/homepage-opener_lol.png") no-repeat;
+	padding-top: 95px;
+	padding-bottom: 50px;
 }
 .ahgl2-opener .entry {
 	padding-right: 450px;
@@ -1482,7 +1484,7 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
 	-webkit-box-pack:center;
 	-ms-box-pack:center;
 }
-.bracket-item > a {
+.bracket-item  a {
 	border-radius: 6px;  
 	color:white;
 	font-weight:bold;
