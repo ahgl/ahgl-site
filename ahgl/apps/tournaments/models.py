@@ -72,7 +72,7 @@ class Map(models.Model):
 
 
 BracketRow = namedtuple("BracketRow", "items, name")
-TeamBracketRecord = namedtuple("TeamBracketRecord", "home_team_membership, away_team_membership, match")
+TeamBracketRecord = namedtuple("TeamBracketRecord", "home_team_membership, away_team_membership, match, is_champion")
 class TournamentRound(models.Model):
     order = models.IntegerField()
     tournament = models.ForeignKey('Tournament', related_name='rounds')
@@ -104,7 +104,7 @@ class TournamentRound(models.Model):
         return fbracket
     
     def match_dict(self):
-        queryset = self.matches.values('id','home_team','away_team','games__winner_team').annotate(wins=Count('games')).order_by('home_team','away_team')
+        queryset = self.matches.filter(published=True).values('id','home_team','away_team','games__winner_team').annotate(wins=Count('games')).order_by('home_team','away_team')
         keyfunc = lambda match:(match['home_team'],match['away_team'])
         makematch = lambda match_group:dict(('home_wins' if item['games__winner_team']==item['home_team'] else 'away_wins',item['wins']) for item in match_group if item['games__winner_team'])
         return dict((frozenset(key),makematch(match_group)) for key, match_group in groupby(queryset,keyfunc))
@@ -116,11 +116,17 @@ class TournamentRound(models.Model):
         num_players = 0
         for wins_needed in takewhile(lambda x:participants, count(1)):
             num_players = len(participants)
-            yield BracketRow([TeamBracketRecord(participants[i], participants[i+1], match_dict.get(frozenset((member.team_id for member in participants[i:i+2])))) for i in range(0, num_players, 2)], self._round_name(num_players))
+            if num_players == 1:
+                yield BracketRow([TeamBracketRecord(participants[0], None, None, True)], self._round_name(num_players))
+            else:
+                yield BracketRow([TeamBracketRecord(participants[i], participants[i+1], match_dict.get(frozenset((member.team_id for member in participants[i:i+2]))), False) for i in range(0, num_players, 2)], self._round_name(num_players))
             participants = [team_membership for team_membership in participants if team_membership.wins>=wins_needed]
         num_players = num_players // 2
         while num_players:
-            yield BracketRow([TeamBracketRecord(None, None, None)]*num_players, self._round_name(num_players))
+            if num_players == 1:
+                yield BracketRow([TeamBracketRecord(None, None, None, True)], self._round_name(num_players))
+            else:
+                yield BracketRow([TeamBracketRecord(None, None, None, False)]*(num_players//2), self._round_name(num_players))
             num_players = num_players // 2
     
     def participants(self):

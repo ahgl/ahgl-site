@@ -55,8 +55,13 @@
 <div class="bracket-round">
 <h3>{{row.name}}</h3>
 {% for item in row.items %}
-<div class="bracket-item" {% if not forloop.parentloop.last %}style="-moz-box-pack:end;"{% endif %}><a href="{{item.home_team_membership.team.get_absolute_url}}" class="{% if item.winner %}winner{% endif %}">{% if item.home_team_membership %}<span class="seed">#{{item.home_team_membership.team.seed}}</span>{% endif %}<span class="team">{{item.home_team_membership.team|default:"-"}}</span><span class="score">{{item.match.home_wins|default:"0"}}</span></a></div>
-<div class="bracket-item" {% if not forloop.parentloop.last %}style="-moz-box-pack:start;"{% endif %}><a href="{{item.away_team_membership.team.get_absolute_url}}" class="{% if item.winner %}winner{% endif %}">{% if item.away_team_membership %}<span class="seed">#{{item.away_team_membership.team.seed}}</span>{% endif %}<span class="team">{{item.away_team_membership.team|default:"-"}}</span><span class="score">{{item.match.away_wins|default:"0"}}</span></a></div>
+{% if item.is_champion %}
+<div class="bracket-item"><a href="{{item.home_team_membership.team.get_absolute_url}}">{% if item.home_team_membership %}<span class="seed">#{{item.home_team_membership.team.seed}}</span>{% endif %}<span class="team">{{item.home_team_membership.team|default:"-"}}</span></a></div>
+{% else %}
+<div style="-moz-box-pack:end;" class="bracket-item" class="{% if item.match.winner_id == item.home_team_membership.team_id %}winner{% endif %}"><a href="{{item.home_team_membership.team.get_absolute_url}}" >{% if item.home_team_membership %}<span class="seed">#{{item.home_team_membership.team.seed}}</span>{% endif %}<span class="team">{{item.home_team_membership.team|default:"-"}}</span><span class="score">{{item.match.home_wins|default:"0"}}</span></a></div>
+<div style="-moz-box-pack:start;" class="bracket-item" class="{% if item.match.winner_id == item.away_team_membership.team_id %}winner{% endif %}"><a href="{{item.away_team_membership.team.get_absolute_url}}" class="{% if item.winner %}winner{% endif %}">{% if item.away_team_membership %}<span class="seed">#{{item.away_team_membership.team.seed}}</span>{% endif %}<span class="team">{{item.away_team_membership.team|default:"-"}}</span><span class="score">{{item.match.away_wins|default:"0"}}</span></a></div>
+{% endif %}
+
 {% endfor %}
 </div>
 {% endfor %}
