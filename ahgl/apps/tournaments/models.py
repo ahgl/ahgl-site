@@ -350,7 +350,7 @@ class Game(models.Model):
         else:
             self.loser = None
             # in case of team games, player fields won't be set
-            if self.winner_team:
+            if self.winner_team and self.match.tournament.structure=="T":
                 if self.winner_team_id == self.match.home_team_id:
                     self.loser_team = self.match.away_team
                 elif self.winner_team_id == self.match.away_team_id:
