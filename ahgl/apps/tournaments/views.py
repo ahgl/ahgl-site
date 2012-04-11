@@ -127,7 +127,7 @@ class GameListView(TournamentSlugContextView, ListView):
             is_win = lambda game:game.winner_id == self.member.pk
         elif hasattr(self, 'player'):
             context['profile'] = context['player'] = self.player
-            is_win = lambda game:game.winner.profile_id == self.player.pk
+            is_win = lambda game:game.winner and game.winner.profile_id == self.player.pk
         if is_win:
             context['game_list'] = list(self.object_list)
             context['game_list'].sort(key=is_win, reverse=True)
