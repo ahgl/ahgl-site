@@ -68,7 +68,7 @@ class StandingsView(TournamentSlugContextView, ListView):
         return ctx
     
     def get_queryset(self):
-        return TournamentRound.objects.filter(tournament=self.kwargs['tournament'])
+        return TournamentRound.objects.filter(tournament=self.kwargs['tournament'], published=True)
 
     def get_template_names(self):
         return "profiles/standings.html"

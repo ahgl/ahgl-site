@@ -80,6 +80,7 @@ class TournamentRound(models.Model):
     stage_order = models.IntegerField()
     stage_name = models.CharField(max_length=40)
     structure = models.CharField(max_length=1, choices=(('G', 'Group'),('E', 'Elimination'),), default='G')
+    published = models.BooleanField(default=False)
     
     @staticmethod
     def _round_name(count):
@@ -135,9 +136,6 @@ class TournamentRound(models.Model):
             return queryset.order_by('-wins', '-tiebreaker', 'team__seed')
         else:
             return queryset.order_by('team__seed')
-    
-    def has_matches(self):
-        return self.matches.filter(published=True).count()
     
     def __unicode__(self):
         return " : ".join((self.stage_name, unicode(self.order)))
