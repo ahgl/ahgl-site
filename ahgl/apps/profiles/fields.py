@@ -50,6 +50,6 @@ try:
         },
       )
     ]
-    add_introspection_rules(rules, ["^bloggy\.fields\.HTMLField"])
+    add_introspection_rules(rules, ["^profiles\.fields\.HTMLField"])
 except ImportError:
     pass
