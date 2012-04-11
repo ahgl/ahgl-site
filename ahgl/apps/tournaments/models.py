@@ -227,7 +227,7 @@ class Match(models.Model):
         win_point = (len(games)//2)+1
         for game in games:
             # if someone already has the games to win (not counting this one) - this game does not matter
-            if (home_wins >= win_point or away_wins >= win_point) and game.winner:
+            if (home_wins >= win_point or away_wins >= win_point) and (game.winner or game.winner_team):
                 game.winner = None
                 game.winner_team = None
                 game.full_clean()
