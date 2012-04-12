@@ -105,9 +105,15 @@ class TournamentRound(models.Model):
         return fbracket
     
     def match_dict(self):
-        queryset = self.matches.filter(published=True).values('id','home_team','away_team','games__winner_team').annotate(wins=Count('games')).order_by('home_team','away_team')
+        queryset = self.matches.filter(published=True).values('id','home_team','away_team','tournament','winner','games__winner_team').annotate(wins=Count('games')).order_by('home_team','away_team')
         keyfunc = lambda match:(match['home_team'],match['away_team'])
-        makematch = lambda match_group:dict(('home_wins' if item['games__winner_team']==item['home_team'] else 'away_wins',item['wins']) for item in match_group if item['games__winner_team'])
+        def makematch(match_group):
+            ret = None
+            for item in match_group:
+                ret = ret or item
+                if item['games__winner_team']:
+                    ret['home_wins' if item['games__winner_team']==item['home_team'] else 'away_wins'] = item['wins']
+            return ret
         return dict((frozenset(key),makematch(match_group)) for key, match_group in groupby(queryset,keyfunc))
 
     def elim_bracket(self):
