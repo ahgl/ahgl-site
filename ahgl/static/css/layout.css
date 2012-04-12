@@ -1493,7 +1493,12 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
 	display:-ms-box;
 	margin:1px;
 	background:rgba(100,100,100, 0.2);
-	-moz-box-orient:horitontal;
+	-moz-box-orient:vertical;
+	-webkit-box-orient:vertical;
+	-ms-box-orient:vertical;
+}
+.bracket-item a.team-link {
+	-moz-box-orient:horizontal;
 	-webkit-box-orient:horizontal;
 	-ms-box-orient:horizontal;
 }
@@ -1503,27 +1508,49 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
 .bracket-item .winner {
 	background:rgba(100,100,100, 0.4);
 }
+.bracket-item .team {
+	display:-moz-box;
+	display:-webkit-box;
+	display:-ms-box;
+	-moz-box-orient:horizontal;
+	-webkit-box-orient:horizontal;
+	-ms-box-orient:horizontal;
+	border-radius: 6px 6px 0 0;
+}
 .bracket-item .seed {
-	border-radius: 6px 0 0 6px;  
+	border-radius: 6px 0 0 0;  
 	display:block;
 	width:2.75em;
 	padding:1.5ex 0 1.5ex .5em;
 	background:rgba(100,100,100, 0.2);
 }
+.bracket-item a.team-link .seed {
+	border-radius: 6px 0 0 6px;
+}
 .bracket-item .score {
-	border-radius: 0 6px 6px 0;  
+	border-radius: 0 6px 0 0;  
 	display:block;
 	width:1.75em;
 	padding:1.5ex .5em 1.5ex 0;
 	background:rgba(100,100,100, 0.2);
 	text-align:right;
+	font-size:7pt;
 }
-.bracket-item .team {
+.bracket-item .team_name {
 	display:block;
 	padding:1.5ex 1em 1.5ex 1em;
 	-moz-box-flex:10;
 	-webkit-box-flex:1;
 	-ms-box-flex:1;
+}
+.bracket-item .team:last-child {
+	border-radius: 0 0 6px 6px;
+}
+.bracket-item .team:last-child .seed {
+	border-radius: 0 0 0 6px;
+}
+.bracket-item .team:last-child .score {
+	border-radius: 0 0 6px 0;
 }
 
 .well, .main-block {
