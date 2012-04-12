@@ -1,6 +1,9 @@
 from django.contrib import admin
 
+from tinymce.widgets import TinyMCE
+
 from .models import Profile, Team, Charity, TeamMembership
+from .fields import HTMLField
 
 class TeamAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
@@ -12,10 +15,16 @@ class TeamAdmin(admin.ModelAdmin):
 class TeamMembershipAdminInline(admin.TabularInline):
     model = TeamMembership
     extra = 1
+    formfield_overrides = {
+        HTMLField: {'widget': TinyMCE()},
+    }
 class TeamMembershipAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'active','captain',)
     list_filter = ('team','race','champion','captain',)
     search_fields = ('char_name',)
+    formfield_overrides = {
+        HTMLField: {'widget': TinyMCE()},
+    }
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', )
