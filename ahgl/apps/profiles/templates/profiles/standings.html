@@ -68,20 +68,24 @@
 <div class="team{% if item.match and item.match.winner == item.home_team_membership.team_id %} winner{% endif %}">
 {% if item.home_team_membership %}<span class="seed">#{{item.home_team_membership.team.seed}}</span>{% endif %}
 <span class="team_name">{{item.home_team_membership.team|default:"-"}}</span>
+{% if item.match %}
 <span class="score">
 {% if item.home_team_membership.team_id == item.match.home_team %}{{item.match.home_wins|default:"0"}}
 {% else %}{{item.match.away_wins|default:"0"}}
 {% endif %}
 </span>
+{% endif %}
 </div>
 <div class="team{% if item.match and item.match.winner == item.away_team_membership.team_id %} winner{% endif %}">
 {% if item.away_team_membership %}<span class="seed">#{{item.away_team_membership.team.seed}}</span>{% endif %}
 <span class="team_name">{{item.away_team_membership.team|default:"-"}}</span>
+{% if item.match %}
 <span class="score">
 {% if item.away_team_membership.team_id == item.match.away_team %}{{item.match.away_wins|default:"0"}}
 {% else %}{{item.match.home_wins|default:"0"}}
 {% endif %}
 </span>
+{% endif %}
 </div>
 </a>
 </div>
