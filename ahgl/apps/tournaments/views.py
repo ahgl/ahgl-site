@@ -117,9 +117,10 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
     
 class GameListView(TournamentSlugContextView, ListView):
     template_name="tournaments/game_list.html"
+    vod_only = False
     def get_context_data(self, **kwargs):
         context = super(GameListView, self).get_context_data(**kwargs)
-        if self.request.GET.get('vod_only'):
+        if self.vod_only or self.request.GET.get('vod_only'):
             context['vod_only'] = True
         is_win = None
         if hasattr(self, 'member'):
@@ -167,7 +168,7 @@ class GameListView(TournamentSlugContextView, ListView):
                                            | Q(away_player__char_name__icontains=self.request.GET.get('s'))
                                            | Q(away_player__profile__name__icontains=self.request.GET.get('s'))
                                            )
-        if self.request.GET.get('vod_only'):
+        if self.vod_only or self.request.GET.get('vod_only'):
             queryset = queryset.exclude(vod="").order_by('-match__publish_date', 'match', 'order')
         return queryset.select_related(*related_members).only(*used_fields)
     

@@ -15,7 +15,8 @@
     {% for tournament in tournament_list %}
         <li><h3 class="t2"><a href="/{{tournament.slug}}">{{ tournament.name }}</a></h3>
               <ul>
-			    <li><a href="{% url schedule tournament.slug %}">{% trans "Schedule" %}</a></li>
+			    <li><a href="{% url videos tournament.slug %}">{% trans "Videos" %}</a></li>
+          <li><a href="{% url schedule tournament.slug %}">{% trans "Schedule" %}</a></li>
 			    <li><a href="{% url standings tournament.slug %}">{% trans "Team Standings" %}</a></li>
 			    <li><a href="{% url teams tournament.slug %}">{% trans "Teams" %}</a></li>
               </ul>
