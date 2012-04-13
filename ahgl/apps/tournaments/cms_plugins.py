@@ -17,7 +17,7 @@ def tourney_from_slug(request):
 
 class GamePlugin(CMSPluginBase):
     model = GamePluginModel
-    name = _("Game Plugin")
+    name = _("Featured Game")
     render_template = "tournaments/game_plugin.html"
 
     def get_form(self, request, obj=None, **kwargs):
@@ -40,7 +40,7 @@ plugin_pool.register_plugin(GamePlugin)
 
 class RandomTeamsPlugin(CMSPluginBase):
     model = TournamentPluginModel
-    name = _("Random Teams Plugin")
+    name = _("Random Teams")
     render_template = "tournaments/random_teams_plugin.html"
 
     def render(self, context, instance, placeholder):
