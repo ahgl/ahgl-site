@@ -16,14 +16,14 @@ class TeamMembershipAdminInline(admin.TabularInline):
     model = TeamMembership
     extra = 1
     formfield_overrides = {
-        HTMLField: {'widget': TinyMCE()},
+        HTMLField: {'widget': TinyMCE(mce_attrs={'theme':'advanced'})},
     }
 class TeamMembershipAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'active','captain',)
     list_filter = ('team','race','champion','captain',)
     search_fields = ('char_name',)
     formfield_overrides = {
-        HTMLField: {'widget': TinyMCE()},
+        HTMLField: {'widget': TinyMCE(mce_attrs={'theme':'advanced'})},
     }
 
 class ProfileAdmin(admin.ModelAdmin):
