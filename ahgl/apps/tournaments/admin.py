@@ -30,9 +30,8 @@ class TournamentAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('__unicode__', 'active',)
     list_filter = ('active',)
-    inlines = [
-        TournamentRoundInline,
-    ]
+    inlines = (TournamentRoundInline,)
+    
     def get_form(self, request, obj=None, **kwargs):
         self.obj = obj
         return super(TournamentAdmin, self).get_form(request, obj, **kwargs)
@@ -99,9 +98,7 @@ class MatchAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'creation_date', 'publish_date', 'tournament', 'home_team','away_team', 'published',)
     list_filter = ('tournament',)
     search_fields = ('home_team__name','away_team__name',)
-    inlines = [
-        GameInline,
-    ]
+    inlines = (GameInline,)
     actions = ['publish_match']
     date_hierarchy = 'creation_date'
     readonly_fields = ('tournament', 'home_submission_date', 'away_submission_date','referee',)
