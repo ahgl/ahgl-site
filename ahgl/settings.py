@@ -199,6 +199,7 @@ INSTALLED_APPS = [
     'messages',
     "djcelery",
     'tinymce',
+    'recaptcha_form',
     
     # cms
     'cms',
@@ -367,6 +368,8 @@ if GONDOR_LOCAL_SETTINGS:
     FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
     FACEBOOK_API_SECRET = os.environ['FACEBOOK_API_SECRET']
     EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+    RECAPTCHA_PUB_KEY = os.environ['RECAPTCHA_PUB_KEY']
+    RECAPTCHA_PRIV_KEY = os.environ['RECAPTCHA_PRIV_KEY']
     
     if GONDOR_REDIS_HOST:
         # Caching
