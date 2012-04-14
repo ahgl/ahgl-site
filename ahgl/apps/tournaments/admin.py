@@ -106,6 +106,8 @@ class MatchAdmin(admin.ModelAdmin):
     date_hierarchy = 'creation_date'
     readonly_fields = ('tournament', 'home_submission_date', 'away_submission_date','referee',)
     
+    def has_add_permission(self, request):
+        return False
     def get_form(self, request, obj=None, **kwargs):
         self.obj = obj
         return super(MatchAdmin, self).get_form(request, obj=obj, **kwargs)
