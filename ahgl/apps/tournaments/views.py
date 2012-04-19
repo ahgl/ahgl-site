@@ -240,6 +240,7 @@ class PlayerAdminView(ListView):
         return super(PlayerAdminView, self).dispatch(request, *args, **kwargs)
 
 class MatchReportView(UpdateView):
+    #TODO: prefetch related
     queryset = Match.objects.filter(home_submitted=True, away_submitted=True, published=False).select_related('home_team', 'away_team', 'tournament')
     template_name = "tournaments/report_match.html"
     
