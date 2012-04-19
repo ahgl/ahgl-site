@@ -18,6 +18,7 @@ from django.contrib.sites.models import Site
 from django.forms import ModelForm, BaseModelForm
 from django.forms.models import BaseModelFormSet
 from django import forms
+from django.forms.widgets import RadioSelect
 from django.forms.models import ModelFormOptions
 from django.forms.formsets import formset_factory
 from django.http import Http404
@@ -266,8 +267,10 @@ class MatchReportView(UpdateView):
                         del self.fields['away_player']
                         del self.fields['away_race']
                     else:
-                        winner_field.queryset = winner_field.queryset.filter(active=True, team__pk__in=(match.home_team_id, match.away_team_id,))
-                        #winner_field.widget = forms.Select
+                        self.fields['winner'] = forms.ModelChoiceField(required=False,
+                                                                       queryset=TeamMembership.objects.filter(active=True, team__pk__in=(match.home_team_id, match.away_team_id,)),
+                                                                       empty_label="Not played"
+                                                                       )
                 class Meta:
                     model = Game
                     fields=('replay','home_player','home_race','away_player','away_race','winner','forfeit',)
