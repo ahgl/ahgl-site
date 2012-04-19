@@ -227,6 +227,8 @@ INSTALLED_APPS = [
     os.path.join(PROJECT_ROOT, "fixtures"),
 ]"""
 
+PAGINATION_INVALID_PAGE_RAISES_404 = True
+
 TINYMCE_DEFAULT_CONFIG = {
     'theme': "simple",
     'custom_undo_redo_levels': 10,
