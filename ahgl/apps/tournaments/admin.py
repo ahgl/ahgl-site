@@ -28,8 +28,8 @@ class TournamentRoundInline(admin.TabularInline):
 
 class TournamentAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('__unicode__', 'active',)
-    list_filter = ('active',)
+    list_display = ('__unicode__', 'status',)
+    list_filter = ('status',)
     inlines = (TournamentRoundInline,)
     
     def get_form(self, request, obj=None, **kwargs):
@@ -115,7 +115,7 @@ class MatchAdmin(admin.ModelAdmin):
     
     def queryset(self, request):
         queryset = super(MatchAdmin, self).queryset(request).select_related('tournament', 'home_team', 'away_team') \
-                                          .defer('tournament__active', 'tournament__games_per_match')
+                                          .defer('tournament__status', 'tournament__games_per_match')
         return queryset
     
     def publish_match(self, request, queryset):

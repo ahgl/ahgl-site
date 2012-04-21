@@ -54,13 +54,13 @@ class Profile(PybbProfile):
         return self.custom_thumb or self.photo
 
     def is_active(self, tournament=None): #TODO: make this check if they are active in that particular tournament
-        return self.user.is_superuser or self.teams.filter(tournament__active=True).count() > 0
+        return self.user.is_superuser or self.teams.filter(tournament__status='A').count() > 0
     
     def is_captain(self):
-        return self.team_membership.filter(captain=True, team__tournament__active=True).count() > 0
+        return self.team_membership.filter(captain=True, team__tournament__status='A').count() > 0
     
     def active_teams(self):
-        return self.teams.filter(tournament__active=True).select_related('tournament')
+        return self.teams.filter(tournament__status='A').select_related('tournament')
     
     def memberships(self):
         return self.team_membership.select_related('team__tournament')

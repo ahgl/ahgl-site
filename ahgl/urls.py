@@ -44,7 +44,7 @@ urlpatterns = patterns("",
     url(r'^submit_lineup/(?P<pk>[\d]+)/$', SubmitLineupView.as_view(), name="submit_lineup"),
     url(r'^(?P<tournament>[\w_-]+)/teams/(?P<slug>[\w_-]+)/edit/$', TeamUpdateView.as_view(), name='edit_team'),
     
-    url(r'^archive/$', ListView.as_view(queryset=Tournament.objects.filter(active=False), template_name="tournaments/archives.html"), name="archives"),
+    url(r'^archive/$', ListView.as_view(queryset=Tournament.objects.filter(status='C'), template_name="tournaments/archives.html"), name="archives"),
     url(r'^games/$', GameListView.as_view(), name='games'),
     url(r'^(?P<tournament>[\w_-]+)/mvp/$', MVPView.as_view(), name='mvp'),
     url(r'^(?P<tournament>[\w_-]+)/videos/$', GameListView.as_view(template_name="tournaments/videos.html", vod_only=True), name='videos'),

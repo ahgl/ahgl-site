@@ -40,7 +40,7 @@ class Tournament(models.Model):
     name = models.CharField(_("name"), max_length=50)
     slug = models.SlugField(max_length=50, primary_key=True)
     map_pool = models.ManyToManyField('Map')
-    active = models.BooleanField(default=False)
+    status = models.CharField(max_length=1, choices=(('C', 'Completed'), ('A', 'Active'), ('S', 'Signup'),), default='S', db_index=True)
     games_per_match = models.PositiveSmallIntegerField(default=5, verbose_name="Default Games per Match", validators=[validate_wholenumber])
     structure = models.CharField(max_length=1, choices=(('I', 'Individual'),('T', 'Team'),), default='I')
     
