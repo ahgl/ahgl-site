@@ -10,7 +10,7 @@
 {% block body %}
 <form enctype="multipart/form-data" method="post" class="form-horizontal well">
     <fieldset>
-        <legend>{% trans "Edit" %} {{team}}</legend>
+        <legend>{% if team %}{% trans "Edit" %} {{team}}{% else %}{% trans "New Team" %}{% endif %}</legend>
         {{ form }}
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">Submit</button>

@@ -91,18 +91,19 @@ class Profile(PybbProfile):
         stores a slugified version of the title, ensuring that the unique
         constraint is observed
         """
-        self.slug = slug = slugify(self.name or self.user.username)
-        i = 0
-        while True:
-            try:
-                savepoint = transaction.savepoint()
-                res = super(Profile, self).save(*args, **kwargs)
-                transaction.savepoint_commit(savepoint)
-                return res
-            except IntegrityError:
-                transaction.savepoint_rollback(savepoint)
-                i += 1
-                self.slug = '%s_%d' % (slug, i)
+        if self.id is None:
+            self.slug = slug = slugify(self.name or self.user.username)
+            i = 0
+            while True:
+                try:
+                    savepoint = transaction.savepoint()
+                    res = super(Profile, self).save(*args, **kwargs)
+                    transaction.savepoint_commit(savepoint)
+                    return res
+                except IntegrityError:
+                    transaction.savepoint_rollback(savepoint)
+                    i += 1
+                    self.slug = '%s_%d' % (slug, i)
 
 class TeamMembership(models.Model):
     """All team specific profile data goes here"""

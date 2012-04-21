@@ -2,7 +2,7 @@
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponse, Http404, HttpResponseRedirect
-from django.views.generic import DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView, UpdateView, CreateView
 from django.forms import models as model_forms
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
@@ -12,6 +12,9 @@ from django.template.loader import render_to_string
 from django.utils import simplejson as json
 from django.template import RequestContext
 from django.db.models import Count
+from django.db.models.signals import post_save
+from django.db import IntegrityError, transaction
+from django.template.defaultfilters import slugify
 
 from idios.views import ProfileDetailView
 from idios.utils import get_profile_model
@@ -56,6 +59,40 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, UpdateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(TeamUpdateView, self).dispatch(*args, **kwargs)
+
+class TeamCreateView(CreateView):
+    model = Team
+    
+    def get_form_class(self):
+        return model_forms.modelform_factory(Team, exclude=('slug','tournament','rank','seed','members',))
+    
+    def form_valid(self, form):
+        ret = super(TeamCreateView, self).form_valid(form)
+        self.object.tournament = self.kwargs['tournament']
+        self.object.slug = slug = slugify(self.object.name)
+        i = 0
+        while True:
+            try:
+                savepoint = transaction.savepoint()
+                res = self.object.save()
+                transaction.savepoint_commit(savepoint)
+                return res
+            except IntegrityError:
+                transaction.savepoint_rollback(savepoint)
+                i += 1
+                self.slug = '%s_%d' % (slug, i)
+        membership = TeamMembership(team=self.object, profile=self.user.get_profile(), char_name=" ", active=True, captain=True)
+        membership.save()
+        return ret
+    
+    def get_success_url(self):
+        return reverse("team_page", kwargs=self.kwargs)
+    
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        if get_object_or_404(Tournament, slug=kwargs['tournament']).status != "S":
+            return HttpResponseForbidden("That tournament is not open for signups at this time.")
+        return super(TeamCreateView, self).dispatch(*args, **kwargs)
     
 class TeamListView(TournamentSlugContextView, ListView):
     def get_queryset(self):
