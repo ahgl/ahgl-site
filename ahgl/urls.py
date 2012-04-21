@@ -23,7 +23,7 @@ handler500 = "pinax.views.server_error"
 urlpatterns = patterns("",
     url(r"^admin/invite_user/$", "pinax.apps.signup_codes.views.admin_invite_user", name="admin_invite_user"),
     url(r"^admin/", include(admin.site.urls)),
-    url(r"^account/", include("pinax.apps.account.urls")),
+    url(r"^account/", include("recaptcha_form.pinax_backend.urls")),
     url(r'^social/', include('social_auth.urls')),
     url(r"^openid/", include(PinaxConsumer().urls)),
     url(r"^profiles/profile/(?P<slug>[\w\._-]+)/$", MyProfileDetailView.as_view(), name="profile_detail"),
