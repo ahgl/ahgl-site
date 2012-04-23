@@ -111,7 +111,6 @@ class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
     template_name_ajax = "idios/profile_edit_ajax.html"
     template_name_ajax_success = "idios/profile_edit_ajax_success.html"
     context_object_name = "profile"
-    form_class=model_forms.modelform_factory(TeamMembership, exclude=("team", "profile", "active", "captain",))
     model = TeamMembership
     
     def get_template_names(self):
@@ -123,6 +122,12 @@ class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
         ctx = super(TeamMembershipUpdateView, self).get_context_data(**kwargs)
         ctx["profile_form"] = ctx["form"]
         return ctx
+
+    def get_form_class(self):
+        exclude = ["team", "profile"]
+        if not TeamMembership.objects.filter(team=self.object.team, profile__user=self.request.user, captain=True).count():
+            exclude += ["captain", "active"]
+        return model_forms.modelform_factory(TeamMembership, exclude=exclude)
     
     def form_valid(self, form):
         self.object = form.save()
