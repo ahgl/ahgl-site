@@ -125,7 +125,7 @@ class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
 
     def get_form_class(self):
         exclude = ["team", "profile"]
-        if not TeamMembership.objects.filter(team=self.object.team, profile__user=self.request.user, captain=True).count():
+        if not self.captain_user:
             exclude += ["captain", "active"]
         return model_forms.modelform_factory(TeamMembership, exclude=exclude)
     
@@ -153,7 +153,8 @@ class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
             return self.render_to_response(self.get_context_data(form=form))
 
     def check_permissions(self):
-        if self.object.profile.user != self.request.user and not (self.object.profile.user.username=="master" and TeamMembership.objects.filter(profile__user=self.request.user, captain=True, team=self.object.team).count()):
+        self.captain_user = bool(TeamMembership.objects.filter(team=self.object.team, profile__user=self.request.user, captain=True).count())
+        if self.object.profile.user != self.request.user and not self.captain_user:
             return HttpResponseForbidden("This is not your membership to edit.")
         
     @method_decorator(login_required)
