@@ -1,0 +1,27 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% trans "Matches" %}{% endblock %}
+
+{% block content-class %}static-page schedule-page-template{% endblock %}
+{% block body %}
+    <h2><a href="{% url team_page tournament=tournament_slug slug=team_slug %}" class="title title-1 t1"><span class="t3">Back to </span>{{team_slug}}</a></h2>
+    {% autopaginate match_list %}
+    
+    <ul class="unstyled">
+    {% for match in match_list %}
+        {% ifchanged %}<h4 class="t3">{{match.tournament_round.stage_name}}</h4>{% endifchanged %}
+        <li class="cf" style="float:none;">
+        <h4 class="t2"><a href="{{match.get_absolute_url}}">{{match}}</a></h4>
+        </li>
+    {% empty %}
+    	<li>No matches yet</li>
+    {% endfor %}
+    </ul>
+    
+    {% paginate %}
+    
+{% endblock %}

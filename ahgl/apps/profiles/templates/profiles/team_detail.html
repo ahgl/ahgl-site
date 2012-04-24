@@ -29,7 +29,7 @@
               <ul class="team-rank-list-1 cf">
 <li class="record">
 <h2>Win/Loss</h2>
-<p class="t5"><a href="{% url matches tournament_slug %}?team={{team.slug}}">{{team.wins}}/{{team.losses}}</a></p>
+<p class="t5"><a href="{% url matches tournament_slug team.slug %}">{{team.wins}}/{{team.losses}}</a></p>
 </li>
 <li class="points">
 <h2 class="points">Tiebreaker</h2>

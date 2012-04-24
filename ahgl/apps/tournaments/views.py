@@ -174,14 +174,19 @@ class GameListView(TournamentSlugContextView, ListView):
         return queryset.select_related(*related_members).only(*used_fields)
     
 class MatchListView(TournamentSlugContextView, ListView):
+    def get_context_data(self, **kwargs):
+        context = super(MatchListView, self).get_context_data(**kwargs)
+        context['team_slug'] = self.kwargs.get('team')
+        return context
     def get_queryset(self):
         queryset = Match.objects.filter(tournament=self.kwargs['tournament']) \
                                        .order_by('publish_date', 'creation_date', 'tournament_round') \
                                        .select_related('home_team', 'away_team', 'tournament_round')
         if (not self.request.user.is_authenticated() or not self.request.user.get_profile().is_active(self.kwargs.get('tournament'))):
             queryset = queryset.filter(published=True)
-        if self.request.GET.get('team'):
-            queryset = queryset.filter(Q(home_team__slug=self.request.GET.get('team')) | Q(away_team__slug=self.request.GET.get('team')))
+        team = self.kwargs.get('team') or self.request.GET.get('team')
+        if team:
+            queryset = queryset.filter(Q(home_team__slug=team) | Q(away_team__slug=team))
         return queryset
 
 class MatchDetailView(ObjectPermissionsCheckMixin, TournamentSlugContextView, DetailView):
