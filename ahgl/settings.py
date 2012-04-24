@@ -125,7 +125,7 @@ MIDDLEWARE_CLASSES = [
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
+    "utils.middleware.RedirectFallbackMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
