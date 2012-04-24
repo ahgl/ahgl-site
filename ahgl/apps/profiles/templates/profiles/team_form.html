@@ -5,7 +5,7 @@
 {% load account_tags %}
 {% load pagination_tags %}
 
-{% block head_title %}{% trans "Edit Team" %}{% endblock %}
+{% block head_title %}{% if team %}{% trans "Edit Team" %}{% else %}{% trans "New Team" %}{% endif %}{% endblock %}
 
 {% block body %}
 <form enctype="multipart/form-data" method="post" class="form-horizontal well">
@@ -18,10 +18,12 @@
         {% csrf_token %}
     </fieldset>
 </form>
+{% if team %}
 <h2>Members</h2>
 <ul>
 {% for team_member in team.team_membership.all %}
 <li><a href="{% url membership_edit team_member.id %}">{{team_member}}</a></li>
 {% endfor %}
 </ul>
+{% endif %}
 {% endblock %}
