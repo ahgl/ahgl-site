@@ -66,10 +66,16 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
     def get_form_class(self):
         view = self
         class TeamCreateForm(ModelForm):
+            duplicate = forms.ModelChoiceField(queryset=Team.objects.filter(team_membership__profile__user=view.request.user), required=False)
             char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length, required=True, label="Your char name")
             class Meta:
                 model = Team
                 exclude=('tournament','rank','seed','members',)
+            def clean(self):
+                if self.cleaned_data.get('duplicate'):
+                    pass
+                else:
+                    return super(TeamCreateForm, self).clean()
             def save(self, *args, **kwargs):
                 self.instance.tournament = view.tournament
                 super(TeamCreateForm, self).save(*args, **kwargs)
