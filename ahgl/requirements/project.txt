@@ -16,6 +16,7 @@ slimit==0.6
 recaptcha-client==1.0.6
 south==0.7.3
 
+celery<3.0
 django-celery==2.3.3
 django-redis-cache==0.9.2
 sorl-thumbnail==11.12
@@ -27,3 +28,7 @@ django-tinymce==1.5.1b2
 -e git+https://github.com/natmaster/pybbm.git#egg=pybbm
 -e hg+https://bitbucket.org/ntucker/django-recaptcha#egg=django-recaptcha
 -e git+https://github.com/natmaster/pinax.git#egg=pinax
+
+# following is needed for a migration, it is harder to remove the parts of the
+# migration that it is to add this back.
+django-imagekit

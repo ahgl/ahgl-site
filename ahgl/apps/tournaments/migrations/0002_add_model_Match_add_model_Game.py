@@ -7,6 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
     depends_on = (
         ("profiles", "0001_initial"),
+        ("profiles", "0002_add_model_Team"),
     )
 
     def forwards(self, orm):

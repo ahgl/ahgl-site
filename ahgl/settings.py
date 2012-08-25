@@ -169,7 +169,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.humanize",
     "django.contrib.redirects",
-    
+    "django.contrib.sites",
+
     "pinax.templatetags",
     
     # theme
