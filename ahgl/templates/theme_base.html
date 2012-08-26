@@ -79,6 +79,7 @@ _gaq.push(['_trackPageview']);
         
         {% compress js %}
         {% block script_base %}
+            <script src="{% static "js/base.js" %}"></script>
             <script src="{% static "pinax/js/jquery.form.js" %}"></script>
             <script src="{% static "pinax/js/pinax.modal.js" %}"></script>
             <script src="{% static "bootstrap/js/bootstrap-collapse.js" %}"></script>
