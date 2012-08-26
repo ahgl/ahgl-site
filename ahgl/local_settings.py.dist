@@ -1,0 +1,36 @@
+# Defaults cache to locmem so redis isn't needed.
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'ahgl'
+    }
+}
+
+# Comment out this and uncomment the DATABASES stuff below to switch to Postgres
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'dev.db',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': ''
+    }
+}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'ahgl',
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': ''
+#     }
+# }
+
+# Makes it so celery tasks don't need a daemon to run (great for dev)
+CELERY_ALWAYS_EAGER = True
+
+
+COMPRESS = False
