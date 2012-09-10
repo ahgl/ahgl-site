@@ -20,8 +20,9 @@
 
         {% compress css %}
         {% block style_base %}
-            <link href="{% static "css/bootstrap_extract.css" %}" rel="stylesheet">
-            <link href="{% static "css/layout.css" %}" rel="stylesheet">
+            <link href="{% static "css/normalize.css" %}" rel="stylesheet">
+            <link href="{% static "css/gridset.css" %}" rel="stylesheet">
+            <link href="{% static "css/homepage.css" %}" rel="stylesheet">
             {% block extra_style %}{% endblock %}
         {% endblock %}
         {% endcompress %}
