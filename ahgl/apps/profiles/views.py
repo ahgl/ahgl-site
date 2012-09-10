@@ -67,7 +67,7 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
         view = self
         class TeamCreateForm(ModelForm):
             #duplicate = forms.ModelChoiceField(queryset=Team.objects.filter(team_membership__profile__user=view.request.user), required=False)
-            char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length, required=True, label="Your char name")
+            char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length, required=True, label="Your character name", help_text=u"or Summoner name")
             class Meta:
                 model = Team
                 exclude=('tournament','rank','seed','members',)
