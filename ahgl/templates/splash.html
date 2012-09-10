@@ -1,4 +1,4 @@
-{% extends "theme_base.html" %}
+{% extends "theme_base_s3.html" %}
 {% load cms_tags %}
 {% load cache %}
 
@@ -7,7 +7,7 @@
 {% block body_base %}
 {% cache 600 splash request.path %}
 <div id="wrapper" class="splash">
-        {% placeholder "content" or %}        
+        {% placeholder "content" or %}
         {% endplaceholder %}
 </div>
 {% endcache %}
