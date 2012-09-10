@@ -64,11 +64,11 @@ _gaq.push(['_trackPageview']);
         {% endblock %}
 
         {% block footer_base %}
-            <div id="main-footer">
-                <div id="main-footer-inner">
-                        {% block footer %}{% include "_footer.html" %}{% endblock %}
+            <footer class="sx-all">
+                <div class="wrapper">
+                    {% block footer %}{% include "_footer_s3.html" %}{% endblock %}
                 </div>
-            </div>
+            </footer>
         {% endblock %}
 
         {% block extra_body_base %}

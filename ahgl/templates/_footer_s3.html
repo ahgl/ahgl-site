@@ -1,0 +1,27 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load menu_tags %}
+{% load ifsetting_tag %}
+
+<div class="sponsors sx2-sx5">
+    <ul>
+        <li class="day9tv"><a href="http://day9.tv"><img src="images/logo-day9tv-yellow.png"></a></li>
+        <li class="redbull"><a href="http://redbullusa.com"><img src="images/logo-redbullgaming.png"></a></li>
+    </ul>
+    <p>The <strong>After Hours Gaming League</strong> is proudly brought to you by <a href="http://day9.tv">Day[9]TV</a> and <a href="http://">Red Bull Gaming</a>.</p>
+    {# TODO: Add social links. #}
+    {# TODO: Add search form. #}
+</div>
+<nav class="sx2-sx5">
+    <ul>
+        <li><a href="{% url archives %}">Past Seasons</a></li>
+	    {% show_menu %}
+        <li><a href="{% url messages_compose_to "ahgltv" %}">Contact</a></li>
+    </ul>
+</nav>
+<div class="copyright sx2-sx5">
+    <p>
+        &copy;2012 <a href="http://jink.tv">Jink.tv</a>. All rights reserved.<br>
+        Site powered by <a href="http://ntucker.me/" title="Nathaniel Tucker">Nathaniel Tucker</a>. Designed by <a href="http://twitter.com/bryanveloso/" title="Bryan Veloso">Bryan Veloso</a>.
+    </p>
+</div>
