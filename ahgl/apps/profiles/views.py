@@ -48,7 +48,17 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, Upd
         return Team.objects.filter(tournament=self.kwargs['tournament']).select_related('charity')
     
     def get_form_class(self):
-        return model_forms.modelform_factory(Team, exclude=('slug','tournament','rank','seed','members','status',))
+        view = self
+        class UpdateForm(ModelForm):
+            def __init__(self, *args, **kwargs):
+                super(UpdateForm, self).__init__(*args, **kwargs)
+                if view.request.POST.get('submit') == 'approval':
+                    for field in self.fields.values():
+                        field.required = True
+            class Meta:
+                model = Team
+                exclude = ('slug','tournament','rank','seed','members','status',)
+        return UpdateForm
 
     def form_valid(self, form):
         ret = super(TeamUpdateView, self).form_valid(form)
