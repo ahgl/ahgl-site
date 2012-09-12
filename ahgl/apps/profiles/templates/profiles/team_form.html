@@ -17,10 +17,10 @@
         {{ form }}
         <div class="form-actions">
           {% if team %}
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" class="btn btn-primary">Update</button>
           <button type="submit" class="btn" name="submit" value="approval">Submit for Approval</button>
           {% else %}
-          <button type="submit" class="btn btn-primary">Update</button>
+          <button type="submit" class="btn btn-primary">Create</button>
           {% endif %}
         </div>
         {% csrf_token %}
