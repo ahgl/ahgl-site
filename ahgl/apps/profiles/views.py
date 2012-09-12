@@ -55,17 +55,15 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, Upd
                 if view.request.POST.get('submit') == 'approval':
                     for field in self.fields.values():
                         field.required = True
+            def save(self, *args, **kwargs):
+                if view.request.POST.get('submit') == 'approval':
+                    self.instance.status = "W"
+                super(UpdateForm, self).save(*args, **kwargs)
+                
             class Meta:
                 model = Team
                 exclude = ('slug','tournament','rank','seed','members','status',)
         return UpdateForm
-
-    def form_valid(self, form):
-        ret = super(TeamUpdateView, self).form_valid(form)
-        if self.request.POST.get('submit') == 'approval':
-            self.object.status = "W"
-            self.object.save()
-        return ret
     
     def get_success_url(self):
         return reverse("team_page", kwargs=self.kwargs)
@@ -99,9 +97,8 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
                 return super(TeamCreateForm, self).clean()"""
             def save(self, *args, **kwargs):
                 self.instance.tournament = view.tournament
-                self.cleaned_data['slug'] = slugify(self.cleaned_data['name'])
+                view.slug = self.instance.slug = slugify(self.cleaned_data['name'])
                 super(TeamCreateForm, self).save(*args, **kwargs)
-                view.slug = self.cleaned_data['slug']
                 membership = TeamMembership(team=self.instance, profile=view.request.user.get_profile(), char_name=self.cleaned_data['char_name'], active=True, captain=True)
                 membership.save()
         return TeamCreateForm
