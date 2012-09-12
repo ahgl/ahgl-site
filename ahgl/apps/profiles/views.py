@@ -14,13 +14,14 @@ from django.template.loader import render_to_string
 from django.utils import simplejson as json
 from django.template import RequestContext
 from django.db.models import Count
+from django.template.defaultfilters import slugify
 
 from idios.views import ProfileDetailView
 from idios.utils import get_profile_model
 from emailconfirmation.models import EmailAddress
 
 from utils.views import ObjectPermissionsCheckMixin
-from .models import Team, TeamMembership
+from .models import Team, TeamMembership, Profile
 from apps.tournaments.models import TournamentRound, Tournament
 
 class TournamentSlugContextView(object):
@@ -70,7 +71,7 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
             char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length, required=True, label="Your character name", help_text=u"or Summoner name")
             class Meta:
                 model = Team
-                exclude=('tournament','rank','seed','members',)
+                exclude=('tournament','rank','seed','members','slug')
             """def clean(self):
                 if self.cleaned_data.get('duplicate'):
                     dup = self.cleaned_data.get('duplicate')
@@ -81,6 +82,7 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
                 return super(TeamCreateForm, self).clean()"""
             def save(self, *args, **kwargs):
                 self.instance.tournament = view.tournament
+                self.cleaned_data['slug'] = slugify(self.cleaned_data['name'])
                 super(TeamCreateForm, self).save(*args, **kwargs)
                 view.slug = self.cleaned_data['slug']
                 membership = TeamMembership(team=self.instance, profile=view.request.user.get_profile(), char_name=self.cleaned_data['char_name'], active=True, captain=True)
@@ -114,6 +116,27 @@ class StandingsView(TournamentSlugContextView, ListView):
 
     def get_template_names(self):
         return "profiles/standings.html"
+
+class TeamMembershipCreateView(CreateView):
+    model = TeamMembership
+    template_name = "profiles/membership_form.html"
+    context_object_name = "membership"
+    def get_form_class(self):
+        view = self
+        class MembershipCreateForm(ModelForm):
+            team = forms.ModelChoiceField(queryset=Team.objects.filter(team_membership__profile__user=view.request.user))
+            profile = forms.ModelChoiceField(queryset=Profile.objects.filter(slug=self.kwargs['slug']), initial=view.profile, widget=forms.HiddenInput())
+            class Meta:
+                model = TeamMembership
+                fields = ('char_name','team','profile')
+            def save(self, *args, **kwargs):
+                self.cleaned_data['profile'] = view.profile
+                return super(MembershipCreateForm, self).save(*args, **kwargs)
+        return MembershipCreateForm
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        self.profile = get_object_or_404(Profile, slug=kwargs['slug'])
+        return super(TeamMembershipCreateView, self).dispatch(request, *args, **kwargs)
 
 class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
     template_name = "idios/profile_edit.html"

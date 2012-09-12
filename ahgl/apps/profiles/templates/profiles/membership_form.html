@@ -1,0 +1,21 @@
+{% extends "site_base.html" %}
+
+{% load bootstrap_tags %}
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% if membership %}{% trans "Edit Team Member" %}{% else %}{% trans "New Team Member" %}{% endif %}{% endblock %}
+
+{% block body %}
+<form method="post" class="form-horizontal well">
+    <fieldset>
+        <legend>{% if membership %}{% trans "Edit" %} {{membership}}{% else %}{% trans "New Team Member" %}{% endif %}</legend>
+        {{ form }}
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        {% csrf_token %}
+    </fieldset>
+</form>
+{% endblock %}

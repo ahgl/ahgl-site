@@ -13,7 +13,7 @@ from idios.views import ProfileUpdateView
 from messages.views import compose
 
 from apps.profiles.models import Profile
-from apps.profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, TeamCreateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView
+from apps.profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, TeamCreateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView, TeamMembershipCreateView
 from apps.tournaments.views import MatchDetailView, MatchListView, MatchReportView, SubmitLineupView, GameListView, PlayerAdminView
 from apps.tournaments.models import Match, Tournament
 
@@ -27,6 +27,7 @@ urlpatterns = patterns("",
     url(r'^social/', include('social_auth.urls')),
     url(r"^openid/", include(PinaxConsumer().urls)),
     url(r"^profiles/profile/(?P<slug>[\w\._-]+)/$", MyProfileDetailView.as_view(), name="profile_detail"),
+    url(r"^profiles/profile/(?P<slug>[\w\._-]+)/add_membership/$", TeamMembershipCreateView.as_view(), name="membership_create"),
     url(r"^profiles/edit/$", ProfileUpdateView.as_view(form_class=model_forms.modelform_factory(Profile, exclude=('user','signature','signature_html','time_zone','language','post_count','avatar',))), name="profile_edit"),
     url(r"^profiles/membership_edit/(?P<pk>[\d]+)/$", TeamMembershipUpdateView.as_view(), name="membership_edit"),
     url(r"^profiles/", include("idios.urls")),
