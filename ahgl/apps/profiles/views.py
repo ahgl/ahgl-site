@@ -48,7 +48,14 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, Upd
         return Team.objects.filter(tournament=self.kwargs['tournament']).select_related('charity')
     
     def get_form_class(self):
-        return model_forms.modelform_factory(Team, exclude=('slug','tournament','rank','seed','members',))
+        return model_forms.modelform_factory(Team, exclude=('slug','tournament','rank','seed','members','status',))
+
+    def form_valid(self, form):
+        ret = super(TeamUpdateView, self).form_valid(form)
+        if self.request.POST.get('submit') == 'approval':
+            self.object.status = "W"
+            self.object.save()
+        return ret
     
     def get_success_url(self):
         return reverse("team_page", kwargs=self.kwargs)
@@ -71,7 +78,7 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
             char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length, required=True, label="Your character name", help_text=u"or Summoner name")
             class Meta:
                 model = Team
-                exclude=('tournament','rank','seed','members','slug', 'approval')
+                exclude=('tournament','rank','seed','members','slug','status','approval')
             """def clean(self):
                 if self.cleaned_data.get('duplicate'):
                     dup = self.cleaned_data.get('duplicate')

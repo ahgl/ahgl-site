@@ -11,9 +11,15 @@
 <form enctype="multipart/form-data" method="post" class="form-horizontal well">
     <fieldset>
         <legend>{% if team %}{% trans "Edit" %} {{team}}{% else %}{% trans "New Team" %}{% endif %}</legend>
+        {% if team %}
+        <p>Status: {{team.get_status_display}}</p>
+        {% endif %}
         {{ form }}
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Update</button>
+          {% if team %}
+          <button type="submit" class="btn" name="submit" value="approval">Submit for Approval</button>
+          {% endif %}
         </div>
         {% csrf_token %}
     </fieldset>
