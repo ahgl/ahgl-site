@@ -71,7 +71,7 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
             char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length, required=True, label="Your character name", help_text=u"or Summoner name")
             class Meta:
                 model = Team
-                exclude=('tournament','rank','seed','members','slug')
+                exclude=('tournament','rank','seed','members','slug', 'approval')
             """def clean(self):
                 if self.cleaned_data.get('duplicate'):
                     dup = self.cleaned_data.get('duplicate')
