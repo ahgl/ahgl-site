@@ -27,11 +27,14 @@
     </fieldset>
 </form>
 {% if team %}
+<div class="well">
 <h2>Members</h2>
+<div>To add members to the team, go to their player profile page (all profiles here: http://afterhoursgaming.tv/profiles/).</div>
 <ul>
 {% for team_member in team.team_membership.all %}
 <li><a href="{% url membership_edit team_member.id %}">{{team_member}}</a></li>
 {% endfor %}
 </ul>
+</div>
 {% endif %}
 {% endblock %}

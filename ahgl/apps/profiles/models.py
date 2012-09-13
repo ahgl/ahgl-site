@@ -163,12 +163,12 @@ class TeamMembership(models.Model):
 
 class Team(models.Model):
     """Per Tournament"""
-    name = models.CharField(_("name"), max_length=50)
+    name = models.CharField(_("company name"), max_length=50)
     slug = models.SlugField(_("slug"), max_length=50)
-    photo = ImageField(upload_to='team_photos', null=True, blank=True)
+    photo = ImageField(_("team photo"), upload_to='team_photos', null=True, blank=True)
     charity = models.ForeignKey('profiles.Charity', null=True, blank=True, on_delete=models.SET_NULL, related_name='teams', help_text=u"If your charity is not listed, send a message to an admin for it to be added.")
-    motto = models.CharField(max_length=70, blank=True)
-    approval = models.FileField(upload_to='team_approvals', null=True, blank=True)
+    motto = models.CharField(_("team motto"), max_length=70, blank=True)
+    approval = models.FileField(_("Written Company Permission"), upload_to='team_approvals', null=True, blank=True, help_text="Submit a pdf of approval letter on official company letterhead saying that your team can represent your company in the AHGL (if needed an approval email from an official company email will do).")
     members = models.ManyToManyField('Profile', null=True, blank=True, related_name='teams', through=TeamMembership)
     tournament = models.ForeignKey('tournaments.Tournament', related_name='teams', db_index=True)
     
