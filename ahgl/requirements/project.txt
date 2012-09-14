@@ -25,9 +25,9 @@ django-messages==0.4.4
 django-tinymce==1.5.1b2
 -e git+https://github.com/divio/django-cms.git#egg=django-cms
 
--e git+https://github.com/natmaster/pybbm.git#egg=pybbm
+-e git+https://github.com/ntucker/pybbm.git#egg=pybbm
 -e hg+https://bitbucket.org/ntucker/django-recaptcha#egg=django-recaptcha
--e git+https://github.com/natmaster/pinax.git#egg=pinax
+-e git+https://github.com/ntucker/pinax.git#egg=pinax
 
 # following is needed for a migration, it is harder to remove the parts of the
 # migration that it is to add this back.
