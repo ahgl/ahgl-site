@@ -20,6 +20,8 @@ from social_auth.backends.facebook import FacebookBackend
 from social_auth.backends.pipeline import USERNAME
 
 from idios.utils import get_profile_form
+from pinax.apps.account.models import EmailAddress, Account
+from timezones.utils import coerce_timezone_value
 from pybb.models import PybbProfile
 if "sorl.thumbnail" in settings.INSTALLED_APPS:
     from sorl.thumbnail import ImageField
@@ -254,9 +256,17 @@ def facebook_extra_values(sender, user, response, details, **kwargs):
         pass
     profile.time_zone = response.get('timezone')
     profile.save()
-    #EmailAddress(user=user, email=user.email, verified=True, primary=True).save() TODO: add email address as possible
-    """account = user.account_set.all()[0]
-    account.language = response.get('locale')
-    #account.timezone = coerce_timezone_value(str(response.get('timezone')))
-    account.save() TODO: Import language and timezone"""
+    account = user.account or Account.create(user=user, create_email=False)
+    try:
+        account.language = response.get('locale').split("_")[0]
+        tz_offset = int(response.get('timezone'))
+        tz_joiner = "" if tz_offset < 0 else "+"
+        account.timezone = coerce_timezone_value(tz_joiner.join(("Etc/GMT",str(tz_offset))))
+        account.full_clean()
+    except Exception:
+        pass
+    account.save()
+    email, created = EmailAddress.objects.get_or_create(user=user, email=user.email)
+    email.verified = True
+    email.save()
     return True
