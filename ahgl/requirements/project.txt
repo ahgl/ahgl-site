@@ -15,6 +15,7 @@ bleach>=1.0
 slimit==0.6
 recaptcha-client==1.0.6
 south==0.7.3
+raven==2.0.3
 
 celery<3.0
 django-celery==2.3.3

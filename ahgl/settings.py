@@ -198,6 +198,7 @@ INSTALLED_APPS = [
     "djcelery",
     'tinymce',
     'recaptcha_form',
+    'raven.contrib.django',
     
     # cms
     'cms',
@@ -313,12 +314,20 @@ DEBUG_TOOLBAR_CONFIG = {
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
+    "root": {
+        "level" : "WARNING",
+        "handlers": ["sentry"],
+    },
     "formatters": {
         "simple": {
             "format": "%(levelname)s %(message)s"
         },
     },
     "handlers": {
+        "sentry": {
+            "level": "ERROR",
+            "class": "raven.contrib.django.handlers.SentryHandler",
+        },
         "console":{
             "level": "INFO",
             "class": "logging.StreamHandler",
@@ -330,15 +339,15 @@ LOGGING = {
         },
     },
     "loggers": {
-        "": {
+        "raven": {
+            "level": "DEBUG",
             "handlers": ["console"],
-            "propagate": True,
-            "level": "INFO",
+            "propagate": False,
         },
-        "django.request": {
-            "handlers": ["mail_admins"],
-            "level": "ERROR",
-            "propagate": True,
+        "sentry.errors": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+            "propagate": False,
         },
     }
 }
@@ -370,6 +379,7 @@ if GONDOR_LOCAL_SETTINGS:
     EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
     RECAPTCHA_PUB_KEY = os.environ['RECAPTCHA_PUB_KEY']
     RECAPTCHA_PRIV_KEY = os.environ['RECAPTCHA_PRIV_KEY']
+    SENTRY_DSN = os.environ['SENTRY_DSN']
     
     if GONDOR_REDIS_HOST:
         # Caching
