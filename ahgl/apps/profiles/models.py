@@ -256,7 +256,7 @@ def facebook_extra_values(sender, user, response, details, **kwargs):
         pass
     profile.time_zone = response.get('timezone')
     profile.save()
-    account = user.account or Account.create(user=user, create_email=False)
+    account = user.account_set.all()[0] or Account.create(user=user, create_email=False)
     try:
         account.language = response.get('locale').split("_")[0]
         tz_offset = int(response.get('timezone'))
