@@ -201,7 +201,7 @@ class Team(models.Model):
         return [membership for membership in self.membership_queryset if membership.captain]
     
     def __unicode__(self):
-        return self.name
+        return u" : ".join((self.name, self.tournament.name))
     
     @models.permalink
     def get_absolute_url(self):
