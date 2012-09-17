@@ -11,7 +11,7 @@
 {% block content-class %}static-page team-template{% endblock %}
 {% block body %}
 {% cache 600 team_detail team.pk request.GET %}
-    <h2 class="title title-1 t1">{{team}}</h2>
+    <h2 class="title title-1 t1">{{team.name}}</h2>
     <div class="content-section-1">
     <p>
 	{% thumbnail team.photo "920x450" as im %}

@@ -25,7 +25,7 @@ Follow us on Twitter <a href="https://twitter.com/ahgltv">https://twitter.com/ah
         {% for game in match.list %}
         <li class="result-excerpt{% if forloop.first %} first-in-row{% endif %}">
         <h3 class="result-excerpt-title">
-        <a class="result-excerpt-link alt-link" href="{{game.vod}}" id="post-133" target="_blank"><span class="t8">{{match.grouper.home_team}}</span> <span class="t7">vs</span> <span class="t8">{{match.grouper.away_team}}</span></a><a href="{% url match_page tournament=tournament_slug pk=match.grouper.pk %}">Game {{forloop.counter}}</a>
+        <a class="result-excerpt-link alt-link" href="{{game.vod}}" id="post-133" target="_blank"><span class="t8">{{match.grouper.home_team.name}}</span> <span class="t7">vs</span> <span class="t8">{{match.grouper.away_team.name}}</span></a><a href="{% url match_page tournament=tournament_slug pk=match.grouper.pk %}">Game {{forloop.counter}}</a>
         </h3>
         </li>
         {% endfor %}

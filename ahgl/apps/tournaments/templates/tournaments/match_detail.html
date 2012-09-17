@@ -4,12 +4,12 @@
 {% load account_tags %}
 {% load pagination_tags %}
 
-{% block head_title %}{{match.home_team}} vs {{match.away_team}}{% endblock %}
+{% block head_title %}{{match.home_team.name}} vs {{match.away_team.name}}{% endblock %}
 
 {% block content-class %}match-post-template{% endblock %}
 {% block body %}
 
-    <h2 class="cf"><a href="{{match.home_team.get_absolute_url}}" class="title title-2 first-title t1">{{match.home_team}}{% if user.is_authenticated and match.winner_id == match.home_team_id %}*{% endif %}</a> <span class="versus t6">vs</span> <a href="{{match.away_team.get_absolute_url}}" class="title title-2 second-title t1">{{match.away_team}}{% if user.is_authenticated and match.winner_id == match.away_team_id %}*{% endif %}</a></h2>
+    <h2 class="cf"><a href="{{match.home_team.get_absolute_url}}" class="title title-2 first-title t1">{{match.home_team.name}}{% if user.is_authenticated and match.winner_id == match.home_team_id %}*{% endif %}</a> <span class="versus t6">vs</span> <a href="{{match.away_team.get_absolute_url}}" class="title title-2 second-title t1">{{match.away_team.name}}{% if user.is_authenticated and match.winner_id == match.away_team_id %}*{% endif %}</a></h2>
 
     {% if first_vod %}
     <div style="text-align:center;" id="main-video-container"><iframe src="{{first_vod}}" width="920" height="459" frameborder="0" allowfullscreen></iframe><embed type="application/x-shockwave-flash" src="{{first_vod}}" style="display:none"></embed></div>

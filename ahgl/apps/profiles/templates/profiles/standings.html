@@ -59,7 +59,7 @@
 <a href="{{item.home_team_membership.team.get_absolute_url}}" class="team-link">
 {% if item.home_team_membership %}
 <span class="seed">#{{item.home_team_membership.team.seed}}</span>{% endif %}
-<span class="team_name">{{item.home_team_membership.team|default:"-"}}</span>
+<span class="team_name">{{item.home_team_membership.team.name|default:"-"}}</span>
 </a>
 </div>
 {% else %}
@@ -67,7 +67,7 @@
 <a href="{% if item.match %}{% url match_page tournament=item.match.tournament pk=item.match.id %}{% endif %}">
 <div class="team{% if item.match and item.match.winner == item.home_team_membership.team_id %} winner{% endif %}">
 {% if item.home_team_membership %}<span class="seed">#{{item.home_team_membership.team.seed}}</span>{% endif %}
-<span class="team_name">{{item.home_team_membership.team|default:"-"}}</span>
+<span class="team_name">{{item.home_team_membership.team.name|default:"-"}}</span>
 {% if item.match %}
 <span class="score">
 {% if item.home_team_membership.team_id == item.match.home_team %}{{item.match.home_wins|default:"0"}}
@@ -78,7 +78,7 @@
 </div>
 <div class="team{% if item.match and item.match.winner == item.away_team_membership.team_id %} winner{% endif %}">
 {% if item.away_team_membership %}<span class="seed">#{{item.away_team_membership.team.seed}}</span>{% endif %}
-<span class="team_name">{{item.away_team_membership.team|default:"-"}}</span>
+<span class="team_name">{{item.away_team_membership.team.name|default:"-"}}</span>
 {% if item.match %}
 <span class="score">
 {% if item.away_team_membership.team_id == item.match.away_team %}{{item.match.away_wins|default:"0"}}

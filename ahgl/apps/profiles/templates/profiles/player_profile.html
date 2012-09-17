@@ -8,7 +8,7 @@
 
 {% block content-class %}static-page player-template{% endblock %}
 {% block body %}
-    <h2><a href="{{ membership.team.get_absolute_url }}" class="title title-1 t1"><span class="t3">Back to </span>{{ membership.team }} Team</a></h2>
+    <h2><a href="{{ membership.team.get_absolute_url }}" class="title title-1 t1"><span class="t3">Back to </span>{{ membership.team.name }} Team</a></h2>
     
     {% with profile=membership.profile %}
           <div class="content-section-1">
@@ -26,7 +26,7 @@
 <h3 class="t2">Record</h3>
 <p><a href="{% url games tournament=membership.team.tournament_id team=membership.team.slug profile=membership.profile.slug %}">{{membership.wins}}W : {{membership.losses}}L</a></p>
 <h3 class="t2">Company</h3>
-<p><a href="{{membership.team.get_absolute_url}}">{{ membership.team }}</a>{% if membership.captain %} *{% endif %}</p>
+<p><a href="{{membership.team.get_absolute_url}}">{{ membership.team.name }}</a>{% if membership.captain %} *{% endif %}</p>
 {% if profile.title %}
 <h3 class="t2">Title</h3>
 <p>{{ profile.title }}</p>

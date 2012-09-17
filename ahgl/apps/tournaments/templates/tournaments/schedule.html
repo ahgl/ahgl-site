@@ -34,9 +34,9 @@
                 <li class="week-list-item">
                   <a class="week-list-link alt-link-2 cf" href="{{match.get_absolute_url}}">
                   <span class="week-matchup-number f6">Matchup {{forloop.counter}}</span>
-                  <span class="week-team-1 f2 bold">{{match.home_team}}</span>
+                  <span class="week-team-1 f2 bold">{{match.home_team.name}}</span>
                   <span class="versus t12">vs</span>
-                  <span class="week-team-2 f2 bold">{{match.away_team}}</span>
+                  <span class="week-team-2 f2 bold">{{match.away_team.name}}</span>
                   <span class="week-view-games f6">View games »</span>
                   </a>
                 </li>
