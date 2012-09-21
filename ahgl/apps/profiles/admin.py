@@ -7,8 +7,8 @@ from .fields import HTMLField
 
 class TeamAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('__unicode__', 'tournament','seed',)
-    list_filter = ('tournament',)
+    list_display = ('__unicode__', 'tournament','seed','status',)
+    list_filter = ('tournament','status',)
     ordering = ('tournament',)
     list_editable = ('seed',)
    
@@ -19,8 +19,8 @@ class TeamMembershipAdminInline(admin.TabularInline):
         HTMLField: {'widget': TinyMCE(mce_attrs={'theme':'advanced'})},
     }
 class TeamMembershipAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'active','captain','status',)
-    list_filter = ('team','race','champion','captain','status',)
+    list_display = ('__unicode__', 'active','captain',)
+    list_filter = ('team','race','champion','captain',)
     search_fields = ('char_name',)
     formfield_overrides = {
         HTMLField: {'widget': TinyMCE(mce_attrs={'theme':'advanced'})},
