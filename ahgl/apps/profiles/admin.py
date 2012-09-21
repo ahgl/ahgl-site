@@ -19,8 +19,8 @@ class TeamMembershipAdminInline(admin.TabularInline):
         HTMLField: {'widget': TinyMCE(mce_attrs={'theme':'advanced'})},
     }
 class TeamMembershipAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'active','captain',)
-    list_filter = ('team','race','champion','captain',)
+    list_display = ('__unicode__', 'active','captain','status',)
+    list_filter = ('team','race','champion','captain','status',)
     search_fields = ('char_name',)
     formfield_overrides = {
         HTMLField: {'widget': TinyMCE(mce_attrs={'theme':'advanced'})},
