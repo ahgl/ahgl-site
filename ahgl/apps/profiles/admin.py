@@ -7,8 +7,8 @@ from .fields import HTMLField
 
 class TeamAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('__unicode__', 'tournament','seed','status',)
-    list_filter = ('tournament','status',)
+    list_display = ('__unicode__', 'tournament','seed','status','charity',)
+    list_filter = ('tournament','status','charity',)
     ordering = ('tournament',)
     list_editable = ('seed',)
    
