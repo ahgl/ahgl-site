@@ -106,6 +106,8 @@ class Profile(PybbProfile):
                     transaction.savepoint_rollback(savepoint)
                     i += 1
                     self.slug = '%s_%d' % (slug, i)
+        else:
+            return super(Profile, self).save(*args, **kwargs)
 
 class TeamMembership(models.Model):
     """All team specific profile data goes here"""
