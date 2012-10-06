@@ -54,6 +54,10 @@ class Profile(PybbProfile):
     @property
     def thumbnail(self):
         return self.custom_thumb or self.photo
+    
+    @property
+    def profile_slug(self):
+        return self.slug
 
     def is_active(self, tournament=None): #TODO: make this check if they are active in that particular tournament
         return self.user.is_superuser or self.teams.filter(tournament__status='A').count() > 0
