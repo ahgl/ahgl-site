@@ -15,6 +15,8 @@ from django.utils import simplejson as json
 from django.template import RequestContext
 from django.db.models import Count
 from django.template.defaultfilters import slugify
+from django.db import IntegrityError
+from django.contrib import messages
 
 from idios.views import ProfileDetailView
 from idios.utils import get_profile_model
@@ -98,9 +100,13 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
             def save(self, *args, **kwargs):
                 self.instance.tournament = view.tournament
                 view.slug = self.instance.slug = slugify(self.cleaned_data['name'])
-                super(TeamCreateForm, self).save(*args, **kwargs)
-                membership = TeamMembership(team=self.instance, profile=view.request.user.get_profile(), char_name=self.cleaned_data['char_name'], active=True, captain=True)
-                membership.save()
+                try:
+                    super(TeamCreateForm, self).save(*args, **kwargs)
+                except IntegrityError:
+                    messages.error(view.request, "Team not created - already exists for this tournament.")
+                else:
+                    membership = TeamMembership(team=self.instance, profile=view.request.user.get_profile(), char_name=self.cleaned_data['char_name'], active=True, captain=True)
+                    membership.save()
         return TeamCreateForm
     
     def get_success_url(self):
