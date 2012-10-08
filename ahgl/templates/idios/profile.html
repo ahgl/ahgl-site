@@ -21,13 +21,3 @@
     <p><br><a href="{% url profile_list %}">{% trans "All Profiles" %}</a></p>
     </div>
 {% endblock %}
-
-{% block extra_script %}
-    <script>
-        $(function() {
-            $("#edit-profile-box").modal({
-                backdrop: true
-            });
-        });
-    </script>
-{% endblock %}
