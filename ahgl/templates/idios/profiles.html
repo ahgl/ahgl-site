@@ -8,6 +8,10 @@
 
 {% block body %}
     <h1>{% trans "All Profiles" %}</h1>
+    <form method="get" action="{{request.path}}" class="form-search">
+    <input type="search" placeholder="username" name="search" value="{{request.GET.search}}" autofocus />
+    <input type="submit" value="Search" class="btn" style="opacity:0.7;" />
+    </form>
     
     {% autopaginate profiles %}
     
