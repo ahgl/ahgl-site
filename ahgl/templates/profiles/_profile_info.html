@@ -30,7 +30,7 @@
 </div>
 <div class="content-section-2">
 {% for membership in profile.memberships %}
-<h3 class="t2"><a href="{% url player_profile tournament=membership.team.tournament_id team=membership.team.slug profile=profile.slug %}">{{membership.team.tournament}} : {{membership.team}}{% if membership.captain %}*{% endif %} : {{membership}}</a></h3>
+<h3 class="t2"><a href="{% url player_profile tournament=membership.team.tournament_id team=membership.team.slug profile=profile.slug %}">{{membership.team}}{% if membership.captain %}*{% endif %} : {{membership}}</a></h3>
 {% endfor %}
 </div>
 
