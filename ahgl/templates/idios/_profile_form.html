@@ -1,6 +1,10 @@
 {% load bootstrap_tags %}
 {{profile_form.media}}
-<form method="POST" class="well">
+{% if profile_form.is_multipart %}
+    <form method="POST" class="well" enctype="multipart/form-data">
+{% else %}
+    <form method="POST" class="well"">
+{% endif %}
     <fieldset>
         {% csrf_token %}
         {{ profile_form|as_bootstrap }}
