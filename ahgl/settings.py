@@ -352,60 +352,9 @@ LOGGING = {
     }
 }
 
-# Gondor Settings Should Always Be Right BEFORE local_settings Import
-GONDOR_LOCAL_SETTINGS = False
-GONDOR_REDIS_HOST = None
-
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
 try:
     from local_settings import *
 except ImportError:
     pass
-
-SERVER_EMAIL = "support@afterhoursgaming.tv"
-DEFAULT_FROM_EMAIL = "support@afterhoursgaming.tv"
-
-CMS_MEDIA_PATH = "cms/"
-CMS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, CMS_MEDIA_PATH)
-CMS_MEDIA_URL = posixpath.join(MEDIA_URL, CMS_MEDIA_PATH)
-CMS_PAGE_MEDIA_PATH = "cms_page_media/"
-
-if GONDOR_LOCAL_SETTINGS:
-    # Gondor stores secret settings in environ variables, load them up here
-    SECRET_KEY = os.environ['SECRET_KEY']
-    FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
-    FACEBOOK_API_SECRET = os.environ['FACEBOOK_API_SECRET']
-    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-    RECAPTCHA_PUB_KEY = os.environ['RECAPTCHA_PUB_KEY']
-    RECAPTCHA_PRIV_KEY = os.environ['RECAPTCHA_PRIV_KEY']
-    SENTRY_DSN = os.environ['SENTRY_DSN']
-    
-    if GONDOR_REDIS_HOST:
-        # Caching
-        CACHES = {
-            "default": {
-                "BACKEND": "redis_cache.RedisCache",
-                "LOCATION": ":".join([GONDOR_REDIS_HOST, str(GONDOR_REDIS_PORT)]),
-                "OPTIONS": {
-                    "DB": 0,
-                    "PASSWORD": GONDOR_REDIS_PASSWORD,
-                }
-            }
-        }
-        THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
-        THUMBNAIL_REDIS_DB = 0
-        THUMBNAIL_REDIS_PASSWORD = GONDOR_REDIS_PASSWORD
-        THUMBNAIL_REDIS_HOST = GONDOR_REDIS_HOST
-        THUMBNAIL_REDIS_PORT = GONDOR_REDIS_PORT
-        
-    BROKER_TRANSPORT = "redis"
-    BROKER_HOST = GONDOR_REDIS_HOST
-    BROKER_PORT = GONDOR_REDIS_PORT
-    BROKER_VHOST = "0"
-    BROKER_PASSWORD = GONDOR_REDIS_PASSWORD
-    
-    CELERY_RESULT_BACKEND = "redis"
-    CELERY_REDIS_HOST = GONDOR_REDIS_HOST
-    CELERY_REDIS_PORT = GONDOR_REDIS_PORT
-    CELERY_REDIS_PASSWORD = GONDOR_REDIS_PASSWORD
