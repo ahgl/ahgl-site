@@ -30,7 +30,7 @@
     <p><a class="btn-auth btn-facebook" href="{% url socialauth_begin 'facebook' %}">Sign in with <b>Facebook</b></a></p>
     {% endif %}
     
-    <form method="POST" action="{% url acct_login %}" autocapitalize="off" class="form-horizontal">
+    <form method="POST" action="{% url acct_login %}" autocapitalize="off" class="form-horizontal well">
         {% csrf_token %}
         <fieldset>
             {{ form|as_bootstrap }}

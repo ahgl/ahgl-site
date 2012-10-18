@@ -20,7 +20,7 @@
         <p>{% trans "Already have an account?" %} <a href="{% url acct_login %}">{% trans "Log In" %}</a>!</p>
         <p><a class="btn-auth btn-facebook" href="{% url socialauth_begin 'facebook' %}">Sign up with <b>Facebook</b></a></p>
         
-        <form id="signup_form" method="post" action="{% url acct_signup %}" autocapitalize="off" class="form-horizontal">
+        <form id="signup_form" method="post" action="{% url acct_signup %}" autocapitalize="off" class="form-horizontal well">
             {% csrf_token %}
             <fieldset>
                 {{ form }}
