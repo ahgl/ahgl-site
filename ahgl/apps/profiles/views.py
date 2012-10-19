@@ -55,8 +55,9 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, Upd
             def __init__(self, *args, **kwargs):
                 super(UpdateForm, self).__init__(*args, **kwargs)
                 if view.request.POST.get('submit') == 'approval':
-                    for field in self.fields.values():
-                        field.required = True
+                    for key, field in self.fields.iteritems():
+                        if key != 'approval':
+                            field.required = True
             def save(self, *args, **kwargs):
                 if view.request.POST.get('submit') == 'approval':
                     self.instance.status = "W"
