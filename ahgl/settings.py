@@ -298,6 +298,8 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
 #Cache settings
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
+AUTOCACHE_PRECOMPUTE_RELATED_CACHE = False
+
 # Email info
 EMAIL_HOST = "oxmail1.registrar-servers.com"
 EMAIL_PORT = 25

@@ -18,6 +18,8 @@ slimit==0.6
 recaptcha-client==1.0.6
 south==0.7.3
 raven==2.0.3
+-e git+https://github.com/ntucker/django-autocache.git#egg=django-autocache
+
 
 celery<3.0
 django-celery==2.3.3
