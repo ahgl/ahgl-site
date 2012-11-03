@@ -219,6 +219,7 @@ class Team(models.Model):
     seed = models.IntegerField(default=0)
     
     status = models.CharField(max_length=1, choices=(('R', 'Registering'),('W', 'Awaiting Approval'), ('A', 'Accepted'),('F', 'Finalized')), default='R')
+    paid = models.BooleanField(default=False)
     
     def update_stats(self):
         self.wins = self.match_wins.filter(published=True).count()

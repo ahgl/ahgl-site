@@ -7,10 +7,10 @@ from .fields import HTMLField
 
 class TeamAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('__unicode__', 'tournament','seed','status','charity',)
-    list_filter = ('tournament','status','charity',)
+    list_display = ('__unicode__', 'tournament','seed','status','paid','charity',)
+    list_filter = ('tournament','status','charity','paid',)
     ordering = ('tournament',)
-    list_editable = ('seed',)
+    list_editable = ('seed','paid',)
    
 class TeamMembershipAdminInline(admin.TabularInline):
     model = TeamMembership
