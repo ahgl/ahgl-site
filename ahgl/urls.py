@@ -13,7 +13,7 @@ from idios.views import ProfileUpdateView
 from messages.views import compose
 
 from apps.profiles.models import Profile
-from apps.profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, TeamCreateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView, TeamMembershipCreateView
+from apps.profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, TeamCreateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView, TeamMembershipCreateView, TeamMembershipDeleteView
 from apps.tournaments.views import MatchDetailView, MatchListView, MatchReportView, SubmitLineupView, GameListView, PlayerAdminView
 from apps.tournaments.models import Match, Tournament
 
@@ -30,6 +30,7 @@ urlpatterns = patterns("",
     url(r"^profiles/profile/(?P<slug>[\w\._-]+)/add_membership/$", TeamMembershipCreateView.as_view(), name="membership_create"),
     url(r"^profiles/edit/$", ProfileUpdateView.as_view(form_class=model_forms.modelform_factory(Profile, exclude=('user','signature','signature_html','time_zone','language','post_count','avatar',))), name="profile_edit"),
     url(r"^profiles/membership_edit/(?P<pk>[\d]+)/$", TeamMembershipUpdateView.as_view(), name="membership_edit"),
+    url(r"^profiles/membership_delete/(?P<pk>[\d]+)/$", TeamMembershipDeleteView.as_view(), name="membership_delete"),
     url(r"^profiles/", include("idios.urls")),
     url(r"^notices/", include("notification.urls")),
     url(r"^announcements/", include("announcements.urls")),

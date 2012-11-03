@@ -1,0 +1,20 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% block head_title %}{% trans "Delete Team Member" %}{% endblock %}
+
+{% block body %}
+<h1 class="f5">Delete {{profile}}</h1>
+<form method="post">
+    <fieldset>
+        <legend>Are you sure you want to delete {{profile}}?</legend>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Delete {{profile}}</button>
+        </div>
+        {% csrf_token %}
+    </fieldset>
+</form>
+
+{% endblock %}

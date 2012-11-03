@@ -11,6 +11,7 @@
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Update</button>
             <a href="{{profile.get_absolute_url}}" class="btn">Cancel</a>
+            <a href="{%url membership_delete profile.pk %}" class="btn btn-danger">Delete</a>
         </div>
     </fieldset>
 </form>

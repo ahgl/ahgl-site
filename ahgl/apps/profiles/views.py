@@ -2,7 +2,7 @@
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponse, Http404, HttpResponseRedirect
-from django.views.generic import DetailView, ListView, UpdateView, CreateView
+from django.views.generic import DetailView, ListView, UpdateView, CreateView, DeleteView
 from django import forms
 from django.forms import models as model_forms
 from django.forms import ModelForm
@@ -158,7 +158,6 @@ class TeamMembershipCreateView(CreateView):
     def dispatch(self, request, *args, **kwargs):
         self.profile = get_object_or_404(Profile, slug=kwargs['slug'])
         return super(TeamMembershipCreateView, self).dispatch(request, *args, **kwargs)
-
 class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
     template_name = "idios/profile_edit.html"
     template_name_ajax = "idios/profile_edit_ajax.html"
@@ -213,6 +212,21 @@ class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(TeamMembershipUpdateView, self).dispatch(*args, **kwargs)
+
+class TeamMembershipDeleteView(ObjectPermissionsCheckMixin, DeleteView):
+    context_object_name = "profile"
+    model = TeamMembership
+    def get_success_url(self):
+        return reverse("team_page", kwargs={"tournament":self.object.team.tournament.slug, "slug":self.object.team.slug})
+
+    def check_permissions(self):
+        self.captain_user = bool(TeamMembership.objects.filter(team=self.object.team, profile__user=self.request.user, captain=True).count())
+        if self.object.profile.user != self.request.user and not self.captain_user:
+            return HttpResponseForbidden("This is not your membership to delete.")
+        
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(TeamMembershipDeleteView, self).dispatch(*args, **kwargs)
 
 class TeamMembershipView(TournamentSlugContextView, DetailView):
     template_name = "profiles/player_profile.html"
