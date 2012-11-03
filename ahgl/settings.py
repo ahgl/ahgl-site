@@ -199,6 +199,7 @@ INSTALLED_APPS = [
     'tinymce',
     'recaptcha_form',
     'raven.contrib.django',
+    'clear_cache',
     
     # cms
     'cms',
