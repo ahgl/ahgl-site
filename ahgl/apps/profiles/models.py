@@ -123,7 +123,39 @@ class TeamMembership(models.Model):
     char_name = models.CharField(max_length=20)
     active = models.BooleanField(default=True)
     captain = models.BooleanField(default=False)
-    questions_answers = HTMLField(tags=['ol','ul','li', 'strong', 'em', 'p'], blank=True)
+    questions_answers = HTMLField(tags=['ol','ul','li', 'strong', 'em', 'p'], blank=True, default="""<ol><li>
+<p>What do you do for a living?  What do you love about your job?</p>
+<p>-</p>
+</li>
+<li>
+<p>What other hobbies do you have?</p>
+<p>-</p>
+</li>
+<li>
+<p>Why do you play StarCraft?</p>
+<p>-</p>
+</li>
+<li>
+<p>How long have you been playing?</p>
+<p>-</p>
+</li>
+<li>
+<p>What have you done to prepare for the momentous challenge that is the AHGL Tournament?</p>
+<p>-</p>
+</li>
+<li>
+<p>Why is your team going to win?</p>
+<p>-</p>
+</li>
+<li>
+<p>Who is the best player on your team?  Why?</p>
+<p>-</p>
+</li>
+<li>
+<p>Whom do you fear most amongst the competition and why?</p>
+<p>-</p>
+</li>
+</ol>""")
     game_profile = models.URLField(null=True, blank=True)
     
     #starcraft data
