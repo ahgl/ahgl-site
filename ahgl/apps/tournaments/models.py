@@ -293,6 +293,9 @@ class Match(models.Model):
                                   }
                 )
     
+    class Meta:
+      verbose_name_plural = "matches"
+      
 def replay_path(instance, filename):
     match = instance.match
     tournament = match.tournament

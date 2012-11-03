@@ -231,6 +231,7 @@ class Charity(models.Model):
     
     class Meta:
         ordering = ('name',)
+        verbose_name_plural = "charities"
 
 @receiver(socialauth_registered, sender=FacebookBackend, dispatch_uid="tournaments_facebook_extra_values")
 def facebook_extra_values(sender, user, response, details, **kwargs):
