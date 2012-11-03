@@ -12,7 +12,7 @@ from .models import Tournament, TournamentRound, Map, Match, Game, TeamRoundMemb
 from apps.profiles.models import Team, Profile, TeamMembership
 
 from .tasks import update_round_stats
-from local_settings import CELERY_ALWAYS_EAGER
+import settings
 
 class TournamentRoundInline(admin.TabularInline):
     model = TournamentRound
@@ -47,8 +47,8 @@ class TournamentAdmin(admin.ModelAdmin):
         else:
             transaction.commit()
             update_round_stats.delay(obj.pk)
-            if CELERY_ALWAYS_EAGER is True:
-              transaction.commit() # must commit if running in eager task mode
+            if getattr(settings, "CELERY_ALWAYS_EAGER", False) is True:
+                transaction.commit() # must commit if running in eager task mode
 
     def get_urls(self):
         urls = super(TournamentAdmin, self).get_urls()
