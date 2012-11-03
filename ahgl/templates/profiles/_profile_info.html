@@ -25,7 +25,7 @@
 <h3 class="t2">Website</h3>
 <p><a href="{{ profile.website }}">{{ profile.website }}</a></p>
 {% endif %}
-{% if request.user.is_authenticated and profile != request.user.get_profile %}<a href="{% url messages_compose_to profile.user %}" class="btn">Send Message</a>{% endif %}
+{% if request.user.is_authenticated and profile != request.user.get_profile and profile.user.username != "master" %}<a href="{% url messages_compose_to profile.user %}" class="btn">Send Message</a>{% endif %}
 <a href="{% url membership_create slug=profile.slug %}" class="btn">Add to team</a>
 </div>
 <div class="content-section-2">
