@@ -18,8 +18,15 @@
         <p>{% trans "You are already logged in." %}</p>
     {% else %}
         <p>{% trans "Already have an account?" %} <a href="{% url acct_login %}">{% trans "Log In" %}</a>!</p>
+        <h1 class="f4">If you participated in Season 1 or 2 of AHGL, please use Facebook so your account can be associated properly with past seasons.</h1><br />
         <p><a class="btn-auth btn-facebook" href="{% url socialauth_begin 'facebook' %}">Sign up with <b>Facebook</b></a></p>
         
+<div class="accordion-group">
+<div class="accordion-heading">
+<a class="accordion-toggle" data-toggle="collapse" href="#signup-collapse" rel="nofollow" target="_blank" title="Show Spoiler">Signup without facebook</a>
+</div>
+<div class="accordion-body collapse" id="signup-collapse">
+<div class="accordion-inner">
         <form id="signup_form" method="post" action="{% url acct_signup %}" autocapitalize="off" class="form-horizontal well">
             {% csrf_token %}
             <fieldset>
@@ -32,7 +39,7 @@
                 <button type="submit" class="btn btn-primary">{% trans "Sign Up" %}</button>
             </div>
         </form>
-        
+</div></div></div>  
 
         {% ifsetting ACCOUNT_USE_OPENID %}
         <h2>{% trans "Or sign in with your OpenID" %}:</h2>
