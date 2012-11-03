@@ -4,13 +4,11 @@
 {% load account_tags %}
 {% load pagination_tags %}
 {% load thumbnail %}
-{% load cache %}
 
 {% block head_title %}{{team}}{% endblock %}
 
 {% block content-class %}static-page team-template{% endblock %}
 {% block body %}
-{% cache 600 team_detail team.pk request.GET %}
     <h2 class="title title-1 t1">{{team.name}}</h2>
     <div class="content-section-1">
     <p>
@@ -96,7 +94,6 @@
     
     {% paginate %}
     {% endwith %}
-{% endcache %}
 {% if is_captain %}
     <div style="clear:both;text-align:center;margin-top:20px;">
         <p><a id="edit-profile-box" href="{% url edit_team tournament=tournament_slug slug=team.slug %}" class="btn">Edit Team</a></p>
