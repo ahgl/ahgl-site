@@ -124,6 +124,10 @@ class TeamMembership(models.Model):
     active = models.BooleanField(default=True)
     captain = models.BooleanField(default=False)
     questions_answers = HTMLField(tags=['ol','ul','li', 'strong', 'em', 'p'], blank=True, default="""<ol><li>
+<p>Why did you choose this race/champion?</p>
+<p>-</p>
+</li>
+<li>
 <p>What do you do for a living?  What do you love about your job?</p>
 <p>-</p>
 </li>
@@ -132,7 +136,7 @@ class TeamMembership(models.Model):
 <p>-</p>
 </li>
 <li>
-<p>Why do you play StarCraft?</p>
+<p>Why do you play StarCraft/League of Legends?</p>
 <p>-</p>
 </li>
 <li>
