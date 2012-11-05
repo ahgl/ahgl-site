@@ -33,7 +33,7 @@
 {% endif %}
 {% if membership.char_name %}
 <h3 class="t2">Ingame Name</h3>
-<p>{% if membership.game_profile %}<a href="{{membership.game_profile}}">{% endif %}{{ membership.char_name }}{%if membership.char_code and user.get_profile.is_active %}.{{ membership.char_code }}{% endif %}{% if profile.game_profile %}</a>{% endif %}</p>
+<p>{% if membership.game_profile %}<a href="{{membership.game_profile}}">{% endif %}{{ membership.char_name }}{%if membership.char_code and user.get_profile.is_active %}.{{ membership.char_code }}{% endif %}{% if membership.game_profile %}</a>{% endif %}</p>
 {% endif %}
 {% if membership.race %}
 <h3 class="t2">Race</h3>
