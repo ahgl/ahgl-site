@@ -16,7 +16,7 @@
     </fieldset>
     {% if profile.memberships %}
     <div>
-    <h3 class="f4">Need to update your player profile?</h3>
+    <h3 class="f4">You're not done yet! Make sure to update your league specific profile below:</h3>
     <ul>
 {% for membership in profile.memberships %}
 <li><a href="{% url membership_edit membership.id %}">{{membership.team}}{% if membership.captain %}*{% endif %} : {{membership}}</a></li>
