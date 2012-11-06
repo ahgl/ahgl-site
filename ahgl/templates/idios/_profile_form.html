@@ -14,4 +14,14 @@
             <a href="{%url membership_delete profile.pk %}" class="btn btn-danger">Delete</a>
         </div>
     </fieldset>
+    {% if profile.memberships %}
+    <div>
+    <h3 class="f4">Need to update your player profile?</h3>
+    <ul>
+{% for membership in profile.memberships %}
+<li><a href="{% url membership_edit membership.id %}">{{membership.team}}{% if membership.captain %}*{% endif %} : {{membership}}</a></li>
+{% endfor %}
+</ul>
+    </div>
+    {% endif %}
 </form>
