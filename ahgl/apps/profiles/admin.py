@@ -15,6 +15,7 @@ class TeamAdmin(admin.ModelAdmin):
 class TeamMembershipAdminInline(admin.TabularInline):
     model = TeamMembership
     extra = 1
+    exclude = ('questions_answers',)
     formfield_overrides = {
         HTMLField: {'widget': TinyMCE(mce_attrs={'theme':'advanced'})},
     }
