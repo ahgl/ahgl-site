@@ -106,5 +106,5 @@ RECAPTCHA_PRIV_KEY = os.environ['RECAPTCHA_PRIV_KEY']
 SENTRY_DSN = os.environ['SENTRY_DSN']
 if os.environ.get('INTERNAL_IPS'):
     INTERNAL_IPS = INTERNAL_IPS + tuple(os.environ['INTERNAL_IPS'].split(":"))
-DB_POOL_SIZE = int(os.environ.get('DB_POOL_SIZE', 20))
+DB_POOL_SIZE = int(os.environ.get('DB_POOL_SIZE', 4))
 USE_DB_CONNECTION_POOLING = os.environ.get('USE_DB_CONNECTION_POOLING', "True") == "True"

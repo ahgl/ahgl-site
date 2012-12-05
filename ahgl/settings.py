@@ -38,6 +38,8 @@ DATABASES = {
         "PORT": "",                             # Set to empty string for default. Not used with sqlite3.
     }
 }
+DB_POOL_SIZE = 4
+USE_DB_CONNECTION_POOLING = True
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
