@@ -261,7 +261,8 @@ JOHNNY_TABLE_WHITELIST = ['cms_cmsplugin',
 'cms_pageusergroup',
 'cms_placeholder',
 'cms_title',
-'cmsplugin_eventspluginmodel',
+'cmsplugin_tournamentpluginmodel',
+'cmsplugin_gamepluginmodel',
 'cmsplugin_file',
 'cmsplugin_googlemap',
 'cmsplugin_link',
@@ -286,6 +287,7 @@ CMS_TEMPLATES = (
     ('simple.html', 'Simple'),
     ('narrow.html', 'Narrow'),
 )
+CMS_VIEW_PERMISSION = False
 
 PYBB_TEMPLATE = "pybb_base.html"
 
