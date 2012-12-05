@@ -39,6 +39,15 @@ if "GONDOR_REDIS_URL" in os.environ:
                 "PASSWORD": GONDOR_REDIS_PASSWORD,
             },
         },
+        "johnny": {
+            "BACKEND": "johnny.backends.redis.RedisCache",
+            "LOCATION": ":".join([GONDOR_REDIS_HOST, str(GONDOR_REDIS_PORT)]),
+            "OPTIONS": {
+                "DB": 0,
+                "PASSWORD": GONDOR_REDIS_PASSWORD,
+            },
+            "JOHNNY_CACHE": True,
+        },
     }
     
     BROKER_TRANSPORT = "redis"

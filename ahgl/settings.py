@@ -111,6 +111,7 @@ TEMPLATE_LOADERS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    "johnny.middleware.QueryCacheMiddleware",
     "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.gzip.GZipMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -246,6 +247,37 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
 }
+
+#Queryset caching with johnny-cache
+JOHNNY_TABLE_WHITELIST = ['cms_cmsplugin',
+'cms_globalpagepermission',
+'cms_globalpagepermissions_sites',
+'cms_page',
+'cms_page_placeholders',
+'cms_pagemoderator',
+'cms_pagemoderatorstate',
+'cms_pagepermission',
+'cms_pageuser',
+'cms_pageusergroup',
+'cms_placeholder',
+'cms_title',
+'cmsplugin_eventspluginmodel',
+'cmsplugin_file',
+'cmsplugin_googlemap',
+'cmsplugin_link',
+'cmsplugin_picture',
+'cmsplugin_snippetptr',
+'cmsplugin_teaser',
+'cmsplugin_text',
+'cmsplugin_twitterrecententries',
+'cmsplugin_twittersearch',
+'cmsplugin_video',
+'menus_cachekey',
+'snippet_snippet',
+'django_site',
+'auth_group',
+'auth_user_groups',
+]
 
 CMS_TEMPLATES = (
     ('splash.html', 'Splash Screen'),

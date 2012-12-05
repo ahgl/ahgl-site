@@ -21,7 +21,7 @@ south==0.7.3
 raven==2.0.3
 -e git+https://github.com/ntucker/django-autocache.git#egg=django-autocache
 -e git+https://github.com/rdegges/django-clear-cache.git#egg=django-clear-cache
-
+johnny-cache==1.4
 
 celery<3.0
 django-celery==2.3.3
