@@ -216,7 +216,6 @@ INSTALLED_APPS = [
     'cms.plugins.snippet',
     'cms.plugins.teaser',
     'cms.plugins.video',
-    'cms.plugins.googlemap',
     'cms.plugins.twitter',
 
 
