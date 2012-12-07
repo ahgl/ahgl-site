@@ -290,7 +290,7 @@ CMS_VIEW_PERMISSION = False
 
 PYBB_TEMPLATE = "pybb_base.html"
 
-CONTACT_EMAIL = "support@ahgl.tv"
+CONTACT_EMAIL = "support@afterhoursgaming.tv"
 
 AUTH_PROFILE_MODULE = "profiles.Profile"
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
