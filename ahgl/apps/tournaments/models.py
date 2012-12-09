@@ -4,6 +4,7 @@ import logging
 import random, math
 from itertools import chain, count, takewhile, islice, groupby
 import datetime
+import os.path
 
 from django.db import models
 from django.db.models import Q, Count, F
@@ -299,8 +300,13 @@ class Match(models.Model):
 def replay_path(instance, filename):
     match = instance.match
     tournament = match.tournament
-    filename = "".join(("_".join((unicode(instance.home_player), unicode(instance.away_player), unicode(instance.map))), u".SC2Replay")).encode('ascii', 'ignore')
+    filename = "".join(("_".join((unicode(instance.home_player), unicode(instance.away_player), unicode(instance.map))), os.path.splitext(filename)[1])).encode('ascii', 'ignore')
     return posixpath.join("replays", unicode(tournament), unicode(match), filename)
+def victory_path(instance, filename):
+    match = instance.match
+    tournament = match.tournament
+    filename = "".join(("_".join((unicode(instance.home_player), unicode(instance.away_player), unicode(instance.map))), filename)).encode('ascii', 'ignore')
+    return posixpath.join("victory", unicode(tournament), unicode(match), filename)
 class Game(models.Model):
     match = models.ForeignKey('Match', related_name="games")
     map = models.ForeignKey('Map') #add verification that this is in map pool for tournament
@@ -317,6 +323,7 @@ class Game(models.Model):
     replay = models.FileField(upload_to=replay_path, max_length=300, null=True, blank=True)
     vod = models.URLField(blank=True)
     is_ace = models.BooleanField(default=False)
+    victory_screen = models.ImageField(upload_to=victory_path, null=True, blank=True)
     
     fields_for_game_detail = ['map',
                            'home_player__char_name',

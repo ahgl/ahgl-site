@@ -302,7 +302,7 @@ class MatchReportView(UpdateView):
                     winner_field.queryset = winner_field.queryset.filter(pk__in=(match.home_team_id, match.away_team_id,)).only('name')
                 class Meta:
                     model = Game
-                    fields=('winner_team','forfeit',)
+                    fields=('replay', 'victory_screen', 'winner_team','forfeit',)
         ReportMatchForm.queryset = Game.objects.select_related('map', 'home_player', 'away_player')
         form_classes = SortedDict([("Games",inlineformset_factory(Match, Game, extra=0, can_delete=False, form=ReportMatchForm)),
                                    ("Match",modelform_factory(Match, fields=('description',)))])
