@@ -163,7 +163,7 @@ class TeamRoundMembership(models.Model):
         self.losses = self.team.match_losses.filter(published=True, tournament_round=self.tournamentround).count()
         self.tiebreaker = self.team.game_wins.filter(match__published=True, match__tournament_round=self.tournamentround).count() \
                         - self.team.game_losses.filter(match__published=True, match__tournament_round=self.tournamentround).count()
-        self.save()
+        self.__class__.objects.filter(pk=self.pk).update(wins=self.wins, losses=self.losses, tiebreaker=self.tiebreaker)
 
     class Meta:
         db_table = 'tournaments_tournamentround_teams'
