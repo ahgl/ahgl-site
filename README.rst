@@ -60,7 +60,6 @@ Now visit localhost and you should see a web page appear!
 
 Windows only
 ````````````
-
 Install precompiled packages::
 
 Visit http://www.lfd.uci.edu/~gohlke/pythonlibs/ to download the following packages
@@ -69,6 +68,7 @@ Visit http://www.lfd.uci.edu/~gohlke/pythonlibs/ to download the following packa
 * lxml 2.2.8
 
 Use easy_install to install them in the virtual environment::
+
     $ easy_install "filename.exe"
     
 Remove the line "lxml==2.3" from ahgl/requirements/project.txt before continuing to the next step
