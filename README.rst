@@ -58,7 +58,8 @@ Now that everything is setup, you can run the local service::
 	
 Now visit localhost and you should see a web page appear!
 
-###Windows only
+Windows only
+````````````
 
 Install precompiled packages::
 
