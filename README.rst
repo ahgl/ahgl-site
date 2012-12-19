@@ -51,6 +51,10 @@ from the ahgl folder::
 
     $ ./manage.py syncdb
     $ ./manage.py migrate
+
+Initialize the database with some sample data::
+
+    $ ./manage.py loaddata fixtures/initial_data.json
 	
 Now that everything is setup, you can run the local service::
 
