@@ -70,6 +70,11 @@ Visit http://www.lfd.uci.edu/~gohlke/pythonlibs/ to download the following packa
 
 * psycopg2
 * lxml 2.3
+* PIL
+* greenlet
+* cython
+
+Also download git at http://git-scm.com/
 
 Use easy_install to install them in the virtual environment::
 
