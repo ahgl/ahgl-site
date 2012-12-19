@@ -32,7 +32,9 @@ Create a virtual env::
 Start that environment::
 
     $ ENV/Scripts/activate
-	
+    
+Windows - execute the windows only setups below
+    	
 Now install the python libraries using pip::
 
     $ pip install --requirement=ahgl/requirements/project.txt
@@ -55,3 +57,17 @@ Now that everything is setup, you can run the local service::
     $ ./manage.py runserver
 	
 Now visit localhost and you should see a web page appear!
+
+###Windows only
+
+Install precompiled packages::
+
+Visit http://www.lfd.uci.edu/~gohlke/pythonlibs/ to download the following packages
+
+* psycopg2
+* lxml 2.2.8
+
+Use easy_install to install them in the virtual environment::
+    $ easy_install "filename.exe"
+    
+Remove the line "lxml==2.3" from ahgl/requirements/project.txt before continuing to the next step
