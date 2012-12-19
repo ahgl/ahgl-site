@@ -60,7 +60,7 @@ Now that everything is setup, you can run the local service::
 
     $ ./manage.py runserver
 	
-Now visit localhost and you should see a web page appear!
+Now visit localhost:8000/admin and you should see a web page appear!
 
 Windows only
 ````````````
