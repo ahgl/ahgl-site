@@ -54,7 +54,7 @@ from the ahgl folder::
 
 Initialize the database with some sample data::
 
-    $ ./manage.py loaddata fixtures/initial_data.json
+    $ ./manage.py loaddata fixtures/sample_data.json
 	
 Now that everything is setup, you can run the local service::
 
