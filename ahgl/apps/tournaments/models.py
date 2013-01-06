@@ -256,6 +256,13 @@ class Match(models.Model):
                                                       self.home_team_id,
                                                       self.away_team_id,
                                                       ])
+    def delete(self, *args, **kwargs):
+        """Note this doesn't get called in bulk delete!"""
+        ret = super(Match, self).delete(*args, **kwargs)
+        for team in (self.home_team, self.away_team):
+            if team:
+                team.update_stats()
+        return ret
 
     def games_with_map(self):
         return self.games.select_related('map').only('map__name', 'order', 'is_ace')

@@ -6,6 +6,7 @@ from django import forms
 from django.conf.urls.defaults import patterns, url
 from django.db import transaction
 from django.db.models.fields.related import RelatedField
+from django.contrib.admin.actions import delete_selected
 
 from .views import NewTournamentRoundView
 from .models import Tournament, TournamentRound, Map, Match, Game, TeamRoundMembership
@@ -102,7 +103,7 @@ class MatchAdmin(admin.ModelAdmin):
     list_filter = ('tournament',)
     search_fields = ('home_team__name','away_team__name',)
     inlines = (GameInline,)
-    actions = ['publish_match']
+    actions = ['publish_match', 'delete_and_update_stats']
     date_hierarchy = 'creation_date'
     readonly_fields = ('tournament', 'home_submission_date', 'away_submission_date','referee',)
     
@@ -132,6 +133,18 @@ class MatchAdmin(admin.ModelAdmin):
             message_bit = "%s match were" % rows_updated
         self.message_user(request, "%s successfully published." % message_bit)
     publish_match.short_description = "Publish matches so they are visible to all users"
+    def delete_and_update_stats(self, request, queryset):
+        ret = delete_selected(self, request, queryset)
+        if request.POST.get('post'):
+            teamset = set()
+            for match in queryset:
+                for team in (match.home_team, match.away_team):
+                    if team:
+                        teamset.add(team)
+            for team in teamset:
+                team.update_stats()
+        return ret
+    delete_and_update_stats.short_description = "Deletes matches and updates all team stats associated with those matches"
 
 admin.site.register(Tournament, TournamentAdmin)
 admin.site.register(Map)
