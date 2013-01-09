@@ -291,8 +291,13 @@ class Match(models.Model):
         except IndexError:
             return None
     
+    def name(self):
+        return u" : ".join((unicode(self.tournament), u" vs ".join((unicode(self.home_team.name), unicode(self.away_team.name)))))
+    def winner__name(self):
+        return self.winner.name
+    
     def __unicode__(self):
-        return u" ".join((u" vs ".join((unicode(self.home_team), unicode(self.away_team))), date(self.publish_date or self.creation_date, "M d, Y")))
+        return u" ".join((unicode(self.tournament), u" vs ".join((unicode(self.home_team.name), unicode(self.away_team.name))), date(self.publish_date or self.creation_date, "M d, Y")))
     
     @models.permalink
     def get_absolute_url(self):
