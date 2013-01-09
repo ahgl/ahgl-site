@@ -99,8 +99,8 @@ def cache_field(field_name, queryset, db_field, request, kwargs):
         kwargs['queryset'] = getattr(request, attr)
 
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ('home_team','away_team', 'winner', 'creation_date', 'publish_date', 'published',)
-    list_filter = ('tournament',)
+    list_display = ('home_team','away_team', 'winner', 'creation_date', 'publish_date', 'home_submitted', 'away_submitted', 'published',)
+    list_filter = ('tournament','home_submitted','away_submitted',)
     search_fields = ('home_team__name','away_team__name',)
     inlines = (GameInline,)
     actions = ['publish_match', 'delete_and_update_stats']
