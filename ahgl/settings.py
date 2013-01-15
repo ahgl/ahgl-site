@@ -282,6 +282,7 @@ JOHNNY_TABLE_WHITELIST = ['cms_cmsplugin',
 CMS_TEMPLATES = (
     ('splash.html', 'Splash Screen'),
     ('tourney_index.html', 'Tournament Index'),
+    ('tourney_index_simple.html', 'Tournament Index Simple'),
     ('simple_custom_nav.html', 'Simple with Custom Nav Plugin'),
     ('simple.html', 'Simple'),
     ('narrow.html', 'Narrow'),

@@ -834,6 +834,7 @@ a:hover .t3 {
 .team-list-container {
 	background:url(../images/background/global/team-list-bkg.jpg) no-repeat 0 0;
 	margin:40px 0 0 0;
+	clear:both;
 }
 .team-list-1 {
 	list-style:none;
