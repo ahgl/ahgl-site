@@ -1,8 +1,8 @@
 # Version control system used locally for your project.
 vcs: hg
 
-# Framework to use on Gondor.
-framework: django
+# Runtime of python to use
+runtime: python-2.7.3
 
 # This path is relative to your project root (the directory gondor.yml lives in.)
 requirements_file: requirements/project.txt
@@ -10,9 +10,11 @@ requirements_file: requirements/project.txt
 # Commands to be executed during deployment. These can handle migrations or
 # moving static files into place. Accepts same parameters as gondor run.
 on_deploy:
+    - manage.py validate
     - manage.py syncdb --noinput
     - manage.py migrate --noinput
     - manage.py collectstatic --noinput
+    - manage.py compress
 
 # URLs which should be served by Gondor mapping to a filesystem location
 # relative to your writable storage area.
