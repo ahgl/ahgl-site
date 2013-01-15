@@ -416,8 +416,7 @@ class Game(models.Model):
         if self.home_player and self.away_player:
             ret = u" vs ".join((unicode(self.home_player), unicode(self.away_player)))
         else:
-            ret = ""
-            #ret = unicode(self.match)
+            ret = u" vs ".join((unicode(self.home_team.name), unicode(self.away_team.name)))
         return u" on ".join((ret, unicode(self.map_id)))
         
     class Meta:
