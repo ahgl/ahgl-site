@@ -14,7 +14,6 @@ on_deploy:
     - manage.py syncdb --noinput
     - manage.py migrate --noinput
     - manage.py collectstatic --noinput
-    - manage.py compress
 
 # URLs which should be served by Gondor mapping to a filesystem location
 # relative to your writable storage area.

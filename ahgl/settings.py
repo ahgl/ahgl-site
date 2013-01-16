@@ -99,7 +99,6 @@ COMPRESS = True
 COMPRESS_STORAGE = "staticfiles.storage.StaticFileStorage"
 # Subdirectory of COMPRESS_ROOT to store the cached media files in
 COMPRESS_OUTPUT_DIR = "cache"
-COMPRESS_OFFLINE = True
 
 COMPRESS_PARSER = "compressor.parser.Html5LibParser"
 COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.CSSMinFilter']
