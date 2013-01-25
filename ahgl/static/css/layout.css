@@ -1273,6 +1273,12 @@ div#static-navheader li {
 div#static-navheader a {
 	text-indent: -9999px;
 }
+.ahgl2-sc2 .b {
+	display: block;
+	width: 50px;
+	height: 56px;
+	background: url("../images/topnav-sc2.png") 0 0px;
+}
 .ahgl2-sc2 .teams {
 	display: block;
 	width: 50px;
@@ -1325,6 +1331,12 @@ div#static-navheader a {
 	background: url("../images/topnav_day9tv.png") no-repeat;
 }
 
+.ahgl2-lol .b {
+	display: block;
+	width: 50px;
+	height: 56px;
+	background: url("../images/topnav-lol.png") 50px 0px;
+}
 .ahgl2-lol .teams {
 	display: block;
 	width: 50px;
