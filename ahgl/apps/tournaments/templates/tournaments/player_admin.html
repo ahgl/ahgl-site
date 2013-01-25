@@ -13,7 +13,7 @@ Player Admin
 <h3 class="t2">Your Matches</h3>
 {% for match in team_matches %}
 <p>{% ifchanged %}<h4 class="f4">{{match.creation_date}}</h4>{% endifchanged %}<h4 class="f2 bold"><a href="{{match.home_team.get_absolute_url}}">{{match.home_team}}</a>{% if match.home_submitted %} (Lineup Submitted: {{match.home_submission_date|default_if_none:"Yes"}}){% endif %} vs <a href="{{match.away_team.get_absolute_url}}">{{match.away_team}}</a>{% if match.away_submitted %} (Lineup Submitted: {{match.away_submission_date|default_if_none:"Yes"}}){% endif %}</h2>
-<h3 class="bold">Channel: AHGL-{{match.home_team.name|slugify}}-{{match.away_team.name|slugify}}</h3>
+<h3 class="bold">Channel: AHGL-{{match.home_team.name|slugify|slice:":12"}}-{{match.away_team.name|slugify|slice:":12"}}</h3>
 
 {% if match.home_submitted and match.away_submitted %}
   {% with games=match.games_for_lineup %}
