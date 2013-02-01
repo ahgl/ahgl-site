@@ -219,6 +219,7 @@ class Team(models.Model):
     approval = models.FileField(_("Written Company Permission"), upload_to='team_approvals', null=True, blank=True, help_text="Submit a pdf of approval letter on official company letterhead saying that your team can represent your company in the AHGL (if needed an approval email from an official company email will do).")
     members = models.ManyToManyField('Profile', null=True, blank=True, related_name='teams', through=TeamMembership)
     tournament = models.ForeignKey('tournaments.Tournament', related_name='teams', db_index=True)
+    karma = models.IntegerField(default=0)
     
     wins = models.IntegerField(default=0, editable=False)
     losses = models.IntegerField(default=0, editable=False)

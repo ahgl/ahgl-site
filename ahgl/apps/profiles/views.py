@@ -65,7 +65,7 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, Upd
                 
             class Meta:
                 model = Team
-                exclude = ('slug','tournament','rank','seed','members','status','paid',)
+                exclude = ('slug','tournament','rank','seed','members','status','paid','karma',)
         return UpdateForm
     
     def get_success_url(self):
@@ -89,7 +89,7 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
             char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length, required=True, label="Your character name", help_text=u"or Summoner name")
             class Meta:
                 model = Team
-                exclude=('tournament','rank','seed','members','slug','status','approval','paid',)
+                exclude=('tournament','rank','seed','members','slug','status','approval','paid','karma',)
             """def clean(self):
                 if self.cleaned_data.get('duplicate'):
                     dup = self.cleaned_data.get('duplicate')

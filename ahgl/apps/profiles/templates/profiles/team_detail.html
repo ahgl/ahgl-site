@@ -46,6 +46,10 @@
 <a href="{% url player_profile tournament=tournament_slug team=team.slug profile=captain.profile.slug %}">{{captain}}</a>
 {% if forloop.first %}</p></li>{% endif %}
 {% endfor %}
+<li>
+<h2>Karma</h2>
+<p class="t5">{{team.karma}}</p>
+</li>
 </ul>
 
             </div>
