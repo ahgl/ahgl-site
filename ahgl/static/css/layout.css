@@ -1249,139 +1249,90 @@ a:hover .t3 {
 }
 
 div#static-navheader {
-  background: url("../images/topnav_bg.png") repeat-x;
-  height: 56px;
-  position:absolute;
-  margin: 0;
-  padding: 0;
-  width:100%;
-  text-align: center;
-  font-size: 0;
+	background: url("../images/topnav_bg.png") repeat-x;
+	height: 40px;
+	position:absolute;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	color: white;
 }
-div#static-navheader ul {
-	list-style-type: none;
-	display: inline;
-	height: 56px;
-	overflow: hidden;
+div#static-navheader .navbar-inner {
+	width: 920px;
+	margin: 0 auto;
+	position: relative;
+	left: 59px;
 }
-div#static-navheader li {
-	display: inline-block;
-	height: 56px;
-	*zoom: 1;
-	*display: inline;
-}
+
 div#static-navheader a {
-	text-indent: -9999px;
+    font-size: 1.2em;
+    font-family: "PublicGothicSquareRegular", Arial, Sans-Seriff;
 }
-.ahgl2-sc2 .b {
-	display: block;
-	width: 50px;
-	height: 56px;
-	background: url("../images/b-blue.png") 0 0px;
+
+div#static-navheader li.dropdown {
+	padding-right: 10px;
 }
-.ahgl2-sc2 .teams {
-	display: block;
-	width: 50px;
-	height: 56px;
-	background: url("../images/topnav-sc2.png") 0 0px;
+
+div#static-navheader .dropdown-toggle {
+    padding: 10px 0px 10px 0px;
 }
-.ahgl2-sc2 .teams:hover {
-	background: url("../images/topnav-sc2.png") 0 -56px;
+
+div#static-navheader .dropdown-menu {
+    background-color: #999;
+    color: #000;
 }
-.ahgl2-sc2 .schedule {
-	display: block;
-	width: 50px;
-	height: 56px;
-	background: url("../images/topnav-sc2.png") -50px 0px;
+
+div#static-navheader .dropdown-menu:after {
+  border-bottom: 6px solid #999;
 }
-.ahgl2-sc2 .schedule:hover {
-	background: url("../images/topnav-sc2.png") -50px -56px;
+
+div#static-navheader .dropdown-menu li > a:hover {
+    background-color: #ffa71a;
+    color: #000;
 }
-.ahgl2-sc2 .replays {
-	display: block;
-	width: 50px;
-	height: 56px;
-	background: url("../images/topnav-sc2.png") -100px 0px;
+
+div#static-navheader .dropdown-menu .divider { 
+	background-color: #666;
+	border-bottom: 1px solid #333;
 }
-.ahgl2-sc2 .replays:hover {
-	background: url("../images/topnav-sc2.png") -100px -56px;
-}
-.ahgl2-sc2 .standings {
-	display: block;
-	width: 50px;
-	height: 56px;
-	background: url("../images/topnav-sc2.png") -150px 0px;
-}
-.ahgl2-sc2 .standings:hover {
-	background: url("../images/topnav-sc2.png") -150px -56px;
+
+div#static-navheader .login {
+	float: right;
+	padding: 10px;
 }
 .ahgl2-sc2 .game {
 	display: block;
-	width: 197px;
-	height: 56px;
+	width: 164px;
+	height: 30px;
 	background: url("../images/topnav-sc2.png") -200px 0px;
 }
 .ahgl2-sc2 .game:hover {
 	background: url("../images/topnav-sc2.png") -200px -56px;
 } 
+.ahgl2-day9tv.brand {
+	margin: 0px -20px;
+}
 .ahgl2-day9tv .beabettergamer {
 	display: block;
 	width: 139px;
-	height: 56px;
+	height: 30px;
+	top: -8px;
+	position: relative;
 	background: url("../images/topnav_day9tv.png") no-repeat;
 }
+.ahgl2-day9tv .beabettergamer:hover {
+	opacity: 0.7; 
+}
 
-.ahgl2-lol .b {
-	display: block;
-	width: 50px;
-	height: 56px;
-	background: url("../images/b-red.png") 50px 0px;
-}
-.ahgl2-lol .teams {
-	display: block;
-	width: 50px;
-	height: 56px;
-	background: url("../images/topnav-lol.png") 50px 0px;
-}
-.ahgl2-lol .teams:hover {
-	background: url("../images/topnav-lol.png") 50px -56px;
-}
-.ahgl2-lol .schedule {
-	display: block;
-	width: 50px;
-	height: 56px;
-	background: url("../images/topnav-lol.png") 100px 0px;
-}
-.ahgl2-lol .schedule:hover {
-	background: url("../images/topnav-lol.png") 100px -56px;
-}
-.ahgl2-lol .replays {
-	display: block;
-	width: 50px;
-	height: 56px;
-	background: url("../images/topnav-lol.png") 150px 0px;
-}
-.ahgl2-lol .replays:hover {
-	background: url("../images/topnav-lol.png") 150px -56px;
-}
-.ahgl2-lol .standings {
-	display: block;
-	width: 50px;
-	height: 56px;
-	background: url("../images/topnav-lol.png") 200px 0px;
-}
-.ahgl2-lol .standings:hover {
-	background: url("../images/topnav-lol.png") 200px -56px;
-}
 .ahgl2-lol .game {
 	display: block;
-	width: 217px;
-	height: 56px;
+	width: 212px;
+	height: 30px;
 	background: url("../images/topnav-lol.png") 0px 0px;
 }
 .ahgl2-lol .game:hover {
 	background: url("../images/topnav-lol.png") 0px -56px;
-}  
+}
 .ahgl2-opener {
 	height: 160px;
 	background:url("../images/homepage-opener.png") no-repeat;

@@ -20,12 +20,12 @@
                 <li><a href="{% url acct_logout %}"><i class="icon-off"></i> Log out</a></li>
             </ul>
         </li>
-    {% else %}
-        <div class="dropdown"><li><a href="{% url acct_login %}">Log in</a></li>
-        {% ifsetting ACCOUNT_OPEN_SIGNUP %}
-            <li class="navbar-text">or</li>
-            <li><a href="{% url acct_signup %}">Sign up</a></li>
-        {% endifsetting %}
-        </div>
-    {% endif %}
 </ul>
+{% else %}
+	<div class="login">
+		<a href="{% url acct_login %}">Log in</a>
+		{% ifsetting ACCOUNT_OPEN_SIGNUP %}
+			or <a href="{% url acct_signup %}">Sign up</a>
+		{% endifsetting %}
+	</div>
+{% endif %}
