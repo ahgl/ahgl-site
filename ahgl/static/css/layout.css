@@ -139,13 +139,13 @@ p {
 /* ======================================================= global id based styles ============= */
 /* ============================================================================================ */
 #wrapper {
-	padding-top: 40px;
+	padding-top: 56px;
 	min-height:100%;
 }
 #main-header {
 	background:url(../images/background/global/header-bkg.jpg) no-repeat center top;
 	height:292px;
-	margin:0 0 -57px 0; /* compensates for large background header by pulling up the main-content area */
+	margin:-15px 0 -57px 0; /* compensates for large background header by pulling up the main-content area */
 }
 
 #main-header-ahgl2 {
