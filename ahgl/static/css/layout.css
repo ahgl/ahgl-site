@@ -1261,7 +1261,7 @@ div#static-navheader .navbar-inner {
 	width: 920px;
 	margin: 0 auto;
 	position: relative;
-	left: 59px;
+	left: 50px;
 }
 
 div#static-navheader a {
@@ -1275,6 +1275,10 @@ div#static-navheader li.dropdown {
 
 div#static-navheader .dropdown-toggle {
     padding: 10px 0px 10px 0px;
+}
+
+div#static-navheader .dropdown-toggle.left-padding {
+	padding-left: 9px;
 }
 
 div#static-navheader .dropdown-menu {
@@ -1302,12 +1306,12 @@ div#static-navheader .login {
 }
 .ahgl2-sc2 .game {
 	display: block;
-	width: 164px;
+	width: 173px;
 	height: 30px;
-	background: url("../images/topnav-sc2.png") -200px 0px;
+	background: url("../images/topnav-sc2.png") -192px 0px;
 }
 .ahgl2-sc2 .game:hover {
-	background: url("../images/topnav-sc2.png") -200px -56px;
+	background: url("../images/topnav-sc2.png") -192px -56px;
 } 
 .ahgl2-day9tv.brand {
 	margin: 0px -20px;
