@@ -1262,6 +1262,8 @@ div#static-navheader .navbar-inner {
 	margin: 0 auto;
 	position: relative;
 	left: 50px;
+	filter: none;
+	background-color: transparent;
 }
 
 div#static-navheader a {
