@@ -22,6 +22,8 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+ALLOWED_HOSTS = [".afterhoursgaming.tv", ".ahgl.tv"]
+
 ADMINS = [
     # ("Your Name", "your_email@domain.com"),
 ]
