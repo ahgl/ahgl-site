@@ -68,20 +68,21 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
                 self.instance.tournament_round = tournament_round
                 return super(TeamSelectionForm, self).save(*args, **kwargs)
         return TeamSelectionForm
-    def date_selection_form(self):
-        class DateForm(forms.Form):
+    def global_form(self):
+        class GlobalForm(forms.Form):
             play_date = forms.DateTimeField(widget=widgets.AdminSplitDateTime(), required=True)
-        return DateForm
+            structure = forms.ChoiceField(initial=self.tournament.structure, choices=Match._meta.get_field('structure').choices)
+        return GlobalForm
         
     def get_form_class(self):
         tournament = self.tournament
         stage = self.stage
-        date_form_class = [('Play Date', formset_factory(self.date_selection_form()))]
+        global_form_class = [('Global Data', formset_factory(self.global_form()))]
         map_form_class = [('Maps',formset_factory(self.map_selection_form(), extra=tournament.games_per_match))]
         match_form_classes = [("Division "+str(tournament_round.order), modelformset_factory(Match, formset=BaseMatchFormSet, form=self.team_selection_form(tournament_round), extra=tournament_round.teams.count()//2))
                               for tournament_round in self.tournament_rounds]
         class NewTournamentRoundForm(MultipleFormSetBase):
-            form_classes = SortedDict(date_form_class+map_form_class+match_form_classes)
+            form_classes = SortedDict(global_form_class+map_form_class+match_form_classes)
             def __init__(self, *args, **kwargs):
                 super(NewTournamentRoundForm, self).__init__(*args, **kwargs)
                 self.maps_formset = self.forms[1]
@@ -90,10 +91,12 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
                     self.maps_formset.forms[-1].fields['is_ace'].initial=True
             def save(self, *args, **kwargs):
                 date = self.forms[0].forms[0].cleaned_data.get('play_date', datetime.datetime.now())
+                structure = self.forms[0].forms[0].cleaned_data.get('structure', tournament.structure)
                 for match_formset in self.forms[2:]:
                     for match_form in match_formset:
                         match_form.instance.creation_date = date
-                if tournament.structure == "T": # Team games don't need to submit lineup, so skip this stage
+                        match_form.instance.structure = structure
+                if structure == "T": # Team games don't need to submit lineup, so skip this stage
                     for match_formset in self.forms[2:]:
                         for match_form in match_formset:
                             match_form.instance.home_submitted = True
@@ -261,7 +264,7 @@ class MatchReportView(UpdateView):
     
     def get_form_class(self):
         match = self.object
-        if match.tournament.structure == "I":
+        if match.structure == "I":
             class ReportMatchForm(ModelForm):
                 winner = forms.ModelChoiceField(required=False,
                                                 queryset=TeamMembership.objects.all(),

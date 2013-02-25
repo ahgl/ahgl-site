@@ -171,6 +171,7 @@ class TeamRoundMembership(models.Model):
         auto_created = True # LOL, this is a terrible hack that keeps add and remove around; only use this if all fields are auto
 
 class Match(models.Model):
+    structure = models.CharField(max_length=1, choices=(('I', 'Individual'),('T', 'Team'),), default='I')
     home_team = models.ForeignKey('profiles.Team', related_name="home_matches")
     away_team = models.ForeignKey('profiles.Team', related_name="away_matches")
     tournament = models.ForeignKey('Tournament', related_name='matches')
@@ -307,7 +308,7 @@ class Match(models.Model):
                 )
     
     class Meta:
-      verbose_name_plural = "matches"
+        verbose_name_plural = "matches"
       
 def replay_path(instance, filename):
     match = instance.match
@@ -378,7 +379,7 @@ class Game(models.Model):
         else:
             self.loser = None
             # in case of team games, player fields won't be set
-            if self.winner_team and self.match.tournament.structure=="T":
+            if self.winner_team and self.match.structure=="T":
                 if self.winner_team_id == self.match.home_team_id:
                     self.loser_team = self.match.away_team
                 elif self.winner_team_id == self.match.away_team_id:

@@ -67,9 +67,9 @@ class GameInline(admin.TabularInline):
     def get_formset(self, request, obj=None, **kwargs):
         self.parent = obj
         if obj:
-            if obj.tournament.structure=="I":
+            if obj.structure=="I":
                 self.exclude = self.individual_field_removals
-            elif obj.tournament.structure=="T":
+            elif obj.structure=="T":
                 self.exclude = self.team_field_removals
         return super(GameInline, self).get_formset(request, obj=obj, **kwargs)
     def formfield_for_foreignkey(self, db_field, request, **kwargs):

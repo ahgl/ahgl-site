@@ -23,8 +23,17 @@ raven==2.0.3
 -e git+https://github.com/rdegges/django-clear-cache.git#egg=django-clear-cache
 johnny-cache==1.4
 
-celery<3.0
-django-celery==2.3.3
+#celery and its dependencies
+amqplib==1.0.2
+anyjson==0.3.3
+kombu==2.5.4
+python-dateutil==2.1
+billiard==2.7.3.18
+celery==3.0.13
+django-celery==3.0.11
+tornado==2.4.1
+celerymon==1.0.3
+
 django-redis-cache==0.9.2
 sorl-thumbnail==11.12
 django-social-auth==0.6.1
