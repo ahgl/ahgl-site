@@ -15,7 +15,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.template.defaultfilters import date
+from django.template.defaultfilters import date, slugify
 
 from cms.models.pluginmodel import CMSPlugin
 from celery.execute import send_task
@@ -313,7 +313,7 @@ class Match(models.Model):
 def replay_path(instance, filename):
     match = instance.match
     tournament = match.tournament
-    filename = "".join(("_".join((unicode(instance.home_player), unicode(instance.away_player), unicode(instance.map))), os.path.splitext(filename)[1])).encode('ascii', 'ignore')
+    filename = "".join(("_".join((slugify(unicode(instance.home_player)), slugify(unicode(instance.away_player)), slugify(unicode(instance.map)))), os.path.splitext(filename)[1])).encode('ascii', 'ignore')
     return posixpath.join("replays", unicode(tournament), unicode(match), filename)
 def victory_path(instance, filename):
     match = instance.match
