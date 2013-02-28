@@ -20,7 +20,7 @@ from social_auth.backends.facebook import FacebookBackend
 from social_auth.backends.pipeline import USERNAME
 
 from idios.utils import get_profile_form
-from pinax.apps.account.models import EmailAddress, Account
+from account.models import EmailAddress, Account
 from timezones.utils import coerce_timezone_value
 from pybb.models import PybbProfile
 if "sorl.thumbnail" in settings.INSTALLED_APPS:

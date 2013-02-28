@@ -1,20 +1,16 @@
 #!/usr/bin/env python
+import os
 import sys
 
-try:
-    import pinax
-except ImportError:
-    sys.stderr.write("Error: Can't import Pinax. Make sure you are in a "
-        "virtual environment that has\nPinax installed.\n")
-    sys.exit(1)
-else:
-    import pinax.env
-
-from django.core.management import execute_from_command_line
-
-
-pinax.env.setup_environ(__file__)
-
+sys.path.insert(0, os.path.join(os.path.abspath(os.path.dirname(__file__)), os.pardir))
+sys.path.insert(0, os.path.join(os.path.abspath(os.path.dirname(__file__)),'apps'))
 
 if __name__ == "__main__":
-    execute_from_command_line()
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ahgl.settings")
+
+    import ahgl.startup as startup
+    startup.run()
+
+    from django.core.management import execute_from_command_line
+
+    execute_from_command_line(sys.argv)

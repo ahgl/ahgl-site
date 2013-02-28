@@ -107,10 +107,11 @@ COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter', 'com
 COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.SlimItFilter']
 
 # List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = [
-    "django.template.loaders.filesystem.load_template_source",
-    "django.template.loaders.app_directories.load_template_source",
-]
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
+)
 
 MIDDLEWARE_CLASSES = [
     "johnny.middleware.QueryCacheMiddleware",
@@ -123,9 +124,7 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django_openid.consumer.SessionConsumer",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "pinax.apps.account.middleware.LocaleMiddleware",
     "pagination.middleware.PaginationMiddleware",
-    "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
@@ -152,12 +151,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     
     "staticfiles.context_processors.static",
     
-    "pinax.core.context_processors.pinax_settings",
-    
-    "pinax.apps.account.context_processors.account",
-    
     "notification.context_processors.notification",
-    "announcements.context_processors.site_wide_announcements",
     "messages.context_processors.inbox",
     
     "pybb.context_processors.processor",
@@ -176,19 +170,19 @@ INSTALLED_APPS = [
     "django.contrib.redirects",
     "django.contrib.sites",
 
-    "pinax.templatetags",
-    
+  
     # theme
+    "pinax_theme_bootstrap_account",
     "pinax_theme_bootstrap",
     
     # external
     "notification", # must be first
+    'account',
     "staticfiles",
     "compressor",
     "debug_toolbar",
     "django_openid",
     "timezones",
-    "emailconfirmation",
     "announcements",
     "pagination",
     "idios",
@@ -221,13 +215,10 @@ INSTALLED_APPS = [
     'cms.plugins.twitter',
 
 
-    # Pinax
-    "pinax.apps.account",
-    "pinax.apps.signup_codes",
-    
     # project
     "profiles",
     "tournaments",
+    "utils",
 ]
 
 """FIXTURE_DIRS = [
@@ -306,7 +297,7 @@ ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 
 AUTHENTICATION_BACKENDS = [
-    "pinax.apps.account.auth_backends.AuthenticationBackend",
+    "account.auth_backends.HybridAuthenticationBackend",
     "social_auth.backends.facebook.FacebookBackend",
 ]
 

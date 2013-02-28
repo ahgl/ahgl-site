@@ -20,7 +20,7 @@ from django.contrib import messages
 
 from idios.views import ProfileDetailView
 from idios.utils import get_profile_model
-from emailconfirmation.models import EmailAddress
+from account.models import EmailAddress
 
 from utils.views import ObjectPermissionsCheckMixin
 from .models import Team, TeamMembership, Profile
