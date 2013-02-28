@@ -30,7 +30,7 @@ urlpatterns = patterns("",
     url(r"^profiles/", include("idios.urls")),
     url(r"^notices/", include("notification.urls")),
     url(r"^announcements/", include("announcements.urls")),
-    url(r'^forum/', include('pybb.urls', namespace='pybb')),
+    #url(r'^forum/', include('pybb.urls', namespace='pybb')),
     url(r'^messages/compose/(?P<recipient>[\+\w\.\-_]+)/$', compose, name='messages_compose_to'), #we allow periods
     url(r'^messages/', include('messages.urls')),
     url(r'^tinymce/', include('tinymce.urls')),

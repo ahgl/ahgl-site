@@ -154,7 +154,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "notification.context_processors.notification",
     "messages.context_processors.inbox",
     
-    "pybb.context_processors.processor",
+    #"pybb.context_processors.processor",
     
     #"apps.tournaments.context_processors.tournament",
 ]
@@ -190,7 +190,7 @@ INSTALLED_APPS = [
     'south',
     'sorl.thumbnail',
     'social_auth',
-    'pybb',
+    #'pybb',
     'pytils',
     'pure_pagination',
     'messages',
@@ -282,7 +282,7 @@ CMS_TEMPLATES = (
 )
 CMS_VIEW_PERMISSION = False
 
-PYBB_TEMPLATE = "pybb_base.html"
+#PYBB_TEMPLATE = "pybb_base.html"
 
 CONTACT_EMAIL = "support@afterhoursgaming.tv"
 
