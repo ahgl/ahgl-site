@@ -1,5 +1,5 @@
 # Create your views here.
-import logging, datetime
+import logging
 
 from django.views.generic import DetailView, ListView, UpdateView
 from django.views.generic.detail import TemplateResponseMixin
@@ -7,6 +7,7 @@ from django.views.generic.edit import FormMixin, ProcessFormView
 from django.forms.models import inlineformset_factory, modelformset_factory, modelform_factory
 from django.db.models import Q
 from django.utils.decorators import method_decorator
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
@@ -90,7 +91,7 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
                 if len(self.maps_formset.forms) > 1:
                     self.maps_formset.forms[-1].fields['is_ace'].initial=True
             def save(self, *args, **kwargs):
-                date = self.forms[0].forms[0].cleaned_data.get('play_date', datetime.datetime.now())
+                date = self.forms[0].forms[0].cleaned_data.get('play_date', timezone.now())
                 structure = self.forms[0].forms[0].cleaned_data.get('structure', tournament.structure)
                 for match_formset in self.forms[2:]:
                     for match_form in match_formset:
@@ -368,12 +369,12 @@ class SubmitLineupView(ObjectPermissionsCheckMixin, UpdateView):
         if self.home_team:
             # upon first submission, set date
             if not self.object.home_submission_date:
-                self.object.home_submission_date = datetime.datetime.now()
+                self.object.home_submission_date = timezone.now()
             self.object.home_submitted = True
         else:
             # upon first submission, set date
             if not self.object.away_submission_date:
-                self.object.away_submission_date = datetime.datetime.now()
+                self.object.away_submission_date = timezone.now()
             self.object.away_submitted = True
         self.object.save()
         if notification and self.object.home_submitted and self.object.away_submitted:

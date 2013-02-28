@@ -3,7 +3,6 @@ import posixpath
 import logging
 import random, math
 from itertools import chain, count, takewhile, islice, groupby
-import datetime
 import os.path
 
 from django.db import models
@@ -16,6 +15,7 @@ from django.contrib.sites.models import Site
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.template.defaultfilters import date, slugify
+from django.utils import timezone
 
 from cms.models.pluginmodel import CMSPlugin
 from celery.execute import send_task
@@ -248,9 +248,9 @@ class Match(models.Model):
     def save(self, notify=True, *args, **kwargs):
         created = self.id is None
         if created and not self.creation_date: # set creation date if it wasn't set already
-            self.creation_date = datetime.datetime.now()
+            self.creation_date = timezone.now()
         if self.published and not self.publish_date:
-            self.publish_date = datetime.datetime.now()
+            self.publish_date = timezone.now()
         super(Match, self).save(*args, **kwargs)
         if "notification" in settings.INSTALLED_APPS and notification and created and notify:
             send_task("tournaments.tasks.notify_match_creation", [unicode(self),

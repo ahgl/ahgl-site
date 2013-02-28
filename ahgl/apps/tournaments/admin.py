@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.utils.functional import curry
 from django.contrib import admin
 from django import forms
@@ -7,6 +5,7 @@ from django.conf.urls.defaults import patterns, url
 from django.db import transaction
 from django.db.models.fields.related import RelatedField
 from django.contrib.admin.actions import delete_selected
+from django.utils import timezone
 
 from .views import NewTournamentRoundView
 from .models import Tournament, TournamentRound, Map, Match, Game, TeamRoundMembership
@@ -123,7 +122,7 @@ class MatchAdmin(admin.ModelAdmin):
         return queryset
     
     def publish_match(self, request, queryset):
-        rows_updated = queryset.update(published=True, publish_date=datetime.now())
+        rows_updated = queryset.update(published=True, publish_date=timezone.now())
         for match in queryset.all():
             match.update_winloss()
             match.update_tiebreaker()

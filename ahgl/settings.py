@@ -61,6 +61,9 @@ LANGUAGES = (
 # to load the internationalization machinery.
 USE_I18N = True
 
+# If you set this to False, Django will not use timezone-aware datetimes.
+USE_TZ = True
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, "site_media", "media")
@@ -128,6 +131,7 @@ MIDDLEWARE_CLASSES = [
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
+    "accounts.middleware.TimezoneMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "utils.middleware.RedirectFallbackMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
