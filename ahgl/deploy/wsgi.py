@@ -22,7 +22,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ahgl.settings")
 
 import env
 # setup the environment for Django and Pinax
-env.setup_environ(__file__, relative_project_path=[os.pardir])
+env.setup_environ(__file__, project_path=[os.pardir])
 
 import ahgl.startup as startup
 startup.run()
