@@ -24,8 +24,8 @@ import env
 # setup the environment for Django and Pinax
 env.setup_environ(__file__, relative_project_path=[os.pardir])
 
-import ahgl.startup as startup
-startup.run()
+#import ahgl.startup as startup
+#startup.run()
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION

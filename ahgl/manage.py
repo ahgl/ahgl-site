@@ -12,8 +12,8 @@ if __name__ == "__main__":
     # setup the environment for Django and Pinax
     env.setup_environ(__file__)
 
-    import ahgl.startup as startup
-    startup.run()
+    #import ahgl.startup as startup
+    #startup.run()
 
     from django.core.management import execute_from_command_line
 
