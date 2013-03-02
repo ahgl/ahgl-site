@@ -29,3 +29,4 @@ pinax-theme-bootstrap==2.0.1
 -e git+https://github.com/pinax/pinax-theme-bootstrap-account.git@98386a90776e76200b9aa6eefe7e6a7b5e2ed553#egg=pinax-theme-boostrap-account
 
 django-pure-pagination==0.2.1
+pytils==0.2.3
