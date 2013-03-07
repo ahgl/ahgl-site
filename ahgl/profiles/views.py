@@ -24,7 +24,7 @@ from account.models import EmailAddress
 
 from utils.views import ObjectPermissionsCheckMixin
 from .models import Team, TeamMembership, Profile
-from apps.tournaments.models import TournamentRound, Tournament
+from tournaments.models import TournamentRound, Tournament
 
 class TournamentSlugContextView(object):
     def get_context_data(self, **kwargs):

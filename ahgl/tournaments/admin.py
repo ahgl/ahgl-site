@@ -9,7 +9,7 @@ from django.utils import timezone
 
 from .views import NewTournamentRoundView
 from .models import Tournament, TournamentRound, Map, Match, Game, TeamRoundMembership
-from apps.profiles.models import Team, Profile, TeamMembership
+from profiles.models import Team, Profile, TeamMembership
 
 from .tasks import update_round_stats
 import settings

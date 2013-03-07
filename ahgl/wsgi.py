@@ -15,17 +15,13 @@ framework.
 """
 import os, sys
 
-sys.path.insert(0, os.path.join(os.path.abspath(os.path.dirname(__file__)), os.pardir, os.pardir))
 sys.path.insert(0, os.path.join(os.path.abspath(os.path.dirname(__file__)), os.pardir))
+sys.path.insert(0, os.path.join(os.path.abspath(os.path.dirname(__file__))))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ahgl.settings")
 
-import env
-# setup the environment for Django and Pinax
-env.setup_environ(__file__, relative_project_path=[os.pardir])
-
-#import ahgl.startup as startup
-#startup.run()
+import ahgl.startup as startup
+startup.run()
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION

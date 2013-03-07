@@ -150,7 +150,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     
     #"pybb.context_processors.processor",
     
-    #"apps.tournaments.context_processors.tournament",
+    #"tournaments.context_processors.tournament",
 ]
 
 INSTALLED_APPS = [
@@ -298,8 +298,8 @@ AUTHENTICATION_BACKENDS = [
 SOCIAL_AUTH_PIPELINE = (
                         'social_auth.backends.pipeline.social.social_auth_user',
                         'social_auth.backends.pipeline.associate.associate_by_email',
-                        'apps.profiles.pipeline.user.get_username',
-                        'apps.profiles.pipeline.user.create_user',
+                        'profiles.pipeline.user.get_username',
+                        'profiles.pipeline.user.create_user',
                         'social_auth.backends.pipeline.social.associate_user',
                         'social_auth.backends.pipeline.social.load_extra_data',
                         'social_auth.backends.pipeline.user.update_user_details',

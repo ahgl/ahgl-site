@@ -17,9 +17,9 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.db.models import Q
 
-from apps.tournaments.models import *
-from apps.profiles.models import *
-from apps.profiles.pipeline.user import *
+from tournaments.models import *
+from profiles.models import *
+from profiles.pipeline.user import *
 
 class Command(BaseCommand):
     args = '<tournament_slug ahgl_url>'

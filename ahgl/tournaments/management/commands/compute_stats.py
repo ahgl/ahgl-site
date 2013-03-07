@@ -3,8 +3,8 @@ from __future__ import print_function
 
 from django.core.management.base import BaseCommand, CommandError
 
-from apps.tournaments.models import TeamRoundMembership, Tournament
-from apps.profiles.models import Team
+from tournaments.models import TeamRoundMembership, Tournament
+from profiles.models import Team
 
 
 class Command(BaseCommand):

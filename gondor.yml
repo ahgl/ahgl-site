@@ -12,7 +12,7 @@ requirements_file: requirements/project.txt
 on_deploy:
     - manage.py validate
     - manage.py syncdb --noinput
-    - manage.py migrate --noinput
+    - manage.py migrate --noinput --delete-ghost-migrations
     - manage.py collectstatic --noinput
 
 # URLs which should be served by Gondor mapping to a filesystem location
@@ -29,7 +29,7 @@ wsgi:
     #
     # wsgi = the Python module which should be importable
     # application = the callable in the Python module
-    entry_point: deploy.wsgi:application
+    entry_point: ahgl.wsgi:application
     
     # Options for gunicorn which runs your WSGI project.
     gunicorn:

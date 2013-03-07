@@ -11,10 +11,10 @@ admin.autodiscover()
 from idios.views import ProfileUpdateView
 from messages.views import compose
 
-from apps.profiles.models import Profile
-from apps.profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, TeamCreateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView, TeamMembershipCreateView, TeamMembershipDeleteView
-from apps.tournaments.views import MatchDetailView, MatchListView, MatchReportView, SubmitLineupView, GameListView, PlayerAdminView
-from apps.tournaments.models import Match, Tournament
+from profiles.models import Profile
+from profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, TeamCreateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView, TeamMembershipCreateView, TeamMembershipDeleteView
+from tournaments.views import MatchDetailView, MatchListView, MatchReportView, SubmitLineupView, GameListView, PlayerAdminView
+from tournaments.models import Match, Tournament
 
 
 

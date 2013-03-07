@@ -32,8 +32,8 @@ else:
 from django.utils.datastructures import SortedDict
 
 from utils.views import ObjectPermissionsCheckMixin
-from apps.profiles.models import Profile, RACES, TeamMembership, Team
-from apps.profiles.views import TournamentSlugContextView
+from profiles.models import Profile, RACES, TeamMembership, Team
+from profiles.views import TournamentSlugContextView
 
 from .models import Tournament, Map, Match, Game, TournamentRound
 from .forms import BaseMatchFormSet, MultipleFormSetBase

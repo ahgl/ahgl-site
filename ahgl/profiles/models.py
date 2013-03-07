@@ -30,7 +30,7 @@ else:
 
 from . import RACES
 from .fields import HTMLField
-from apps.tournaments.models import Game
+from tournaments.models import Game
 
 logger = logging.getLogger(__name__)
 

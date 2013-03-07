@@ -28,7 +28,7 @@ if "notification" in settings.INSTALLED_APPS:
 else:
     notification = None
 
-from apps.profiles import RACES
+from profiles import RACES
 
 
 logger = logging.getLogger(__name__)
