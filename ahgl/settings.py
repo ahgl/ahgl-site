@@ -275,6 +275,7 @@ CMS_TEMPLATES = (
     ('narrow.html', 'Narrow'),
 )
 CMS_VIEW_PERMISSION = False
+CMS_MODERATOR = False
 
 #PYBB_TEMPLATE = "pybb_base.html"
 
