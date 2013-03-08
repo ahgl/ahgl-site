@@ -70,7 +70,7 @@ sorl-thumbnail==11.12
 django-social-auth==0.6.1
 django-messages==0.4.4
 django-tinymce==1.5.1b2
--e git+https://github.com/ntucker/django-cms.git@32ad323db491a641035fa364e97793e2109dcdd2#egg=django-cms
+django-cms==2.3.4
 
 -e git+https://github.com/ntucker/pybbm.git#egg=pybbm
 -e hg+https://bitbucket.org/ntucker/django-recaptcha#egg=django-recaptcha
