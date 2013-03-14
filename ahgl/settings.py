@@ -121,7 +121,7 @@ MIDDLEWARE_CLASSES = [
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    "accounts.middleware.TimezoneMiddleware",
+    "account.middleware.TimezoneMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "utils.middleware.RedirectFallbackMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
