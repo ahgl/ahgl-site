@@ -276,6 +276,7 @@ CMS_TEMPLATES = (
 )
 CMS_VIEW_PERMISSION = False
 CMS_MODERATOR = False
+CMS_PERMISSION = False
 
 #PYBB_TEMPLATE = "pybb_base.html"
 
