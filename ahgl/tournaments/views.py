@@ -355,7 +355,10 @@ class SubmitLineupView(ObjectPermissionsCheckMixin, UpdateView):
             side = "home"
         else:
             side = "away"
-        player = forms.ModelChoiceField(queryset=TeamMembership.objects.filter(team=self.team, active=True), label='Player')
+        queryset = TeamMembership.objects.filter(team=self.team, active=True)
+        if self.team.tournament.structure == "I":
+            queryset = queryset.filter(char_code__isnull=False)
+        player = forms.ModelChoiceField(queryset=queryset, label='Player')
         race = forms.ChoiceField(label='Race', choices=[('','---------')]+list(RACES))
         namespace = {'base_fields':{side+'_player': player, side+'_race': race},
                      '_meta':ModelFormOptions({'model':Game,
@@ -408,7 +411,7 @@ class SubmitLineupView(ObjectPermissionsCheckMixin, UpdateView):
         if self.object.home_team_id in self.captain_teams:
             self.home_team = True
             self.team = self.object.home_team
-        elif self.object.away_team_id in self.captain_teams:
+        elif self.object.away_team_id in self.captain_teams or self.request.user.is_superuser:
             self.home_team = False
             self.team = self.object.away_team
         else:
