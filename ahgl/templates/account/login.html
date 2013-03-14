@@ -21,16 +21,16 @@
         <p><span class="warning">{% trans "Note" %}</span>: {% blocktrans %}you are already logged in as {{ user_display }}.{% endblocktrans %}</p>
     {% else %}
         {% ifsetting ACCOUNT_OPEN_SIGNUP %}
-        {% url acct_signup as signup_url %}
+        {% url account_signup as signup_url %}
         <p>{% blocktrans %}Don't have an account? <a href="{{ signup_url }}">Sign up</a>!{% endblocktrans %}</p>
         {% endifsetting %}
         <p>
-            <a href="{% url acct_passwd_reset %}">{% trans "Forgot password?" %}</a>
+            <a href="{% url account_password_reset %}">{% trans "Forgot password?" %}</a>
         </p>
     <p><a class="btn-auth btn-facebook" href="{% url socialauth_begin 'facebook' %}">Sign in with <b>Facebook</b></a></p>
     {% endif %}
     
-    <form method="POST" action="{% url acct_login %}" autocapitalize="off" class="form-horizontal well">
+    <form method="POST" action="{% url account_login %}" autocapitalize="off" class="form-horizontal well">
         {% csrf_token %}
         <fieldset>
             {{ form|as_bootstrap }}
@@ -71,7 +71,7 @@
     {% endifsetting %}
     
     {% if request.user.is_authenticated %}
-        <div><a href="{% url acct_logout %}?next={{ request.path }}">logout</a></div>
+        <div><a href="{% url account_logout %}?next={{ request.path }}">logout</a></div>
     {% endif %}
     
     <p>{% blocktrans %}If you have any trouble logging in to your account, contact us at <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a>.{% endblocktrans %}</p>
