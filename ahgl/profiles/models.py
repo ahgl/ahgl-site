@@ -277,6 +277,7 @@ class Charity(models.Model):
         
 class Caster(models.Model):
     user = models.ForeignKey(User, verbose_name=_("user"), related_name="caster_profile")
+    tournament = models.ForeignKey('tournaments.Tournament', related_name="casters")
     description = HTMLField()
     photo = ImageField(upload_to='caster_photos', null=True, blank=True, help_text=u"Must be 352 x 450 pixels")
     featured_match = models.ForeignKey('tournaments.Match', related_name="casters")

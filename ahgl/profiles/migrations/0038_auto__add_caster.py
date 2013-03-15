@@ -1,17 +1,18 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
         # Adding model 'Caster'
         db.create_table('profiles_caster', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='caster_profile', to=orm['auth.User'])),
+            ('tournament', self.gf('django.db.models.fields.related.ForeignKey')(related_name='casters', to=orm['tournaments.Tournament'])),
             ('description', self.gf('profiles.fields.HTMLField')(attributes=[], tags=[])),
             ('photo', self.gf('sorl.thumbnail.fields.ImageField')(max_length=100, null=True, blank=True)),
             ('featured_match', self.gf('django.db.models.fields.related.ForeignKey')(related_name='casters', to=orm['tournaments.Match'])),
@@ -19,11 +20,16 @@ class Migration(SchemaMigration):
         db.send_create_signal('profiles', ['Caster'])
 
 
+        # Changing field 'Team.charity'
+        db.alter_column('profiles_team', 'charity_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, on_delete=models.SET_NULL, to=orm['profiles.Charity']))
+
     def backwards(self, orm):
-        
         # Deleting model 'Caster'
         db.delete_table('profiles_caster')
 
+
+        # Changing field 'Team.charity'
+        db.alter_column('profiles_team', 'charity_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['profiles.Charity']))
 
     models = {
         'auth.group': {
@@ -41,7 +47,7 @@ class Migration(SchemaMigration):
         },
         'auth.user': {
             'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2013, 3, 15, 1, 44, 16, 9000)'}),
+            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
@@ -49,7 +55,7 @@ class Migration(SchemaMigration):
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2013, 3, 15, 1, 44, 16, 8000)'}),
+            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
@@ -68,6 +74,7 @@ class Migration(SchemaMigration):
             'featured_match': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'casters'", 'to': "orm['tournaments.Match']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'photo': ('sorl.thumbnail.fields.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'tournament': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'casters'", 'to': "orm['tournaments.Tournament']"}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'caster_profile'", 'to': "orm['auth.User']"})
         },
         'profiles.charity': {
@@ -91,7 +98,7 @@ class Migration(SchemaMigration):
             'show_signatures': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'signature': ('django.db.models.fields.TextField', [], {'max_length': '1024', 'blank': 'True'}),
             'signature_html': ('django.db.models.fields.TextField', [], {'max_length': '1054', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
             'time_zone': ('django.db.models.fields.FloatField', [], {'default': '3.0'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '70', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'profile'", 'to': "orm['auth.User']"}),
@@ -100,7 +107,7 @@ class Migration(SchemaMigration):
         'profiles.team': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('name', 'tournament'), ('slug', 'tournament'))", 'object_name': 'Team'},
             'approval': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'charity': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'teams'", 'null': 'True', 'to': "orm['profiles.Charity']"}),
+            'charity': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'teams'", 'null': 'True', 'on_delete': 'models.SET_NULL', 'to': "orm['profiles.Charity']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'karma': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'losses': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
@@ -110,7 +117,7 @@ class Migration(SchemaMigration):
             'paid': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'photo': ('sorl.thumbnail.fields.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'seed': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'db_index': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'}),
             'status': ('django.db.models.fields.CharField', [], {'default': "'R'", 'max_length': '1'}),
             'tiebreaker': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'tournament': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'teams'", 'to': "orm['tournaments.Tournament']"}),
@@ -160,7 +167,7 @@ class Migration(SchemaMigration):
             'games_per_match': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '5'}),
             'map_pool': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['tournaments.Map']", 'symmetrical': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'primary_key': 'True', 'db_index': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'primary_key': 'True'}),
             'status': ('django.db.models.fields.CharField', [], {'default': "'S'", 'max_length': '1', 'db_index': 'True'}),
             'structure': ('django.db.models.fields.CharField', [], {'default': "'I'", 'max_length': '1'})
         },
