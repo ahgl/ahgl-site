@@ -28,7 +28,7 @@
                 {% endif %}
                     <span class="notice_type"><h4>[{% trans notice.notice_type.display %}]</h4></span>
                     <span class="notice_message">{{ notice.message|safe }}</span>
-                    <span class="notice_time">{{ notice.added|localtime:account.timezone|time:"P" }}</span>
+                    <span class="notice_time">{{ notice.added|time:"P" }}</span>
                 </div>
             {% endfor %}
         {% endfor %}
