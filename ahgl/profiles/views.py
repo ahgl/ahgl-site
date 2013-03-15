@@ -23,7 +23,7 @@ from idios.utils import get_profile_model
 from account.models import EmailAddress
 
 from utils.views import ObjectPermissionsCheckMixin
-from .models import Team, TeamMembership, Profile
+from .models import Team, TeamMembership, Profile, Caster
 from tournaments.models import TournamentRound, Tournament
 
 class TournamentSlugContextView(object):
@@ -266,4 +266,10 @@ class MyProfileDetailView(ProfileDetailView):
         except:
             self.kwargs['username'] = slug
             return super(MyProfileDetailView, self).get_object()
+    
+class CasterListView(ListView):
+    template_name = "profiles/casters.html"
+    context_object_name = "casters"
+    def get_queryset(self):
+        return Caster.objects.filter(tournament=self.kwargs.get('tournament')).order_by('?')
     

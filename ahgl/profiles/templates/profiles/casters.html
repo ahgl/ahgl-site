@@ -1,0 +1,25 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load thumbnail %}
+{% load phileo_tags %}
+
+{% block head_title %}{% trans "Casters" %}{% endblock %}
+
+{% block content-class %}static-page{% endblock %} 
+{% block body %}
+    <h2 class="title title-1 t1">Casters</h2>
+    <p>This year, AHGL is hosting So You Think You Can Cast - a casting competition where we recruit new talent to cast for our A league games.  You'll see them every week of the season, casting games and getting to know the players.  Once in playoffs, though, you are in control!  Viewers will vote and get to determine who will move on to cast the next round of playoffs.</p>
+
+    <ul class="cf">
+    {% for caster in casters %}
+        <li>
+        <div class="pull-right">{% phileo_widget user caster %}</div>
+        <img src="{{MEDIA_URL}}{{caster.photo}}" />
+        <div class="clearfix">{{caster.description}}</div>
+        </li>
+    {% endfor %}
+    </ul>
+    
+{% endblock %}

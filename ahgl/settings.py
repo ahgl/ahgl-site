@@ -114,7 +114,6 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.middleware.transaction.TransactionMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django_openid.consumer.SessionConsumer",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -285,6 +284,35 @@ PHILEO_LIKABLE_MODELS = {
 }
 
 #PYBB_TEMPLATE = "pybb_base.html"
+
+ALLOWED_TAGS = ['a', 'abbr', 'acronym', 'blockquote', 'br', 'cite', 'code', 'dd', 'del',
+                 'div', 'dl', 'dt', 'em', 'h2', 'h3', 'h4', 'h5', 'i', 'iframe', 'img', 'ins', 'li', 'ol', 'p',
+                 'pre', 'q', 'small', 'span', 'strong', 'sub', 'sup', 'table', 'td',
+                 'th', 'tr', 'u', 'ul']
+ALLOWED_ATTRIBUTES = {
+                'a'         : ['href', 'rel', 'target', 'title', 'data-toggle', 'class'],
+                'blockquote': ['cite'],
+                'q'         : ['cite'],
+                'img'       : ['src', 'alt', 'title', 'style'],
+                'iframe'    : ['src', 'width', 'height', 'frameborder', 'allowfullscreen'],
+                'div'       : ['class', 'id', 'style',],
+                'span'      : ['class',],
+                'p'         : ['style'],
+                'table'     : ['class',],
+                'td'        : ['colspan',],
+                'th'        : ['colspan',],
+                'ul'        : ['class',],
+                'li'        : ['class',],
+             }
+ALLOWED_STYLES = ['float','text-align','width','height',]
+ALLOWED_CLASSES = ['accordion-group', 'accordion-heading', 'accordion-toggle',
+                   'accordion-body', 'accordion-inner', 'clearfix', 'collapse',
+                   'bracket', 'bracket-round', 'bracket-item', 'winner', 'team',
+                   'seed', 'score', 'team_name', 'team-link', 'thumbnail', 'caption', 'thumbnails',
+                   'pull-right', 'pull-left', 'table', 'table-striped', 'table-bordered', 'table-hover',
+                   'table-condensed', 'error', 'success', 'warning', 'info', 'unstyled',
+                   'span1', 'span2', 'span3', 'span4', 'span5', 'span6', 'span7', 'span8',
+                   ]
 
 CONTACT_EMAIL = "support@afterhoursgaming.tv"
 

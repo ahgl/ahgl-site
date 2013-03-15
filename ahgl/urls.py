@@ -12,7 +12,7 @@ from idios.views import ProfileUpdateView
 from messages.views import compose
 
 from profiles.models import Profile
-from profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, TeamCreateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView, TeamMembershipCreateView, TeamMembershipDeleteView
+from profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, TeamCreateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView, TeamMembershipCreateView, TeamMembershipDeleteView, CasterListView
 from tournaments.views import MatchDetailView, MatchListView, MatchReportView, SubmitLineupView, GameListView, PlayerAdminView
 from tournaments.models import Match, Tournament
 
@@ -59,6 +59,7 @@ urlpatterns = patterns("",
     url(r'^(?P<tournament>[\w_-]+)/matches/(?P<pk>[\d]+)/$', MatchDetailView.as_view(), name='match_page'),
     #url(r'^(?P<tournament>[\w_-]+)/matches/(?P<date>[\d\\-]+)/(?P<home>[\w_-]+)-vs-(?P<away>[\w_-]+)$', MatchDetailView.as_view(), name='match_page'),
     url(r'^(?P<tournament>[\w_-]+)/standings/$', StandingsView.as_view(), name='standings'),
+    url(r'^(?P<tournament>[\w_-]+)/casters/$', CasterListView.as_view(), name='casters'),
     url(r'^', include('cms.urls')),
 )
 
