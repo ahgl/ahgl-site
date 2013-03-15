@@ -19,6 +19,8 @@
         <img src="{{MEDIA_URL}}{{caster.photo}}" />
         <div class="clearfix">{{caster.description}}</div>
         </li>
+    {% empty %}
+      <li>No casters for this league.</li>
     {% endfor %}
     </ul>
     
