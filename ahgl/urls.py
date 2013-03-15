@@ -29,6 +29,7 @@ urlpatterns = patterns("",
     url(r"^profiles/membership_delete/(?P<pk>[\d]+)/$", TeamMembershipDeleteView.as_view(), name="membership_delete"),
     url(r"^profiles/", include("idios.urls")),
     url(r"^notices/", include("notification.urls")),
+    url(r"^likes/", include("phileo.urls")),
     url(r"^announcements/", include("announcements.urls")),
     #url(r'^forum/', include('pybb.urls', namespace='pybb')),
     url(r'^messages/compose/(?P<recipient>[\+\w\.\-_]+)/$', compose, name='messages_compose_to'), #we allow periods

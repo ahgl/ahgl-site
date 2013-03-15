@@ -20,6 +20,7 @@ djcelery.setup_loader()
 
 INTERNAL_IPS = [
     "127.0.0.1",
+    "192.168.0.2",
 ]
 
 ALLOWED_HOSTS = [".afterhoursgaming.tv", ".ahgl.tv"]
@@ -193,6 +194,7 @@ INSTALLED_APPS = [
     'recaptcha_form',
     'raven.contrib.django',
     'clear_cache',
+    'phileo',
     
     # cms
     'cms',
@@ -277,6 +279,10 @@ CMS_TEMPLATES = (
 CMS_VIEW_PERMISSION = False
 CMS_MODERATOR = False
 CMS_PERMISSION = False
+
+PHILEO_LIKABLE_MODELS = {
+    "profiles.Caster": {}  # can override default config settings for each model here
+}
 
 #PYBB_TEMPLATE = "pybb_base.html"
 

@@ -274,6 +274,12 @@ class Charity(models.Model):
     class Meta:
         ordering = ('name',)
         verbose_name_plural = "charities"
+        
+class Caster(models.Model):
+    user = models.ForeignKey(User, verbose_name=_("user"), related_name="caster_profile")
+    description = HTMLField()
+    photo = ImageField(upload_to='caster_photos', null=True, blank=True, help_text=u"Must be 352 x 450 pixels")
+    featured_match = models.ForeignKey('tournaments.Match', related_name="casters")
 
 @receiver(socialauth_registered, sender=FacebookBackend, dispatch_uid="tournaments_facebook_extra_values")
 def facebook_extra_values(sender, user, response, details, **kwargs):

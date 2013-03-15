@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from tinymce.widgets import TinyMCE
 
-from .models import Profile, Team, Charity, TeamMembership
+from .models import Profile, Team, Charity, TeamMembership, Caster
 from .fields import HTMLField
 
 class TeamAdmin(admin.ModelAdmin):
@@ -33,9 +33,12 @@ class ProfileAdmin(admin.ModelAdmin):
     search_fields = ('name','team_membership__char_name','user__username',)
     inlines = (TeamMembershipAdminInline,)
     
+class CasterAdmin(admin.ModelAdmin):
+    list_display = ('user', )
 
 
 admin.site.register(TeamMembership, TeamMembershipAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Charity)
+admin.site.register(Caster, CasterAdmin)

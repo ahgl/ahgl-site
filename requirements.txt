@@ -48,7 +48,7 @@ html5lib==0.90
 bleach>=1.0
 slimit==0.6
 recaptcha-client==1.0.6
-south==0.7.3
+south==0.7.6
 raven==2.0.3
 -e git+https://github.com/ntucker/django-autocache.git#egg=django-autocache
 -e git+https://github.com/rdegges/django-clear-cache.git#egg=django-clear-cache
@@ -71,6 +71,7 @@ django-social-auth==0.6.1
 django-messages==0.4.4
 django-tinymce==1.5.1b2
 django-cms==2.3.4
+phileo==1.0
 
 -e git+https://github.com/ntucker/pybbm.git#egg=pybbm
 -e hg+https://bitbucket.org/ntucker/django-recaptcha#egg=django-recaptcha
