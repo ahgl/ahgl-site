@@ -37,9 +37,9 @@ pytils==0.2.3
 # Put project-specific requirements here.
 # See http://pip-installer.org/requirement-format.html for more information.
 
-gondor==1.2
+gondor==1.2.1
 psycopg2==2.4.5
-gunicorn==0.14.3
+gunicorn==0.17.2
 eventlet==0.9.16
 sqlalchemy==0.7.8
 lxml==2.3
