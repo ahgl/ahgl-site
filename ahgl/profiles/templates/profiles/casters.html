@@ -15,7 +15,7 @@
     <ul class="cf">
     {% for caster in casters %}
         <li>
-        <div class="pull-right">{% phileo_widget user caster %}</div>
+        <div class="pull-right">{% phileo_widget_brief user caster %}</div>
         <img src="{{MEDIA_URL}}{{caster.photo}}" />
         <div class="clearfix">{{caster.description}}</div>
         </li>
