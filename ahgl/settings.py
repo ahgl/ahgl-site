@@ -327,8 +327,8 @@ ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 
 AUTHENTICATION_BACKENDS = [
-    "social_auth.backends.facebook.FacebookBackend",
-    "account.auth_backends.HybridAuthenticationBackend",
+    "ahgl.auth_backends.FbLikableBackend",
+    "ahgl.auth_backends.HybridLikeableBackend",
 ]
 
 SOCIAL_AUTH_PIPELINE = (
