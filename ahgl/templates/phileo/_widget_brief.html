@@ -4,9 +4,14 @@
            data-method="post"
            data-replace-closest=".phileo"
            data-spinner="off"
-           href="{{ like_url }}">
+           href="{{ like_url }}?t=b">
             <i class="icon {{ like_class }}"></i>
             {{ like_text }}
         </a>
+    {% endif %}
+    {% if request.user.is_staff %}
+    <span class="count">
+        {{ like_count }} {{ counts_text }}
+    </span>
     {% endif %}
 </div>
