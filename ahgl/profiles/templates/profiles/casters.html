@@ -18,6 +18,7 @@
         <div class="pull-right">{% if user.is_authenticated %}{% phileo_widget_brief user caster %}{% else %}Login to vote{% endif %}</div>
         <img src="{{MEDIA_URL}}{{caster.photo}}" />
         <div class="clearfix">{{caster.description}}</div>
+        <br>
         </li>
     {% empty %}
       <li>No casters for this league.</li>
