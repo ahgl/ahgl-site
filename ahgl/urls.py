@@ -9,7 +9,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from idios.views import ProfileUpdateView
-from messages.views import compose
+from django_messages.views import compose
 
 from profiles.models import Profile
 from profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, TeamCreateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView, TeamMembershipCreateView, TeamMembershipDeleteView, CasterListView
@@ -33,7 +33,7 @@ urlpatterns = patterns("",
     url(r"^announcements/", include("announcements.urls")),
     #url(r'^forum/', include('pybb.urls', namespace='pybb')),
     url(r'^messages/compose/(?P<recipient>[\+\w\.\-_]+)/$', compose, name='messages_compose_to'), #we allow periods
-    url(r'^messages/', include('messages.urls')),
+    url(r'^messages/', include('django_messages.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
     
     # player admin controls

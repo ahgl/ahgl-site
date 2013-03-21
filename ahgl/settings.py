@@ -146,7 +146,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "staticfiles.context_processors.static",
     
     "notification.context_processors.notification",
-    "messages.context_processors.inbox",
+    "django_messages.context_processors.inbox",
     
     #"pybb.context_processors.processor",
     
@@ -187,7 +187,7 @@ INSTALLED_APPS = [
     #'pybb',
     'pytils',
     'pure_pagination',
-    'messages',
+    'django_messages',
     "djcelery",
     'tinymce',
     'recaptcha_form',
