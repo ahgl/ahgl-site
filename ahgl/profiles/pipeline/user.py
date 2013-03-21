@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
 from social_auth.backends.pipeline import USERNAME, USERNAME_MAX_LENGTH
-from idios.models import create_profile
+from idios.receivers import create_profile
 
 from ..models import Profile
 
