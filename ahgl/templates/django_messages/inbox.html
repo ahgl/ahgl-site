@@ -18,7 +18,7 @@
             {% if message.replied %}</em>{% endif %}
             {% if message.new %}</strong>{% endif %}</td>
         <td>{{ message.sent_at|date:_("DATETIME_FORMAT") }}</td>
-        <td><a href="{% url messages.views.delete message.id %}">{% trans "delete" %}</a></td>
+        <td><a href="{% url django_messages.views.delete message.id %}">{% trans "delete" %}</a></td>
     </tr>
 {% endfor %}
     </tbody>
