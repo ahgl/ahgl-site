@@ -3,11 +3,17 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from django.db.utils import DatabaseError
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        try:
+            db.delete_table('django_messages_message')
+        except DatabaseError:
+            db.commit_transaction()
+            db.start_transaction()
         db.rename_table('messages_message', 'django_messages_message') 
 
         if not db.dry_run:
