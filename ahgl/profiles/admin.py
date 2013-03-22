@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.contrib.contenttypes.models import ContentType
 
 from tinymce.widgets import TinyMCE
+from phileo.models import Like
 
 from .models import Profile, Team, Charity, TeamMembership, Caster
 from .fields import HTMLField
@@ -35,6 +37,15 @@ class ProfileAdmin(admin.ModelAdmin):
     
 class CasterAdmin(admin.ModelAdmin):
     list_display = ('user', )
+    actions = ['reset_votes',]
+    
+    def reset_votes(self, request, queryset):
+        for caster in queryset.all():
+            Like.objects.filter(
+                                receiver_content_type=ContentType.objects.get_for_model(caster),
+                                receiver_object_id=caster.pk
+                                ).delete()
+        self.message_user(request, "Votes successfully deleted.".format(rows_deleted))
 
 
 admin.site.register(TeamMembership, TeamMembershipAdmin)
