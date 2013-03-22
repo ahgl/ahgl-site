@@ -14,8 +14,10 @@
 
     <ul class="cf">
     {% for caster in casters %}
-        <li>
+        <li{% if not caster.active %} style="opacity:0.6;"{% endif %}>
+        {% if caster.active %}
         <div class="pull-right">{% if user.is_authenticated %}{% phileo_widget_brief user caster %}{% else %}Login to vote{% endif %}</div>
+        {% endif %}
         <img src="{{MEDIA_URL}}{{caster.photo}}" />
         <div class="clearfix">{{caster.description}}</div>
         <br>

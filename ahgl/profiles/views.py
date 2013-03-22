@@ -271,5 +271,5 @@ class CasterListView(ListView):
     template_name = "profiles/casters.html"
     context_object_name = "casters"
     def get_queryset(self):
-        return Caster.objects.filter(tournament=self.kwargs.get('tournament')).order_by('?')
+        return Caster.objects.filter(tournament=self.kwargs.get('tournament')).order_by('-active', '?')
     
