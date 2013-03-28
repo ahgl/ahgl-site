@@ -4,7 +4,6 @@ import logging
 import random, math
 from itertools import chain, count, takewhile, islice, groupby
 import os.path
-from pprint import pprint
 
 from django.db import models
 from django.db.models import Q, Count, F
@@ -121,7 +120,6 @@ class TournamentRound(models.Model):
     def elim_bracket(self):
         positions, participants = zip(*self._seed(list(enumerate(self.participants()))))
         match_dict = self.match_dict()
-        pprint(match_dict)
         num_players = 0
         for wins_needed in takewhile(lambda x:participants, count(1)):
             num_players = len(participants)
