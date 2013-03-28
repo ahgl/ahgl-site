@@ -1430,34 +1430,34 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
 .bracket {
 	display:-moz-box;
 	display:-webkit-box;
-	display:-ms-box;
+	display:-ms-flexbox;
 	-moz-box-orient:horitontal;
 	-webkit-box-orient:horizontal;
-	-ms-box-orient:horizontal;
+	-ms-flex-direction:row;
 	width:100%;
 }
 .bracket-round {
 	-moz-box-flex:2;
 	-webkit-box-flex:2;
-	-ms-box-flex:2;
+	-ms-flex:2 0 auto;
 	max-width:200px;
 	display:-moz-box;
 	display:-webkit-box;
-	display:-ms-box;
+	display:-ms-flexbox;
 	-moz-box-orient:vertical;
 	-webkit-box-orient:vertical;
-	-ms-box-orient:vertical;
+	-ms-flex-direction:column;
 }
 .bracket-item {
 	-moz-box-flex:2;
 	-webkit-box-flex:2;
-	-ms-box-flex:2;
+	-ms-flex:2 0 auto;
 	display:-moz-box;
 	display:-webkit-box;
-	display:-ms-box;
+	display:-ms-flexbox;
 	-moz-box-orient:vertical;
 	-webkit-box-orient:vertical;
-	-ms-box-orient:vertical;
+	-ms-flex-direction:column;
 	-moz-box-pack:center;
 	-webkit-box-pack:center;
 	-ms-box-pack:center;
@@ -1468,17 +1468,17 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
 	font-weight:bold;
 	display:-moz-box;
 	display:-webkit-box;
-	display:-ms-box;
+	display:-ms-flexbox;
 	margin:1px;
 	background:rgba(100,100,100, 0.2);
 	-moz-box-orient:vertical;
 	-webkit-box-orient:vertical;
-	-ms-box-orient:vertical;
+	-ms-flex-direction:column;
 }
 .bracket-item a.team-link {
 	-moz-box-orient:horizontal;
 	-webkit-box-orient:horizontal;
-	-ms-box-orient:horizontal;
+	-ms-flex-direction:row;
 }
 .bracket-item > a:hover {
 	background:rgba(100,100,100,0.6);
@@ -1489,10 +1489,10 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
 .bracket-item .team {
 	display:-moz-box;
 	display:-webkit-box;
-	display:-ms-box;
+	display:-ms-flexbox;
 	-moz-box-orient:horizontal;
 	-webkit-box-orient:horizontal;
-	-ms-box-orient:horizontal;
+	-ms-flex-direction:row;
 	border-radius: 6px 6px 0 0;
 }
 .bracket-item .seed {
@@ -1519,7 +1519,7 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
 	padding:1.5ex 1em 1.5ex 1em;
 	-moz-box-flex:10;
 	-webkit-box-flex:1;
-	-ms-box-flex:1;
+	-ms-flex:1 0 auto;
 }
 .bracket-item .team:last-child {
 	border-radius: 0 0 6px 6px;
