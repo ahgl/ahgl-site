@@ -2,7 +2,7 @@
 vcs: hg
 
 # Runtime of python to use
-runtime: python-2.7.3
+#runtime: python-2.7.3
 
 # This path is relative to your project root (the directory gondor.yml lives in.)
 requirements_file: requirements.txt
