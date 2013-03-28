@@ -4,6 +4,7 @@ import logging
 import random, math
 from itertools import chain, count, takewhile, islice, groupby
 import os.path
+from pprint import pprint
 
 from django.db import models
 from django.db.models import Q, Count, F
@@ -120,14 +121,14 @@ class TournamentRound(models.Model):
     def elim_bracket(self):
         positions, participants = zip(*self._seed(list(enumerate(self.participants()))))
         match_dict = self.match_dict()
-        print(match_dict)
+        pprint(match_dict)
         num_players = 0
         for wins_needed in takewhile(lambda x:participants, count(1)):
             num_players = len(participants)
             if num_players == 1:
                 yield BracketRow([TeamBracketRecord(participants[0], None, None, True)], self._round_name(num_players))
             else:
-                yield BracketRow([TeamBracketRecord(participants[i], participants[i+1], match_dict.get(frozenset((member.team_id for member in participants[i:i+2]))), False) for i in range(0, num_players, 2)], self._round_name(num_players))
+                yield BracketRow([TeamBracketRecord(participants[i], participants[i+1], match_dict.get(frozenset((member.team_id for member in participants[i:i+2]))), False) for i in range(0, num_players//2*2, 2)], self._round_name(num_players))
             participants = [team_membership for team_membership in participants if team_membership.wins>=wins_needed]
         num_players = num_players // 2
         while num_players:
