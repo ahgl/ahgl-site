@@ -98,7 +98,7 @@ def cache_field(field_name, queryset, db_field, request, kwargs):
         kwargs['queryset'] = getattr(request, attr)
 
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ('name','winner__name', 'creation_date', 'publish_date', 'home_submission_date', 'away_submission_date', 'published',)
+    list_display = ('name','winner__name', 'creation_date', 'publish_date', 'home_submission_date', 'away_submission_date', 'tournament_round', 'published',)
     list_filter = ('tournament','home_submitted','away_submitted',)
     search_fields = ('home_team__name','away_team__name',)
     inlines = (GameInline,)
@@ -117,7 +117,7 @@ class MatchAdmin(admin.ModelAdmin):
         return super(MatchAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
     
     def queryset(self, request):
-        queryset = super(MatchAdmin, self).queryset(request).select_related('tournament', 'home_team', 'away_team') \
+        queryset = super(MatchAdmin, self).queryset(request).select_related('tournament', 'home_team', 'away_team', 'winner').prefetch_related('tournament_round') \
                                           .defer('tournament__status', 'tournament__games_per_match')
         return queryset
     
