@@ -273,6 +273,7 @@ CMS_TEMPLATES = (
     ('tourney_index_simple.html', 'Tournament Index Simple'),
     ('simple_custom_nav.html', 'Simple with Custom Nav Plugin'),
     ('simple.html', 'Simple'),
+    ('super_simple.html', 'Super Simple'),
     ('narrow.html', 'Narrow'),
 )
 CMS_VIEW_PERMISSION = False

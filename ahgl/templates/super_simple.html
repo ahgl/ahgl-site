@@ -1,0 +1,21 @@
+{% extends "site_base.html" %}
+{% load cms_tags %}
+{% load menu_tags %}
+{% load cache %}
+
+{% block head_title %}{{ request.current_page.get_title }}{% endblock %}
+
+{% block content-class %}static-page{% endblock %}
+
+{% block tournament_nav %}
+{% endblock %}
+
+
+{% block body %}
+{% cache 300 cms_body request.path %}
+{% placeholder content %}
+{% endcache %}
+{% endblock %}
+
+{% block footer_base %}
+{% endblock %}
