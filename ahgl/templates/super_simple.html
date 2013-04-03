@@ -8,10 +8,6 @@
 {% block content-class %}static-page{% endblock %}
 
 {% block tournament_nav %}
-{% endblock %}
-
-
-{% block tournament_nav %}
 {% cache 300 cms_top request.path %}
 {% placeholder top_before_main %}
 {% endcache %}
