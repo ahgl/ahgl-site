@@ -1460,7 +1460,7 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
 	-ms-flex-direction:column;
 	-moz-box-pack:center;
 	-webkit-box-pack:center;
-	-ms-box-pack:center;
+	-ms-flex-pack:center;
 }
 .bracket-item a {
 	border-radius: 6px;  
