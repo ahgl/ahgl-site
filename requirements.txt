@@ -50,7 +50,7 @@ slimit==0.6
 recaptcha-client==1.0.6
 south==0.7.6
 raven==2.0.3
--e git+https://github.com/ntucker/django-autocache.git#egg=django-autocache
+-e git+https://github.com/ntucker/django-cache-magic.git#egg=django-cache-magic
 -e git+https://github.com/rdegges/django-clear-cache.git#egg=django-clear-cache
 johnny-cache==1.4
 

@@ -32,7 +32,7 @@ if "GONDOR_REDIS_URL" in os.environ:
     # Caching
     CACHES = {
         "default": {
-            "BACKEND": "autocache.cache.RedisHerdCache",
+            "BACKEND": "cachemagic.cache.RedisHerdCache",
             "LOCATION": ":".join([GONDOR_REDIS_HOST, str(GONDOR_REDIS_PORT)]),
             "OPTIONS": {
                 "DB": 0,
