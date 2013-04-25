@@ -279,6 +279,7 @@ CMS_TEMPLATES = (
 CMS_VIEW_PERMISSION = False
 CMS_MODERATOR = False
 CMS_PERMISSION = False
+CMS_REDIRECTS = True
 
 PHILEO_LIKABLE_MODELS = {
     "profiles.Caster": {}  # can override default config settings for each model here
