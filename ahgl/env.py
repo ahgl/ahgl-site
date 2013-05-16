@@ -6,7 +6,7 @@ from django.utils.importlib import import_module
 
 def setup_environ(dunder_file=None, project_path=None, relative_project_path=None, settings_path=None):
     assert not (dunder_file and project_path), ("You must not specify both "
-        "__file__ and project_path")
+                                                "__file__ and project_path")
 
     if dunder_file is not None:
         file_path = os.path.abspath(os.path.dirname(dunder_file))

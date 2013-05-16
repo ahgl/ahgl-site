@@ -24,7 +24,7 @@ class RedirectFallbackMiddleware(object):
                 # Try removing the trailing slash.
                 try:
                     r = Redirect.objects.get(site__id__exact=settings.SITE_ID,
-                        old_path=path[:path.rfind('/')] + path[path.rfind('/') + 1:])
+                                             old_path=path[:path.rfind('/')] + path[path.rfind('/') + 1:])
                 except Redirect.DoesNotExist:
                     pass
             if r is not None:
