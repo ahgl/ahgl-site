@@ -11,3 +11,4 @@ ENV/
 .project
 ahgl/site_media/*
 ahgl/.gondor/site_key
+dev.db
