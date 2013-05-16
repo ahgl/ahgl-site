@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Changing field 'Game.replay'
         db.alter_column('tournaments_game', 'replay', self.gf('django.db.models.fields.files.FileField')(max_length=300, null=True))
 
 
     def backwards(self, orm):
-        
+
         # Changing field 'Game.replay'
         db.alter_column('tournaments_game', 'replay', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True))
 
@@ -64,7 +64,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'photo': ('imagekit.models.ProcessedImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'questions_answers': ('apps.profiles.fields.HTMLField', [], {'blank': 'True'}),
+            'questions_answers': ('profiles.fields.HTMLField', [], {'blank': 'True'}),
             'race': ('django.db.models.fields.CharField', [], {'max_length': '1', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '70', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),

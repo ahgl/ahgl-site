@@ -2,26 +2,25 @@
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
-from django.db import models
+from django.db import connection, models
 from django.db.utils import DatabaseError
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        try:
-            db.delete_table('django_messages_message')
-        except DatabaseError:
-            db.commit_transaction()
-            db.start_transaction()
-        db.rename_table('messages_message', 'django_messages_message') 
+        tables = connection.introspection.table_names()
+        if 'messages_message' in tables:
+            if 'django_messages_message' in tables:
+                db.delete_table('django_messages_message')
+            db.rename_table('messages_message', 'django_messages_message')
 
         if not db.dry_run:
             # For permissions to work properly after migrating
             orm['contenttypes.contenttype'].objects.filter(app_label='messages_message', model='message').update(app_label='django_messages')
 
     def backwards(self, orm):
-        db.rename_table('django_messages_message', 'messages_message') 
+        db.rename_table('django_messages_message', 'messages_message')
 
         if not db.dry_run:
             # For permissions to work properly after migrating

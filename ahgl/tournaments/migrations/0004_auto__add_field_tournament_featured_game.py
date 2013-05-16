@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Tournament.featured_game'
         db.add_column('tournaments_tournament', 'featured_game', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tournaments.Game'], null=True, blank=True), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Tournament.featured_game'
         db.delete_column('tournaments_tournament', 'featured_game_id')
 
@@ -64,7 +64,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'photo': ('imagekit.models.ProcessedImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'questions_answers': ('apps.profiles.fields.HTMLField', [], {'blank': 'True'}),
+            'questions_answers': ('profiles.fields.HTMLField', [], {'blank': 'True'}),
             'race': ('django.db.models.fields.CharField', [], {'max_length': '1', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '70', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
