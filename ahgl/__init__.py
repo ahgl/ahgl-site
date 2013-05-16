@@ -3,7 +3,9 @@ import logging
 from django.conf import settings
 from django.db.utils import load_backend
 import sqlalchemy.pool as pool
-pool_initialized=False
+
+pool_initialized = False
+
 
 def init_pool():
     """From http://blog.bootstraptoday.com/2012/07/11/django-connection-pooling-using-sqlalchemy-connection-pool/"""
@@ -13,10 +15,10 @@ def init_pool():
         try:
             backendname = settings.DATABASES['default']['ENGINE']
             backend = load_backend(backendname)
-        
+
             #replace the database object with a proxy.
             backend.Database = pool.manage(backend.Database, pool_size=settings.DB_POOL_SIZE, max_overflow=-1)
-        
+
             backend.DatabaseError = backend.Database.DatabaseError
             backend.IntegrityError = backend.Database.IntegrityError
             logging.info("Connection Pool initialized")

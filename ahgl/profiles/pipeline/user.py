@@ -13,6 +13,7 @@ from ..models import Profile
 
 logger = logging.getLogger(__name__)
 
+
 def get_username(details, response, user=None, *args, **kwargs):
     """Return an username for new user. Return current user username
     if user was given.
@@ -76,7 +77,7 @@ def create_user(backend, details, response, uid, username, user=None, *args,
             if not Profile.objects.filter(user=user).count():
                 profile.user = user
                 profile.save()
-        
+
     if not user:
         user = User.objects.create_user(username=username, email=email)
     return {

@@ -1,7 +1,6 @@
-
 RACES = (
-         ("T", "Terran"),
-         ("P", "Protoss"),
-         ("Z", "Zerg"),
-         ("R", "Random"),
-         )
+    ("T", "Terran"),
+    ("P", "Protoss"),
+    ("Z", "Zerg"),
+    ("R", "Random"),
+)

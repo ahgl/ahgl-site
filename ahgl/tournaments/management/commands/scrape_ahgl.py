@@ -10,6 +10,7 @@ import traceback
 import datetime
 from optparse import make_option
 
+from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand, CommandError
@@ -17,9 +18,10 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.db.models import Q
 
-from tournaments.models import *
-from profiles.models import *
-from profiles.pipeline.user import *
+from tournaments.models import (Game, Map, Match, TeamRoundMembership,
+                                Tournament, TournamentRound, replay_path)
+from profiles.models import Charity, Profile, Team, TeamMembership
+
 
 class Command(BaseCommand):
     args = '<tournament_slug ahgl_url>'
@@ -45,14 +47,22 @@ class Command(BaseCommand):
             dest='admin',
             default=False,
             help='Scrape data from admin page'),
-        )
-    
+    )
+
     first_week_match = datetime.date(2012, 1, 6)
     a_week = datetime.timedelta(weeks=1)
     master_user = User.objects.get(username='master')
     unknown_photo = '/wp-content/themes/AHGL/images/the-unknown.png'
-    
-    _map_map = {u"Xelnaga": "Xel'Naga Caverns", u"Xel’Naga Caverns": "Xel'Naga Caverns", u"Tal’Darim Altar": "Tal'Darim Altar", u"Tal’darim Altar": "Tal'Darim Altar", "Tal'Darim Altar":"Tal'Darim Altar", "The Shattered Temple": "Shattered Temple"}
+
+    _map_map = {
+        u"Xelnaga": "Xel'Naga Caverns",
+        u"Xel’Naga Caverns": "Xel'Naga Caverns",
+        u"Tal’Darim Altar": "Tal'Darim Altar",
+        u"Tal’darim Altar": "Tal'Darim Altar",
+        "Tal'Darim Altar": "Tal'Darim Altar",
+        "The Shattered Temple": "Shattered Temple"
+    }
+
     def coerse_mapname(self, mapname):
         if mapname in self._map_map.keys():
             return self._map_map[mapname]
@@ -78,8 +88,7 @@ class Command(BaseCommand):
             membership = TeamMembership(team=team, profile=profile, char_name=char_name, active=False)
             membership.save()
             return profile, membership
-            
-        
+
         if "Player not found in database" in tostring(member_d):
             print("Player not found...skipping", file=self.stdout)
             return
@@ -111,7 +120,7 @@ class Command(BaseCommand):
             profile.photo.save(filename, ContentFile(urllib2.urlopen(member_photo_url).read()))
         if info_ps[3].text:
             profile.title = info_ps[3].text
-        if info_ps[-1].text: # deal with blank race
+        if info_ps[-1].text:  # deal with blank race
             if info_h3s[-1].text.strip().lower() == "champion":
                 membership.champion = info_ps[-1].text.strip()
             else:
@@ -132,23 +141,24 @@ class Command(BaseCommand):
             profile.save()
             membership.save()
         return profile, membership
+
     def load_team(self, team_url, team_name):
         team_d = self.visit_url(team_url)
-       
+
         # load team data
-        team, created = Team.objects.get_or_create(tournament=self.tournament, name=team_name, slug=slugify(team_name), defaults={'rank':1})
+        team, created = Team.objects.get_or_create(tournament=self.tournament, name=team_name, slug=slugify(team_name), defaults={'rank': 1})
         print(created, file=self.stdout)
         photo_url = team_d.cssselect('.content-section-1 img')[0].get('src')
         filename = slugify(team_name) + posixpath.splitext(photo_url)[1]
         team.photo.save(filename, ContentFile(urllib2.urlopen(photo_url).read()))
-        
+
         charity_p = team_d.cssselect('.content-section-3 p')[0 if self.tournament.slug == "starcraft-2-season-1" else 1]
         charity_name = charity_p.cssselect('a')[0].text
         charity, created = Charity.objects.get_or_create(name=charity_name)
         charity.link = charity_p.cssselect('a')[0].get('href')
         if not charity.desc:
             print("charity desc")
-            charity.desc = charity_p.text_content().strip()[2:] #"".join(list(charity_p.itertext())[1:])
+            charity.desc = charity_p.text_content().strip()[2:]  # "".join(list(charity_p.itertext())[1:])
         if not charity.logo:
             try:
                 charity_photo_url = team_d.cssselect('.content-section-4 img')[0].get('src')
@@ -176,6 +186,7 @@ class Command(BaseCommand):
         team.full_clean()
         team.save()
         return team
+
     def find_round(self, home_team, away_team, creation_date):
         for round in TournamentRound.objects.filter(teams__pk=home_team.pk).filter(teams__pk=away_team.pk).order_by('stage_order'):
             previous_matchup_count = round.matches.filter(creation_date__lt=creation_date) \
@@ -184,9 +195,10 @@ class Command(BaseCommand):
             if not previous_matchup_count:
                 break
         return round
+
     def load_match(self, match_url, week=None):
         match_d = self.visit_url(match_url)
-        
+
         if not match_d.cssselect('a.first-title'):
             print("Not a real match....skipping", file=self.stderr)
             return
@@ -195,14 +207,14 @@ class Command(BaseCommand):
         if week is None:
             week = int(re.search('week[^/]*([\d]+)[^/]*/', match_url).group(1)) - 1
         print("{0} week".format(week), file=self.stdout)
-        creation_date = self.first_week_match + self.a_week*week
+        creation_date = self.first_week_match + self.a_week * week
         round = self.find_round(home_team, away_team, creation_date)
-        match, match_created = Match.objects.get_or_create(home_team=home_team, away_team=away_team, creation_date=creation_date, tournament=self.tournament, defaults={'tournament_round':round})
+        match, match_created = Match.objects.get_or_create(home_team=home_team, away_team=away_team, creation_date=creation_date, tournament=self.tournament, defaults={'tournament_round': round})
         match.published = True
         match.publish_date = match.creation_date + self.a_week + datetime.timedelta(days=5)
         match.home_submitted = True
         match.away_submitted = True
-        
+
         match.save(notify=False)
         # add games
         for order, game_li in enumerate(match_d.cssselect('li.cf'), start=1):
@@ -218,14 +230,14 @@ class Command(BaseCommand):
                 map.full_clean()
                 map.save()
             self.tournament.map_pool.add(map)
-            
+
             # Game creation
-            game, game_created = Game.objects.get_or_create(match=match, order=order, defaults={"map":map})
-            game.map = map # just assure the current coersed version
+            game, game_created = Game.objects.get_or_create(match=match, order=order, defaults={"map": map})
+            game.map = map  # just assure the current coersed version
             #if game_created:
             #    print("Created game {order}".format(order=order), file=self.stdout)
 
-            # only load players if players play individual games            
+            # only load players if players play individual games
             if not self.options['whole_team']:
                 home_player = game_li.cssselect('.video-player-link-container h3')[0].text
                 away_player = game_li.cssselect('.video-player-link-container.last h3')[0].text
@@ -243,14 +255,13 @@ class Command(BaseCommand):
                             profile, membership = self.load_player(url, team, char_name)
                             setattr(game, "_".join((member, "player")), membership)
 
-            
             vod = game_li.cssselect('.video-link-container > a.video-link')[0].get('href')
             if vod and not "afterhoursgaming.tv" in vod:
                 game.vod = vod
             replay_a = game_li.cssselect('.video-link-container > p > a')
             if replay_a:
                 self.save_replay(game, replay_a)
-            if game.order==5:
+            if game.order == 5:
                 game.is_ace = True
             game.save()
         match.save(notify=False)
@@ -270,7 +281,7 @@ class Command(BaseCommand):
             return TeamMembership.objects.get(team=team, char_name__iexact=char_name), False
         except TeamMembership.DoesNotExist:
             if active:
-                profile, created = Profile(name=char_name, user=self.master_user), True #have to use fake name since admin doesn't have names
+                profile, created = Profile(name=char_name, user=self.master_user), True  # have to use fake name since admin doesn't have names
                 profile.save()
                 membership = TeamMembership(team=team, profile=profile, char_name=char_name)
                 print("Creating player {0}".format(membership.char_name), file=self.stdout)
@@ -280,6 +291,7 @@ class Command(BaseCommand):
 
     re_lineup = re.compile(r"((?P<home_name>[^\.\s]+)(\. ?(?P<home_code>[^\s]+))? +(\([^\)]+\) )?\((?P<home_race>[\w])\))? \< (?P<map>[^\>]+) \> (\((?P<away_race>[\w])\) (?P<away_name>[^\.]+)(\.(?P<away_code>[^\s]+))?)?")
     re_captain = re.compile(r"(?P<name>[^,]+), (?P<email>[^@]+@[^\.]+\.[^,]+), (?P<char_name>[^\.]+)\.(?P<char_code>[\d]+)")
+
     def load_lineup(self, lineup_url):
         lineup_d = self.visit_url(lineup_url)
         week = int(lineup_d.cssselect("h1")[0].text.strip().rsplit(None, 1)[-1]) - 1
@@ -290,14 +302,13 @@ class Command(BaseCommand):
             home_team = Team.objects.get(name=home_team, tournament=self.tournament)
             away_team = Team.objects.get(name=away_team, tournament=self.tournament)
 
-            
-            creation_date = self.first_week_match + self.a_week*week
-            try: # ug, inconsistencies in ordering....
+            creation_date = self.first_week_match + self.a_week * week
+            try:  # ug, inconsistencies in ordering....
                 match = Match.objects.get(home_team=away_team, away_team=home_team, creation_date=creation_date, tournament=self.tournament)
             except Match.DoesNotExist:
                 reverse_order = False
                 round = self.find_round(home_team, away_team, creation_date)
-                match, match_created = Match.objects.get_or_create(home_team=home_team, away_team=away_team, creation_date=creation_date, tournament=self.tournament, defaults={'tournament_round':round})
+                match, match_created = Match.objects.get_or_create(home_team=home_team, away_team=away_team, creation_date=creation_date, tournament=self.tournament, defaults={'tournament_round': round})
                 if match_created:
                     print("Creating new match {0} vs {1}".format(home_team, away_team), file=self.stdout)
                 else:
@@ -307,7 +318,7 @@ class Command(BaseCommand):
                 print("Processing match {0} vs {1}".format(home_team, away_team), file=self.stdout)
             match.home_submitted = True
             match.away_submitted = True
-            
+
             maps = []
             for order, game_text in enumerate(matchup_p.itertext(), start=1):
                 game_matcher = self.re_lineup.search(game_text.strip())
@@ -323,13 +334,13 @@ class Command(BaseCommand):
                 if map_created:
                     print("{0} map not found...creating".format(map_name), file=self.stderr)
                     self.tournament.map_pool.add(map)
-                
-                game, game_created = Game.objects.get_or_create(match=match, order=order, defaults={"map":map})
-                game.map = map # just assure the current coersed version
+
+                game, game_created = Game.objects.get_or_create(match=match, order=order, defaults={"map": map})
+                game.map = map  # just assure the current coersed version
                 if game_created:
                     print("  Creating new game {0} {1} {2}".format(home_team.name, map_name, away_team.name), file=self.stdout)
                     match.games.add(game)
-                if game_matcher.group("away_race"): #not ace match, load up player data
+                if game_matcher.group("away_race"):  # not ace match, load up player data
                     p1, p1_created = self.create_membership(team=home_team, char_name=game_matcher.group("home_name"))
                     p2, p2_created = self.create_membership(team=away_team, char_name=game_matcher.group("away_name"))
                     p1race = game_matcher.group("home_race").upper()
@@ -370,7 +381,7 @@ class Command(BaseCommand):
                 for match in matches_needing_games:
                     print("Match {0} had no map information...using information from other matches".format(match), file=self.stdout)
                     for order, (map, is_ace) in enumerate(map_pool, start=1):
-                        game, game_created = Game.objects.get_or_create(match=match, order=order, defaults={"map":map})
+                        game, game_created = Game.objects.get_or_create(match=match, order=order, defaults={"map": map})
                         if game_created:
                             print("Created game on map {0}".format(map.name), file=self.stdout)
                         game.is_ace = is_ace
@@ -381,8 +392,9 @@ class Command(BaseCommand):
                 print("No map information was gathered for this week, so deleting all matches.", file=self.stdout)
                 for match in matches_needing_games:
                     match.delete()
-         
+
     re_result = re.compile("\): (?P<home_name>[^\.:\s]+)(\. ?(?P<home_code>[^\s]+))? +(\([^\)]+\) )?\((?P<home_race>[\w])\) (?P<win_ptr>&lt;|&gt;) \((?P<away_race>[\w])\) (?P<away_name>[^\.]+)(\.(?P<away_code>[^\s]+))? +--")
+
     def load_result(self, result_url):
         result_d = self.visit_url(result_url)
         week = int(result_d.cssselect("h1")[0].text.strip().rsplit(None, 1)[-1]) - 1
@@ -390,14 +402,14 @@ class Command(BaseCommand):
             home_team, away_team = (s.strip() for s in match_h2.text.split(":")[1].split(" vs "))
             home_team = Team.objects.get(name=home_team, tournament=self.tournament)
             away_team = Team.objects.get(name=away_team, tournament=self.tournament)
-            creation_date = self.first_week_match + self.a_week*week
-            try: # ug, inconsistencies in ordering....
+            creation_date = self.first_week_match + self.a_week * week
+            try:  # ug, inconsistencies in ordering....
                 match = Match.objects.get(home_team=away_team, away_team=home_team, creation_date=creation_date, tournament=self.tournament)
             except Match.DoesNotExist:
                 reverse_order = False
                 try:
                     match = Match.objects.get(home_team=home_team, away_team=away_team, creation_date=creation_date, tournament=self.tournament)
-                except Match.DoesNotExist: # this means we didn't have any map data, so we had deleted the matches
+                except Match.DoesNotExist:  # this means we didn't have any map data, so we had deleted the matches
                     continue
                 print("Processing match {0} vs {1}".format(home_team, away_team), file=self.stdout)
             else:
@@ -449,7 +461,7 @@ class Command(BaseCommand):
                             try:
                                 away_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("away_name").strip().encode('ascii', 'ignore'))
                             except TeamMembership.DoesNotExist:
-                                print(">"+game_matcher.group("away_name").strip().encode('ascii', 'ignore')+"<", "did not match")
+                                print(">" + game_matcher.group("away_name").strip().encode('ascii', 'ignore') + "<", "did not match")
                         else:
                             try:
                                 away_player = TeamMembership.objects.get(char_name__iexact=game_matcher.group("away_name").strip(), char_code=away_code)
@@ -466,7 +478,7 @@ class Command(BaseCommand):
                         except TeamMembership.DoesNotExist:
                             kwargs['team'] = home_team
                             home_player = TeamMembership.objects.get(**kwargs)
-                            
+
                     home_race = game_matcher.group("home_race").upper()
                     away_race = game_matcher.group("away_race").upper()
                     if reverse_order:
@@ -487,7 +499,7 @@ class Command(BaseCommand):
                     else:
                         print("Unrecognized game result: {0}".format(game_text), file=self.stdout)
                         continue
-                    p = html.fragment_fromstring("<p>"+game_text+"</p>")
+                    p = html.fragment_fromstring("<p>" + game_text + "</p>")
                     replay_a = list(p.cssselect("a"))
                     if replay_a:
                         if not game.replay:
@@ -505,14 +517,13 @@ class Command(BaseCommand):
             self.tournament = Tournament.objects.get(slug=args[0])
         except Tournament.DoesNotExist:
             raise CommandError("Tournament {0} does not exist".format(args[0]))
-        self.site_url = args[1] if len(args)>1 else "http://afterhoursgaming.tv/sc2/"
+        self.site_url = args[1] if len(args) > 1 else "http://afterhoursgaming.tv/sc2/"
         admin_url = "http://ahgl.npinp.com/"
         if self.tournament.slug == "starcraft-2-season-1":
             self.first_week_match = datetime.date(2011, 6, 24)
-        
-        
+
         settings.INSTALLED_APPS.remove("notification")
-        
+
         try:
             if options['team']:
                 # Load teams
@@ -522,7 +533,7 @@ class Command(BaseCommand):
                     team_url = team_a.get('href')
                     team_name = " ".join(team_a.text_content().strip().split()[:-1])
                     self.load_team(team_url, team_name)
-                
+
             if options['match']:
                 # load groups
                 schedule_d = self.visit_url("schedule", self.site_url)
@@ -531,7 +542,7 @@ class Command(BaseCommand):
                 else:
                     round_lis = schedule_d.cssselect('#week-1-schedule li.season-list-item')
                 for i, group_li in enumerate(round_lis, start=1):
-                    round, created = TournamentRound.objects.get_or_create(order=i, stage_order=1, tournament=self.tournament, default={'stage_name':"Group"})
+                    round, created = TournamentRound.objects.get_or_create(order=i, stage_order=1, tournament=self.tournament, default={'stage_name': "Group"})
                     print("Round {0} retrieved, adding members".format(i), file=self.stdout)
                     for team_span in group_li.cssselect('.week-list-link > span.f2'):
                         team_slug = slugify(team_span.text.strip())
@@ -545,38 +556,38 @@ class Command(BaseCommand):
                             except Team.DoesNotExist:
                                 if not tried_nospace:
                                     print("Team {slug} not found...trying without spaces".format(slug=team_slug), file=self.stdout)
-                                    team_slug = team_slug.replace('-','')
+                                    team_slug = team_slug.replace('-', '')
                                     tried_nospace = True
                                 else:
                                     print("Team {slug} not found................skipping".format(slug=team_slug), file=self.stdout)
                                     break
-                        
+
                 # load matches
                 for week, week_li in enumerate(schedule_d.cssselect("li.season-list-item")):
                     for match_li in week_li.cssselect('li.week-list-item'):
                         match_url = list(match_li.cssselect('a.week-list-link'))[-1].get('href')
                         self.load_match(match_url, week)
-                
+
             # ----------- Admin site ------------------
             if options['admin']:
-                
+
                 # load lineups (extra match info)
                 lineup_d = self.visit_url("show-lineup", admin_url)
                 for a in lineup_d.cssselect("a"):
                     self.load_lineup(a.get('href'))
-                
+
                 # load results
                 result_d = self.visit_url("show-result", admin_url)
                 for a in result_d.cssselect("a"):
                     self.load_result(a.get('href'))
-                
+
             # ----------- Update stats ------------------
             for team in Team.objects.filter(tournament=self.tournament):
                 team.update_stats()
             for membership in TeamRoundMembership.objects.filter(tournamentround__tournament=self.tournament):
                 membership.update_stats()
-                            
+
         except Exception as e:
-            print('Error occured, dumping last document\n {0}'.format(tostring(self.d) if hasattr(self,"d") else None), file=self.stderr)
+            print('Error occurred, dumping last document\n {0}'.format(tostring(self.d) if hasattr(self, "d") else None), file=self.stderr)
             traceback.print_exc(file=self.stderr)
             print(e, file=self.stderr)

@@ -1,7 +1,6 @@
 from django.conf import settings
-from django.conf.urls.defaults import *
-from django.views.generic.simple import direct_to_template
-from django.views.generic import DetailView, ListView
+from django.conf.urls.defaults import include, patterns, url
+from django.views.generic import ListView
 from django.conf.urls.static import static
 from django.forms import models as model_forms
 
@@ -12,37 +11,41 @@ from idios.views import ProfileUpdateView
 from django_messages.views import compose
 
 from profiles.models import Profile
-from profiles.views import MVPView, TeamListView, TeamDetailView, StandingsView, TeamUpdateView, TeamCreateView, MyProfileDetailView, TeamMembershipView, TeamMembershipUpdateView, TeamMembershipCreateView, TeamMembershipDeleteView, CasterListView
-from tournaments.views import MatchDetailView, MatchListView, MatchReportView, SubmitLineupView, GameListView, PlayerAdminView
-from tournaments.models import Match, Tournament
+from profiles.views import (MVPView, TeamListView, TeamDetailView,
+                            StandingsView, TeamUpdateView, TeamCreateView,
+                            MyProfileDetailView, TeamMembershipView,
+                            TeamMembershipUpdateView, TeamMembershipCreateView,
+                            TeamMembershipDeleteView, CasterListView)
+from tournaments.views import (MatchDetailView, MatchListView, MatchReportView,
+                               SubmitLineupView, GameListView, PlayerAdminView)
+from tournaments.models import Tournament
 
 
-
-urlpatterns = patterns("",
+urlpatterns = patterns('',
     url(r"^admin/", include(admin.site.urls)),
     url(r"^account/", include("recaptcha_form.account_backend.urls")),
     url(r'^social/', include('social_auth.urls')),
     url(r"^profiles/profile/(?P<slug>[\w\._-]+)/$", MyProfileDetailView.as_view(), name="profile_detail"),
     url(r"^profiles/profile/(?P<slug>[\w\._-]+)/add_membership/$", TeamMembershipCreateView.as_view(), name="membership_create"),
-    url(r"^profiles/edit/$", ProfileUpdateView.as_view(form_class=model_forms.modelform_factory(Profile, exclude=('user','signature','signature_html','time_zone','language','post_count','avatar',))), name="profile_edit"),
+    url(r"^profiles/edit/$", ProfileUpdateView.as_view(form_class=model_forms.modelform_factory(Profile, exclude=('user', 'signature', 'signature_html', 'time_zone', 'language', 'post_count', 'avatar',))), name="profile_edit"),
     url(r"^profiles/membership_edit/(?P<pk>[\d]+)/$", TeamMembershipUpdateView.as_view(), name="membership_edit"),
     url(r"^profiles/membership_delete/(?P<pk>[\d]+)/$", TeamMembershipDeleteView.as_view(), name="membership_delete"),
     url(r"^profiles/", include("idios.urls")),
     url(r"^notices/", include("notification.urls")),
     url(r"^likes/", include("phileo.urls")),
     url(r"^announcements/", include("announcements.urls")),
-    #url(r'^forum/', include('pybb.urls', namespace='pybb')),
-    url(r'^messages/compose/(?P<recipient>[\+\w\.\-_]+)/$', compose, name='messages_compose_to'), #we allow periods
+    # url(r'^forum/', include('pybb.urls', namespace='pybb')),
+    url(r'^messages/compose/(?P<recipient>[\+\w\.\-_]+)/$', compose, name='messages_compose_to'),  # we allow periods
     url(r'^messages/', include('django_messages.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
-    
+
     # player admin controls
     url(r'^player_admin/$', PlayerAdminView.as_view(), name="player_admin"),
     url(r'^report_match/(?P<pk>[\d]+)/$', MatchReportView.as_view(), name="report_match"),
     # captain specific
     url(r'^submit_lineup/(?P<pk>[\d]+)/$', SubmitLineupView.as_view(), name="submit_lineup"),
     url(r'^(?P<tournament>[\w_-]+)/teams/(?P<slug>[\w_-]+)/edit/$', TeamUpdateView.as_view(), name='edit_team'),
-    
+
     url(r'^archive/$', ListView.as_view(queryset=Tournament.objects.filter(status='C'), template_name="tournaments/archives.html"), name="archives"),
     url(r'^games/$', GameListView.as_view(), name='games'),
     url(r'^(?P<tournament>[\w_-]+)/mvp/$', MVPView.as_view(), name='mvp'),
@@ -68,4 +71,5 @@ if settings.SERVE_MEDIA:
     urlpatterns += patterns("",
         url(r"", include("staticfiles.urls")),
     )
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

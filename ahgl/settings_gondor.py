@@ -1,7 +1,7 @@
 import os
 import urlparse
 
-from .settings import *
+from .settings import *  # noqa
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -28,7 +28,7 @@ if "GONDOR_REDIS_URL" in os.environ:
     GONDOR_REDIS_HOST = url.hostname
     GONDOR_REDIS_PORT = url.port
     GONDOR_REDIS_PASSWORD = url.password
-    
+
     # Caching
     CACHES = {
         "default": {
@@ -49,13 +49,13 @@ if "GONDOR_REDIS_URL" in os.environ:
             "JOHNNY_CACHE": True,
         },
     }
-    
+
     BROKER_TRANSPORT = "redis"
     BROKER_HOST = GONDOR_REDIS_HOST
     BROKER_PORT = GONDOR_REDIS_PORT
     BROKER_VHOST = "0"
     BROKER_PASSWORD = GONDOR_REDIS_PASSWORD
-    
+
     import djcelery
     djcelery.setup_loader()
     CELERY_RESULT_BACKEND = "redis"
@@ -65,7 +65,7 @@ if "GONDOR_REDIS_URL" in os.environ:
 
 if "GONDOR_HAYSTACK_SOLR_URL" in os.environ:
     if 'HAYSTACK_SEARCH_ENGINE' in locals():
-        del HAYSTACK_SEARCH_ENGINE
+        del HAYSTACK_SEARCH_ENGINE  # noqa
     GONDOR_HAYSTACK_SOLR_URL = os.environ["GONDOR_HAYSTACK_SOLR_URL"]
     HAYSTACK_CONNECTIONS = {
         'default': {
@@ -76,13 +76,13 @@ if "GONDOR_HAYSTACK_SOLR_URL" in os.environ:
         },
     }
 
-SITE_ID = 1 # set this to match your Sites setup
+SITE_ID = 1  # set this to match your Sites setup
 
 MEDIA_ROOT = os.path.join(os.environ["GONDOR_DATA_DIR"], "site_media", "media")
 STATIC_ROOT = os.path.join(os.environ["GONDOR_DATA_DIR"], "site_media", "static")
 
-MEDIA_URL = "/site_media/media/" # make sure this maps inside of a static_urls URL
-STATIC_URL = "/site_media/static/" # make sure this maps inside of a static_urls URL
+MEDIA_URL = "/site_media/media/"  # make sure this maps inside of a static_urls URL
+STATIC_URL = "/site_media/static/"  # make sure this maps inside of a static_urls URL
 MEDIA_URL = os.environ.get('MEDIA_URL', MEDIA_URL)
 STATIC_URL = os.environ.get('STATIC_URL', STATIC_URL)
 ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"

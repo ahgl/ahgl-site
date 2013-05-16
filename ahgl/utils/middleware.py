@@ -3,6 +3,7 @@ from django import http
 from django.conf import settings
 from django.core.cache import cache
 
+
 class RedirectFallbackMiddleware(object):
     def __init__(self):
         self.cache_timeout = getattr(settings, 'CACHE_REDIRECT_SECONDS', 300)
@@ -10,7 +11,7 @@ class RedirectFallbackMiddleware(object):
 
     def process_response(self, request, response):
         if response.status_code != 404:
-            return response # No need to check for a redirect for non-404 responses.
+            return response  # No need to check for a redirect for non-404 responses.
         path = request.get_full_path()
         cache_key = " ".join((self.key_prefix, path))
         new_path = cache.get(cache_key, None)
@@ -23,7 +24,7 @@ class RedirectFallbackMiddleware(object):
                 # Try removing the trailing slash.
                 try:
                     r = Redirect.objects.get(site__id__exact=settings.SITE_ID,
-                        old_path=path[:path.rfind('/')]+path[path.rfind('/')+1:])
+                        old_path=path[:path.rfind('/')] + path[path.rfind('/') + 1:])
                 except Redirect.DoesNotExist:
                     pass
             if r is not None:

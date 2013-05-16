@@ -26,6 +26,7 @@ from utils.views import ObjectPermissionsCheckMixin
 from .models import Team, TeamMembership, Profile, Caster
 from tournaments.models import TournamentRound, Tournament
 
+
 class TournamentSlugContextView(object):
     def get_context_data(self, **kwargs):
         context = super(TournamentSlugContextView, self).get_context_data(**kwargs)
@@ -36,21 +37,24 @@ class TournamentSlugContextView(object):
             pass"""
         return context
 
+
 class TeamDetailView(TournamentSlugContextView, DetailView):
     def get_context_data(self, **kwargs):
         context = super(TeamDetailView, self).get_context_data(**kwargs)
-        context['is_captain'] = self.request.user.is_authenticated() and any((captain.profile.user_id==self.request.user.id for captain in self.object.captains))
+        context['is_captain'] = self.request.user.is_authenticated() and any((captain.profile.user_id == self.request.user.id for captain in self.object.captains))
         return context
-        
+
     def get_queryset(self):
         return Team.objects.filter(tournament=self.kwargs['tournament']).select_related('charity')
-    
+
+
 class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, UpdateView):
     def get_queryset(self):
         return Team.objects.filter(tournament=self.kwargs['tournament']).select_related('charity')
-    
+
     def get_form_class(self):
         view = self
+
         class UpdateForm(ModelForm):
             def __init__(self, *args, **kwargs):
                 super(UpdateForm, self).__init__(*args, **kwargs)
@@ -58,46 +62,52 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, Upd
                     for key, field in self.fields.iteritems():
                         if key != 'approval':
                             field.required = True
+
             def save(self, *args, **kwargs):
                 if view.request.POST.get('submit') == 'approval':
                     self.instance.status = "W"
                 super(UpdateForm, self).save(*args, **kwargs)
-                
+
             class Meta:
                 model = Team
-                exclude = ('slug','tournament','rank','seed','members','status','paid','karma',)
+                exclude = ('slug', 'tournament', 'rank', 'seed', 'members', 'status', 'paid', 'karma',)
         return UpdateForm
-    
+
     def get_success_url(self):
         return reverse("team_page", kwargs=self.kwargs)
 
     def check_permissions(self):
         if not self.request.user.is_superuser and not self.object.team_membership.filter(captain=True, profile__user=self.request.user).count():
             return HttpResponseForbidden("You are not captain of this team.")
-        
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(TeamUpdateView, self).dispatch(*args, **kwargs)
 
+
 class TeamCreateView(TournamentSlugContextView, CreateView):
     model = Team
-    
+
     def get_form_class(self):
         view = self
+
         class TeamCreateForm(ModelForm):
             #duplicate = forms.ModelChoiceField(queryset=Team.objects.filter(team_membership__profile__user=view.request.user), required=False)
             char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length, required=True, label="Your character name", help_text=u"or Summoner name")
+
             class Meta:
                 model = Team
-                exclude=('tournament','rank','seed','members','slug','status','approval','paid','karma',)
-            """def clean(self):
-                if self.cleaned_data.get('duplicate'):
-                    dup = self.cleaned_data.get('duplicate')
-                    copy = ('name', 'slug', 'photo', 'charity', 'motto')
-                    for field in copy:
-                        if not self.cleaned_data.get(field):
-                            self.cleaned_data[field] = getattr(dup, field)
-                return super(TeamCreateForm, self).clean()"""
+                exclude = ('tournament', 'rank', 'seed', 'members', 'slug', 'status', 'approval', 'paid', 'karma',)
+
+            # def clean(self):
+            #     if self.cleaned_data.get('duplicate'):
+            #         dup = self.cleaned_data.get('duplicate')
+            #         copy = ('name', 'slug', 'photo', 'charity', 'motto')
+            #         for field in copy:
+            #             if not self.cleaned_data.get(field):
+            #                 self.cleaned_data[field] = getattr(dup, field)
+            #     return super(TeamCreateForm, self).clean()
+
             def save(self, *args, **kwargs):
                 self.instance.tournament = view.tournament
                 view.slug = self.instance.slug = slugify(self.cleaned_data['name'])
@@ -109,10 +119,10 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
                     membership = TeamMembership(team=self.instance, profile=view.request.user.get_profile(), char_name=self.cleaned_data['char_name'], active=True, captain=True)
                     membership.save()
         return TeamCreateForm
-    
+
     def get_success_url(self):
-        return reverse("team_page", kwargs={"tournament":self.kwargs['tournament'], "slug":self.slug})
-    
+        return reverse("team_page", kwargs={"tournament": self.kwargs['tournament'], "slug": self.slug})
+
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.tournament = get_object_or_404(Tournament, slug=kwargs['tournament'])
@@ -121,55 +131,66 @@ class TeamCreateView(TournamentSlugContextView, CreateView):
         if self.tournament.status != "S":
             return HttpResponseForbidden("That tournament is not open for signups at this time.")
         return super(TeamCreateView, self).dispatch(request, *args, **kwargs)
-    
+
+
 class TeamListView(TournamentSlugContextView, ListView):
     def get_queryset(self):
-        return Team.objects.filter(tournament=self.kwargs['tournament']).only('name','slug','photo','tournament')
-    
+        return Team.objects.filter(tournament=self.kwargs['tournament']).only('name', 'slug', 'photo', 'tournament')
+
+
 class StandingsView(TournamentSlugContextView, ListView):
     def get_context_data(self, **kwargs):
         ctx = super(StandingsView, self).get_context_data(**kwargs)
-        ctx["show_points"] = get_object_or_404(Tournament.objects.only('structure'), pk=self.kwargs['tournament']).structure=="I"
+        ctx["show_points"] = get_object_or_404(Tournament.objects.only('structure'), pk=self.kwargs['tournament']).structure == "I"
         return ctx
-    
+
     def get_queryset(self):
         return TournamentRound.objects.filter(tournament=self.kwargs['tournament'], published=True)
 
     def get_template_names(self):
         return "profiles/standings.html"
 
+
 class TeamMembershipCreateView(CreateView):
     model = TeamMembership
     template_name = "profiles/membership_form.html"
     context_object_name = "membership"
+
     def get_form_class(self):
         view = self
+
         class MembershipCreateForm(ModelForm):
             team = forms.ModelChoiceField(queryset=Team.objects.filter(team_membership__profile__user=view.request.user))
             profile = forms.ModelChoiceField(queryset=Profile.objects.filter(slug=self.kwargs['slug']), initial=view.profile, widget=forms.HiddenInput())
+
             class Meta:
                 model = TeamMembership
-                fields = ('char_name','team','profile')
+                fields = ('char_name', 'team', 'profile')
+
             def save(self, *args, **kwargs):
                 self.cleaned_data['profile'] = view.profile
                 return super(MembershipCreateForm, self).save(*args, **kwargs)
         return MembershipCreateForm
+
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.profile = get_object_or_404(Profile, slug=kwargs['slug'])
         return super(TeamMembershipCreateView, self).dispatch(request, *args, **kwargs)
+
+
 class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
     template_name = "idios/profile_edit.html"
     template_name_ajax = "idios/profile_edit_ajax.html"
     template_name_ajax_success = "idios/profile_edit_ajax_success.html"
     context_object_name = "profile"
     model = TeamMembership
-    
+
     def get_template_names(self):
         if self.request.is_ajax():
             return [self.template_name_ajax]
         else:
             return [self.template_name]
+
     def get_context_data(self, **kwargs):
         ctx = super(TeamMembershipUpdateView, self).get_context_data(**kwargs)
         ctx["profile_form"] = ctx["form"]
@@ -180,7 +201,7 @@ class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
         if not self.captain_user:
             exclude += ["captain", "active"]
         return model_forms.modelform_factory(TeamMembership, exclude=exclude)
-    
+
     def form_valid(self, form):
         self.object = form.save()
         if self.request.is_ajax():
@@ -192,7 +213,7 @@ class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
             return HttpResponse(json.dumps(data), content_type="application/json")
         else:
             return HttpResponseRedirect(self.get_success_url())
-    
+
     def form_invalid(self, form):
         if self.request.is_ajax():
             ctx = RequestContext(self.request, self.get_context_data(form=form))
@@ -208,35 +229,41 @@ class TeamMembershipUpdateView(ObjectPermissionsCheckMixin, UpdateView):
         self.captain_user = bool(TeamMembership.objects.filter(team=self.object.team, profile__user=self.request.user, captain=True).count())
         if self.object.profile.user != self.request.user and not self.captain_user:
             return HttpResponseForbidden("This is not your membership to edit.")
-        
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(TeamMembershipUpdateView, self).dispatch(*args, **kwargs)
 
+
 class TeamMembershipDeleteView(ObjectPermissionsCheckMixin, DeleteView):
     context_object_name = "profile"
     model = TeamMembership
+
     def get_success_url(self):
-        return reverse("team_page", kwargs={"tournament":self.object.team.tournament.slug, "slug":self.object.team.slug})
+        return reverse("team_page", kwargs={"tournament": self.object.team.tournament.slug, "slug": self.object.team.slug})
 
     def check_permissions(self):
         self.captain_user = bool(TeamMembership.objects.filter(team=self.object.team, profile__user=self.request.user, captain=True).count())
         if self.object.profile.user != self.request.user and not self.captain_user:
             return HttpResponseForbidden("This is not your membership to delete.")
-        
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(TeamMembershipDeleteView, self).dispatch(*args, **kwargs)
 
+
 class TeamMembershipView(TournamentSlugContextView, DetailView):
     template_name = "profiles/player_profile.html"
     context_object_name = "membership"
+
     def get_queryset(self):
         return TeamMembership.get(**self.kwargs)
+
     def get_context_data(self, **kwargs):
         ctx = super(TeamMembershipView, self).get_context_data(**kwargs)
         ctx['is_me'] = self.request.user.is_authenticated() and self.request.user.id == self.object.profile.user_id
         return ctx
+
     def get_object(self, queryset=None):
         if queryset is None:
             queryset = self.get_queryset()
@@ -247,12 +274,14 @@ class TeamMembershipView(TournamentSlugContextView, DetailView):
                           {'verbose_name': queryset.model._meta.verbose_name})
         return obj
 
+
 class MVPView(TournamentSlugContextView, ListView):
     template_name = "profiles/mvp.html"
     context_object_name = "players"
-    
+
     def get_queryset(self):
-        return TeamMembership.objects.filter(team__tournament=self.kwargs.get('tournament'), game_wins__match__published=True).select_related('team','profile').annotate(win_count=Count('game_wins')).order_by('-win_count')
+        return TeamMembership.objects.filter(team__tournament=self.kwargs.get('tournament'), game_wins__match__published=True).select_related('team', 'profile').annotate(win_count=Count('game_wins')).order_by('-win_count')
+
 
 class MyProfileDetailView(ProfileDetailView):
     def get_object(self):
@@ -266,10 +295,11 @@ class MyProfileDetailView(ProfileDetailView):
         except:
             self.kwargs['username'] = slug
             return super(MyProfileDetailView, self).get_object()
-    
+
+
 class CasterListView(ListView):
     template_name = "profiles/casters.html"
     context_object_name = "casters"
+
     def get_queryset(self):
         return Caster.objects.filter(tournament=self.kwargs.get('tournament')).order_by('-active', '?')
-    

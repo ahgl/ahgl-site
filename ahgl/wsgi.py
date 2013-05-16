@@ -13,9 +13,11 @@ middleware here, or combine a Django application with an application of another
 framework.
 
 """
-import os, sys
+import os
+import sys
 
-sys.path.insert(0, os.path.join(os.path.abspath(os.path.dirname(__file__)), os.pardir))
+sys.path.insert(0, os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                                os.pardir))
 sys.path.insert(0, os.path.join(os.path.abspath(os.path.dirname(__file__))))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ahgl.settings")

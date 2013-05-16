@@ -104,7 +104,7 @@ COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.SlimItFilter']
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = [
@@ -142,14 +142,14 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "sekizai.context_processors.sekizai",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    
+
     "staticfiles.context_processors.static",
-    
+
     "notification.context_processors.notification",
     "django_messages.context_processors.inbox",
-    
+
     #"pybb.context_processors.processor",
-    
+
     #"tournaments.context_processors.tournament",
 ]
 
@@ -164,13 +164,13 @@ INSTALLED_APPS = [
     "django.contrib.redirects",
     "django.contrib.sites",
 
-  
+
     # theme
     "pinax_theme_bootstrap_account",
     "pinax_theme_bootstrap",
-    
+
     # external
-    "notification", # must be first
+    "notification",  # must be first
     'account',
     "staticfiles",
     "compressor",
@@ -194,7 +194,7 @@ INSTALLED_APPS = [
     'raven.contrib.django',
     'clear_cache',
     'phileo',
-    
+
     # cms
     'cms',
     'mptt',
@@ -216,17 +216,17 @@ INSTALLED_APPS = [
     "utils",
 ]
 
-"""FIXTURE_DIRS = [
-    os.path.join(PROJECT_ROOT, "fixtures"),
-]"""
+# FIXTURE_DIRS = [
+#     os.path.join(PROJECT_ROOT, "fixtures"),
+# ]
 
 PAGINATION_INVALID_PAGE_RAISES_404 = True
 
 TINYMCE_DEFAULT_CONFIG = {
     'theme': "simple",
     'custom_undo_redo_levels': 10,
-    'width':"100%",
-    'height':"480",
+    'width': "100%",
+    'height': "480",
 }
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
@@ -236,35 +236,36 @@ ABSOLUTE_URL_OVERRIDES = {
 }
 
 #Queryset caching with johnny-cache
-JOHNNY_TABLE_WHITELIST = ['cms_cmsplugin',
-'cms_globalpagepermission',
-'cms_globalpagepermissions_sites',
-'cms_page',
-'cms_page_placeholders',
-'cms_pagemoderator',
-'cms_pagemoderatorstate',
-'cms_pagepermission',
-'cms_pageuser',
-'cms_pageusergroup',
-'cms_placeholder',
-'cms_title',
-'cmsplugin_tournamentpluginmodel',
-'cmsplugin_gamepluginmodel',
-'cmsplugin_file',
-'cmsplugin_googlemap',
-'cmsplugin_link',
-'cmsplugin_picture',
-'cmsplugin_snippetptr',
-'cmsplugin_teaser',
-'cmsplugin_text',
-'cmsplugin_twitterrecententries',
-'cmsplugin_twittersearch',
-'cmsplugin_video',
-'menus_cachekey',
-'snippet_snippet',
-'django_site',
-'auth_group',
-'auth_user_groups',
+JOHNNY_TABLE_WHITELIST = [
+    'cms_cmsplugin',
+    'cms_globalpagepermission',
+    'cms_globalpagepermissions_sites',
+    'cms_page',
+    'cms_page_placeholders',
+    'cms_pagemoderator',
+    'cms_pagemoderatorstate',
+    'cms_pagepermission',
+    'cms_pageuser',
+    'cms_pageusergroup',
+    'cms_placeholder',
+    'cms_title',
+    'cmsplugin_tournamentpluginmodel',
+    'cmsplugin_gamepluginmodel',
+    'cmsplugin_file',
+    'cmsplugin_googlemap',
+    'cmsplugin_link',
+    'cmsplugin_picture',
+    'cmsplugin_snippetptr',
+    'cmsplugin_teaser',
+    'cmsplugin_text',
+    'cmsplugin_twitterrecententries',
+    'cmsplugin_twittersearch',
+    'cmsplugin_video',
+    'menus_cachekey',
+    'snippet_snippet',
+    'django_site',
+    'auth_group',
+    'auth_user_groups',
 ]
 
 CMS_TEMPLATES = (
@@ -287,34 +288,36 @@ PHILEO_LIKABLE_MODELS = {
 
 #PYBB_TEMPLATE = "pybb_base.html"
 
-ALLOWED_TAGS = ['a', 'abbr', 'acronym', 'blockquote', 'br', 'cite', 'code', 'dd', 'del',
-                 'div', 'dl', 'dt', 'em', 'h2', 'h3', 'h4', 'h5', 'i', 'iframe', 'img', 'ins', 'li', 'ol', 'p',
-                 'pre', 'q', 'small', 'span', 'strong', 'sub', 'sup', 'table', 'td',
-                 'th', 'tr', 'u', 'ul']
+ALLOWED_TAGS = ['a', 'abbr', 'acronym', 'blockquote', 'br', 'cite', 'code',
+                'dd', 'del', 'div', 'dl', 'dt', 'em', 'h2', 'h3', 'h4', 'h5',
+                'i', 'iframe', 'img', 'ins', 'li', 'ol', 'p', 'pre', 'q',
+                'small', 'span', 'strong', 'sub', 'sup', 'table', 'td', 'th',
+                'tr', 'u', 'ul']
 ALLOWED_ATTRIBUTES = {
-                'a'         : ['href', 'rel', 'target', 'title', 'data-toggle', 'class'],
-                'blockquote': ['cite'],
-                'q'         : ['cite'],
-                'img'       : ['src', 'alt', 'title', 'style'],
-                'iframe'    : ['src', 'width', 'height', 'frameborder', 'allowfullscreen'],
-                'div'       : ['class', 'id', 'style',],
-                'span'      : ['class',],
-                'p'         : ['style'],
-                'table'     : ['class',],
-                'td'        : ['colspan',],
-                'th'        : ['colspan',],
-                'ul'        : ['class',],
-                'li'        : ['class',],
-             }
-ALLOWED_STYLES = ['float','text-align','width','height',]
+    'a': ['href', 'rel', 'target', 'title', 'data-toggle', 'class'],
+    'blockquote': ['cite'],
+    'q': ['cite'],
+    'img': ['src', 'alt', 'title', 'style'],
+    'iframe': ['src', 'width', 'height', 'frameborder', 'allowfullscreen'],
+    'div': ['class', 'id', 'style'],
+    'span': ['class'],
+    'p': ['style'],
+    'table': ['class'],
+    'td': ['colspan'],
+    'th': ['colspan'],
+    'ul': ['class'],
+    'li': ['class'],
+}
+ALLOWED_STYLES = ['float', 'text-align', 'width', 'height']
 ALLOWED_CLASSES = ['accordion-group', 'accordion-heading', 'accordion-toggle',
                    'accordion-body', 'accordion-inner', 'clearfix', 'collapse',
                    'bracket', 'bracket-round', 'bracket-item', 'winner', 'team',
-                   'seed', 'score', 'team_name', 'team-link', 'thumbnail', 'caption', 'thumbnails',
-                   'pull-right', 'pull-left', 'table', 'table-striped', 'table-bordered', 'table-hover',
-                   'table-condensed', 'error', 'success', 'warning', 'info', 'unstyled',
-                   'span1', 'span2', 'span3', 'span4', 'span5', 'span6', 'span7', 'span8',
-                   ]
+                   'seed', 'score', 'team_name', 'team-link', 'thumbnail',
+                   'caption', 'thumbnails', 'pull-right', 'pull-left', 'table',
+                   'table-striped', 'table-bordered', 'table-hover',
+                   'table-condensed', 'error', 'success', 'warning', 'info',
+                   'unstyled', 'span1', 'span2', 'span3', 'span4', 'span5',
+                   'span6', 'span7', 'span8', ]
 
 CONTACT_EMAIL = "support@afterhoursgaming.tv"
 
@@ -334,18 +337,18 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SOCIAL_AUTH_PIPELINE = (
-                        'social_auth.backends.pipeline.social.social_auth_user',
-                        'social_auth.backends.pipeline.associate.associate_by_email',
-                        'profiles.pipeline.user.get_username',
-                        'profiles.pipeline.user.create_user',
-                        'social_auth.backends.pipeline.social.associate_user',
-                        'social_auth.backends.pipeline.social.load_extra_data',
-                        'social_auth.backends.pipeline.user.update_user_details',
-                        )
+    'social_auth.backends.pipeline.social.social_auth_user',
+    'social_auth.backends.pipeline.associate.associate_by_email',
+    'profiles.pipeline.user.get_username',
+    'profiles.pipeline.user.create_user',
+    'social_auth.backends.pipeline.social.associate_user',
+    'social_auth.backends.pipeline.social.load_extra_data',
+    'social_auth.backends.pipeline.user.update_user_details',
+)
 
 SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook',)
 
-SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_COMPLETE_URL_NAME = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 
 SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
@@ -353,7 +356,7 @@ SOCIAL_AUTH_CHANGE_SIGNAL_ONLY = True
 
 FACEBOOK_EXTENDED_PERMISSIONS = ('email',)
 
-LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
+LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
 LOGIN_REDIRECT_URLNAME = "acct_email"
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
 
@@ -379,7 +382,7 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "root": {
-        "level" : "WARNING",
+        "level": "WARNING",
         "handlers": ["sentry"],
     },
     "formatters": {
@@ -392,7 +395,7 @@ LOGGING = {
             "level": "ERROR",
             "class": "raven.contrib.django.handlers.SentryHandler",
         },
-        "console":{
+        "console": {
             "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "simple"
@@ -419,6 +422,6 @@ LOGGING = {
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
 try:
-    from local_settings import *
+    from local_settings import *  # noqa
 except ImportError:
     pass
