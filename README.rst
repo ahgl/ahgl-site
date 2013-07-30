@@ -47,8 +47,9 @@ your local setup::
 Then edit it to verify/change any of the options.
 
 If all of that worked, you should be able to initialize the database by running
-from the ahgl folder::
+from the ahgl folder (note: you might need to run syncdb twice)::
 
+    $ ./manage.py syncdb
     $ ./manage.py syncdb
     $ ./manage.py migrate
 
