@@ -55,6 +55,12 @@ from the ahgl folder::
 Initialize the database with some sample data::
 
     $ ./manage.py loaddata fixtures/sample_data.json
+
+Create the default Django Site object::
+
+    $ ./manage.py shell
+    >>> from django.contrib.sites.models import Site
+    >>> Site.objects.create(name='example.com', domain='example.com')
 	
 Now that everything is setup, you can run the local service::
 
