@@ -12,7 +12,7 @@ from django_messages.views import compose
 
 from profiles.models import Profile
 from profiles.views import (MVPView, TeamListView, TeamDetailView,
-                            StandingsView, TeamUpdateView, TeamCreateView,
+                            StandingsView, TeamUpdateView, TeamCreateView, TeamSignupView,
                             MyProfileDetailView, TeamMembershipView,
                             TeamMembershipUpdateView, TeamMembershipCreateView,
                             TeamMembershipDeleteView, CasterListView)
@@ -48,6 +48,7 @@ urlpatterns = patterns('',
 
     url(r'^archive/$', ListView.as_view(queryset=Tournament.objects.filter(status='C'), template_name="tournaments/archives.html"), name="archives"),
     url(r'^games/$', GameListView.as_view(), name='games'),
+    url(r'^team/signup/$', TeamSignupView.as_view(), name='signup_team'),
     url(r'^(?P<tournament>[\w_-]+)/mvp/$', MVPView.as_view(), name='mvp'),
     url(r'^(?P<tournament>[\w_-]+)/videos/$', GameListView.as_view(template_name="tournaments/videos.html", vod_only=True), name='videos'),
     url(r'^(?P<tournament>[\w_-]+)/games/$', GameListView.as_view(), name='games'),

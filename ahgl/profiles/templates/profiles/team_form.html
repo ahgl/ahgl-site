@@ -4,13 +4,15 @@
 {% load i18n %}
 {% load account_tags %}
 {% load pagination_tags %}
+{% load show_snippet_tag %}
 
-{% block head_title %}{% if team %}{% trans "Edit Team" %}{% else %}{% trans "New Team" %}{% endif %}{% endblock %}
+{% block head_title %}{% if team %}{% trans "Edit Team" %}{% else %}{% trans "Create a Team" %}{% endif %}{% endblock %}
 
 {% block body %}
 <form enctype="multipart/form-data" method="post" class="form-horizontal well">
+    <h1>{% if team %}{% trans "Edit" %} {{team}}{% else %}{% trans "Create a Team" %}{% endif %}</h1>
+    {% show_snippet "Team Signup Message" %}
     <fieldset>
-        <legend>{% if team %}{% trans "Edit" %} {{team}}{% else %}{% trans "New Team" %}{% endif %}</legend>
         {% if team %}
         <p>Status: {{team.get_status_display}}</p>
         {% endif %}
@@ -20,7 +22,7 @@
           <button type="submit" class="btn btn-primary">Update</button>
           <button type="submit" class="btn" name="submit" value="approval">Submit for Approval</button>
           {% else %}
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" class="btn btn-primary">Start Registration</button>
           {% endif %}
         </div>
         {% csrf_token %}

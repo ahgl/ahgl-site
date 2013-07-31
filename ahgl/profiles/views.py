@@ -1,4 +1,6 @@
 # Create your views here.
+from warnings import warn
+
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponse, Http404, HttpResponseRedirect
@@ -84,7 +86,47 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, Upd
     def dispatch(self, *args, **kwargs):
         return super(TeamUpdateView, self).dispatch(*args, **kwargs)
 
+class TeamSignupView(CreateView):
+    model = Team
 
+    def get_form_class(self):
+        view = self
+
+        class TeamSignupForm(ModelForm):
+            char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length,
+                    required=True, label="Your character name", help_text=u"or Summoner name")
+
+            class Meta:
+                model = Team
+                fields = [
+                        'tournament',
+                        'name', # Company name
+                        'char_name',
+                        ]
+
+            def save(self, *args, **kwargs):
+                self.instance.tournament = view.tournament
+                view.slug = self.instance.slug = slugify(self.cleaned_data['name'])
+                try:
+                    super(TeamSignupForm, self).save(*args, **kwargs)
+                except IntegrityError:
+                    messages.error(view.request, "Team not created - already exists for this tournament.")
+                else:
+                    membership = TeamMembership(team=self.instance, profile=view.request.user.get_profile(), char_name=self.cleaned_data['char_name'], active=True, captain=True)
+                    membership.save()
+        return TeamSignupForm
+
+    def get_success_url(self):
+        return reverse("team_page", kwargs={"slug": self.slug})
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if not EmailAddress.objects.filter(user=request.user, verified=True).count():
+            return HttpResponseForbidden("You must confirm your email address to create a team.")
+        return super(TeamSignupView, self).dispatch(request, *args, **kwargs)
+
+
+# DEPRECATED
 class TeamCreateView(TournamentSlugContextView, CreateView):
     model = Team
 

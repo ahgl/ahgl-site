@@ -1545,5 +1545,11 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
   background-color: inherit;
 }
 .well ul, .main-block ul, .well ol, .main-block ol {
-	margin-left:1em;
+    margin-left:1em;
+}
+.well h1 {
+    font-size: 150%;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-bottom: 0.5em;
 }
