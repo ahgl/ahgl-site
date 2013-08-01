@@ -10,8 +10,12 @@
 
 {% block body %}
 <form enctype="multipart/form-data" method="post" class="form-horizontal well">
-    <h1>{% if team %}{% trans "Edit" %} {{team}}{% else %}{% trans "Create a Team" %}{% endif %}</h1>
-    {% show_snippet "Team Signup Message" %}
+    {% if team %}
+        <h1>{% if team %}{% trans "Edit" %} {{team}}</h1>
+    {% else %}
+        <h1>{% trans "Create a Team" %}</h1>
+        {% show_snippet "Team Signup Message" %}
+    {% endif %}
     <fieldset>
         {% if team %}
         <p>Status: {{team.get_status_display}}</p>

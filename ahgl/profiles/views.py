@@ -122,7 +122,7 @@ class TeamSignupView(CreateView):
         return TeamSignupForm
 
     def get_success_url(self):
-        return reverse("team_page", kwargs={"tournament": self.request.POST['tournament'], "slug": self.slug})
+        return reverse("edit_team", kwargs={"tournament": self.request.POST['tournament'], "slug": self.slug})
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
