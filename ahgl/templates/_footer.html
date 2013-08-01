@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load menu_tags %}
 {% load ifsetting_tag %}
+{% load cms_tags %}
 <div id="poweredbyday9tv"><p align="center">Brought to you by Day[9]TV and Red Bull Gaming</p><div style="margin-left:300px"><img src="{% static "images/day9tv_smaller.png" %}" style="float:left; cursor:pointer; margin-top: 30px;" onclick="window.location='http://day9.tv'"><img src="{% static "images/redbull_gaming.png" %}" style="float:left; cursor:pointer" onclick="window.location='http://www.getredbulletin.com/AHGL'" /></div></div>
                 <div style="clear:both"></div>
 				<div class="cf">
@@ -69,7 +70,13 @@
 
 				</div>
 
-				<p id="copyright">&copy;Jink.tv 2012. All Rights reserved</p>
+				<p id="copyright">
+				  &copy; Jink.tv 2012. All rights reserved.
+				  &ndash;
+				  <a href="{% page_url "terms-of-use" %}">{% page_attribute "page_title" "terms-of-use" %}</a>
+				  &ndash;
+				  <a href="{% page_url "privacy-policy" %}">{% page_attribute "page_title" "privacy-policy" %}</a>
+				</p>
 
 				<p id="credit">
                     Site powered by <a class="alt-link" title="Nathaniel Tucker" href="http://ntucker.me">Nathaniel Tucker</a>.
