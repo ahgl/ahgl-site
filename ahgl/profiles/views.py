@@ -105,7 +105,6 @@ class TeamSignupView(CreateView):
                         ]
 
             def save(self, *args, **kwargs):
-                self.instance.tournament = view.tournament
                 view.slug = self.instance.slug = slugify(self.cleaned_data['name'])
                 try:
                     super(TeamSignupForm, self).save(*args, **kwargs)
@@ -117,7 +116,7 @@ class TeamSignupView(CreateView):
         return TeamSignupForm
 
     def get_success_url(self):
-        return reverse("team_page", kwargs={"slug": self.slug})
+        return reverse("team_page", kwargs={"tournament": self.request.POST['tournament'], "slug": self.slug})
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
