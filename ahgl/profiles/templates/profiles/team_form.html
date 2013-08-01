@@ -11,7 +11,7 @@
 {% block body %}
 <form enctype="multipart/form-data" method="post" class="form-horizontal well">
     {% if team %}
-        <h1>{% if team %}{% trans "Edit" %} {{team}}</h1>
+        <h1>{% trans "Edit" %} {{team}}</h1>
     {% else %}
         <h1>{% trans "Create a Team" %}</h1>
         {% show_snippet "Team Signup Message" %}
