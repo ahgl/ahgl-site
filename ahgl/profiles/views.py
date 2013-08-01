@@ -96,6 +96,12 @@ class TeamSignupView(CreateView):
             char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length,
                     required=True, label="Your character name", help_text=u"or Summoner name")
 
+            def __init__(self, *args, **kwargs):
+                super(TeamSignupForm, self).__init__(*args, **kwargs)
+                # Limit tournament choices to those just in the signup stage.
+                # via http://stackoverflow.com/q/291945/102704
+                self.fields['tournament'].queryset = Tournament.objects.filter(status='S')
+
             class Meta:
                 model = Team
                 fields = [
