@@ -12,7 +12,7 @@ from django_messages.views import compose
 
 from profiles.models import Profile
 from profiles.views import (MVPView, TeamListView, TeamDetailView,
-                            StandingsView, TeamUpdateView, TeamCreateView, TeamSignupView,
+                            StandingsView, TeamUpdateView, TeamSignupView,
                             MyProfileDetailView, TeamMembershipView,
                             TeamMembershipUpdateView, TeamMembershipCreateView,
                             TeamMembershipDeleteView, CasterListView)
@@ -55,7 +55,7 @@ urlpatterns = patterns('',
     url(r'^(?P<tournament>[\w_-]+)/teams/(?P<team>[\w_-]+)/(?P<profile>[\w\._-]+)/games/$', GameListView.as_view(), name='games'),
     url(r'^(?P<tournament>[\w_-]+)/teams/(?P<team>[\w_-]+)/matches/$', MatchListView.as_view(template_name="tournaments/team_match_list.html"), name='matches'),
     url(r'^(?P<tournament>[\w_-]+)/teams/$', TeamListView.as_view(), name='teams'),
-    url(r'^(?P<tournament>[\w_-]+)/teams/create/$', TeamCreateView.as_view(), name='create_team'),
+    #url(r'^(?P<tournament>[\w_-]+)/teams/create/$', TeamCreateView.as_view(), name='create_team'),
     url(r'^(?P<tournament>[\w_-]+)/teams/(?P<slug>[\w_-]+)/$', TeamDetailView.as_view(), name='team_page'),
     url(r'^(?P<tournament>[\w_-]+)/teams/(?P<team>[\w_-]+)/(?P<profile>[\w\._-]+)/$', TeamMembershipView.as_view(), name='player_profile'),
     url(r'^(?P<tournament>[\w_-]+)/schedule/$', MatchListView.as_view(template_name="tournaments/schedule.html"), name='schedule'),

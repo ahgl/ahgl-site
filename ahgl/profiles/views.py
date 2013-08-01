@@ -131,55 +131,6 @@ class TeamSignupView(CreateView):
         return super(TeamSignupView, self).dispatch(request, *args, **kwargs)
 
 
-# DEPRECATED
-class TeamCreateView(TournamentSlugContextView, CreateView):
-    model = Team
-
-    def get_form_class(self):
-        view = self
-
-        class TeamCreateForm(ModelForm):
-            #duplicate = forms.ModelChoiceField(queryset=Team.objects.filter(team_membership__profile__user=view.request.user), required=False)
-            char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length, required=True, label="Your character name", help_text=u"or Summoner name")
-
-            class Meta:
-                model = Team
-                exclude = ('tournament', 'rank', 'seed', 'members', 'slug', 'status', 'approval', 'paid', 'karma',)
-
-            # def clean(self):
-            #     if self.cleaned_data.get('duplicate'):
-            #         dup = self.cleaned_data.get('duplicate')
-            #         copy = ('name', 'slug', 'photo', 'charity', 'motto')
-            #         for field in copy:
-            #             if not self.cleaned_data.get(field):
-            #                 self.cleaned_data[field] = getattr(dup, field)
-            #     return super(TeamCreateForm, self).clean()
-
-            def save(self, *args, **kwargs):
-                self.instance.tournament = view.tournament
-                view.slug = self.instance.slug = slugify(self.cleaned_data['name'])
-                try:
-                    super(TeamCreateForm, self).save(*args, **kwargs)
-                except IntegrityError:
-                    messages.error(view.request, "Team not created - already exists for this tournament.")
-                else:
-                    membership = TeamMembership(team=self.instance, profile=view.request.user.get_profile(), char_name=self.cleaned_data['char_name'], active=True, captain=True)
-                    membership.save()
-        return TeamCreateForm
-
-    def get_success_url(self):
-        return reverse("team_page", kwargs={"tournament": self.kwargs['tournament'], "slug": self.slug})
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        self.tournament = get_object_or_404(Tournament, slug=kwargs['tournament'])
-        if not EmailAddress.objects.filter(user=request.user, verified=True).count():
-            return HttpResponseForbidden("You must confirm your email address to create a team.")
-        if self.tournament.status != "S":
-            return HttpResponseForbidden("That tournament is not open for signups at this time.")
-        return super(TeamCreateView, self).dispatch(request, *args, **kwargs)
-
-
 class TeamListView(TournamentSlugContextView, ListView):
     def get_queryset(self):
         return Team.objects.filter(tournament=self.kwargs['tournament']).only('name', 'slug', 'photo', 'tournament')
