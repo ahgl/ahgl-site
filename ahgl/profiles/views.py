@@ -140,11 +140,10 @@ class TeamAdminView(ListView):
         # to do that with Django. Sorry.
         team_ids = set(m.team_id for m in self.get_queryset()) # Why isn't this already in self.queryset?
         teams = Team.objects.filter(id__in=team_ids)
-        profile_ids = set(m.profile_id for m in TeamMembership.objects.filter(team_id__in=team_ids))
-        profiles = Profile.objects.filter(id__in=profile_ids)
+        memberships = TeamMembership.objects.filter(team_id__in=team_ids)
         return {
             'teams': teams,
-            'profiles': profiles,
+            'memberships': memberships,
         }
 
     def get_template_names(self):

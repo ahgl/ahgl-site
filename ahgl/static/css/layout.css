@@ -1553,3 +1553,13 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
     line-height: 1.5;
     margin-bottom: 0.5em;
 }
+
+ul.bulleted li {
+    margin-left: 2em;
+    line-height: 1.5;
+}
+ul.bulleted li:before {
+    content: "• ";
+    display: inline;
+    color: white;
+}

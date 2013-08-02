@@ -10,17 +10,40 @@
     <h2 class="title title-1 t1">Team Admin</h2>
 
     <h3 class="t2">Edit My Teams</h3>
+    <ul class="bulleted">
     {% for team in teams %}
-      <p>{{ team }}</p>
+      <li>
+        <a href="{% url edit_team team.tournament.slug team.slug %}">{{ team }}</a>
+      </li>
     {% empty %}
-      <p>You are not a captain of any teams.</p>
+      <li>You are not a captain of any teams.</li>
     {% endfor %}
+    </ul>
+
+    <br/>
+    <br/>
+    <br/>
 
     <h3 class="t2">Edit My Player Profiles</h3>
-    {% for profile in profiles %}
-      <p>{{ profile }}</p>
+    <ul class="bulleted">
+    {% regroup memberships by team as m_by_team %}
+    {% for group in m_by_team %}
+      <li>
+        {{ group.grouper }}
+        <ul class="bulleted">
+          {% for m in group.list %}
+            <li><a href="{% url membership_edit m.pk %}">{{ m.profile }}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
     {% empty %}
-      <p>You are not a captain of any teams.</p>
+      <li>You are not a captain of any teams.</li>
     {% endfor %}
+    </ul>
+
+    <br/>
+    <br/>
+
+    <a class="btn btn-primary" href="{% url signup_team %}">Start a Team</a>
 
 {% endblock %}
