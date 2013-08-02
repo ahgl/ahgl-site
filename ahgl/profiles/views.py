@@ -131,6 +131,26 @@ class TeamSignupView(CreateView):
         return super(TeamSignupView, self).dispatch(request, *args, **kwargs)
 
 
+class TeamAdminView(ListView):
+    def get_queryset(self):
+        return TeamMembership.objects.filter(profile__user=self.request.user, captain=True)
+
+    def get_context_data(self, **kwargs):
+        # Probably a better way to do this with joins, but I never remember how
+        # to do that with Django. Sorry.
+        team_ids = set(m.team_id for m in self.get_queryset()) # Why isn't this already in self.queryset?
+        teams = Team.objects.filter(id__in=team_ids)
+        profile_ids = set(m.profile_id for m in TeamMembership.objects.filter(team_id__in=team_ids))
+        profiles = Profile.objects.filter(id__in=profile_ids)
+        return {
+            'teams': teams,
+            'profiles': profiles,
+        }
+
+    def get_template_names(self):
+        return "profiles/team_admin.html"
+
+
 class TeamListView(TournamentSlugContextView, ListView):
     def get_queryset(self):
         return Team.objects.filter(tournament=self.kwargs['tournament']).only('name', 'slug', 'photo', 'tournament')

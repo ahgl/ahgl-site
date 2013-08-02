@@ -1,0 +1,26 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load thumbnail %}
+
+{% block head_title %}{% blocktrans %}Team Admin{% endblocktrans %}{% endblock %}
+
+{% block body %}
+    <h2 class="title title-1 t1">Team Admin</h2>
+
+    <h3 class="t2">Edit My Teams</h3>
+    {% for team in teams %}
+      <p>{{ team }}</p>
+    {% empty %}
+      <p>You are not a captain of any teams.</p>
+    {% endfor %}
+
+    <h3 class="t2">Edit My Player Profiles</h3>
+    {% for profile in profiles %}
+      <p>{{ profile }}</p>
+    {% empty %}
+      <p>You are not a captain of any teams.</p>
+    {% endfor %}
+
+{% endblock %}
