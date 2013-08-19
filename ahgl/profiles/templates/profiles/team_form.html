@@ -9,6 +9,9 @@
 {% block head_title %}{% if team %}{% trans "Edit Team" %}{% else %}{% trans "Create a Team" %}{% endif %}{% endblock %}
 
 {% block body %}
+
+{# NOTE: This page is used for both initial team creation and profile editing, hence all the "if team" stuff. #}
+
 <form enctype="multipart/form-data" method="post" class="form-horizontal well">
     {% if team %}
         <h1>{% trans "Edit" %} {{team}}</h1>
@@ -26,36 +29,27 @@
                 {{ error }}<br />
             {% endfor %}
         </div>
-    {% elif not team.is_complete %}
+    {% elif team and not team.is_complete %}
         <div class="alert alert-error">
             Please complete your team profile below.
         </div>
-    {% else %}
+    {% elif team %}
         <div class="alert alert-success">
             Your team profile is complete.
-            <a href="{% url team_page team.tournament.slug team.slug %}">View Page...</a>
+            {% if team.tournament %}
+                <a href="{% url team_page team.tournament.slug team.slug %}">View Page...</a>
+            {% endif %}
         </div>
     {% endif %}
 
     {% if team %}
-        <p>
-            Status:
-            {% if team.status == 'R' or team.status == 'W' %}
-                <span class="label label-info">{{team.get_status_display}}</span>
-            {% elif team.status == 'A' or team.status == 'F' %}
-                <span class="label label-success">{{team.get_status_display}}</span>
-            {% else %}
-                <span class="label label-important">{{team.get_status_display}}</span>
-            {% endif %}
-        </p>
-    {% endif %}
 
     <fieldset>
         <legend>
             Team Name
             {% if team.name %}
                 <span class="label label-success">Complete</span>
-            {% else %}
+            {% elif team %}
                 <span class="label label-warning">Incomplete</span>
             {% endif %}
         </legend>
@@ -110,7 +104,6 @@
         {{ form.charity|as_bootstrap_field }}
     </fieldset>
 
-    {% if team %}
     <fieldset>
         {% with team.team_membership.all as memberships %}
             <legend>
@@ -147,7 +140,6 @@
             </p>
         {% endwith %}
     </fieldset>
-    {% endif %}
 
     <fieldset>
         <legend>Payment</legend>
@@ -163,6 +155,16 @@
             {% endif %}
         {% endif %}
     </fieldset>
+
+    {% else %} {# if team #}
+
+    <fieldset>
+        {{ form.tournament|as_bootstrap_field }}
+        {{ form.name|as_bootstrap_field }}
+        {{ form.char_name|as_bootstrap_field }}
+    </fieldset>
+
+    {% endif %} {# if team #}
 
     <fieldset>
         <div class="form-actions">
