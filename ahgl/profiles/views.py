@@ -54,29 +54,43 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, Upd
     def get_queryset(self):
         return Team.objects.filter(tournament=self.kwargs['tournament']).select_related('charity')
 
+    @property
+    def requested_approval(self):
+        return self.request.POST.get('submit') == 'approval'
+
     def get_form_class(self):
         view = self
 
         class UpdateForm(ModelForm):
             def __init__(self, *args, **kwargs):
                 super(UpdateForm, self).__init__(*args, **kwargs)
-                if view.request.POST.get('submit') == 'approval':
+                if view.requested_approval:
                     for key, field in self.fields.iteritems():
                         if key != 'approval':
                             field.required = True
 
-            def save(self, *args, **kwargs):
-                if view.request.POST.get('submit') == 'approval':
-                    self.instance.status = "W"
-                super(UpdateForm, self).save(*args, **kwargs)
+            def clean_approval(self):
+                value = self.cleaned_data.get('approval')
+                if view.requested_approval:
+                    if value:
+                        self.instance.status = "W"
+                    else:
+                        raise forms.ValidationError("Approval from your company is required.")
+                return value
 
             class Meta:
                 model = Team
                 exclude = ('slug', 'tournament', 'rank', 'seed', 'members', 'status', 'paid', 'karma',)
         return UpdateForm
 
+    # Override this so we can save self.object for get_success_url.
+    def form_valid(self, form):
+        form.save()
+        team = self.object = form.instance
+        return HttpResponseRedirect(self.get_success_url())
+
     def get_success_url(self):
-        return reverse("team_page", kwargs=self.kwargs)
+        return reverse("edit_team", kwargs=self.kwargs)
 
     def check_permissions(self):
         if not self.request.user.is_superuser and not self.object.team_membership.filter(captain=True, profile__user=self.request.user).count():

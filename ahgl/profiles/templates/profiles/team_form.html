@@ -17,6 +17,26 @@
         {% show_snippet "Team Signup Message" %}
     {% endif %}
 
+    {% if form.non_field_errors %}
+        <div class="alert alert-error">
+            {% if form_error_title %}
+                <strong>{{ form_error_title }}</strong>
+            {% endif %}
+            {% for error in form.non_field_errors %}
+                {{ error }}<br />
+            {% endfor %}
+        </div>
+    {% elif not team.is_complete %}
+        <div class="alert alert-error">
+            Please complete your team profile below.
+        </div>
+    {% else %}
+        <div class="alert alert-success">
+            Your team profile is complete.
+            <a href="{% url team_page team.tournament.slug team.slug %}">View Page...</a>
+        </div>
+    {% endif %}
+
     {% if team %}
         <p>
             Status:
@@ -95,7 +115,7 @@
         {% with team.team_membership.all as memberships %}
             <legend>
                 Team Roster
-                {% if memberships|length >= 8 %}
+                {% if team.has_minimum_members %}
                     <span class="label label-success">Complete</span>
                 {% else %}
                     <span class="label label-warning">Please add at least 8 players.</span>
@@ -131,12 +151,12 @@
 
     <fieldset>
         <div class="form-actions">
-          {% if team %}
-            <button type="submit" class="btn btn-primary">Update</button>
-            <button type="submit" class="btn" name="submit" value="approval">Submit for Approval</button>
-          {% else %}
-            <button type="submit" class="btn btn-primary">Start Registration</button>
-          {% endif %}
+            {% if team %}
+                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn" name="submit" value="approval">Submit for Approval</button>
+            {% else %}
+                <button type="submit" class="btn btn-primary">Start Registration</button>
+            {% endif %}
         </div>
         {% csrf_token %}
     </fieldset>
