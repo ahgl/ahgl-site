@@ -1,85 +1,37 @@
-AHGL - After Hours Gaming League
-================================
+After Hours Gaming League Web Site
+==================================
 
 This is the source for <http://afterhoursgaming.tv/>
 
-Platform
---------
+Getting Started
+---------------
 
-This site is built upon the following basic platform:
+You should be familiar with [Python 2.7](http://www.python.org/download/releases/2.7/)
+and [Django 1.4](https://docs.djangoproject.com/en/1.4/). This site also makes use of Redis, Celery, South, Pinax, and a few other things.
 
-- python
-- django
-- postgres - relational database
-- redis - for caching
-- celery - for task queue
-- south - for database migrations
+### 1. Install the Python dependencies
 
-Setup
------
+First install pip and virtualenv (you might need to run this as root):
 
-To setup an environment to test locally, you should first install
-[Python (2.7)](http://python.org/),
-[pip](http://pypi.python.org/pypi/pip), and
-[virtualenv](http://pypi.python.org/pypi/virtualenv) as well as
-[PostgreSQL](http://postgresql.com) (although you can use SQLite if
-necessary).
+    $ easy_install virtualenv
+    $ easy_install pip
 
-Pip is the python package management tool that will allow you to install
-all the other python libraries that are used quite easily. Virtualenv
-allows you to have segregated python installs that have different
-libraries.
-
-Create a virtual env:
+Create a virtual env in an arbitrary directory, `ENV`:
 
     $ virtualenv --distribute ENV
 
-Start that environment:
+Source that environment (you might want to add this to your `.bashrc`/`.zshrc`):
 
-    $ ENV/Scripts/activate
+    $ . ENV/bin/activate
 
-Windows - execute the windows only setups below
-
-Now install the python libraries using pip:
+Install all of the required libraries, which takes a while:
 
     $ pip install --requirement=ahgl/requirements/project.txt
 
-You'll want to create a local\_settings.py file to specify your settings
-based on your local setup:
-
-    $ cp ahgl/local_settings.py{.dist,}
-
-Then edit it to verify/change any of the options.
-
-If all of that worked, you should be able to initialize the database by
-running from the ahgl folder (note: you might need to run syncdb twice):
-
-    $ ./manage.py syncdb
-    $ ./manage.py syncdb
-    $ ./manage.py migrate
-
-Initialize the database with some sample data:
-
-    $ ./manage.py loaddata fixtures/sample_data.json
-
-Create the default Django Site object:
-
-    $ ./manage.py shell
-    >>> from django.contrib.sites.models import Site
-    >>> Site.objects.create(name='example.com', domain='example.com')
-
-Now that everything is setup, you can run the local service:
-
-    $ ./manage.py runserver
-
-Now visit localhost:8000/admin and you should see a web page appear!
-
-### Windows only
-
-Install precompiled packages:
+#### Windows users
 
 Visit <http://www.lfd.uci.edu/~gohlke/pythonlibs/> to download the
-following packages
+following precompiled packages:
 
 - psycopg2
 - lxml 2.3
@@ -87,11 +39,48 @@ following packages
 - greenlet
 - cython
 
-Also download git at <http://git-scm.com/>
-
 Use easy\_install to install them in the virtual environment:
 
     $ easy_install "filename.exe"
 
 Remove the line "lxml==2.3" from ahgl/requirements/project.txt before
 continuing to the next step
+
+### 2. Create a local settings file
+
+    $ cp ahgl/local_settings.py.dist ahgl/local_settings.py
+
+`local_settings.py` is sourced by `settings.py` and isn't checked in, so put any changes you need for development in there.
+
+### 3. Prepare the database
+
+* **Mac OS X:** Grab [Postgres.app](http://postgresapp.com/) (easiest) or `brew install postgres` (easy)
+* **Debian/Ubuntu:** `sudo apt-get install postgresql`
+* **Windows:** Go [here](http://www.postgresql.org/download/windows/)
+
+Then (yes, you might need to run `syncdb` twice):
+
+    $ ./manage.py syncdb
+    $ ./manage.py syncdb
+    $ ./manage.py migrate
+
+Load some sample data:
+
+    $ ./manage.py loaddata fixtures/dev.json
+
+### 4. Run the server
+
+    $ ./manage.py runserver
+
+Now visit http://localhost:8000/ and you should see something that looks like AHGL!
+
+### 5. Log into the admin panel
+
+Go to http://localhost:8000/admin and login with the username and password `admin`. 
+
+Where Do I Start?
+-----------------
+
+**The CMS plugin** edits a lot of the static stuff.
+
+

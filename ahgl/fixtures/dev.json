@@ -1,0 +1,3713 @@
+[
+  {
+    "pk": 1,
+    "model": "sites.site",
+    "fields": {
+      "domain": "example.com",
+      "name": "example.com"
+    }
+  },
+  {
+    "pk": 653,
+    "model": "profiles.teammembership",
+    "fields": {
+      "profile": 696,
+      "champion": "",
+      "char_code": null,
+      "questions_answers": "<ol><li>\n<p>Why did you choose this race/champion?</p>\n<p>-</p>\n</li>\n<li>\n<p>What do you do for a living?  What do you love about your job?</p>\n<p>-</p>\n</li>\n<li>\n<p>What other hobbies do you have?</p>\n<p>-</p>\n</li>\n<li>\n<p>Why do you play StarCraft/League of Legends?</p>\n<p>-</p>\n</li>\n<li>\n<p>How long have you been playing?</p>\n<p>-</p>\n</li>\n<li>\n<p>What have you done to prepare for the momentous challenge that is the AHGL Tournament?</p>\n<p>-</p>\n</li>\n<li>\n<p>Why is your team going to win?</p>\n<p>-</p>\n</li>\n<li>\n<p>Who is the best player on your team?  Why?</p>\n<p>-</p>\n</li>\n<li>\n<p>Whom do you fear most amongst the competition and why?</p>\n<p>-</p>\n</li>\n<li>\n<p>What is your Heart of the Swarm beta character code and ID?</p>\n<p>-</p>\n</li>\n</ol>",
+      "race": "T",
+      "game_profile": "",
+      "team": 70,
+      "active": true,
+      "captain": true,
+      "char_name": "captainawesome"
+    }
+  },
+  {
+    "pk": 70,
+    "model": "profiles.team",
+    "fields": {
+      "status": "R",
+      "losses": 0,
+      "name": "Test Company",
+      "photo": "",
+      "tournament": "test-tournament",
+      "paid": false,
+      "seed": 0,
+      "karma": 0,
+      "wins": 0,
+      "tiebreaker": 0,
+      "approval": "",
+      "motto": "",
+      "slug": "test-company",
+      "charity": null
+    }
+  },
+  {
+    "pk": 28,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "",
+      "link": "http://www.amnesty.org/",
+      "name": "Amnesty International",
+      "desc": "Amnesty International is a global movement of more than 3 million supporters, members and activists in more than 150 countries and territories who campaign to end grave abuses of human rights."
+    }
+  },
+  {
+    "pk": 27,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/big-brothers-big-sisters.8abrie4abrie5sz300x250ordtimestamp",
+      "link": "http://www.bbbs.org/",
+      "name": "Big Brothers Big Sisters",
+      "desc": "For more than 100 years, Big Brothers Big Sisters has operated under the belief that inherent in every child is the ability to succeed and thrive in life. As the nation\u2019s largest donor and volunteer supported mentoring network, Big Brothers Big Sisters makes meaningful, monitored matches between adult volunteers (\u201cBigs\u201d) and children (\u201cLittles\u201d), ages 6 through 18, in communities across the country."
+    }
+  },
+  {
+    "pk": 11,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/boys-and-girls-club-of-london-on_16.png",
+      "link": "http://www.bgclondon.ca/home.html",
+      "name": "Boys and Girls Club of London, ON",
+      "desc": "The Boys & Girls Club of London is a non-profit recreational facility that provides activities for children whenever school is out. Our program services are planned to provide fun with a purpose. We offer recreation, social interaction and educational programs to build confidence, independence, self-esteem and self-respect for individuals and families in need. The Boys & Girls Club deals directly with the disadvantaged youth of our community. The Club gives children and teens of all abilities a place where they can learn and play away from the worries of the street."
+    }
+  },
+  {
+    "pk": 19,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/brunau-foundation_12.png",
+      "link": "http://www.brunau.ch/",
+      "name": "Brunau Foundation",
+      "desc": "The Brunau Foundation, founded in 1956 by the swiss \u00ab Integration Handicap \u00bb supports and efforts for social and professional integration of the handicapped. It offers 50 people yearly to absolve an education in an office environment."
+    }
+  },
+  {
+    "pk": 7,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/cia-officers-memorial-foundation_12.jpg",
+      "link": "http://www.ciamemorialfoundation.org/index.php",
+      "name": "CIA Officers Memorial Foundation",
+      "desc": "The CIA Officers Memorial Foundation provides educational support to the spouses of CIA officers killed in the line of duty, and the children and spouses of officers who die on active duty as a result of accident, illness or other causes."
+    }
+  },
+  {
+    "pk": 4,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/camp-rising-sun_18.png",
+      "link": "http://camprisingsun.com/",
+      "name": "Camp Rising Sun",
+      "desc": "Camp Rising Sun is a camp for children who have faced a diagnosis of cancer. Camp gives children, aged 5-17, the opportunity to remember the joys of childhood; how to laugh, and how to play."
+    }
+  },
+  {
+    "pk": 6,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/childs-play_34.jpg",
+      "link": "http://www.childsplaycharity.org/",
+      "name": "Child's Play",
+      "desc": "Child's Play is dedicated to improving the lives of children in hospitals around the world through the kindness and generosity of the video game community and the power of play."
+    }
+  },
+  {
+    "pk": 9,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/childrens-hospital-of-eastern-ontario-cheo_12.jpg",
+      "link": "http://www.cheofoundation.com/",
+      "name": "Children's Hospital of Eastern Ontario (CHEO)",
+      "desc": "CHEO is a pediatric health and research center providing outstanding family-centered patient care, pioneering breakthrough research, and training the health care professionals of tomorrow."
+    }
+  },
+  {
+    "pk": 2,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/college-for-every-student_18.jpg",
+      "link": "http://www.collegefes.org/",
+      "name": "College for Every Student",
+      "desc": "The need for College For Every Student (CFES) is greater today than ever. \r\n\r\nAs a nation, we face the challenge of educating our young people to become the skilled workers and leaders of tomorrow. For America to remain a land of opportunity and prosperity - and retain its role as a global economic leader - we must provide opportunities for all of our young people to realize their fullest potential. To do so, we must dramatically increase the college-going and graduation rates of low-income youth, who constitute the fastest-growing population in our public schools."
+    }
+  },
+  {
+    "pk": 1,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/doctors-without-borders_12.png",
+      "link": "http://doctorswithoutborders.org",
+      "name": "Doctors Without Borders",
+      "desc": "Doctors Without Borders/M\u00e9decins Sans Fronti\u00e8res (MSF) is an international medical humanitarian organization working in nearly 70 countries to assist people whose survival is threatened by violence, neglect, or catastrophe."
+    }
+  },
+  {
+    "pk": 23,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/doctors-without-borders-medecins-sans-frontieres-msf_2.jpg",
+      "link": "http://www.doctorswithoutborders.org/",
+      "name": "Doctors Without Borders / M\u00e9decins Sans Fronti\u00e8res (MSF)",
+      "desc": "Doctors Without Borders / M\u00e9decins Sans Fronti\u00e8res (MSF) is an international independent medical humanitarian organization that delivers emergency aid to people affected by armed conflict, epidemics, natural and man-made disasters, and exclusion from health care in more than 60 countries. A private, non-profit organization, Doctors Without Borders was founded in 1971 as the first non-governmental organization to both provide emergency medical assistance and bear witness publicly to the plight of people it assists."
+    }
+  },
+  {
+    "pk": 24,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/epic_1.jpg",
+      "link": "http://www.epicthemovement.org/",
+      "name": "E.P.I.C",
+      "desc": "E.P.I.C. (Everyday People Initiating Change) is a non-profit organization committed to bringing safe, clean drinking water to a number of villages in the developing world. Through the implementation of clean water wells, along with hygiene and sanitation education programs, E.P.I.C. provides a sustainable solution to a vast amount of the problems being faced by people in the developing world today."
+    }
+  },
+  {
+    "pk": 16,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/exceptional-minds_13.jpg",
+      "link": "http://www.exceptionalmindsstudio.org/",
+      "name": "Exceptional Minds",
+      "desc": "A California nonprofit that offers training and employment opportunities for those on the autism spectrum who have a penchant for animation, design and video editing."
+    }
+  },
+  {
+    "pk": 8,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/food-for-lane-county_12.jpg",
+      "link": "http://www.foodforlanecounty.org",
+      "name": "Food for Lane County",
+      "desc": "Food for Lane County strives to eliminate hunger in Lane County, Oregon. Their goal is to create access to food for people in need. They believe that all people deserve access to wholesome, culturally appropriate, nutritious food, delivered with respect and compassion."
+    }
+  },
+  {
+    "pk": 21,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/goodie-two-shoes-foundation_12.png",
+      "link": "http://www.goodietwoshoes.org/",
+      "name": "Goodie Two Shoes Foundation",
+      "desc": "The Goodie Two Shoes Foundation provides disadvantaged children and children in crisis with new shoes and socks as well as other items deemed essential for good health and positive development."
+    }
+  },
+  {
+    "pk": 13,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/make-a-wish-foundation-international_16.png",
+      "link": "http://www.worldwish.org/",
+      "name": "Make A Wish Foundation - International",
+      "desc": "The Make A Wish Foundation - International grants the wishes of children with life-threatening medical conditions to enrich the human experience with hope, strength, and joy."
+    }
+  },
+  {
+    "pk": 22,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/make-a-wish-foundation_19.png",
+      "link": "http://www.wish.org/",
+      "name": "Make a Wish Foundation",
+      "desc": "Since 1980, the Make-A-Wish Foundation\u00ae has enriched the lives of children with life-threatening medical conditions through its wish-granting work. The Foundation\\'s mission reflects the life-changing impact that a Make-A-Wish\u00ae experience has on children, families, referral sources, donors, sponsors and entire communities."
+    }
+  },
+  {
+    "pk": 12,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/make-a-wish-foundation_16.png",
+      "link": "http://wish.org",
+      "name": "Make-A-Wish Foundation\u00ae",
+      "desc": "Since 1980, the Make-A-Wish Foundation\u00ae has enriched the lives of children with life-threatening medical conditions through its wish-granting work. The Foundation\u2018s mission reflects the life-changing impact that a Make-A-Wish\u00ae experience has on children, families, referral sources, donors, sponsors and entire communities."
+    }
+  },
+  {
+    "pk": 26,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/meals-on-wheels.jpg",
+      "link": "http://www.mowaa.org/",
+      "name": "Meals on Wheels",
+      "desc": "The Meals On Wheels Association of America is the oldest and largest national organization composed of and representing local, community-based Senior Nutrition Programs in all 50 U.S. states, as well as the U.S. Territories."
+    }
+  },
+  {
+    "pk": 3,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/room-to-read_17.jpg",
+      "link": "http://www.roomtoread.org/",
+      "name": "Room to Read",
+      "desc": "Room to Read seeks to transform the lives of millions of \r\nchildren in developing countries by focusing on literacy and \r\ngender equality in education. Working in collaboration with \r\nlocal communities, partner organizations and governments, \r\nwe develop literacy skills and a habit of reading among \r\nprimary school children, and support girls to complete \r\nsecondary school with the relevant life skills to succeed in \r\nschool and beyond."
+    }
+  },
+  {
+    "pk": 18,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/san-diego-humane-society_12.png",
+      "link": "http://www.sdhumane.org/",
+      "name": "San Diego Humane Society",
+      "desc": "Serving San Diego County since 1880, the San Diego Humane Society and SPCA provides vital services to animals and people alike.\r\n\r\nSan Diego Humane Society and SPCA\u2019s programs include:\r\n\r\n    -sheltering and adopting animals\r\n    -investigating animal cruelty and neglect\r\n    -rescuing animals in emergency situations\r\n    -positive reinforcement behavior training through public training classes\r\n    -providing adult and youth education programs\r\n    -sharing animals through pet-assisted therapy and more."
+    }
+  },
+  {
+    "pk": 10,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/save_the_children_110508_0.jpg",
+      "link": "http://zynga.org/initiatives/save-children.php",
+      "name": "Save the Children",
+      "desc": "When disaster strikes around the world, Save the Children is there to save lives with food, medical care and education and remains to help communities rebuild through long-term recovery programs. As quickly and as effectively as Save the Children responds to tsunamis and civil conflict, it works to resolve the ongoing struggles children face every day \u2014 poverty, hunger, illiteracy and disease \u2014 and replaces them with hope for the future."
+    }
+  },
+  {
+    "pk": 20,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "",
+      "link": "http://wdc.com/en/company/communityrelations/WDFoundation.aspx",
+      "name": "The WD Foundation",
+      "desc": "The Western Digital Charitable Foundation, \u201cWD Foundation\u201d, a California non-profit benefit corporation, was created in 1997 to support Western Digital\u2019s philanthropic activities that support economic, social, educational, and health needs in our regional business communities within the United States. The Western Digital Foundation also supports global philanthropic programs through WD Foundations in Thailand and Malaysia.  \r\n\r\nCurrently the WD Foundation is donating money to the Red Cross relief effort to repair the damage done to Thailand in the recent floods."
+    }
+  },
+  {
+    "pk": 15,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/united-way-of-america_16.jpg",
+      "link": "http://liveunited.org",
+      "name": "United Way of America",
+      "desc": "A national system of volunteers, contributors, and local charities helping people in their own communities."
+    }
+  },
+  {
+    "pk": 14,
+    "model": "profiles.charity",
+    "fields": {
+      "logo": "charity_logos/youth-service-america_14.png",
+      "link": "http://www.ysa.org",
+      "name": "Youth Service America",
+      "desc": "YSA (Youth Service America) improves communities worldwide by increasing the number and the diversity of young people, ages 5-25, serving in substantive roles. YSA coordinates Global Youth Service Day (www.GYSD.org) and Semester of Service, distributes over $1 million in grants annually, and provides resources and trainings."
+    }
+  },
+  {
+    "pk": "starcraft-2-season-1",
+    "model": "tournaments.tournament",
+    "fields": {
+      "status": "C",
+      "games_per_match": 5,
+      "map_pool": [
+        "Backwater Gulch",
+        "Metalopolis",
+        "Shakuras Plateau",
+        "Shattered Temple",
+        "Tal'Darim Altar",
+        "Typhon Peaks",
+        "Xel'Naga Caverns"
+      ],
+      "name": "Starcraft 2 Season 1",
+      "structure": "I"
+    }
+  },
+  {
+    "pk": "starcraft-2-season-2",
+    "model": "tournaments.tournament",
+    "fields": {
+      "status": "A",
+      "games_per_match": 7,
+      "map_pool": [
+        "Antiga Shipyard",
+        "Arid Plateau",
+        "Cloud Kingdom",
+        "Entombed Valley",
+        "Metalopolis",
+        "Shakuras Plateau",
+        "Shattered Temple",
+        "Tal'Darim Altar"
+      ],
+      "name": "Starcraft 2 Season 2",
+      "structure": "I"
+    }
+  },
+  {
+    "pk": "league-legends",
+    "model": "tournaments.tournament",
+    "fields": {
+      "status": "A",
+      "games_per_match": 3,
+      "map_pool": [
+        "Summoner\u2019s Rift"
+      ],
+      "name": "League of Legends",
+      "structure": "T"
+    }
+  },
+  {
+    "pk": "test-tournament",
+    "model": "tournaments.tournament",
+    "fields": {
+      "status": "S",
+      "games_per_match": 5,
+      "map_pool": [
+        "Backwater Gulch"
+      ],
+      "name": "Test Tournament",
+      "structure": "I"
+    }
+  },
+  {
+    "pk": "Antiga Shipyard",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/antiga-shipyard.jpg"
+    }
+  },
+  {
+    "pk": "Arid Plateau",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/arid-plateau.jpg"
+    }
+  },
+  {
+    "pk": "Backwater Gulch",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/backwater-gulch.jpg"
+    }
+  },
+  {
+    "pk": "Cloud Kingdom",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/cloud-kingdom.jpg"
+    }
+  },
+  {
+    "pk": "Entombed Valley",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/entombed-valley.jpg"
+    }
+  },
+  {
+    "pk": "Metalopolis",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/metalopolis.jpg"
+    }
+  },
+  {
+    "pk": "Shakuras Plateau",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/shakuras-plateau.jpg"
+    }
+  },
+  {
+    "pk": "Shattered Temple",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/shattered-temple.jpg"
+    }
+  },
+  {
+    "pk": "Summoner\u2019s Rift",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/summoners-rift.jpg"
+    }
+  },
+  {
+    "pk": "Tal'Darim Altar",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/taldarim-altar_2.jpg"
+    }
+  },
+  {
+    "pk": "Typhon Peaks",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/typhon-peaks.jpg"
+    }
+  },
+  {
+    "pk": "Xel'Naga Caverns",
+    "model": "tournaments.map",
+    "fields": {
+      "photo": "map_photos/xelnaga-caverns_1.jpg"
+    }
+  },
+  {
+    "pk": 13,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Championship Elimination",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 6,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "E"
+    }
+  },
+  {
+    "pk": 19,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "3rd Place Match",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 5,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "E"
+    }
+  },
+  {
+    "pk": 18,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Consolation Finals",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 4,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "E"
+    }
+  },
+  {
+    "pk": 15,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Championship Bracket",
+      "tournament": "league-legends",
+      "stage_order": 3,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "E"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Consolation Group",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 3,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 21,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Championship Bracket",
+      "tournament": "test-tournament",
+      "stage_order": 3,
+      "teams": [
+        70
+      ],
+      "published": true,
+      "order": 1,
+      "structure": "E"
+    }
+  },
+  {
+    "pk": 16,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Playoffs",
+      "tournament": "starcraft-2-season-1",
+      "stage_order": 3,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "E"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Consolation Group",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 3,
+      "teams": [],
+      "published": true,
+      "order": 2,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 20,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "3rd Place Match",
+      "tournament": "league-legends",
+      "stage_order": 2,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "E"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Championship Group Seeding",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 2,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 22,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "3rd Place Match",
+      "tournament": "test-tournament",
+      "stage_order": 2,
+      "teams": [
+        70
+      ],
+      "published": true,
+      "order": 1,
+      "structure": "E"
+    }
+  },
+  {
+    "pk": 17,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Battle for Third",
+      "tournament": "starcraft-2-season-1",
+      "stage_order": 2,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "E"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Championship Group Seeding",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 2,
+      "teams": [],
+      "published": true,
+      "order": 2,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Championship Group Seeding",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 2,
+      "teams": [],
+      "published": true,
+      "order": 3,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Championship Group Seeding",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 2,
+      "teams": [],
+      "published": true,
+      "order": 4,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Group",
+      "tournament": "starcraft-2-season-1",
+      "stage_order": 1,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Group",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 1,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 14,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Group",
+      "tournament": "league-legends",
+      "stage_order": 1,
+      "teams": [],
+      "published": true,
+      "order": 1,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Group",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 1,
+      "teams": [],
+      "published": true,
+      "order": 2,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Group",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 1,
+      "teams": [],
+      "published": true,
+      "order": 3,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Group",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 1,
+      "teams": [],
+      "published": true,
+      "order": 4,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Group",
+      "tournament": "starcraft-2-season-2",
+      "stage_order": 1,
+      "teams": [],
+      "published": true,
+      "order": 5,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 23,
+    "model": "tournaments.tournamentround",
+    "fields": {
+      "stage_name": "Group",
+      "tournament": "test-tournament",
+      "stage_order": 1,
+      "teams": [
+        70
+      ],
+      "published": true,
+      "order": 12,
+      "structure": "G"
+    }
+  },
+  {
+    "pk": 40,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_account",
+      "name": "Can add account",
+      "content_type": 14
+    }
+  },
+  {
+    "pk": 41,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_account",
+      "name": "Can change account",
+      "content_type": 14
+    }
+  },
+  {
+    "pk": 42,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_account",
+      "name": "Can delete account",
+      "content_type": 14
+    }
+  },
+  {
+    "pk": 55,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_accountdeletion",
+      "name": "Can add account deletion",
+      "content_type": 19
+    }
+  },
+  {
+    "pk": 56,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_accountdeletion",
+      "name": "Can change account deletion",
+      "content_type": 19
+    }
+  },
+  {
+    "pk": 57,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_accountdeletion",
+      "name": "Can delete account deletion",
+      "content_type": 19
+    }
+  },
+  {
+    "pk": 49,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_emailaddress",
+      "name": "Can add email address",
+      "content_type": 17
+    }
+  },
+  {
+    "pk": 50,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_emailaddress",
+      "name": "Can change email address",
+      "content_type": 17
+    }
+  },
+  {
+    "pk": 51,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_emailaddress",
+      "name": "Can delete email address",
+      "content_type": 17
+    }
+  },
+  {
+    "pk": 52,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_emailconfirmation",
+      "name": "Can add email confirmation",
+      "content_type": 18
+    }
+  },
+  {
+    "pk": 53,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_emailconfirmation",
+      "name": "Can change email confirmation",
+      "content_type": 18
+    }
+  },
+  {
+    "pk": 54,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_emailconfirmation",
+      "name": "Can delete email confirmation",
+      "content_type": 18
+    }
+  },
+  {
+    "pk": 43,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_signupcode",
+      "name": "Can add signup code",
+      "content_type": 15
+    }
+  },
+  {
+    "pk": 44,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_signupcode",
+      "name": "Can change signup code",
+      "content_type": 15
+    }
+  },
+  {
+    "pk": 45,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_signupcode",
+      "name": "Can delete signup code",
+      "content_type": 15
+    }
+  },
+  {
+    "pk": 46,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_signupcoderesult",
+      "name": "Can add signup code result",
+      "content_type": 16
+    }
+  },
+  {
+    "pk": 47,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_signupcoderesult",
+      "name": "Can change signup code result",
+      "content_type": 16
+    }
+  },
+  {
+    "pk": 48,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_signupcoderesult",
+      "name": "Can delete signup code result",
+      "content_type": 16
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_logentry",
+      "name": "Can add log entry",
+      "content_type": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_logentry",
+      "name": "Can change log entry",
+      "content_type": 1
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_logentry",
+      "name": "Can delete log entry",
+      "content_type": 1
+    }
+  },
+  {
+    "pk": 58,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_announcement",
+      "name": "Can add announcement",
+      "content_type": 20
+    }
+  },
+  {
+    "pk": 59,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_announcement",
+      "name": "Can change announcement",
+      "content_type": 20
+    }
+  },
+  {
+    "pk": 60,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_announcement",
+      "name": "Can delete announcement",
+      "content_type": 20
+    }
+  },
+  {
+    "pk": 61,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_dismissal",
+      "name": "Can add dismissal",
+      "content_type": 21
+    }
+  },
+  {
+    "pk": 62,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_dismissal",
+      "name": "Can change dismissal",
+      "content_type": 21
+    }
+  },
+  {
+    "pk": 63,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_dismissal",
+      "name": "Can delete dismissal",
+      "content_type": 21
+    }
+  },
+  {
+    "pk": 7,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_group",
+      "name": "Can add group",
+      "content_type": 3
+    }
+  },
+  {
+    "pk": 8,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_group",
+      "name": "Can change group",
+      "content_type": 3
+    }
+  },
+  {
+    "pk": 9,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_group",
+      "name": "Can delete group",
+      "content_type": 3
+    }
+  },
+  {
+    "pk": 4,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_permission",
+      "name": "Can add permission",
+      "content_type": 2
+    }
+  },
+  {
+    "pk": 5,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_permission",
+      "name": "Can change permission",
+      "content_type": 2
+    }
+  },
+  {
+    "pk": 6,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_permission",
+      "name": "Can delete permission",
+      "content_type": 2
+    }
+  },
+  {
+    "pk": 10,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_user",
+      "name": "Can add user",
+      "content_type": 4
+    }
+  },
+  {
+    "pk": 11,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_user",
+      "name": "Can change user",
+      "content_type": 4
+    }
+  },
+  {
+    "pk": 12,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_user",
+      "name": "Can delete user",
+      "content_type": 4
+    }
+  },
+  {
+    "pk": 121,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_cmsplugin",
+      "name": "Can add cms plugin",
+      "content_type": 41
+    }
+  },
+  {
+    "pk": 122,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_cmsplugin",
+      "name": "Can change cms plugin",
+      "content_type": 41
+    }
+  },
+  {
+    "pk": 123,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_cmsplugin",
+      "name": "Can delete cms plugin",
+      "content_type": 41
+    }
+  },
+  {
+    "pk": 134,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_globalpagepermission",
+      "name": "Can add Page global permission",
+      "content_type": 45
+    }
+  },
+  {
+    "pk": 135,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_globalpagepermission",
+      "name": "Can change Page global permission",
+      "content_type": 45
+    }
+  },
+  {
+    "pk": 136,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_globalpagepermission",
+      "name": "Can delete Page global permission",
+      "content_type": 45
+    }
+  },
+  {
+    "pk": 124,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_page",
+      "name": "Can add page",
+      "content_type": 42
+    }
+  },
+  {
+    "pk": 125,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_page",
+      "name": "Can change page",
+      "content_type": 42
+    }
+  },
+  {
+    "pk": 126,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_page",
+      "name": "Can delete page",
+      "content_type": 42
+    }
+  },
+  {
+    "pk": 127,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "view_page",
+      "name": "Can view page",
+      "content_type": 42
+    }
+  },
+  {
+    "pk": 128,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_pagemoderator",
+      "name": "Can add PageModerator",
+      "content_type": 43
+    }
+  },
+  {
+    "pk": 129,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_pagemoderator",
+      "name": "Can change PageModerator",
+      "content_type": 43
+    }
+  },
+  {
+    "pk": 130,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_pagemoderator",
+      "name": "Can delete PageModerator",
+      "content_type": 43
+    }
+  },
+  {
+    "pk": 131,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_pagemoderatorstate",
+      "name": "Can add Page moderator state",
+      "content_type": 44
+    }
+  },
+  {
+    "pk": 132,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_pagemoderatorstate",
+      "name": "Can change Page moderator state",
+      "content_type": 44
+    }
+  },
+  {
+    "pk": 133,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_pagemoderatorstate",
+      "name": "Can delete Page moderator state",
+      "content_type": 44
+    }
+  },
+  {
+    "pk": 137,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_pagepermission",
+      "name": "Can add Page permission",
+      "content_type": 46
+    }
+  },
+  {
+    "pk": 138,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_pagepermission",
+      "name": "Can change Page permission",
+      "content_type": 46
+    }
+  },
+  {
+    "pk": 139,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_pagepermission",
+      "name": "Can delete Page permission",
+      "content_type": 46
+    }
+  },
+  {
+    "pk": 140,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_pageuser",
+      "name": "Can add User (page)",
+      "content_type": 47
+    }
+  },
+  {
+    "pk": 141,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_pageuser",
+      "name": "Can change User (page)",
+      "content_type": 47
+    }
+  },
+  {
+    "pk": 142,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_pageuser",
+      "name": "Can delete User (page)",
+      "content_type": 47
+    }
+  },
+  {
+    "pk": 143,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_pageusergroup",
+      "name": "Can add User group (page)",
+      "content_type": 48
+    }
+  },
+  {
+    "pk": 144,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_pageusergroup",
+      "name": "Can change User group (page)",
+      "content_type": 48
+    }
+  },
+  {
+    "pk": 145,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_pageusergroup",
+      "name": "Can delete User group (page)",
+      "content_type": 48
+    }
+  },
+  {
+    "pk": 118,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_placeholder",
+      "name": "Can add placeholder",
+      "content_type": 40
+    }
+  },
+  {
+    "pk": 119,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_placeholder",
+      "name": "Can change placeholder",
+      "content_type": 40
+    }
+  },
+  {
+    "pk": 120,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_placeholder",
+      "name": "Can delete placeholder",
+      "content_type": 40
+    }
+  },
+  {
+    "pk": 146,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_title",
+      "name": "Can add title",
+      "content_type": 49
+    }
+  },
+  {
+    "pk": 147,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_title",
+      "name": "Can change title",
+      "content_type": 49
+    }
+  },
+  {
+    "pk": 148,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_title",
+      "name": "Can delete title",
+      "content_type": 49
+    }
+  },
+  {
+    "pk": 13,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_contenttype",
+      "name": "Can add content type",
+      "content_type": 5
+    }
+  },
+  {
+    "pk": 14,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_contenttype",
+      "name": "Can change content type",
+      "content_type": 5
+    }
+  },
+  {
+    "pk": 15,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_contenttype",
+      "name": "Can delete content type",
+      "content_type": 5
+    }
+  },
+  {
+    "pk": 79,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_message",
+      "name": "Can add Message",
+      "content_type": 27
+    }
+  },
+  {
+    "pk": 80,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_message",
+      "name": "Can change Message",
+      "content_type": 27
+    }
+  },
+  {
+    "pk": 81,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_message",
+      "name": "Can delete Message",
+      "content_type": 27
+    }
+  },
+  {
+    "pk": 88,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_association",
+      "name": "Can add association",
+      "content_type": 30
+    }
+  },
+  {
+    "pk": 89,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_association",
+      "name": "Can change association",
+      "content_type": 30
+    }
+  },
+  {
+    "pk": 90,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_association",
+      "name": "Can delete association",
+      "content_type": 30
+    }
+  },
+  {
+    "pk": 85,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_nonce",
+      "name": "Can add nonce",
+      "content_type": 29
+    }
+  },
+  {
+    "pk": 86,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_nonce",
+      "name": "Can change nonce",
+      "content_type": 29
+    }
+  },
+  {
+    "pk": 87,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_nonce",
+      "name": "Can delete nonce",
+      "content_type": 29
+    }
+  },
+  {
+    "pk": 91,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_useropenidassociation",
+      "name": "Can add user openid association",
+      "content_type": 31
+    }
+  },
+  {
+    "pk": 92,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_useropenidassociation",
+      "name": "Can change user openid association",
+      "content_type": 31
+    }
+  },
+  {
+    "pk": 93,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_useropenidassociation",
+      "name": "Can delete user openid association",
+      "content_type": 31
+    }
+  },
+  {
+    "pk": 103,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_crontabschedule",
+      "name": "Can add crontab",
+      "content_type": 35
+    }
+  },
+  {
+    "pk": 104,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_crontabschedule",
+      "name": "Can change crontab",
+      "content_type": 35
+    }
+  },
+  {
+    "pk": 105,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_crontabschedule",
+      "name": "Can delete crontab",
+      "content_type": 35
+    }
+  },
+  {
+    "pk": 100,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_intervalschedule",
+      "name": "Can add interval",
+      "content_type": 34
+    }
+  },
+  {
+    "pk": 101,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_intervalschedule",
+      "name": "Can change interval",
+      "content_type": 34
+    }
+  },
+  {
+    "pk": 102,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_intervalschedule",
+      "name": "Can delete interval",
+      "content_type": 34
+    }
+  },
+  {
+    "pk": 109,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_periodictask",
+      "name": "Can add periodic task",
+      "content_type": 37
+    }
+  },
+  {
+    "pk": 110,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_periodictask",
+      "name": "Can change periodic task",
+      "content_type": 37
+    }
+  },
+  {
+    "pk": 111,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_periodictask",
+      "name": "Can delete periodic task",
+      "content_type": 37
+    }
+  },
+  {
+    "pk": 106,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_periodictasks",
+      "name": "Can add periodic tasks",
+      "content_type": 36
+    }
+  },
+  {
+    "pk": 107,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_periodictasks",
+      "name": "Can change periodic tasks",
+      "content_type": 36
+    }
+  },
+  {
+    "pk": 108,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_periodictasks",
+      "name": "Can delete periodic tasks",
+      "content_type": 36
+    }
+  },
+  {
+    "pk": 94,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_taskmeta",
+      "name": "Can add task state",
+      "content_type": 32
+    }
+  },
+  {
+    "pk": 95,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_taskmeta",
+      "name": "Can change task state",
+      "content_type": 32
+    }
+  },
+  {
+    "pk": 96,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_taskmeta",
+      "name": "Can delete task state",
+      "content_type": 32
+    }
+  },
+  {
+    "pk": 97,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_tasksetmeta",
+      "name": "Can add saved group result",
+      "content_type": 33
+    }
+  },
+  {
+    "pk": 98,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_tasksetmeta",
+      "name": "Can change saved group result",
+      "content_type": 33
+    }
+  },
+  {
+    "pk": 99,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_tasksetmeta",
+      "name": "Can delete saved group result",
+      "content_type": 33
+    }
+  },
+  {
+    "pk": 115,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_taskstate",
+      "name": "Can add task",
+      "content_type": 39
+    }
+  },
+  {
+    "pk": 116,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_taskstate",
+      "name": "Can change task",
+      "content_type": 39
+    }
+  },
+  {
+    "pk": 117,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_taskstate",
+      "name": "Can delete task",
+      "content_type": 39
+    }
+  },
+  {
+    "pk": 112,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_workerstate",
+      "name": "Can add worker",
+      "content_type": 38
+    }
+  },
+  {
+    "pk": 113,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_workerstate",
+      "name": "Can change worker",
+      "content_type": 38
+    }
+  },
+  {
+    "pk": 114,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_workerstate",
+      "name": "Can delete worker",
+      "content_type": 38
+    }
+  },
+  {
+    "pk": 164,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_file",
+      "name": "Can add file",
+      "content_type": 55
+    }
+  },
+  {
+    "pk": 165,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_file",
+      "name": "Can change file",
+      "content_type": 55
+    }
+  },
+  {
+    "pk": 166,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_file",
+      "name": "Can delete file",
+      "content_type": 55
+    }
+  },
+  {
+    "pk": 161,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_link",
+      "name": "Can add link",
+      "content_type": 54
+    }
+  },
+  {
+    "pk": 162,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_link",
+      "name": "Can change link",
+      "content_type": 54
+    }
+  },
+  {
+    "pk": 163,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_link",
+      "name": "Can delete link",
+      "content_type": 54
+    }
+  },
+  {
+    "pk": 170,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_cachekey",
+      "name": "Can add cache key",
+      "content_type": 57
+    }
+  },
+  {
+    "pk": 171,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_cachekey",
+      "name": "Can change cache key",
+      "content_type": 57
+    }
+  },
+  {
+    "pk": 172,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_cachekey",
+      "name": "Can delete cache key",
+      "content_type": 57
+    }
+  },
+  {
+    "pk": 31,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_notice",
+      "name": "Can add notice",
+      "content_type": 11
+    }
+  },
+  {
+    "pk": 32,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_notice",
+      "name": "Can change notice",
+      "content_type": 11
+    }
+  },
+  {
+    "pk": 33,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_notice",
+      "name": "Can delete notice",
+      "content_type": 11
+    }
+  },
+  {
+    "pk": 34,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_noticequeuebatch",
+      "name": "Can add notice queue batch",
+      "content_type": 12
+    }
+  },
+  {
+    "pk": 35,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_noticequeuebatch",
+      "name": "Can change notice queue batch",
+      "content_type": 12
+    }
+  },
+  {
+    "pk": 36,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_noticequeuebatch",
+      "name": "Can delete notice queue batch",
+      "content_type": 12
+    }
+  },
+  {
+    "pk": 28,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_noticesetting",
+      "name": "Can add notice setting",
+      "content_type": 10
+    }
+  },
+  {
+    "pk": 29,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_noticesetting",
+      "name": "Can change notice setting",
+      "content_type": 10
+    }
+  },
+  {
+    "pk": 30,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_noticesetting",
+      "name": "Can delete notice setting",
+      "content_type": 10
+    }
+  },
+  {
+    "pk": 25,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_noticetype",
+      "name": "Can add notice type",
+      "content_type": 9
+    }
+  },
+  {
+    "pk": 26,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_noticetype",
+      "name": "Can change notice type",
+      "content_type": 9
+    }
+  },
+  {
+    "pk": 27,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_noticetype",
+      "name": "Can delete notice type",
+      "content_type": 9
+    }
+  },
+  {
+    "pk": 37,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_observeditem",
+      "name": "Can add observed item",
+      "content_type": 13
+    }
+  },
+  {
+    "pk": 38,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_observeditem",
+      "name": "Can change observed item",
+      "content_type": 13
+    }
+  },
+  {
+    "pk": 39,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_observeditem",
+      "name": "Can delete observed item",
+      "content_type": 13
+    }
+  },
+  {
+    "pk": 82,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_like",
+      "name": "Can add like",
+      "content_type": 28
+    }
+  },
+  {
+    "pk": 83,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_like",
+      "name": "Can change like",
+      "content_type": 28
+    }
+  },
+  {
+    "pk": 84,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_like",
+      "name": "Can delete like",
+      "content_type": 28
+    }
+  },
+  {
+    "pk": 158,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_picture",
+      "name": "Can add picture",
+      "content_type": 53
+    }
+  },
+  {
+    "pk": 159,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_picture",
+      "name": "Can change picture",
+      "content_type": 53
+    }
+  },
+  {
+    "pk": 160,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_picture",
+      "name": "Can delete picture",
+      "content_type": 53
+    }
+  },
+  {
+    "pk": 216,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_caster",
+      "name": "Can add caster",
+      "content_type": 72
+    }
+  },
+  {
+    "pk": 217,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_caster",
+      "name": "Can change caster",
+      "content_type": 72
+    }
+  },
+  {
+    "pk": 218,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_caster",
+      "name": "Can delete caster",
+      "content_type": 72
+    }
+  },
+  {
+    "pk": 213,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_charity",
+      "name": "Can add charity",
+      "content_type": 71
+    }
+  },
+  {
+    "pk": 214,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_charity",
+      "name": "Can change charity",
+      "content_type": 71
+    }
+  },
+  {
+    "pk": 215,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_charity",
+      "name": "Can delete charity",
+      "content_type": 71
+    }
+  },
+  {
+    "pk": 203,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_profile",
+      "name": "Can add profile",
+      "content_type": 68
+    }
+  },
+  {
+    "pk": 206,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "block_users",
+      "name": "Can block any user",
+      "content_type": 68
+    }
+  },
+  {
+    "pk": 204,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_profile",
+      "name": "Can change profile",
+      "content_type": 68
+    }
+  },
+  {
+    "pk": 205,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_profile",
+      "name": "Can delete profile",
+      "content_type": 68
+    }
+  },
+  {
+    "pk": 210,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_team",
+      "name": "Can add team",
+      "content_type": 70
+    }
+  },
+  {
+    "pk": 211,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_team",
+      "name": "Can change team",
+      "content_type": 70
+    }
+  },
+  {
+    "pk": 212,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_team",
+      "name": "Can delete team",
+      "content_type": 70
+    }
+  },
+  {
+    "pk": 207,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_teammembership",
+      "name": "Can add team membership",
+      "content_type": 69
+    }
+  },
+  {
+    "pk": 208,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_teammembership",
+      "name": "Can change team membership",
+      "content_type": 69
+    }
+  },
+  {
+    "pk": 209,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_teammembership",
+      "name": "Can delete team membership",
+      "content_type": 69
+    }
+  },
+  {
+    "pk": 19,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_redirect",
+      "name": "Can add redirect",
+      "content_type": 7
+    }
+  },
+  {
+    "pk": 20,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_redirect",
+      "name": "Can change redirect",
+      "content_type": 7
+    }
+  },
+  {
+    "pk": 21,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_redirect",
+      "name": "Can delete redirect",
+      "content_type": 7
+    }
+  },
+  {
+    "pk": 16,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_session",
+      "name": "Can add session",
+      "content_type": 6
+    }
+  },
+  {
+    "pk": 17,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_session",
+      "name": "Can change session",
+      "content_type": 6
+    }
+  },
+  {
+    "pk": 18,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_session",
+      "name": "Can delete session",
+      "content_type": 6
+    }
+  },
+  {
+    "pk": 22,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_site",
+      "name": "Can add site",
+      "content_type": 8
+    }
+  },
+  {
+    "pk": 23,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_site",
+      "name": "Can change site",
+      "content_type": 8
+    }
+  },
+  {
+    "pk": 24,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_site",
+      "name": "Can delete site",
+      "content_type": 8
+    }
+  },
+  {
+    "pk": 152,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_snippet",
+      "name": "Can add Snippet",
+      "content_type": 51
+    }
+  },
+  {
+    "pk": 153,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_snippet",
+      "name": "Can change Snippet",
+      "content_type": 51
+    }
+  },
+  {
+    "pk": 154,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_snippet",
+      "name": "Can delete Snippet",
+      "content_type": 51
+    }
+  },
+  {
+    "pk": 155,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_snippetptr",
+      "name": "Can add Snippet",
+      "content_type": 52
+    }
+  },
+  {
+    "pk": 156,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_snippetptr",
+      "name": "Can change Snippet",
+      "content_type": 52
+    }
+  },
+  {
+    "pk": 157,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_snippetptr",
+      "name": "Can delete Snippet",
+      "content_type": 52
+    }
+  },
+  {
+    "pk": 76,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_association",
+      "name": "Can add association",
+      "content_type": 26
+    }
+  },
+  {
+    "pk": 77,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_association",
+      "name": "Can change association",
+      "content_type": 26
+    }
+  },
+  {
+    "pk": 78,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_association",
+      "name": "Can delete association",
+      "content_type": 26
+    }
+  },
+  {
+    "pk": 73,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_nonce",
+      "name": "Can add nonce",
+      "content_type": 25
+    }
+  },
+  {
+    "pk": 74,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_nonce",
+      "name": "Can change nonce",
+      "content_type": 25
+    }
+  },
+  {
+    "pk": 75,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_nonce",
+      "name": "Can delete nonce",
+      "content_type": 25
+    }
+  },
+  {
+    "pk": 70,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_usersocialauth",
+      "name": "Can add user social auth",
+      "content_type": 24
+    }
+  },
+  {
+    "pk": 71,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_usersocialauth",
+      "name": "Can change user social auth",
+      "content_type": 24
+    }
+  },
+  {
+    "pk": 72,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_usersocialauth",
+      "name": "Can delete user social auth",
+      "content_type": 24
+    }
+  },
+  {
+    "pk": 64,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_migrationhistory",
+      "name": "Can add migration history",
+      "content_type": 22
+    }
+  },
+  {
+    "pk": 65,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_migrationhistory",
+      "name": "Can change migration history",
+      "content_type": 22
+    }
+  },
+  {
+    "pk": 66,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_migrationhistory",
+      "name": "Can delete migration history",
+      "content_type": 22
+    }
+  },
+  {
+    "pk": 167,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_teaser",
+      "name": "Can add teaser",
+      "content_type": 56
+    }
+  },
+  {
+    "pk": 168,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_teaser",
+      "name": "Can change teaser",
+      "content_type": 56
+    }
+  },
+  {
+    "pk": 169,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_teaser",
+      "name": "Can delete teaser",
+      "content_type": 56
+    }
+  },
+  {
+    "pk": 149,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_text",
+      "name": "Can add text",
+      "content_type": 50
+    }
+  },
+  {
+    "pk": 150,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_text",
+      "name": "Can change text",
+      "content_type": 50
+    }
+  },
+  {
+    "pk": 151,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_text",
+      "name": "Can delete text",
+      "content_type": 50
+    }
+  },
+  {
+    "pk": 67,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_kvstore",
+      "name": "Can add kv store",
+      "content_type": 23
+    }
+  },
+  {
+    "pk": 68,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_kvstore",
+      "name": "Can change kv store",
+      "content_type": 23
+    }
+  },
+  {
+    "pk": 69,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_kvstore",
+      "name": "Can delete kv store",
+      "content_type": 23
+    }
+  },
+  {
+    "pk": 194,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_game",
+      "name": "Can add game",
+      "content_type": 65
+    }
+  },
+  {
+    "pk": 195,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_game",
+      "name": "Can change game",
+      "content_type": 65
+    }
+  },
+  {
+    "pk": 196,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_game",
+      "name": "Can delete game",
+      "content_type": 65
+    }
+  },
+  {
+    "pk": 197,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_gamepluginmodel",
+      "name": "Can add game plugin model",
+      "content_type": 66
+    }
+  },
+  {
+    "pk": 198,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_gamepluginmodel",
+      "name": "Can change game plugin model",
+      "content_type": 66
+    }
+  },
+  {
+    "pk": 199,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_gamepluginmodel",
+      "name": "Can delete game plugin model",
+      "content_type": 66
+    }
+  },
+  {
+    "pk": 185,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_map",
+      "name": "Can add map",
+      "content_type": 62
+    }
+  },
+  {
+    "pk": 186,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_map",
+      "name": "Can change map",
+      "content_type": 62
+    }
+  },
+  {
+    "pk": 187,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_map",
+      "name": "Can delete map",
+      "content_type": 62
+    }
+  },
+  {
+    "pk": 191,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_match",
+      "name": "Can add match",
+      "content_type": 64
+    }
+  },
+  {
+    "pk": 192,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_match",
+      "name": "Can change match",
+      "content_type": 64
+    }
+  },
+  {
+    "pk": 193,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_match",
+      "name": "Can delete match",
+      "content_type": 64
+    }
+  },
+  {
+    "pk": 182,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_tournament",
+      "name": "Can add tournament",
+      "content_type": 61
+    }
+  },
+  {
+    "pk": 183,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_tournament",
+      "name": "Can change tournament",
+      "content_type": 61
+    }
+  },
+  {
+    "pk": 184,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_tournament",
+      "name": "Can delete tournament",
+      "content_type": 61
+    }
+  },
+  {
+    "pk": 200,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_tournamentpluginmodel",
+      "name": "Can add tournament plugin model",
+      "content_type": 67
+    }
+  },
+  {
+    "pk": 201,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_tournamentpluginmodel",
+      "name": "Can change tournament plugin model",
+      "content_type": 67
+    }
+  },
+  {
+    "pk": 202,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_tournamentpluginmodel",
+      "name": "Can delete tournament plugin model",
+      "content_type": 67
+    }
+  },
+  {
+    "pk": 188,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_tournamentround",
+      "name": "Can add tournament round",
+      "content_type": 63
+    }
+  },
+  {
+    "pk": 189,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_tournamentround",
+      "name": "Can change tournament round",
+      "content_type": 63
+    }
+  },
+  {
+    "pk": 190,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_tournamentround",
+      "name": "Can delete tournament round",
+      "content_type": 63
+    }
+  },
+  {
+    "pk": 176,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_twitterrecententries",
+      "name": "Can add twitter recent entries",
+      "content_type": 59
+    }
+  },
+  {
+    "pk": 177,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_twitterrecententries",
+      "name": "Can change twitter recent entries",
+      "content_type": 59
+    }
+  },
+  {
+    "pk": 178,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_twitterrecententries",
+      "name": "Can delete twitter recent entries",
+      "content_type": 59
+    }
+  },
+  {
+    "pk": 179,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_twittersearch",
+      "name": "Can add twitter search",
+      "content_type": 60
+    }
+  },
+  {
+    "pk": 180,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_twittersearch",
+      "name": "Can change twitter search",
+      "content_type": 60
+    }
+  },
+  {
+    "pk": 181,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_twittersearch",
+      "name": "Can delete twitter search",
+      "content_type": 60
+    }
+  },
+  {
+    "pk": 173,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_video",
+      "name": "Can add video",
+      "content_type": 58
+    }
+  },
+  {
+    "pk": 174,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_video",
+      "name": "Can change video",
+      "content_type": 58
+    }
+  },
+  {
+    "pk": 175,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_video",
+      "name": "Can delete video",
+      "content_type": 58
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.group",
+    "fields": {
+      "name": "organizers",
+      "permissions": []
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.group",
+    "fields": {
+      "name": "players",
+      "permissions": []
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2013-08-19T05:17:34Z",
+      "groups": [
+        1
+      ],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$uNNb7wIPjMDL$t+AUPsF0teiA4xi6sARurtuFGl6D1EJLaMJ3DkscHVU=",
+      "email": "django-admin@ahgl.tv",
+      "date_joined": "2013-07-30T00:41:31Z"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "account.account",
+    "fields": {
+      "timezone": "",
+      "user": 1,
+      "language": "en-us"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "account.emailaddress",
+    "fields": {
+      "verified": true,
+      "user": 1,
+      "primary": true,
+      "email": "x@x.com"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 2,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "top",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 3,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "video",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 4,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "twitter",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 5,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "shirt",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 6,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "bottom",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 7,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "nav",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 8,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "top",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 9,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "video",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 10,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "twitter",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 11,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "shirt",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 12,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "bottom",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 13,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "nav",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 14,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 15,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 16,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 17,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 18,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "top",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 19,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "video",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 20,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "twitter",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 21,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "shirt",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 22,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "bottom",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 23,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "nav",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 24,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 25,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 27,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 28,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "nav",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 29,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "top",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 30,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "video",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 31,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "twitter",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 32,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "shirt",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 33,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "bottom",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 34,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "nav",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 35,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 36,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 71,
+    "model": "cms.cmsplugin",
+    "fields": {
+      "rght": 2,
+      "changed_date": "2013-08-19T16:30:09.838Z",
+      "parent": null,
+      "language": "en",
+      "level": 0,
+      "creation_date": "2013-07-30T20:03:53.132Z",
+      "lft": 1,
+      "tree_id": 1,
+      "position": 0,
+      "placeholder": 25,
+      "plugin_type": "TextPlugin"
+    }
+  },
+  {
+    "pk": 72,
+    "model": "cms.cmsplugin",
+    "fields": {
+      "rght": 2,
+      "changed_date": "2013-07-31T20:54:41.070Z",
+      "parent": null,
+      "language": "en",
+      "level": 0,
+      "creation_date": "2013-07-31T20:54:37.809Z",
+      "lft": 1,
+      "tree_id": 2,
+      "position": 1,
+      "placeholder": 25,
+      "plugin_type": "SnippetPlugin"
+    }
+  },
+  {
+    "pk": 74,
+    "model": "cms.cmsplugin",
+    "fields": {
+      "rght": 2,
+      "changed_date": "2013-08-01T00:58:14.216Z",
+      "parent": null,
+      "language": "en",
+      "level": 0,
+      "creation_date": "2013-08-01T00:58:06.257Z",
+      "lft": 1,
+      "tree_id": 3,
+      "position": 0,
+      "placeholder": 35,
+      "plugin_type": "TextPlugin"
+    }
+  },
+  {
+    "pk": 75,
+    "model": "cms.cmsplugin",
+    "fields": {
+      "rght": 2,
+      "changed_date": "2013-08-01T00:58:59.811Z",
+      "parent": null,
+      "language": "en",
+      "level": 0,
+      "creation_date": "2013-08-01T00:58:50.129Z",
+      "lft": 1,
+      "tree_id": 4,
+      "position": 0,
+      "placeholder": 36,
+      "plugin_type": "TextPlugin"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "cms.page",
+    "fields": {
+      "rght": 2,
+      "navigation_extenders": "",
+      "site": 1,
+      "creation_date": "2012-03-13T20:56:55.699Z",
+      "lft": 1,
+      "in_navigation": false,
+      "reverse_id": null,
+      "login_required": false,
+      "created_by": "ntucker",
+      "publication_end_date": null,
+      "moderator_state": 0,
+      "template": "simple.html",
+      "tree_id": 1,
+      "placeholders": [
+        25
+      ],
+      "changed_date": "2013-07-30T20:05:09.498Z",
+      "limit_visibility_in_menu": null,
+      "parent": null,
+      "publisher_state": 1,
+      "soft_root": false,
+      "publication_date": "2012-03-13T20:57:22.566Z",
+      "publisher_public": null,
+      "level": 0,
+      "changed_by": "admin",
+      "publisher_is_draft": true,
+      "published": true
+    }
+  },
+  {
+    "pk": 2,
+    "model": "cms.page",
+    "fields": {
+      "rght": 2,
+      "navigation_extenders": "",
+      "site": 1,
+      "creation_date": "2012-03-13T20:57:44.117Z",
+      "lft": 1,
+      "in_navigation": false,
+      "reverse_id": null,
+      "login_required": false,
+      "created_by": "ntucker",
+      "publication_end_date": null,
+      "moderator_state": 0,
+      "template": "tourney_index.html",
+      "tree_id": 2,
+      "placeholders": [],
+      "changed_date": "2012-04-12T22:13:17.601Z",
+      "limit_visibility_in_menu": null,
+      "parent": null,
+      "publisher_state": 1,
+      "soft_root": false,
+      "publication_date": "2012-03-13T21:00:46.316Z",
+      "publisher_public": null,
+      "level": 0,
+      "changed_by": "tom-garcia",
+      "publisher_is_draft": true,
+      "published": true
+    }
+  },
+  {
+    "pk": 3,
+    "model": "cms.page",
+    "fields": {
+      "rght": 2,
+      "navigation_extenders": "",
+      "site": 1,
+      "creation_date": "2012-03-13T21:02:09.571Z",
+      "lft": 1,
+      "in_navigation": false,
+      "reverse_id": null,
+      "login_required": false,
+      "created_by": "ntucker",
+      "publication_end_date": null,
+      "moderator_state": 0,
+      "template": "tourney_index.html",
+      "tree_id": 3,
+      "placeholders": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "changed_date": "2012-03-27T09:45:20.927Z",
+      "limit_visibility_in_menu": null,
+      "parent": null,
+      "publisher_state": 1,
+      "soft_root": false,
+      "publication_date": "2012-03-13T21:03:30.382Z",
+      "publisher_public": null,
+      "level": 0,
+      "changed_by": "tom-garcia",
+      "publisher_is_draft": true,
+      "published": true
+    }
+  },
+  {
+    "pk": 4,
+    "model": "cms.page",
+    "fields": {
+      "rght": 2,
+      "navigation_extenders": "",
+      "site": 1,
+      "creation_date": "2012-03-13T22:17:57.857Z",
+      "lft": 1,
+      "in_navigation": true,
+      "reverse_id": null,
+      "login_required": false,
+      "created_by": "ntucker",
+      "publication_end_date": null,
+      "moderator_state": 0,
+      "template": "simple.html",
+      "tree_id": 4,
+      "placeholders": [],
+      "changed_date": "2012-04-06T18:48:36.492Z",
+      "limit_visibility_in_menu": null,
+      "parent": null,
+      "publisher_state": 1,
+      "soft_root": false,
+      "publication_date": "2012-03-13T22:18:10.359Z",
+      "publisher_public": null,
+      "level": 0,
+      "changed_by": "eburkhart",
+      "publisher_is_draft": true,
+      "published": true
+    }
+  },
+  {
+    "pk": 5,
+    "model": "cms.page",
+    "fields": {
+      "rght": 2,
+      "navigation_extenders": "",
+      "site": 1,
+      "creation_date": "2012-03-13T22:21:57.904Z",
+      "lft": 1,
+      "in_navigation": true,
+      "reverse_id": null,
+      "login_required": false,
+      "created_by": "ntucker",
+      "publication_end_date": null,
+      "moderator_state": 0,
+      "template": "narrow.html",
+      "tree_id": 5,
+      "placeholders": [],
+      "changed_date": "2012-04-06T18:51:23.445Z",
+      "limit_visibility_in_menu": null,
+      "parent": null,
+      "publisher_state": 1,
+      "soft_root": false,
+      "publication_date": "2012-03-13T22:22:31.792Z",
+      "publisher_public": null,
+      "level": 0,
+      "changed_by": "eburkhart",
+      "publisher_is_draft": true,
+      "published": true
+    }
+  },
+  {
+    "pk": 6,
+    "model": "cms.page",
+    "fields": {
+      "rght": 2,
+      "navigation_extenders": "",
+      "site": 1,
+      "creation_date": "2012-03-13T22:44:15.610Z",
+      "lft": 1,
+      "in_navigation": true,
+      "reverse_id": null,
+      "login_required": false,
+      "created_by": "ntucker",
+      "publication_end_date": null,
+      "moderator_state": 0,
+      "template": "narrow.html",
+      "tree_id": 6,
+      "placeholders": [],
+      "changed_date": "2012-04-12T17:01:09.858Z",
+      "limit_visibility_in_menu": null,
+      "parent": null,
+      "publisher_state": 1,
+      "soft_root": false,
+      "publication_date": "2012-03-13T22:44:27.368Z",
+      "publisher_public": null,
+      "level": 0,
+      "changed_by": "ntucker",
+      "publisher_is_draft": true,
+      "published": true
+    }
+  },
+  {
+    "pk": 7,
+    "model": "cms.page",
+    "fields": {
+      "rght": 2,
+      "navigation_extenders": "",
+      "site": 1,
+      "creation_date": "2012-03-13T22:44:52.729Z",
+      "lft": 1,
+      "in_navigation": true,
+      "reverse_id": null,
+      "login_required": false,
+      "created_by": "ntucker",
+      "publication_end_date": null,
+      "moderator_state": 0,
+      "template": "narrow.html",
+      "tree_id": 7,
+      "placeholders": [],
+      "changed_date": "2012-03-19T00:39:24.586Z",
+      "limit_visibility_in_menu": null,
+      "parent": null,
+      "publisher_state": 1,
+      "soft_root": false,
+      "publication_date": "2012-03-13T22:45:02.421Z",
+      "publisher_public": null,
+      "level": 0,
+      "changed_by": "ntucker",
+      "publisher_is_draft": true,
+      "published": true
+    }
+  },
+  {
+    "pk": 8,
+    "model": "cms.page",
+    "fields": {
+      "rght": 2,
+      "navigation_extenders": "",
+      "site": 1,
+      "creation_date": "2012-03-24T00:35:53.922Z",
+      "lft": 1,
+      "in_navigation": false,
+      "reverse_id": null,
+      "login_required": false,
+      "created_by": "ntucker",
+      "publication_end_date": null,
+      "moderator_state": 0,
+      "template": "simple_custom_nav.html",
+      "tree_id": 8,
+      "placeholders": [
+        27,
+        28
+      ],
+      "changed_date": "2012-03-31T22:43:01.773Z",
+      "limit_visibility_in_menu": null,
+      "parent": null,
+      "publisher_state": 1,
+      "soft_root": false,
+      "publication_date": "2012-03-24T00:36:09.103Z",
+      "publisher_public": null,
+      "level": 0,
+      "changed_by": "ntucker",
+      "publisher_is_draft": true,
+      "published": true
+    }
+  },
+  {
+    "pk": 10,
+    "model": "cms.page",
+    "fields": {
+      "rght": 2,
+      "navigation_extenders": "",
+      "site": 1,
+      "creation_date": "2013-08-01T00:57:31.469Z",
+      "lft": 1,
+      "in_navigation": false,
+      "reverse_id": "terms-of-use",
+      "login_required": false,
+      "created_by": "admin",
+      "publication_end_date": null,
+      "moderator_state": 0,
+      "template": "simple.html",
+      "tree_id": 9,
+      "placeholders": [
+        35
+      ],
+      "changed_date": "2013-08-01T23:44:47.844Z",
+      "limit_visibility_in_menu": null,
+      "parent": null,
+      "publisher_state": 1,
+      "soft_root": false,
+      "publication_date": "2013-08-01T01:00:15.331Z",
+      "publisher_public": null,
+      "level": 0,
+      "changed_by": "admin",
+      "publisher_is_draft": true,
+      "published": true
+    }
+  },
+  {
+    "pk": 11,
+    "model": "cms.page",
+    "fields": {
+      "rght": 2,
+      "navigation_extenders": "",
+      "site": 1,
+      "creation_date": "2013-08-01T00:57:40.916Z",
+      "lft": 1,
+      "in_navigation": false,
+      "reverse_id": "privacy-policy",
+      "login_required": false,
+      "created_by": "admin",
+      "publication_end_date": null,
+      "moderator_state": 0,
+      "template": "simple.html",
+      "tree_id": 10,
+      "placeholders": [
+        36
+      ],
+      "changed_date": "2013-08-01T23:45:00.840Z",
+      "limit_visibility_in_menu": null,
+      "parent": null,
+      "publisher_state": 1,
+      "soft_root": false,
+      "publication_date": "2013-08-01T01:00:16.295Z",
+      "publisher_public": null,
+      "level": 0,
+      "changed_by": "admin",
+      "publisher_is_draft": true,
+      "published": true
+    }
+  },
+  {
+    "pk": 7,
+    "model": "cms.title",
+    "fields": {
+      "menu_title": "",
+      "redirect": "",
+      "meta_keywords": "",
+      "page_title": "",
+      "language": "en",
+      "title": "Disclaimer",
+      "has_url_overwrite": false,
+      "application_urls": "",
+      "creation_date": "2012-03-13T22:44:52.768Z",
+      "page": 7,
+      "path": "d",
+      "meta_description": "",
+      "slug": "d"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "cms.title",
+    "fields": {
+      "menu_title": "",
+      "redirect": "",
+      "meta_keywords": "",
+      "page_title": "",
+      "language": "en",
+      "title": "League of Legends",
+      "has_url_overwrite": false,
+      "application_urls": "",
+      "creation_date": "2012-03-13T21:02:09.628Z",
+      "page": 3,
+      "path": "league-legends",
+      "meta_description": "",
+      "slug": "league-legends"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "cms.title",
+    "fields": {
+      "menu_title": "",
+      "redirect": "",
+      "meta_keywords": "",
+      "page_title": "",
+      "language": "en",
+      "title": "Starcraft 2",
+      "has_url_overwrite": false,
+      "application_urls": "",
+      "creation_date": "2012-03-24T00:35:54.049Z",
+      "page": 8,
+      "path": "starcraft-2-season-1",
+      "meta_description": "",
+      "slug": "starcraft-2-season-1"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "cms.title",
+    "fields": {
+      "menu_title": "",
+      "redirect": "",
+      "meta_keywords": "",
+      "page_title": "",
+      "language": "en",
+      "title": "About",
+      "has_url_overwrite": false,
+      "application_urls": "",
+      "creation_date": "2012-03-13T22:17:58.728Z",
+      "page": 4,
+      "path": "about",
+      "meta_description": "",
+      "slug": "about"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "cms.title",
+    "fields": {
+      "menu_title": "",
+      "redirect": "",
+      "meta_keywords": "",
+      "page_title": "",
+      "language": "en",
+      "title": "Press",
+      "has_url_overwrite": false,
+      "application_urls": "",
+      "creation_date": "2012-03-13T22:21:57.957Z",
+      "page": 5,
+      "path": "press",
+      "meta_description": "",
+      "slug": "press"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "cms.title",
+    "fields": {
+      "menu_title": "",
+      "redirect": "",
+      "meta_keywords": "",
+      "page_title": "",
+      "language": "en",
+      "title": "FAQ",
+      "has_url_overwrite": false,
+      "application_urls": "",
+      "creation_date": "2012-03-13T22:44:15.652Z",
+      "page": 6,
+      "path": "faq",
+      "meta_description": "",
+      "slug": "faq"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "cms.title",
+    "fields": {
+      "menu_title": "",
+      "redirect": "",
+      "meta_keywords": "",
+      "page_title": "",
+      "language": "en",
+      "title": "Starcraft 2",
+      "has_url_overwrite": false,
+      "application_urls": "",
+      "creation_date": "2012-03-13T20:57:44.180Z",
+      "page": 2,
+      "path": "starcraft-2-season-2",
+      "meta_description": "",
+      "slug": "starcraft-2-season-2"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "cms.title",
+    "fields": {
+      "menu_title": "",
+      "redirect": "",
+      "meta_keywords": "",
+      "page_title": "",
+      "language": "en",
+      "title": "After Hours Gaming League",
+      "has_url_overwrite": false,
+      "application_urls": "",
+      "creation_date": "2012-03-13T20:56:56.623Z",
+      "page": 1,
+      "path": "",
+      "meta_description": "",
+      "slug": "home"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "cms.title",
+    "fields": {
+      "menu_title": "",
+      "redirect": "",
+      "meta_keywords": "",
+      "page_title": "",
+      "language": "en",
+      "title": "Terms of Use",
+      "has_url_overwrite": false,
+      "application_urls": "",
+      "creation_date": "2013-08-01T00:57:31.538Z",
+      "page": 10,
+      "path": "terms-of-use",
+      "meta_description": "",
+      "slug": "terms-of-use"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "cms.title",
+    "fields": {
+      "menu_title": "",
+      "redirect": "",
+      "meta_keywords": "",
+      "page_title": "",
+      "language": "en",
+      "title": "Privacy Policy",
+      "has_url_overwrite": false,
+      "application_urls": "",
+      "creation_date": "2013-08-01T00:57:40.984Z",
+      "page": 11,
+      "path": "privacy-policy",
+      "meta_description": "",
+      "slug": "privacy-policy"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "snippet.snippet",
+    "fields": {
+      "html": "\t\t<ul class=\"social-links-list-2\">\r\n\t\t\t<li>\r\n\t\t\t\t<h3 class=\"social-links-title t13\">SHARE</h3>\r\n\t\t\t</li>\r\n\t\t\t<li>\r\n\t\t\t\t<a href=\"http://twitter.com/share\" class=\"twitter-share-button\" data-url=\"http://afterhoursgaming.tv\" data-text=\"Amazon, Dropbox, Facebook, Google, Microsoft, Twitter, Yelp, Zynga compete in the After Hours Gaming League!\" data-count=\"horizontal\" data-via=\"AHGLtv\" data-related=\"day9tv:Be a Better Gamer\">Tweet</a><script type=\"text/javascript\" src=\"http://platform.twitter.com/widgets.js\">\r\n\t\t\t\t</script>\r\n\t\t\t</li>\r\n\t\t\t<li>\r\n\t\t\t\t<script src=\"http://www.stumbleupon.com/hostedbadge.php?s=1\">\r\n\t\t\t\t</script>\r\n\t\t\t</li>\r\n\t\t\t<li>\r\n\t\t\t\t<g:plusone size=\"medium\" href=\"http://afterhoursgaming.tv\"></g:plusone>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"last\">\r\n\t\t\t\t<div id=\"fb-root\"></div><script src=\"http://connect.facebook.net/en_US/all.js#appId=157706227633889&amp;xfbml=1\">\r\n\t\t\t\t</script>\r\n\t\t\t\t<fb:like href=\"http://www.facebook.com/pages/After-Hours-Gaming-League-AHGL/161287690608204\" send=\"true\" layout=\"button_count\" width=\"150\" show_faces=\"false\" font=\"\">\r\n\t\t\t\t</fb:like>\r\n\t\t\t</li>\r\n\t\t</ul>",
+      "name": "AHGL Homepage social links",
+      "template": ""
+    }
+  },
+  {
+    "pk": 3,
+    "model": "snippet.snippet",
+    "fields": {
+      "html": "            <div class=\"ahgl-tshirt-link\">\r\n                <h3 class=\"t13\">ORDER YOUR AHGL TSHIRT!</h3>\r\n                <a href=\"http://bit.ly/day9store\">Get Your AHGL T-Shirt!</a>\r\n            </div>\r\n",
+      "name": "AHGL Shirt",
+      "template": ""
+    }
+  },
+  {
+    "pk": 7,
+    "model": "snippet.snippet",
+    "fields": {
+      "html": "<div id=\"ahgl-social-links\">\r\n<ul class=\"social-links-list-2\">\r\n<li><a href=\"http://twitter.com/share\" class=\"twitter-share-button\" data-count=\"horizontal\" data-via=\"AHGLtv\" data-related=\"day9tv:Be a Better Gamer\">Tweet</a><script type=\"text/javascript\" src=\"http://platform.twitter.com/widgets.js\"></script></li>\r\n<li><g:plusone size=\"medium\" href=\"http://afterhoursgaming.tv/\"></g:plusone></li>\r\n<li class=\"last\">\r\n<div id=\"fb-root\"></div>\r\n<p><script src=\"http://connect.facebook.net/en_US/all.js#appId=103110473118155&amp;xfbml=1\"></script><fb:like href=\"http://afterhoursgaming.tv/press/\" send=\"true\" layout=\"button_count\" width=\"150\" show_faces=\"false\" font=\"\"></fb:like></li>\r\n</ul>\r\n</div>",
+      "name": "Press Social links",
+      "template": ""
+    }
+  },
+  {
+    "pk": 8,
+    "model": "snippet.snippet",
+    "fields": {
+      "html": "\t\t<div class=\"hero-container\">\r\n\t\t\t<h2 class=\"hero-title t9\">\r\n\t\t\t\tCongratulation Winners!\t\t\t\t<span class=\"hero-sub-title t10\">\r\n\t\t\t\t\tSee you for AHGL - Season 2!\t\t\t\t</span>\r\n\t\t\t</h2>\r\n\t\t\t<div id=\"hero-video-container\">\r\n\t\t\t<iframe width=\"100%\" height=\"565\" src=\"http://www.youtube.com/embed/KY-ISbkSgR4\" frameborder=\"0\" allowfullscreen></iframe>\r\n\t\t\t\t<!--<a href=\"http://day9.tv/tipjar\" target=\"_blank\"><img src=\"/wp-content/uploads/2011/08/support-day9tv.png\" border=\"0\"></a>--><a href=\"http://bit.ly/day9store\" target=\"_blank\"><img src=\"/wp-content/uploads/2011/08/ahgl-tshirts2.png\" border=\"0\"></a><!--<img src=\"/wp-content/uploads/2011/08/popup-chat3.png\" border=\"0\" onclick=\"window.open('http://www.twitch.tv/chat/embed?channel=day9tv&popout_chat=true','JustinTVChatWindowday9tv','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=400, height=600');\" style=\"cursor:pointer\">-->\r\n\t\t\t</div>\r\n\t\t</div>",
+      "name": "SC2 season 1 top",
+      "template": ""
+    }
+  },
+  {
+    "pk": 1,
+    "model": "snippet.snippet",
+    "fields": {
+      "html": "            <script type=\"text/javascript\">        \t\r\n$(document).ready(function(){\r\n\r\n    $(\".rollover\").css({'opacity':'0'});\r\n\r\n\t$('#main-content .openersc2 a').hover(\r\n\t\tfunction() {\r\n\t\t\t$(this).find('.rollover').stop().fadeTo(500, 1);\r\n\t\t},\r\n\t\tfunction() {\r\n\t\t\t$(this).find('.rollover').stop().fadeTo(500, 0);\r\n\t\t}\r\n\t)\r\n\t$('#main-content .openerlol a').hover(\r\n\t\tfunction() {\r\n\t\t\t$(this).find('.rollover').stop().fadeTo(500, 1);\r\n\t\t},\r\n\t\tfunction() {\r\n\t\t\t$(this).find('.rollover').stop().fadeTo(500, 0);\r\n\t\t}\r\n\t)\r\n\r\n});\t\t\r\n</script>",
+      "name": "Splash Rollover Script",
+      "template": ""
+    }
+  },
+  {
+    "pk": 9,
+    "model": "snippet.snippet",
+    "fields": {
+      "html": "<div class=\"alert alert-block alert-info\">\r\n\r\nThis is the Team Signup Message that can be modified/cleared in <code>/admin/snippet/</code>\r\n\r\n</div>",
+      "name": "Team Signup Message",
+      "template": ""
+    }
+  },
+  {
+    "pk": 72,
+    "model": "snippet.snippetptr",
+    "fields": {
+      "snippet": 6
+    }
+  },
+  {
+    "pk": 696,
+    "model": "profiles.profile",
+    "fields": {
+      "website": "",
+      "show_signatures": true,
+      "name": "Johnny Admin",
+      "language": "en",
+      "title": "",
+      "signature_html": "",
+      "photo": "",
+      "time_zone": 3.0,
+      "post_count": 0,
+      "avatar": "",
+      "signature": "",
+      "custom_thumb": "",
+      "slug": "johnny-admin",
+      "autosubscribe": true,
+      "user": 1
+    }
+  }
+]
