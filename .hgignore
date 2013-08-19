@@ -12,3 +12,4 @@ ENV/
 ahgl/site_media/*
 ahgl/.gondor/site_key
 dev.db
+.DS_Store
