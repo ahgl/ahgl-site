@@ -150,6 +150,21 @@
     {% endif %}
 
     <fieldset>
+        <legend>Payment</legend>
+        {% if team.status == 'R' %}
+            <p class="muted">Please Submit for Approval before paying.</p>
+        {% elif team.status == 'W' %}
+            <p class="text-info">Please check back soon, we're reviewing your team</p>
+        {% elif team.status == 'A' %}
+            {% if team.paid %}
+                <p class="text-success">Payment complete. Good Luck and Have Fun!</p>
+            {% else %}
+                <p class="text-error">Pay the registration fee <a href="http://afterhoursgaming.tv/registration-payment/">here</a>.</p>
+            {% endif %}
+        {% endif %}
+    </fieldset>
+
+    <fieldset>
         <div class="form-actions">
             {% if team %}
                 <button type="submit" class="btn btn-primary">Update</button>
