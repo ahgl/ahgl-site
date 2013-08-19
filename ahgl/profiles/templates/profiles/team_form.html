@@ -44,6 +44,17 @@
 
     {% if team %}
 
+    <p>
+        Status:
+        {% if team.status == 'R' or team.status == 'W' %}
+            <span class="label label-info">{{team.get_status_display}}</span>
+        {% elif team.status == 'A' or team.status == 'F' %}
+            <span class="label label-success">{{team.get_status_display}}</span>
+        {% else %}
+            <span class="label label-important">{{team.get_status_display}}</span>
+        {% endif %}
+    </p>
+
     <fieldset>
         <legend>
             Team Name
@@ -151,7 +162,7 @@
             {% if team.paid %}
                 <p class="text-success">Payment complete. Good Luck and Have Fun!</p>
             {% else %}
-                <p class="text-error">Pay the registration fee <a href="http://afterhoursgaming.tv/registration-payment/">here</a>.</p>
+                <p class="alert alert-error">Pay the registration fee <a href="http://afterhoursgaming.tv/registration-payment/">here</a>.</p>
             {% endif %}
         {% endif %}
     </fieldset>
@@ -170,7 +181,9 @@
         <div class="form-actions">
             {% if team %}
                 <button type="submit" class="btn btn-primary">Update</button>
-                <button type="submit" class="btn" name="submit" value="approval">Submit for Approval</button>
+                {% if team.status == 'R' %}
+                    <button type="submit" class="btn" name="submit" value="approval">Submit for Approval</button>
+                {% endif %}
             {% else %}
                 <button type="submit" class="btn btn-primary">Start Registration</button>
             {% endif %}
