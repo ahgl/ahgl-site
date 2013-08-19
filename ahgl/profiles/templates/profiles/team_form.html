@@ -1,6 +1,6 @@
 {% extends "site_base.html" %}
 
-{% load bootstrap_tags %}
+{% load as_bootstrap_field %}
 {% load i18n %}
 {% load account_tags %}
 {% load pagination_tags %}
@@ -16,31 +16,131 @@
         <h1>{% trans "Create a Team" %}</h1>
         {% show_snippet "Team Signup Message" %}
     {% endif %}
+
+    {% if team %}
+        <p>
+            Status:
+            {% if team.status == 'R' or team.status == 'W' %}
+                <span class="label label-info">{{team.get_status_display}}</span>
+            {% elif team.status == 'A' or team.status == 'F' %}
+                <span class="label label-success">{{team.get_status_display}}</span>
+            {% else %}
+                <span class="label label-important">{{team.get_status_display}}</span>
+            {% endif %}
+        </p>
+    {% endif %}
+
     <fieldset>
-        {% if team %}
-        <p>Status: {{team.get_status_display}}</p>
-        {% endif %}
-        {{ form|as_bootstrap }}
+        <legend>
+            Team Name
+            {% if team.name %}
+                <span class="label label-success">Complete</span>
+            {% else %}
+                <span class="label label-warning">Incomplete</span>
+            {% endif %}
+        </legend>
+        {{ form.name|as_bootstrap_field }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            Team Photo
+            {% if team.photo %}
+                <span class="label label-success">Complete</span>
+            {% else %}
+                <span class="label label-warning">Incomplete</span>
+            {% endif %}
+        </legend>
+        {{ form.photo|as_bootstrap_field }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            Team Motto
+            {% if team.motto %}
+                <span class="label label-success">Complete</span>
+            {% else %}
+                <span class="label label-warning">Incomplete</span>
+            {% endif %}
+        </legend>
+        {{ form.motto|as_bootstrap_field }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            Company Permission
+            {% if team.approval %}
+                <span class="label label-success">Complete</span>
+            {% else %}
+                <span class="label label-warning">Incomplete</span>
+            {% endif %}
+        </legend>
+        {{ form.approval|as_bootstrap_field }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            Charity Permission
+            {% if team.charity %}
+                <span class="label label-success">Complete</span>
+            {% else %}
+                <span class="label label-warning">Incomplete</span>
+            {% endif %}
+        </legend>
+        {{ form.charity|as_bootstrap_field }}
+    </fieldset>
+
+    {% if team %}
+    <fieldset>
+        {% with team.team_membership.all as memberships %}
+            <legend>
+                Team Roster
+                {% if memberships|length >= 8 %}
+                    <span class="label label-success">Complete</span>
+                {% else %}
+                    <span class="label label-warning">Please add at least 8 players.</span>
+                {% endif %}
+            </legend>
+            {% if memberships|length %}
+            <div class="control-group">
+                <h3>
+                    {{ memberships|length }}
+                    member{{ memberships|length|pluralize:"s" }}:
+                </h3>
+                <ul class="bulleted">
+                    {% for m in memberships %}
+                        <li>
+                            <a href="{% url membership_edit m.id %}">{{m}}</a>
+                            {{ m.fields }}
+                            {% if m.is_using_default_bio %}
+                                <span class="label label-warning">Bio: Incomplete</span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <br/>
+            {% endif %}
+            <p>
+                Find and add players to your team
+                <a href="{% url profile_list %}">here</a>.
+            </p>
+        {% endwith %}
+    </fieldset>
+    {% endif %}
+
+    <fieldset>
         <div class="form-actions">
           {% if team %}
-          <button type="submit" class="btn btn-primary">Update</button>
-          <button type="submit" class="btn" name="submit" value="approval">Submit for Approval</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn" name="submit" value="approval">Submit for Approval</button>
           {% else %}
-          <button type="submit" class="btn btn-primary">Start Registration</button>
+            <button type="submit" class="btn btn-primary">Start Registration</button>
           {% endif %}
         </div>
         {% csrf_token %}
     </fieldset>
+
 </form>
-{% if team %}
-<div class="well">
-<h2>Members</h2>
-<div>To add members to the team, go to their player profile page (all profiles here: <a href="http://afterhoursgaming.tv/profiles/">http://afterhoursgaming.tv/profiles/</a>).</div>
-<ul>
-{% for team_member in team.team_membership.all %}
-<li><a href="{% url membership_edit team_member.id %}">{{team_member}}</a></li>
-{% endfor %}
-</ul>
-</div>
-{% endif %}
+
 {% endblock %}

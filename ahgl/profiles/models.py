@@ -192,6 +192,11 @@ class TeamMembership(models.Model):
     def losses(self):
         return self.game_losses.filter(match__published=True).count()
 
+    @property
+    def is_using_default_bio(self):
+        default = self._meta.get_field('questions_answers').default
+        return default[100:] == self.questions_answers[100:]
+
     @models.permalink
     def get_absolute_url(self, group=None):
         return ('player_profile', (), {
@@ -214,7 +219,7 @@ class Team(models.Model):
     name = models.CharField(_("company name"), max_length=50)
     slug = models.SlugField(_("slug"), max_length=50)
     photo = ImageField(_("team photo"), upload_to='team_photos', null=True, blank=True, help_text=u"Must be 920px x 450px")
-    charity = models.ForeignKey('profiles.Charity', null=True, blank=True, on_delete=models.SET_NULL, related_name='teams', help_text=u"If your charity is not listed, send a message to an admin for it to be added.")
+    charity = models.ForeignKey('profiles.Charity', null=True, blank=True, on_delete=models.SET_NULL, related_name='teams', help_text=u"To add a charity not in this list, get written or email permission from the charity and <a href='/messages/compose/ahgltv/'>contact us</a>.")
     motto = models.CharField(_("team motto"), max_length=70, blank=True)
     approval = models.FileField(_("Written Company Permission"), upload_to='team_approvals', null=True, blank=True, help_text="Submit a pdf of approval letter on official company letterhead saying that your team can represent your company in the AHGL (if needed an approval email from an official company email will do).")
     members = models.ManyToManyField('Profile', null=True, blank=True, related_name='teams', through=TeamMembership)

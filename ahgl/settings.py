@@ -184,6 +184,7 @@ INSTALLED_APPS = [
     'south',
     'sorl.thumbnail',
     'social_auth',
+
     #'pybb',
     'pytils',
     'pure_pagination',
@@ -208,7 +209,6 @@ INSTALLED_APPS = [
     'cms.plugins.teaser',
     'cms.plugins.video',
     'cms.plugins.twitter',
-
 
     # project
     "profiles",

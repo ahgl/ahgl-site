@@ -1553,6 +1553,11 @@ div#homepage-linkbar .ahgl-facebook-page a:hover {
     line-height: 1.5;
     margin-bottom: 0.5em;
 }
+.well legend {
+    font-size: 130%;
+    border-bottom: 1px solid rgba(0,0,0,.15);
+    padding-top: .3em;
+}
 
 ul.bulleted li {
     margin-left: 2em;
@@ -1562,4 +1567,7 @@ ul.bulleted li:before {
     content: "• ";
     display: inline;
     color: white;
+}
+.well ul.bulleted li:before {
+    color: black;
 }
