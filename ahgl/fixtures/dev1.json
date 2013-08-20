@@ -1,0 +1,282 @@
+[
+  {
+    "pk": 1,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 2,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "top",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 3,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "video",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 4,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "twitter",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 5,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "shirt",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 6,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "bottom",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 7,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "nav",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 8,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "top",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 9,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "video",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 10,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "twitter",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 11,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "shirt",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 12,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "bottom",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 13,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "nav",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 14,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 15,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 16,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 17,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 18,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "top",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 19,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "video",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 20,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "twitter",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 21,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "shirt",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 22,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "bottom",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 23,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "nav",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 24,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 25,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 27,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 28,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "nav",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 29,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "top",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 30,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "video",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 31,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "twitter",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 32,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "shirt",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 33,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "bottom",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 34,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "nav",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 35,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  },
+  {
+    "pk": 36,
+    "model": "cms.placeholder",
+    "fields": {
+      "slot": "content",
+      "default_width": null
+    }
+  }
+]

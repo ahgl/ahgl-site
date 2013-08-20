@@ -1,0 +1,5 @@
+# Development fixtures need to be in two parts because of some weirdness with django-cms:
+# https://groups.google.com/d/msg/django-cms/cHGzNW4GpxA/vXKW5vsfZXcJ
+
+./manage.py dumpdata --indent=2 --natural cms.placeholder >ahgl/fixtures/dev1.json
+./manage.py dumpdata --indent=2 --natural --exclude auth.Permission --exclude cms.placeholder sites profiles tournaments auth account cms text snippet >ahgl/fixtures/dev2.json
