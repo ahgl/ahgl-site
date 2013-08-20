@@ -1,5 +1,5 @@
 [gondor]
-vcs = hg
+vcs = git
 
 [app]
 wsgi_entry_point = deploy.wsgi:application
