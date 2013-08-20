@@ -1,7 +1,11 @@
 After Hours Gaming League Web Site
 ==================================
 
-This is the source for <http://afterhoursgaming.tv/>
+[![Imgur](http://i.imgur.com/XRSju5C.png)](http://afterhoursgaming.tv/)
+
+This is the source for <http://afterhoursgaming.tv/>.
+
+*Want to contribute?* Check out [CONTRIBUTING.md](https://github.com/ahgl/ahgl-site/blob/master/CONTRIBUTING.md)!
 
 Getting Started
 ---------------
@@ -11,12 +15,14 @@ and [Django 1.4](https://docs.djangoproject.com/en/1.4/). This site also makes u
 
 ### 1. Install the Python dependencies
 
-First install pip and virtualenv (you might need to run this as root):
+First, fork this repo by clicking the "Fork" button above. Then clone it locally.
+
+Install pip and virtualenv (you might need to run this as root):
 
     $ easy_install virtualenv
     $ easy_install pip
 
-Create a virtual env in an arbitrary directory, `ENV`:
+Create a virtual environment directory somewhere outside of the repo:
 
     $ virtualenv --distribute ENV
 
@@ -24,9 +30,9 @@ Source that environment (you might want to add this to your `.bashrc`/`.zshrc`):
 
     $ . ENV/bin/activate
 
-Install all of the required libraries, which takes a while:
+Install all of the required libraries. This takes a while, so go grab some coffee:
 
-    $ pip install --requirement=ahgl/requirements/project.txt
+    $ pip install --requirement=ahgl-site/requirements.txt
 
 #### Windows users
 
@@ -39,12 +45,11 @@ following precompiled packages:
 - greenlet
 - cython
 
-Use easy\_install to install them in the virtual environment:
+Use easy_install to install them in the virtual environment:
 
     $ easy_install "filename.exe"
 
-Remove the line "lxml==2.3" from ahgl/requirements/project.txt before
-continuing to the next step
+Remove the line `lxml==2.3` from `ahgl/requirements.txt` before continuing to the next step.
 
 ### 2. Create a local settings file
 
@@ -58,10 +63,15 @@ continuing to the next step
 * **Debian/Ubuntu:** `sudo apt-get install postgresql`
 * **Windows:** Go [here](http://www.postgresql.org/download/windows/)
 
-Then (yes, you might need to run `syncdb` twice):
+Create the database:
 
-    $ ./manage.py syncdb
-    $ ./manage.py syncdb
+    $ psql -h localhost
+    > create database ahgl;
+    CREATE DATABASE
+
+Initialize the tables:
+
+    $ ./manage.py syncdb --noinput
     $ ./manage.py migrate
 
 Load some sample data:
@@ -76,11 +86,12 @@ Now visit http://localhost:8000/ and you should see something that looks like AH
 
 ### 5. Log into the admin panel
 
-Go to http://localhost:8000/admin and login with the username and password `admin`. 
-
-Where Do I Start?
------------------
+Go to http://localhost:8000/admin and login with `admin` / `admin`.
 
 **The CMS plugin** edits a lot of the static stuff.
 
+**The profiles/ and tournaments/ directories** have most of the important models and views. Lots of views are the newer Django class-based views.
 
+**The admin view** (http://localhost:8000/admin) is worth poking through.
+
+GLHF!
