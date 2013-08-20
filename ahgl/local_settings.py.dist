@@ -7,30 +7,39 @@ CACHES = {
 }
 
 # Comment out this and uncomment the DATABASES stuff below to switch to Postgres
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': 'dev.db',
+#        'USER': '',
+#        'PASSWORD': '',
+#        'HOST': '',
+#        'PORT': ''
+#    }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'dev.db',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ahgl',
         'USER': '',
         'PASSWORD': '',
-        'HOST': '',
+        'HOST': 'localhost',
         'PORT': ''
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'ahgl',
-#         'USER': '',
-#         'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': ''
-#     }
-# }
-
 # Makes it so celery tasks don't need a daemon to run (great for dev)
 CELERY_ALWAYS_EAGER = True
 
-
 COMPRESS = False
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    #"ahgl.auth_backends.FbLikableBackend",
+    #"ahgl.auth_backends.HybridLikeableBackend",
+]
+
+
+RECAPTCHA_PUB_KEY = '6Lfmh-USAAAAAADsbe7qnd6woY5zdVXWZ_4qP3PX'
+RECAPTCHA_PRIV_KEY = '6Lfmh-USAAAAACe90Asun2vElZKKHI6cCBSPpBDr'
