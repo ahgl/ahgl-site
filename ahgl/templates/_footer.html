@@ -4,83 +4,55 @@
 {% load ifsetting_tag %}
 {% load cms_tags %}
 <div id="poweredbyday9tv"><p align="center">Brought to you by Day[9]TV and Red Bull Gaming</p><div style="margin-left:300px"><img src="{% static "images/day9tv_smaller.png" %}" style="float:left; cursor:pointer; margin-top: 30px;" onclick="window.location='http://day9.tv'"><img src="{% static "images/redbull_gaming.png" %}" style="float:left; cursor:pointer" onclick="window.location='http://www.getredbulletin.com/AHGL'" /></div></div>
-                <div style="clear:both"></div>
-				<div class="cf">
-
-
-
-					<form id="search-form" action="{% url games %}" method="get">
-	<label for="s" class="off-screen">Search for:</label>
-	<input class="f3" type="text" id="s" name="s" placeholder="Type your search here" />
-	<input class="f3" type="submit" value="Go" id="go-button" />
-</form>
-<ul class="footer-list-1">
-<li>
-  <a href="{% url archives %}" title="Past Seasons">Past Seasons</a>
-</li>
+<div style="clear:both"></div>
+<div class="cf">
+  <form id="search-form" action="{% url games %}" method="get">
+    <label for="s" class="off-screen">Search for:</label>
+    <input class="f3" type="text" id="s" name="s" placeholder="Type your search here" />
+    <input class="f3" type="submit" value="Go" id="go-button" />
+  </form>
+  <ul class="footer-list-1">
+    <li>
+    <a href="{% url archives %}" title="Past Seasons">Past Seasons</a>
+    </li>
     {% show_menu %}
-<li>
-  <a href="{% url messages_compose_to "ahgltv" %}" title="Contact">Contact</a>
-</li>
-</ul>
-
-
-					<ul class="social-links-list-1">
-
-						<li>
-
-							<h2 class="social-links-header f3">
-
-								Follow us
-							</h2>
-
-						</li>
-
-						<li>
-
-							<a class="twitter-link" href="http://twitter.com/ahgltv" title="twitter">
-
-								<span class="off-screen">twitter</span>
-
-							</a>
-
-						</li>
-
-						<li>
-
-							<a class="facebook-link" href="http://www.facebook.com/AHGLtv" title="Facebook">
-
-								<span class="off-screen">Facebook</span>
-
-							</a>
-
-						</li>
-
-						<li class="last">
-
-							<a class="youtube-link" href="http://www.youtube.com/afterhoursgamingtv" title="YouTube">
-
-								<span class="off-screen">YouTube</span>
-
-							</a>
-
-						</li>
-
-					</ul>
-
-				</div>
-
-				<p id="copyright">
-				  &copy; Jink.tv 2012. All rights reserved.
-				  &ndash;
-				  <a href="{% page_url "terms-of-use" %}">{% page_attribute "page_title" "terms-of-use" %}</a>
-				  &ndash;
-				  <a href="{% page_url "privacy-policy" %}">{% page_attribute "page_title" "privacy-policy" %}</a>
-				</p>
-
-				<p id="credit">
-                    Site powered by <a class="alt-link" title="Nathaniel Tucker" href="http://ntucker.me">Nathaniel Tucker</a>.
-
-					Designed by <a class="alt-link" title="Visit Bernat's Portfolio" href="http://www.bernatfortet.com/">Bernat Fortet</a>.
-
-				</p>
+    <li>
+    <a href="{% url messages_compose_to "ahgltv" %}" title="Contact">Contact</a>
+    </li>
+  </ul>
+  <ul class="social-links-list-1">
+    <li>
+    <h2 class="social-links-header f3">
+      Follow us
+    </h2>
+    </li>
+    <li>
+    <a class="twitter-link" href="http://twitter.com/ahgltv" title="twitter">
+      <span class="off-screen">twitter</span>
+    </a>
+    </li>
+    <li>
+    <a class="facebook-link" href="http://www.facebook.com/AHGLtv" title="Facebook">
+      <span class="off-screen">Facebook</span>
+    </a>
+    </li>
+    <li class="last">
+    <a class="youtube-link" href="http://www.youtube.com/afterhoursgamingtv" title="YouTube">
+      <span class="off-screen">YouTube</span>
+    </a>
+    </li>
+  </ul>
+</div>
+<p id="copyright">
+&copy;2013 <a href="http://jink.tv">Jink.tv</a>. All rights reserved.
+&ndash;
+<a href="{% page_url "terms-of-use" %}">{% page_attribute "page_title" "terms-of-use" %}</a>
+&ndash;
+<a href="{% page_url "privacy-policy" %}">{% page_attribute "page_title" "privacy-policy" %}</a>
+</p>
+<p id="credit">
+Site built by <a class="alt-link" title="Nathaniel Tucker" href="http://ntucker.me">Nathaniel Tucker</a>.
+Designed by <a class="alt-link" title="Visit Bernat's Portfolio" href="http://www.bernatfortet.com/">Bernat Fortet</a>.
+<br/>
+<a href="https://github.com/ahgl/ahgl-site">Fork this site on GitHub</a>
+</p>
