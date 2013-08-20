@@ -3,6 +3,6 @@ vcs = git
 
 [app]
 wsgi_entry_point = deploy.wsgi:application
-requirements_file = requirements/project.txt
+requirements_file = requirements.txt
 migrations = south
 staticfiles = on
