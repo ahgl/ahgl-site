@@ -155,10 +155,6 @@ class TeamMembership(models.Model):
 <p>Whom do you fear most amongst the competition and why?</p>
 <p>-</p>
 </li>
-<li>
-<p>What is your Heart of the Swarm beta character code and ID?</p>
-<p>-</p>
-</li>
 </ol>""")
     game_profile = models.URLField(null=True, blank=True)
 
