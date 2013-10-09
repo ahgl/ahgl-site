@@ -80,10 +80,11 @@
                 <div id="main-footer-inner">
                         {% block footer %}{% include "_footer.html" %}{% endblock %}
                 </div>
+                {% include "redbull_footer1.html" %}
             </div>
         {% endblock %}
 
-        {% block extra_body_base %}
+        {% block extra_body_base %} 
             {% analytics %}
             {% block extra_body %}{% endblock %}
         {% endblock %}
