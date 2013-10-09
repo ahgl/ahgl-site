@@ -54,6 +54,10 @@ a {
 	background:transparent;
 }
 
+a:visited {
+    color:inherit !important;
+}
+
 /* change colours to suit your needs */
 ins {
 	background-color:#ff9;
@@ -139,13 +143,11 @@ p {
 /* ======================================================= global id based styles ============= */
 /* ============================================================================================ */
 #wrapper {
-	padding-top: 56px;
 	min-height:100%;
 }
 #main-header {
 	background:url(../images/background/global/header-bkg.jpg) no-repeat center top;
 	height:292px;
-	margin:-15px 0 -57px 0; /* compensates for large background header by pulling up the main-content area */
 }
 
 #main-header-ahgl2 {
@@ -245,7 +247,6 @@ p {
 }
 #main-footer-inner {
 	width:920px;
-	height:147px;
 	margin:0 auto 0 auto;
 	padding:58px 40px 0 40px;
 }
@@ -1249,21 +1250,12 @@ a:hover .t3 {
 }
 
 div#static-navheader {
-	background: url("../images/topnav_bg.png") repeat-x;
 	height: 40px;
 	position:absolute;
+	right:5px;
 	margin: 0;
 	padding: 0;
-	width: 100%;
 	color: white;
-}
-div#static-navheader .navbar-inner {
-	width: 920px;
-	margin: 0 auto;
-	position: relative;
-	left: 50px;
-	filter: none;
-	background-color: transparent;
 }
 
 div#static-navheader a {
