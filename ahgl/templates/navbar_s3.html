@@ -1,0 +1,111 @@
+<style>
+div#static-navheader .navbar-inner {
+	width: 920px;
+	margin: 0 auto;
+	position: relative;
+	left: 50px;
+	filter: none;
+	background-color: transparent;
+}
+
+div#static-navheader a {
+    font-size: 1.2em;
+    font-family: "PublicGothicSquareRegular", Arial, Sans-Seriff;
+}
+
+div#static-navheader li.dropdown {
+	padding-right: 10px;
+}
+
+div#static-navheader .dropdown-toggle {
+    padding: 10px 0px 10px 0px;
+}
+
+div#static-navheader .dropdown-toggle.left-padding {
+	padding-left: 9px;
+}
+
+div#static-navheader .dropdown-menu {
+    background-color: #999;
+    color: #000;
+}
+
+div#static-navheader .dropdown-menu:after {
+  border-bottom: 6px solid #999;
+}
+
+div#static-navheader .dropdown-menu li > a:hover {
+    background-color: #ffa71a;
+    color: #000;
+}
+
+div#static-navheader .dropdown-menu .divider { 
+	background-color: #666;
+	border-bottom: 1px solid #333;
+}
+
+div#static-navheader .login {
+	float: right;
+	padding: 10px;
+}
+</style>
+
+<div id="static-navheader" class="navbar">
+	<div class="navbar-inner">
+	    <ul class="nav">
+		    <li class="dropdown">
+			    <a href="#" class="dropdown-toggle" data-toggle="dropdown">B League<b class="caret"></b></a>
+			    <ul class="dropdown-menu">
+				    <li><a href="/starcraft-2-season-3-b-league">B League Home</a></li>
+				    <li class="divider"></li>
+				    <li><a href="{% url schedule "starcraft-2-season-3-b-league" %}">Schedule</a></li>
+				    <li><a href="{% url standings "starcraft-2-season-3-b-league" %}">Standings</a></li>
+				    <li><a href="{% url teams "starcraft-2-season-3-b-league" %}">Teams</a></li>
+				    <li><a href="{% url videos "starcraft-2-season-3-b-league" %}">Videos</a></li>
+			    </ul>
+		    </li>
+      
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">A League<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/starcraft-2-season-3-a-league">A League Home</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url schedule "starcraft-2-season-3-a-league" %}">Schedule</a></li>
+                <li><a href="{% url standings "starcraft-2-season-3-a-league" %}">Standings</a></li>
+                <li><a href="{% url teams "starcraft-2-season-3-a-league" %}">Teams</a></li>
+                <li><a href="{% url videos "starcraft-2-season-3-a-league" %}">Videos</a></li>
+                <li><a href="/starcraft-2-season-3-a-league/casters/">Casters</a></li>
+              </ul>
+            </li>
+		    <li class="ahgl2-sc2"><a href="/starcraft-2-season-3-a-league" class="game">&nbsp;</a></li>
+		    <div class="brand ahgl2-day9tv"><a class="beabettergamer" href="http://day9.tv">&nbsp;</a></div>
+		    <li class="ahgl2-lol"><a href="/league-legends-season-3-a-league" class="game">&nbsp;</a></li>
+		
+		    <li class="dropdown">
+			    <a href="#" class="dropdown-toggle left-padding" data-toggle="dropdown">A League<b class="caret"></b></a>
+			    <ul class="dropdown-menu">
+				    <li><a href="/league-legends-season-3-a-league">A League Home</a></li>
+				    <li class="divider"></li>
+				    <li><a href="{% url schedule "league-legends-season-3-a-league" %}">Schedule</a></li>
+				    <li><a href="{% url standings "league-legends-season-3-a-league" %}">Standings</a></li>
+				    <li><a href="{% url teams "league-legends-season-3-a-league" %}">Teams</a></li>
+				    <li><a href="{% url videos "league-legends-season-3-a-league" %}">Videos</a></li>
+				    <li><a href="/league-legends-season-3-a-league/casters/">Casters</a></li>
+			    </ul>
+		    </li>
+		
+		    <li class="dropdown">
+			    <a href="#" class="dropdown-toggle" data-toggle="dropdown">B League<b class="caret"></b></a>
+			    <ul class="dropdown-menu">
+				    <li><a href="/league-legends-season-3-b-league">B League Home</a></li>
+				    <li class="divider"></li>
+				    <li><a href="{% url schedule "league-legends-season-3-b-league" %}">Schedule</a></li>
+				    <li><a href="{% url standings "league-legends-season-3-b-league" %}">Standings</a></li>
+				    <li><a href="{% url teams "league-legends-season-3-b-league" %}">Teams</a></li>
+				    <li><a href="{% url videos "league-legends-season-3-b-league" %}">Videos</a></li>
+			    </ul>
+		    </li>
+	    </ul>
+    </div>
+    {% block account_bar %}{% include "_account_bar.html" %}{% endblock %}
+</div>

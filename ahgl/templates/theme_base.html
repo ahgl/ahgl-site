@@ -56,12 +56,12 @@
 
     {% include "redbull_header2.html" %}
 
-        {% block topbar_base %}
-        {% endblock %}
+
 
         {% block body_base %}
             <div id="wrapper">
                 <div style="width:920px;margin:0 auto;">{% include "_messages.html" %}</div>
+                {% block topbar_base %}{% endblock %}
                 {% block tournament_nav %}
                 <div id="main-header">
                 {% include "tournaments/_tournament_nav.html" %}
