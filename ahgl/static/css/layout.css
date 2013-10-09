@@ -54,6 +54,10 @@ a {
 	background:transparent;
 }
 
+a:visited {
+    color:inherit !important;
+}
+
 /* change colours to suit your needs */
 ins {
 	background-color:#ff9;
