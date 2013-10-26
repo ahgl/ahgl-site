@@ -55,7 +55,7 @@ a {
 }
 
 a:visited {
-    color:inherit !important;
+    color:ff5b47;
 }
 
 /* change colours to suit your needs */
@@ -1562,4 +1562,29 @@ ul.bulleted li:before {
 }
 .well ul.bulleted li:before {
     color: black;
+}
+
+.subnavilist {
+    border-color:#415892;
+    border-width:2px;
+    border-style:solid;
+}
+.subnavilist li {
+    background-color:#213872;
+    text-align:center;
+}
+.subnavilist li a {
+    padding:.5em;
+    color:#ffffff;
+    font-weight:bold;
+}
+.subnavilist li:hover {
+    background-color:#DDDDDD;
+}
+.subnavilist li a:hover {
+    color:#FF5B47;
+}
+.subnavilist .nav-header {
+    background-color:inherit !important;
+    text-align:center;
 }
