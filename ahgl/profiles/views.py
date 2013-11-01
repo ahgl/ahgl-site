@@ -141,7 +141,7 @@ class TeamSignupView(CreateView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         if not EmailAddress.objects.filter(user=request.user, verified=True).count():
-            return HttpResponseForbidden("You must confirm your email address to create a team.")
+            return HttpResponseForbidden("Email verification required. Go here: http://afterhoursgaming.tv/account/settings/ enter your email and hit save. Then click the link in the email to verify. If you don't get an email, try changing it, saving, and changing it back.")
         return super(TeamSignupView, self).dispatch(request, *args, **kwargs)
 
 
