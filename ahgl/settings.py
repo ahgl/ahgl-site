@@ -6,6 +6,8 @@ import os.path
 import posixpath
 import djcelery
 
+from datetime import timedelta
+
 gettext = lambda s: s
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -214,7 +216,6 @@ INSTALLED_APPS = [
     "tournaments",
     "utils",
 ]
-
 
 CELERYBEAT_SCHEDULE = {
     'expunge-deleted-account': {
