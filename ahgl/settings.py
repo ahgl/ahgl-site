@@ -215,6 +215,14 @@ INSTALLED_APPS = [
     "utils",
 ]
 
+
+CELERYBEAT_SCHEDULE = {
+    'expunge-deleted-account': {
+        'task': 'profiles.tasks.expunge_deleted',
+        'schedule': timedelta(days=1),
+    },
+}
+
 # FIXTURE_DIRS = [
 #     os.path.join(PROJECT_ROOT, "fixtures"),
 # ]
