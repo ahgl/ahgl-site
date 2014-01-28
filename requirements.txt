@@ -16,16 +16,16 @@ django-debug-toolbar==0.9.4
 django-staticfiles==1.2.1
 django_compressor==1.3
 
--e git+https://github.com/ntucker/django-user-accounts.git#egg=django-user-accounts
+-e git+https://github.com/ntucker/django-user-accounts.git@dafd6f2fc8346fd05bea3803340e04ba2639a716#egg=django-user-accounts
 django-timezones==0.2
 pytz==2012j
 django-openid==0.3a1
 python-openid==2.2.5
 
--e git+https://github.com/ntucker/django-announcements.git#egg=django-announcements
+-e git+https://github.com/ntucker/django-announcements.git@a5ccade33afedcb916bf796624558cc3070c25b3#egg=django-announcements
 django-pagination==1.0.7
--e git+https://github.com/ntucker/django-notification.git#egg=django-notification
--e git+https://github.com/ntucker/idios.git#egg=idios
+-e git+https://github.com/ntucker/django-notification.git@8ad545ae85ce1f41985aa824457844c7632cac04#egg=django-notification
+-e git+https://github.com/ntucker/idios.git@07c6d21a681cd640259af6f3d2070588dc72aa04#egg=idios
 metron==0.1
 
 pinax-theme-bootstrap==2.0.1
@@ -50,8 +50,8 @@ slimit==0.6
 recaptcha-client==1.0.6
 south==0.7.6
 raven==2.0.3
--e git+https://github.com/ntucker/django-cache-magic.git#egg=django-cache-magic
--e git+https://github.com/rdegges/django-clear-cache.git#egg=django-clear-cache
+-e git+https://github.com/ntucker/django-cache-magic.git@dbfb4aa042f4c5b1fb145bdb1d5f721a8909e2c8#egg=django-cache-magic
+-e git+https://github.com/rdegges/django-clear-cache.git@9251fd3730afb8ab3deaf5c2619889438fc760c4#egg=django-clear-cache
 johnny-cache==1.4
 
 #celery and its dependencies
@@ -73,8 +73,8 @@ django-tinymce==1.5.1b2
 django-cms==2.3.4
 phileo==1.0
 
--e git+https://github.com/ntucker/pybbm.git#egg=pybbm
--e hg+https://bitbucket.org/ntucker/django-recaptcha#egg=django-recaptcha
+-e git+https://github.com/ntucker/pybbm.git@d1d0a3c92986fa012b01105677b38c35fe59d5cf#egg=pybbm
+-e hg+https://bitbucket.org/ntucker/django-recaptcha/@2e55e507faa9e9c6c97b06b48c75641cc4df0e8b#egg=django-recaptcha
 
 # following is needed for a migration, it is harder to remove the parts of the
 # migration that it is to add this back.
