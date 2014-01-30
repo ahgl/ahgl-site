@@ -43,7 +43,7 @@ gunicorn==0.17.2
 eventlet==0.9.16
 sqlalchemy==0.7.8
 lxml==2.3
-PIL==1.1.7
+--allow-external PIL --allow-unverified PIL PIL==1.1.7
 html5lib==0.90
 bleach>=1.0
 slimit==0.6
@@ -73,7 +73,10 @@ django-tinymce==1.5.1b2
 django-cms==2.3.4
 phileo==1.0
 
+# Need to specify direct path to postmarkup it seems.
+https://postmarkup.googlecode.com/files/postmarkup-1.2.0.tar.gz
 -e git+https://github.com/ntucker/pybbm.git@d1d0a3c92986fa012b01105677b38c35fe59d5cf#egg=pybbm
+
 -e hg+https://bitbucket.org/ntucker/django-recaptcha/@2e55e507faa9e9c6c97b06b48c75641cc4df0e8b#egg=django-recaptcha
 
 # following is needed for a migration, it is harder to remove the parts of the

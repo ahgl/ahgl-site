@@ -30,9 +30,13 @@ Source that environment (you might want to add this to your `.bashrc`/`.zshrc`):
 
     $ . ENV/bin/activate
 
+NOTE: As of Oct 1, 2013, Git versions 1.3 and newer break pip, so you need to install the bleeding-edge version of pip. More info [here](http://oliviercortes.com/pip-and-git-on-the-edge.html).
+
+    $ pip install -U -e git+https://github.com/pypa/pip.git@develop#egg=pip-dev
+
 Install all of the required libraries. This takes a while, so go grab some coffee:
 
-    $ pip install --requirement=ahgl-site/requirements.txt
+    $ pip install -r requirements.txt
 
 #### Windows users
 
@@ -44,10 +48,6 @@ following precompiled packages:
 - PIL
 - greenlet
 - cython
-
-Use easy_install to install them in the virtual environment:
-
-    $ easy_install "filename.exe"
 
 Remove the line `lxml==2.3` from `ahgl/requirements.txt` before continuing to the next step.
 
