@@ -43,7 +43,7 @@ gunicorn==0.17.2
 eventlet==0.9.16
 sqlalchemy==0.7.8
 lxml==2.3
---allow-external PIL --allow-unverified PIL PIL==1.1.7
+pillow==2.3.0
 html5lib==0.90
 bleach==1.2.1
 slimit==0.6
