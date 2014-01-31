@@ -147,7 +147,7 @@ class TeamSignupView(CreateView):
 
 class TeamAdminView(ListView):
     def get_queryset(self):
-        return TeamMembership.objects.filter(profile__user=self.request.user, captain=True)
+        return TeamMembership.objects.filter(profile__user=self.request.user.id, captain=True)
 
     def get_context_data(self, **kwargs):
         # Probably a better way to do this with joins, but I never remember how
