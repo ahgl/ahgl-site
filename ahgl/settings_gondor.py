@@ -94,10 +94,11 @@ CMS_MEDIA_URL = posixpath.join(MEDIA_URL, CMS_MEDIA_PATH)
 CMS_PAGE_MEDIA_PATH = "cms_page_media/"
 CMS_VIEW_PERMISSION = False
 
-# Email info
-EMAIL_HOST = "oxmail1.registrar-servers.com"
-EMAIL_PORT = 25
-EMAIL_HOST_USER = "support@afterhoursgaming.tv"
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = "AHGLtv"
 SERVER_EMAIL = "support@afterhoursgaming.tv"
 DEFAULT_FROM_EMAIL = "support@afterhoursgaming.tv"
 EMAIL_CONFIRMATION_DAYS = 2
