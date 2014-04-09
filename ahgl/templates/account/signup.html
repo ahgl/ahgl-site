@@ -68,11 +68,9 @@
         </form>
         {% endifsetting %}
         
-        {% url terms as terms_url %}
-        {% url privacy as privacy_url %}
-        <p>{% blocktrans %}By clicking "Sign Up", you are indicating that you have read and agree to the <a href="{{ terms_url }}">Terms of Use</a> and <a href="{{ privacy_url }}">Privacy Policy</a> and that you are at least 13 years of age.{% endblocktrans %}</p>
+          <p>By clicking "Sign Up", you are indicating that you have read and agree to the <a href="http://afterhoursgaming.tv/terms-of-use/">Terms of Use</a> and <a href="http://afterhoursgaming.tv/privacy-policy/">Privacy Policy</a> and that you are at least 13 years of age.</p>
         
-        <p>{% blocktrans %}If you have any trouble creating your account, contact us at <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a>.{% endblocktrans %}</p>
+        <p>If you have any trouble creating your account, please <a href="http://afterhoursgaming.tv/messages/compose/ahgltv/">contact us</a>.</p>
         
     {% endif %}
 {% endblock %}
