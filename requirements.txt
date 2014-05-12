@@ -70,7 +70,7 @@ sorl-thumbnail==11.12
 django-social-auth==0.6.1
 -e git+https://github.com/arneb/django-messages.git@80316aa1b57f5dda987a2e580ec78372974a7520#egg=django-messages
 django-tinymce==1.5.1b2
-django-cms==2.3.4
+django-cms==2.3.8
 phileo==1.0
 
 # Need to specify direct path to postmarkup it seems.

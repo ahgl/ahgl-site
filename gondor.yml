@@ -1,5 +1,5 @@
 # Version control system used locally for your project.
-vcs: git
+vcs: git 
 
 # Runtime of python to use
 #runtime: python-2.7.3
