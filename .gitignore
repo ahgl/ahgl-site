@@ -10,3 +10,6 @@ ahgl/.gondor/site_key
 ahgl/local_settings.py
 ahgl/site_media/*
 dev.db
+ahgl/static/js/app/styles/*.css
+ahgl/static/js/app/.editorConfig
+ahgl/static/js/app/.htaccess
