@@ -4,4 +4,5 @@ dist
 .sass-cache
 bower_components
 .htaccess
-ahgl/static/js/app/app/styles/main.css
+main.css
+.htaccess
