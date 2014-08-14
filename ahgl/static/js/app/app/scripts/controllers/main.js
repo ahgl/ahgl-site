@@ -8,6 +8,6 @@
  * Controller of the ahgl2App
  */
 angular.module('ahgl2App')
-	.controller('MainCtrl', function ($scope) {
-		
-	});
+    .controller('MainCtrl', function ($scope) {
+        
+    });
