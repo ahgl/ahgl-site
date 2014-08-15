@@ -8,9 +8,11 @@
  * Controller of the ahgl2App
  */
 angular.module('ahgl2App')
-    .controller('HeaderCtrl', function ($scope) {
-        $scope.game1ImageSrc = 'images/game1.png';
-        $scope.game2ImageSrc = 'images/game2.png';
-        $scope.game3ImageSrc = 'images/game3.png';
-        $scope.game4ImageSrc = 'images/game4.png';
+    .controller('HeaderCtrl', function ($scope, $http) {
+        $http.get('http://127.0.0.1:8000/api/header/?format=json').then(function(resp) {    
+            $scope.game1ImageSrc = resp.data.results[0].image_url;
+            $scope.game2ImageSrc = resp.data.results[1].image_url;
+            $scope.game3ImageSrc = resp.data.results[2].image_url;
+            $scope.game4ImageSrc = resp.data.results[3].image_url;
+        });
     });

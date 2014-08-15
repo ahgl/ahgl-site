@@ -21,7 +21,18 @@ from tournaments.views import (MatchDetailView, MatchListView, MatchReportView,
 from tournaments.models import Tournament
 
 
+from django.conf.urls import patterns, url, include
+from rest_framework import routers
+from ahgl.api.views import header
+
+router = routers.DefaultRouter()
+router.register(r'header', header.HeaderViewSet)
+
 urlpatterns = patterns('',
+    url(r'^api/', include(router.urls)),
+)
+
+urlpatterns += patterns('',
     url(r"^admin/", include(admin.site.urls)),
     url(r"^account/", include("recaptcha_form.account_backend.urls")),
     url(r'^social/', include('social_auth.urls')),

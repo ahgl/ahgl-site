@@ -104,8 +104,8 @@ Initialize the tables:
 
 Load some sample data:
 
-    $ ./manage.py loaddata fixtures/dev1.json
-    $ ./manage.py loaddata fixtures/dev2.json
+    $ ./manage.py loaddata ahgl/fixtures/dev1.json
+    $ ./manage.py loaddata ahgl/fixtures/dev2.json
 
 ### 4. Run the server
 

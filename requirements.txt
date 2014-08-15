@@ -42,7 +42,7 @@ psycopg2==2.4.5
 gunicorn==0.17.2
 eventlet==0.9.16
 sqlalchemy==0.7.8
-lxml==2.3
+#lxml==2.3
 pillow==2.3.0
 html5lib==0.90
 bleach==1.2.1
@@ -82,3 +82,6 @@ https://postmarkup.googlecode.com/files/postmarkup-1.2.0.tar.gz
 # following is needed for a migration, it is harder to remove the parts of the
 # migration that it is to add this back.
 django-imagekit
+
+djangorestframework==2.3.14
+django-cors-headers

@@ -127,6 +127,8 @@ MIDDLEWARE_CLASSES = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "utils.middleware.RedirectFallbackMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = "ahgl.urls"
@@ -215,7 +217,19 @@ INSTALLED_APPS = [
     "profiles",
     "tournaments",
     "utils",
+    'api',
+
+    'rest_framework',
+    'corsheaders',
 ]
+
+REST_FRAMEWORK = {
+    'PAGINATE_BY': 10
+}
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:9000',
+)
 
 CELERYBEAT_SCHEDULE = {
     'expunge-deleted-account': {
