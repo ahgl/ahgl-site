@@ -14,5 +14,6 @@ angular.module('ahgl2App')
             $scope.game2ImageSrc = resp.data.results[1].image_url;
             $scope.game3ImageSrc = resp.data.results[2].image_url;
             $scope.game4ImageSrc = resp.data.results[3].image_url;
+            $scope.game5ImageSrc = resp.data.results[4].image_url;
         });
     });

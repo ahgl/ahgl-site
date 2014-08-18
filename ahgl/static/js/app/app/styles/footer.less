@@ -3,9 +3,10 @@ footer {
     font-size: 12px;
     .bar {
         padding: 15px;
-        background-color: #1f1f1f;
-        color: #aaa;
+        background-color: @dark-grey;
+        color: @light-grey;
         text-align: center;
+        opacity: .7;
         ul {
             li {
                 display: inline-block;
@@ -24,7 +25,7 @@ footer {
                 display: inline-block;
                 height: 40px;
                 width: 40px;
-                background-color: #fff;
+                background-color: white;
                 cursor: pointer;
                 &.facebook {
                     background-image: url('../images/facebook.png');
@@ -52,7 +53,7 @@ footer {
         .terms {
             display: inline-block;
             text-align: right;
-            color: rgb(227, 45, 46);
+            color: @bright-red;
             vertical-align: middle;
             height: 60px;
         }
@@ -66,7 +67,7 @@ footer {
         }
         .built-by {
             display: inline-block;
-            color: #aaa;
+            color: @light-grey;
             vertical-align: middle;
             height: 60px;
         }
