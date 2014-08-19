@@ -1,0 +1,75 @@
+footer {
+    font-family: 'AvianoFutureBold';
+    font-size: 12px;
+    .bar {
+        padding: 15px;
+        background-color: @dark-grey;
+        color: @light-grey;
+        text-align: center;
+        opacity: .7;
+        ul {
+            li {
+                display: inline-block;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+        }
+    }
+    .social {
+        width: 174px;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        ul {
+            li {
+                display: inline-block;
+                height: 40px;
+                width: 40px;
+                background-color: white;
+                cursor: pointer;
+                &.facebook {
+                    background-image: url('../images/facebook.png');
+                }
+                &.twitter {
+                    background-image: url('../images/twitter.png');
+                }
+                &.youtube {
+                    background-image: url('../images/youtube.png');
+                }
+                &.twitch {
+                    background-image: url('../images/twitch.png');
+                }
+            }
+        }
+    }
+    .misc {
+        width: 568px;
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 11px;
+        line-height: 1.365;
+        text-transform: lowercase;
+        .terms {
+            display: inline-block;
+            text-align: right;
+            color: @bright-red;
+            vertical-align: middle;
+            height: 60px;
+        }
+        .icon {
+            display: inline-block;
+            width: 28px;
+            height: 40px;
+            margin-left: 5px;
+            margin-right: 5px;
+            background-image: url('../images/small-logo.png');
+        }
+        .built-by {
+            display: inline-block;
+            color: @light-grey;
+            vertical-align: middle;
+            height: 60px;
+        }
+    }
+}

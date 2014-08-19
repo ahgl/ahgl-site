@@ -10,6 +10,34 @@ This is the source for <http://afterhoursgaming.tv/>.
 Getting Started
 ---------------
 
+### 1. Install npm dependencies
+
+navigate to: 'ahgl/static/js/app'
+
+run the following:
+
+    $ npm install
+
+### 2. Install bower dependencies
+
+in 'ahgl/static/js/app'
+
+run the following:
+
+    $ bower install
+
+### 3. Run the app
+
+in 'ahgl/static/js/app'
+
+run the following:
+
+    $ grunt serve
+
+
+Old docs
+-------------------------------------------------------------------------------------------------
+
 You should be familiar with [Python 2.7](http://www.python.org/download/releases/2.7/)
 and [Django 1.4](https://docs.djangoproject.com/en/1.4/). This site also makes use of Redis, Celery, South, Pinax, and a few other things.
 
@@ -76,8 +104,8 @@ Initialize the tables:
 
 Load some sample data:
 
-    $ ./manage.py loaddata fixtures/dev1.json
-    $ ./manage.py loaddata fixtures/dev2.json
+    $ ./manage.py loaddata ahgl/fixtures/dev1.json
+    $ ./manage.py loaddata ahgl/fixtures/dev2.json
 
 ### 4. Run the server
 
