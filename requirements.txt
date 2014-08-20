@@ -86,3 +86,4 @@ django-imagekit
 djangorestframework==2.3.14
 django-cors-headers
 django-filter
+requests==2.3.0
