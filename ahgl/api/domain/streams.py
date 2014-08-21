@@ -3,13 +3,13 @@ import json
 from django.db import models
 
 class LiveStreams(object):
-	def load(self, channel):
+	def load(self, channel, live_stream_image_url):
 		r = requests.get('https://api.twitch.tv/kraken/streams/' + channel)
 		json = r.json()
 		if json['stream']:
 			stream = Stream()
 			stream.channel_name = json['stream']['channel']['display_name']
-			stream.image_url = 'http://localhost:9000/images/live-stream-game.png'
+			stream.image_url = live_stream_image_url
 			return stream
 		else:
 			return None
