@@ -1,7 +1,7 @@
-<div ng-controller="LiveStreamCtrl" class="livestream-container">
+<div ng-controller="LiveStreamCtrl" class="livestream-container" ng-show="liveStream">
     <div class="header"></div>
     <div class="title-container">
-        <img class="logo" src="{{live_stream_logo}}"/>
+        <img class="logo" ng-src="{{live_stream_logo}}"/>
         <div class="title">{{streamTitle}}</div>
         <div class="currently-playing">Currently Playing</div>
     </div>
