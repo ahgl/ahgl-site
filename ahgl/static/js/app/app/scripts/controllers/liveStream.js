@@ -2,21 +2,19 @@
 
 /**
  * @ngdoc function
- * @name ahgl2App.controller:LiveStreamCtrl
+ * @name ahglApp.controller:LiveStreamCtrl
  * @description
  * # LiveStreamCtrl
- * Controller of the ahgl2App
+ * Controller of the ahglApp
  */
-angular.module('ahgl2App')
-    .controller('LiveStreamCtrl', function ($scope, $sce, $http) {
-        $http.get('http://127.0.0.1:8000/api/streams/?format=json').then(function(response) {
-            $scope.liveStream = response.data.channel_name != undefined;
-            if (response.data.channel_name) {
-                $scope.channel_name = response.data.channel_name;
-                $scope.chat_url = $sce.trustAsResourceUrl('http://twitch.tv/chat/embed?channel=' + response.data.channel_name + '&amp;popout_chat=false');
-                $scope.live_stream_logo = $sce.trustAsResourceUrl(response.data.image_url);
-                $scope.streamTitle = response.data.channel_name;
-            }
-        });
-            
+angular.module('ahglApp')
+    .controller('LiveStreamCtrl', function ($scope, $sce, liveStreamSvc, urls) {
+        liveStreamSvc.fetchStreams()
+            .then(function(resp) {
+                $scope.liveStream = true;
+                $scope.channel_name = resp.channelName;
+                $scope.chat_url = $sce.trustAsResourceUrl(urls.chatUrl.replace('{{channelName}}', resp.channelName));
+                $scope.live_stream_logo = $sce.trustAsResourceUrl(resp.gameImageUrl);
+                $scope.streamTitle = resp.channelName;
+            });
     });

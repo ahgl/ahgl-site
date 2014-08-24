@@ -23,14 +23,14 @@ from tournaments.models import Tournament
 
 from django.conf.urls import patterns, url, include
 from rest_framework import routers
-from ahgl.api.views import header, streams
+from ahgl.api.views import header, games
 
 router = routers.DefaultRouter()
 router.register(r'header', header.HeaderViewSet)
+router.register(r'games', games.GamesViewSet)
 
 urlpatterns = patterns('',
     url(r'^api/', include(router.urls)),
-    url(r'^api/streams', streams.StreamsAPIView.as_view(), name ='streams_api_view')
 )
 
 urlpatterns += patterns('',

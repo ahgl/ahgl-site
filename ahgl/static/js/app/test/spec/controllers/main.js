@@ -3,7 +3,7 @@
 describe('Controller: MainCtrl', function () {
 
     // load the controller's module
-    beforeEach(module('ahgl2App'));
+    beforeEach(module('ahglApp'));
 
     var MainCtrl,
         scope;

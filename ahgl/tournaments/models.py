@@ -39,9 +39,7 @@ def validate_wholenumber(value):
 
 class Tournament(models.Model):
     name = models.CharField(_("name"), max_length=50)
-    game = models.ForeignKey('api.Game', blank=True, null=True, on_delete=models.SET_NULL)
     slug = models.SlugField(max_length=50, primary_key=True)
-    channel_name = models.CharField(max_length=100)
     map_pool = models.ManyToManyField('Map')
     status = models.CharField(max_length=1, choices=(('C', 'Completed'), ('A', 'Active'), ('S', 'Signup'),), default='S', db_index=True)
     games_per_match = models.PositiveSmallIntegerField(default=5, verbose_name="Default Games per Match", validators=[validate_wholenumber])

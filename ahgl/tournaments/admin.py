@@ -29,16 +29,13 @@ class TournamentRoundInline(admin.TabularInline):
 
 class TournamentAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('__unicode__', 'game_name', 'status',)
+    list_display = ('__unicode__', 'status',)
     list_filter = ('status',)
     inlines = (TournamentRoundInline,)
 
     def get_form(self, request, obj=None, **kwargs):
         self.obj = obj
         return super(TournamentAdmin, self).get_form(request, obj, **kwargs)
-
-    def game_name(self, instance):
-        return instance.game.name
 
     @transaction.commit_manually
     def save_model(self, request, obj, form, change):
