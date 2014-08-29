@@ -1,52 +1,66 @@
 .carousel {
-	height: 200px;
-	img {
-		display: block;
-		height: 200px;
-		width: 1200px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-	.mask {
-		opacity: 0.5;
-		background-color: #000;
-		width: 100%;
-		height: 75px;
-		position: absolute;
-		top: 125px;
-	}
-	.message {
-		position: absolute;
-		background: transparent;
-		color: white;
-		width: 100%;
-		height: 75px;
-		top: 135px;
-		text-align: center;
-	}
-	.rn-carousel-controls {
-		position: relative;
-		width: 1200px;
-		margin-left: auto;
-		margin-right: auto;
-		.rn-carousel-control.rn-carousel-control-next {
-			width: 30px;
-			height: 50px;
-			margin-top: -125px;
-			background: url('../images/carousel-right-arrow.png');
-			&:before {
-				content: '';
-			}
-		}
-		.rn-carousel-control.rn-carousel-control-prev {
-			width: 30px;
-			height: 50px;
-			margin-top: -125px;
-			background: url('../images/carousel-left-arrow.png');
-			&:before {
-				content: '';
-			}
-		}
-	}
-	
+    height: 200px;
+    position: relative;
+    top: -26px;
+    img {
+        display: block;
+        height: 200px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .fade {
+        width: 100%;
+        height: 50px;
+        position: absolute;
+        top: 0px;
+        background-image: -webkit-linear-gradient(top, 
+            rgba(0,0,0,0.9) 0%, 
+            rgba(0,0,0,0.4) 80%,
+            rgba(0,0,0,0) 100%);
+    }
+    .mask {
+        background-image: -webkit-linear-gradient(top, 
+            rgba(0,0,0,0.5) 0%, 
+            rgba(0,0,0,0.6) 20%,
+            rgba(0,0,0,0.9) 100%);
+        width: 100%;
+        height: 75px;
+        position: absolute;
+        top: 125px;
+    }
+    .message {
+        position: absolute;
+        background: transparent;
+        color: white;
+        width: 100%;
+        height: 75px;
+        top: 135px;
+        text-align: center;
+    }
+    .rn-carousel-controls {
+        position: relative;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        .rn-carousel-control.rn-carousel-control-next {
+            width: 30px;
+            height: 50px;
+            margin-top: -50px;
+            background: url('../images/carousel-right-arrow.png');
+            &:before {
+                content: '';
+            }
+        }
+        .rn-carousel-control.rn-carousel-control-prev {
+            width: 30px;
+            height: 50px;
+            margin-top: -50px;
+            background: url('../images/carousel-left-arrow.png');
+            &:before {
+                content: '';
+            }
+        }
+    }
+    
 }
