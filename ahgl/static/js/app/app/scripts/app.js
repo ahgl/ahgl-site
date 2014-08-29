@@ -10,6 +10,7 @@
  */
 angular
     .module('ahglApp', [
+        'config',
         'ngAnimate',
         'ngCookies',
         'ngResource',
@@ -27,10 +28,4 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
-    })
-    .value('urls', {
-        headerInfoUrl: 'http://127.0.0.1:8000/api/header/?format=json',
-        gamesUrl: 'http://127.0.0.1:8000/api/games/?format=json',
-        streamUrl: 'https://api.twitch.tv/kraken/streams/{{channelName}}?callback=JSON_CALLBACK',
-        chatUrl: 'http://twitch.tv/chat/embed?channel={{channelName}}&amp;popout_chat=false'
     });

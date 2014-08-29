@@ -9,3 +9,11 @@ class Game(models.Model):
 
 	def __unicode__(self):
 		return self.name
+
+class CarouselItem(models.Model):
+	order = models.IntegerField()
+	message = models.CharField(max_length=2048)
+	image_url = models.CharField(max_length=2048)
+
+	def __unicode__(self):
+		return self.image_url

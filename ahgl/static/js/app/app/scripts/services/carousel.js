@@ -8,9 +8,9 @@
  * Controller of the ahglApp
  */
 angular.module('ahglApp')
-    .service('carouselSvc', function ($sce, $http, $q, urls) {
+    .service('carouselSvc', function ($sce, $http, $q, urlSvc) {
         
         this.fetchCarousels = function () {
-
+            return $http.get(urlSvc.carouselUrl);
         }
     });

@@ -8,9 +8,9 @@
  * Controller of the ahglApp
  */
 angular.module('ahglApp')
-    .service('headerSvc', function ($sce, $http, urls) {
+    .service('headerSvc', function ($sce, $http, urlSvc) {
         
         this.fetchHeaderInfo = function () {
-            return $http.get(urls.headerInfoUrl);
+            return $http.get(urlSvc.headerInfoUrl);
         }  
     });

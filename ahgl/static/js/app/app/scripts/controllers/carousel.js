@@ -10,13 +10,12 @@
 angular.module('ahglApp')
     .controller('CarouselCtrl', function ($scope, carouselSvc, $sce) {
         $scope.carouselInterval = 5000;
-        $scope.slides = [
-        	{
-        		image: 'http://placekitten.com/605/300',
-        		message: $sce.trustAsHtml('<b>hi</b><br/>there')
-        	},
-        	{
-        		image: 'http://placekitten.com/601/300'
-        	}
-        ]
+        $scope.slides = [];
+        carouselSvc.fetchCarousels()
+            .then(function(resp) {  
+                resp.data.results.forEach(function(carousel) {
+                    carousel.message = $sce.trustAsHtml(carousel.message);
+                    $scope.slides.push(carousel);
+                });
+            });
     });
