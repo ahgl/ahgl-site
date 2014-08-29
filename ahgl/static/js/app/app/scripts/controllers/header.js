@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name ahgl2App.controller:HeaderCtrl
+ * @name ahglApp.controller:HeaderCtrl
  * @description
  * # HeaderCtrl
- * Controller of the ahgl2App
+ * Controller of the ahglApp
  */
-angular.module('ahgl2App')
+angular.module('ahglApp')
     .controller('HeaderCtrl', function ($scope, $http) {
         $http.get('http://127.0.0.1:8000/api/header/?format=json').then(function(resp) {    
             $scope.game1ImageSrc = resp.data.results[0].image_url;
