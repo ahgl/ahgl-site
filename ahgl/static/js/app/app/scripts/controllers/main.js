@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name ahgl2App.controller:MainCtrl
+ * @name ahglApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the ahgl2App
+ * Controller of the ahglApp
  */
-angular.module('ahgl2App')
+angular.module('ahglApp')
     .controller('MainCtrl', function () {
         
     });

@@ -1,0 +1,54 @@
+.livestream-container {
+    font-family: 'AvianoFutureBold';
+    .header {
+        background-image: url('../images/livestream-header.png');
+        height: 105px;
+        width: 1026px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .title-container {
+        color: @bright-red;
+        width: 977px;
+        margin-left: auto;
+        margin-right: auto;
+        img {
+            float: left;
+            margin-top: 5px;
+            margin-right: 5px;
+        }
+        .title {
+            font-size: 26px;
+            text-transform: uppercase;
+        }
+        .currently-playing {
+            color: @dark-red;
+            font-size: 16px;
+            text-transform: uppercase;  
+        }
+    }
+    .stream-container {
+        width: 977px;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        border-top: 1px solid @medium-grey;
+
+        .twitch-container, 
+        .chat-container {
+            display: inline-block;
+            height: 500px;
+            margin-top: 15px;
+        }
+
+        .twitch-container {
+            width: 655px;
+            margin-right: 15px;
+            background-color: @light-grey;
+        }
+        .chat-container {
+            width: 300px;
+            background-color: @light-grey;
+        }
+    }
+}
