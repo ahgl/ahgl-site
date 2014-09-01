@@ -196,6 +196,8 @@ class Match(models.Model):
     winner = models.ForeignKey('profiles.Team', related_name="match_wins", blank=True, null=True, editable=False)
     loser = models.ForeignKey('profiles.Team', related_name="match_losses", blank=True, null=True, editable=False)
 
+    featured = models.BooleanField(default=False)
+
     def update_winloss(self):
         for team in (self.home_team, self.away_team):
             team.wins = team.match_wins.filter(published=True).count()
