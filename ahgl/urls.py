@@ -17,18 +17,18 @@ from profiles.views import (MVPView, TeamListView, TeamDetailView, TeamAdminView
                             TeamMembershipUpdateView, TeamMembershipCreateView,
                             TeamMembershipDeleteView, CasterListView)
 from tournaments.views import (MatchDetailView, MatchListView, MatchReportView,
-                               SubmitLineupView, GameListView, PlayerAdminView,
-                               FeaturedMatchListView)
+                               SubmitLineupView, GameListView, PlayerAdminView)
 from tournaments.models import Tournament
 
 
 from django.conf.urls import patterns, url, include
 from rest_framework import routers
-from ahgl.api.views import header, games
+from ahgl.api.views import header, games, matches
 
 router = routers.DefaultRouter()
 router.register(r'header', header.HeaderViewSet)
 router.register(r'games', games.GamesViewSet)
+router.register(r'featured_matches', matches.FeaturedMatchesViewSet)
 
 urlpatterns = patterns('',
     url(r'^api/', include(router.urls)),
@@ -78,8 +78,6 @@ urlpatterns += patterns('',
     #url(r'^(?P<tournament>[\w_-]+)/matches/(?P<date>[\d\\-]+)/(?P<home>[\w_-]+)-vs-(?P<away>[\w_-]+)$', MatchDetailView.as_view(), name='match_page'),
     url(r'^(?P<tournament>[\w_-]+)/standings/$', StandingsView.as_view(), name='standings'),
     url(r'^(?P<tournament>[\w_-]+)/casters/$', CasterListView.as_view(), name='casters'),
-
-    url(r'^featured_matches$', FeaturedMatchListView.as_view(), name='featured_matches'),
 
     url(r'^', include('cms.urls')),
 )
