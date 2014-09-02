@@ -34,8 +34,6 @@ from profiles.views import TournamentSlugContextView
 from .models import Tournament, Match, Game, TournamentRound
 from .forms import BaseMatchFormSet, MultipleFormSetBase
 
-from itertools import chain
-
 logger = logging.getLogger(__name__)
 
 
@@ -219,30 +217,6 @@ class MatchListView(TournamentSlugContextView, ListView):
         team = self.kwargs.get('team') or self.request.GET.get('team')
         if team:
             queryset = queryset.filter(Q(home_team__slug=team) | Q(away_team__slug=team))
-        return queryset
-
-class FeaturedMatchListView(ListView):
-    def get_queryset(self):
-        limit = 4
-        if self.kwargs.get('limit'):
-            limit = self.kwargs['limit']
-
-        if self.request.GET.get('tournament'):
-            queryset = (Match.objects.filter(tournament=self.request.GET.get('tournament'), featured=True)
-                    .order_by('publish_date', 'creation_date', 'tournament_round')
-                    .select_related('home_team', 'away_team', 'tournament_round'))[:limit]
-        else:
-            queryset = (Match.objects.filter(tournament__status='A', featured=True)
-                    .order_by('publish_date', 'creation_date', 'tournament_round')
-                    .select_related('home_team', 'away_team', 'tournament_round'))[:limit]
-
-            if queryset.count() < limit:
-                additional_queryset = (Match.objects.filter(tournament__status='A', featured=False)
-                    .order_by('publish_date', 'creation_date', 'tournament_round')
-                    .select_related('home_team', 'away_team', 'tournament_round'))
-
-                queryset = list(chain(queryset, additional_queryset))[:limit]
-
         return queryset
 
 class MatchDetailView(ObjectPermissionsCheckMixin, TournamentSlugContextView, DetailView):
