@@ -1,0 +1,170 @@
+@font-face {
+  font-family: AvianoFutureBold;
+  src: url('fonts/AvianoFutureBold.otf');
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: white;
+  background-image: url('../images/background.jpg');
+}
+header {
+  width: 986px;
+  height: 175px;
+  margin-left: auto;
+  margin-right: auto;
+}
+header .logo {
+  display: inline-block;
+  width: 107px;
+  height: 212px;
+  background-image: url('../images/logo.png');
+}
+header .bar {
+  display: inline-block;
+  width: 895px;
+  height: 116px;
+  position: absolute;
+  top: 32px;
+  background-image: url('../images/header-background.png');
+}
+header .bar img {
+  width: 167px;
+  height: 100px;
+  margin: 0 2px;
+  cursor: pointer;
+}
+header .bar .more {
+  position: absolute;
+  background-image: url('../images/more.png');
+  right: 8px;
+  top: 17px;
+  height: 92px;
+  width: 60px;
+  cursor: pointer;
+}
+footer {
+  font-family: 'AvianoFutureBold';
+  font-size: 12px;
+}
+footer .bar {
+  padding: 15px;
+  background-color: #1f1f1f;
+  color: #aaaaaa;
+  text-align: center;
+  opacity: .7;
+}
+footer .bar ul li {
+  display: inline-block;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+footer .social {
+  width: 174px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+footer .social ul li {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  cursor: pointer;
+}
+footer .social ul li.facebook {
+  background-image: url('../images/facebook.png');
+}
+footer .social ul li.twitter {
+  background-image: url('../images/twitter.png');
+}
+footer .social ul li.youtube {
+  background-image: url('../images/youtube.png');
+}
+footer .social ul li.twitch {
+  background-image: url('../images/twitch.png');
+}
+footer .misc {
+  width: 568px;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 11px;
+  line-height: 1.365;
+  text-transform: lowercase;
+}
+footer .misc .terms {
+  display: inline-block;
+  text-align: right;
+  color: #e32d2e;
+  vertical-align: middle;
+  height: 60px;
+}
+footer .misc .icon {
+  display: inline-block;
+  width: 28px;
+  height: 40px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-image: url('../images/small-logo.png');
+}
+footer .misc .built-by {
+  display: inline-block;
+  color: #aaaaaa;
+  vertical-align: middle;
+  height: 60px;
+}
+.livestream-container {
+  font-family: 'AvianoFutureBold';
+}
+.livestream-container .header {
+  background-image: url('../images/livestream-header.png');
+  height: 105px;
+  width: 1026px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.livestream-container .title-container {
+  color: #e32d2e;
+  width: 977px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.livestream-container .title-container img {
+  float: left;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+.livestream-container .title-container .title {
+  font-size: 26px;
+  text-transform: uppercase;
+}
+.livestream-container .title-container .currently-playing {
+  color: #832325;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+.livestream-container .stream-container {
+  width: 977px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: 1px solid #676767;
+}
+.livestream-container .stream-container .twitch-container,
+.livestream-container .stream-container .chat-container {
+  display: inline-block;
+  height: 500px;
+  margin-top: 15px;
+}
+.livestream-container .stream-container .twitch-container {
+  width: 655px;
+  margin-right: 15px;
+  background-color: #aaaaaa;
+}
+.livestream-container .stream-container .chat-container {
+  width: 300px;
+  background-color: #aaaaaa;
+}

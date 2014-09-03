@@ -1,0 +1,38 @@
+.featured-matches {
+    width: 1036px;
+    height: 350px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .header {
+        background-image: url('../images/featuredmatches-header.png');
+        height: 105px;
+        width: 1026px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .featured-matches-container {
+        font-family: 'AvianoFutureBold';
+        margin-left: 10px;
+        margin-right: 10px;
+        .match {
+            border: 2px solid @light-grey;
+            margin: 10px;
+            float: left;
+            width: 310px;
+            padding-top: 70px;
+            padding-bottom: 70px;
+            p {
+                text-align: center;
+                text-transform: uppercase;
+                color: white;
+                font-size: 11px;
+                &.vs {
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }    
+}
