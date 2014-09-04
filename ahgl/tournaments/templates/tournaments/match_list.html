@@ -13,16 +13,16 @@
     
     <ul class="unstyled">
     {% for match in match_list %}
-    	{% if match.publish_date %}
-    	{% ifchanged %}<h3 class="t3">{{ match.publish_date|date:"M d, Y" }}</h3>{% endifchanged %}
-    	{% else %}
-    	{% ifchanged %}<h3 class="t3">Not published</h3>{% endifchanged %}
-    	{% ifchanged %}<h3 class="t3">{{ match.creation_date|date:"M d, Y" }}</h3>{% endifchanged %}
-    	{% endif %}
-    	{% ifchanged %}<h4 class="bold">Division {{match.tournament_round.order}} ({{match.tournament_round.stage_name}})</h4>{% endifchanged %}
+        {% if match.publish_date %}
+        {% ifchanged %}<h3 class="t3">{{ match.publish_date|date:"M d, Y" }}</h3>{% endifchanged %}
+        {% else %}
+        {% ifchanged %}<h3 class="t3">Not published</h3>{% endifchanged %}
+        {% ifchanged %}<h3 class="t3">{{ match.creation_date|date:"M d, Y" }}</h3>{% endifchanged %}
+        {% endif %}
+        {% ifchanged %}<h4 class="bold">Division {{match.tournament_round.order}} ({{match.tournament_round.stage_name}})</h4>{% endifchanged %}
         <li class="cf" style="float:none;"><a href="{{match.get_absolute_url}}">{{match.home_team}} vs {{match.away_team}}</a></li>
     {% empty %}
-    	<li>No matches yet</li>
+         <li>No matches yet</li>
     {% endfor %}
     </ul>
     

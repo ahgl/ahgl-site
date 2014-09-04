@@ -11,6 +11,6 @@ from profiles.models import Team, TeamMembership
 import settings
 
 class GameAdmin(admin.ModelAdmin):
-	list_display = ('name',)
+    list_display = ('name',)
 
 admin.site.register(Game, GameAdmin)
