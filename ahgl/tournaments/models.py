@@ -454,6 +454,9 @@ class Article(models.Model):
 
         super(Article, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return self.cms_plugin.get().page.get_absolute_url()
+
 
 @receiver(post_save, sender=Match, dispatch_uid="tournaments_update_winloss")
 def update_winloss(sender, instance, created, **kwargs):
@@ -475,5 +478,5 @@ class TournamentPluginModel(CMSPlugin):
     tournament = models.ForeignKey('Tournament')
 
 class ArticlePluginModel(CMSPlugin):
-    article = models.ForeignKey('Article', unique=True)
+    article = models.ForeignKey('Article', unique=True, related_name='cms_plugin')
 
