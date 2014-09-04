@@ -2,8 +2,10 @@
 
 <div ng-controller="FeaturedMatchesCtrl" class="featured-matches-container">
     <div ng-repeat="match in matches" class="match" style="background-image: url('{{match.background_image_url}}');">
-        <p>{{ match.home_team }}</p>
-        <p class="vs">vs</p>
-        <p>{{ match.away_team }}</p>
+        <a href="{{ match.match_url }}">
+            <p>{{ match.home_team }}</p>
+            <p class="vs">vs</p>
+            <p>{{ match.away_team }}</p>
+        </a>
     </div>
 </div>
