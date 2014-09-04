@@ -4,7 +4,7 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Tournament, GamePluginModel, TournamentPluginModel, Game
+from .models import Tournament, GamePluginModel, TournamentPluginModel, Game, Article, ArticlePluginModel
 
 r_tourney_slug = re.compile('^(?P<slug>[\w_-]+)/')
 
@@ -61,3 +61,27 @@ class TournamentNavPlugin(CMSPluginBase):
         context['tournament_slug'] = instance.tournament_id
         return context
 plugin_pool.register_plugin(TournamentNavPlugin)
+
+class ArticlePlugin(CMSPluginBase):
+    model = ArticlePluginModel
+    name = _("Article")
+    render_template = "tournaments/article_plugin.html"
+
+    def get_form(self, request, obj=None, **kwargs):
+        self.obj = obj
+        return super(ArticlePlugin, self).get_form(request, obj, **kwargs)
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "article":
+            kwargs["queryset"] = Article.objects.filter(published=True) \
+                                             .order_by('-publish_date') \
+                                             .only('title', 'summary')
+        return super(ArticlePlugin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def render(self, context, instance, placeholder):
+        context['article'] = instance.article
+        if instance.article:
+            context['tournaments'] = instance.article.tournaments.all()
+
+        return context
+plugin_pool.register_plugin(ArticlePlugin)
