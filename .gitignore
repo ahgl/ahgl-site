@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 *.pyc
 *.swp
 .DS_Store
@@ -11,7 +10,3 @@ ahgl/.gondor/site_key
 ahgl/local_settings.py
 ahgl/site_media/*
 dev.db
-=======
-*.pyc
-ahgl/local_settings.py
->>>>>>> Stashed changes
