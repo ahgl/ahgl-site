@@ -157,19 +157,6 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'creation_date', 'publish_date', 'published',)
     fields = ('title', 'summary', 'published', 'tournaments')
 
-    def get_form(self, request, obj=None, **kwargs):
-        self.obj = obj
-        return super(ArticleAdmin, self).get_form(request, obj, **kwargs)
-
-    @transaction.commit_manually
-    def save_model(self, request, obj, form, change):
-        try:
-            super(ArticleAdmin, self).save_model(request, obj, form, change)
-        except:
-            transaction.rollback()
-            raise
-        else:
-            transaction.commit()
 
 admin.site.register(Tournament, TournamentAdmin)
 admin.site.register(Map)
