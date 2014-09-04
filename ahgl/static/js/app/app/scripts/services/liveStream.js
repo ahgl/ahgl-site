@@ -8,7 +8,7 @@
  * Controller of the ahglApp
  */
 angular.module('ahglApp')
-    .service('liveStreamSvc', function ($sce, $http, $q, urls) {
+    .service('liveStreamSvc', function ($sce, $http, $q, urlSvc) {
         
         this.fetchStreams = function () {
             var deferred = $q.defer();
@@ -16,7 +16,7 @@ angular.module('ahglApp')
                 .then(function (games) {
                     var endpoints = [];
                     games.data.results.forEach(function (game) {
-                        endpoints.push($http.jsonp(urls.streamUrl.replace('{{channelName}}', game.channel_name)));
+                        endpoints.push($http.jsonp(urlSvc.streamUrl.replace('{{channelName}}', game.channel_name)));
                     });
                     $q.all(endpoints)
                         .then(function(responses) {
@@ -35,6 +35,6 @@ angular.module('ahglApp')
         }  
 
         this.fetchGames = function () {
-            return $http.get($sce.trustAsResourceUrl(urls.gamesUrl));
+            return $http.get($sce.trustAsResourceUrl(urlSvc.gamesUrl));
         } 
     });
