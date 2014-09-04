@@ -23,12 +23,13 @@ from tournaments.models import Tournament
 
 from django.conf.urls import patterns, url, include
 from rest_framework import routers
-from ahgl.api.views import header, games, articles
+from ahgl.api.views import header, games, carousel, articles
 
 router = routers.DefaultRouter()
 router.register(r'header', header.HeaderViewSet)
 router.register(r'games', games.GamesViewSet)
 router.register(r'latest_news', articles.LatestNewsViewSet)
+router.register(r'carousel', carousel.CarouselItemViewSet)
 
 urlpatterns = patterns('',
     url(r'^api/', include(router.urls)),
