@@ -34,19 +34,6 @@ class Migration(SchemaMigration):
         ))
         db.create_unique('tournaments_article_tournaments', ['article_id', 'tournament_id'])
 
-
-        # Changing field 'Game.winner'
-        db.alter_column('tournaments_game', 'winner_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, on_delete=models.SET_NULL, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.loser'
-        db.alter_column('tournaments_game', 'loser_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, on_delete=models.SET_NULL, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.away_player'
-        db.alter_column('tournaments_game', 'away_player_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, on_delete=models.SET_NULL, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.home_player'
-        db.alter_column('tournaments_game', 'home_player_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, on_delete=models.SET_NULL, to=orm['profiles.TeamMembership']))
-
     def backwards(self, orm):
         # Deleting model 'ArticlePluginModel'
         db.delete_table('cmsplugin_articlepluginmodel')
@@ -56,19 +43,6 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field tournaments on 'Article'
         db.delete_table('tournaments_article_tournaments')
-
-
-        # Changing field 'Game.winner'
-        db.alter_column('tournaments_game', 'winner_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.loser'
-        db.alter_column('tournaments_game', 'loser_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.away_player'
-        db.alter_column('tournaments_game', 'away_player_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.home_player'
-        db.alter_column('tournaments_game', 'home_player_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['profiles.TeamMembership']))
 
     models = {
         'auth.group': {
