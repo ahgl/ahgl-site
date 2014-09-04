@@ -3,6 +3,10 @@ header {
     height: 175px;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
+    z-index: 9999;
+    background: transparent;
+    font-family: 'AvianoFutureBold';
     .logo {
         display: inline-block;
         width: 107px;
@@ -30,6 +34,22 @@ header {
             height: 92px;
             width: 60px;
             cursor: pointer;
+        }
+    }
+    .navigation {
+        width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        top: -61px;
+        ul {
+            list-style-type: none;
+            li {
+                display: inline-block;
+                color: lightgrey;
+                font-size: 12px;
+                margin-right: 20px;
+            }
         }
     }
 }
