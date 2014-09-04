@@ -6,7 +6,7 @@ from django.contrib.admin.actions import delete_selected
 from django.utils import timezone
 
 from .views import NewTournamentRoundView
-from .models import Tournament, TournamentRound, Map, Match, Game
+from .models import Article, Tournament, TournamentRound, Map, Match, Game
 from profiles.models import Team, TeamMembership
 
 from .tasks import update_round_stats
@@ -153,6 +153,25 @@ class MatchAdmin(admin.ModelAdmin):
         return ret
     delete_and_update_stats.short_description = "Deletes matches and updates all team stats associated with those matches"
 
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('title', 'creation_date', 'publish_date', 'published',)
+    fields = ('title', 'summary', 'published', 'tournaments')
+
+    def get_form(self, request, obj=None, **kwargs):
+        self.obj = obj
+        return super(ArticleAdmin, self).get_form(request, obj, **kwargs)
+
+    @transaction.commit_manually
+    def save_model(self, request, obj, form, change):
+        try:
+            super(ArticleAdmin, self).save_model(request, obj, form, change)
+        except:
+            transaction.rollback()
+            raise
+        else:
+            transaction.commit()
+
 admin.site.register(Tournament, TournamentAdmin)
 admin.site.register(Map)
 admin.site.register(Match, MatchAdmin)
+admin.site.register(Article, ArticleAdmin)
