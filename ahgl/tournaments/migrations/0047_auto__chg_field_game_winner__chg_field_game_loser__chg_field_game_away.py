@@ -9,17 +9,6 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
 
-        # Changing field 'Game.winner'
-        db.alter_column('tournaments_game', 'winner_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, on_delete=models.SET_NULL, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.loser'
-        db.alter_column('tournaments_game', 'loser_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, on_delete=models.SET_NULL, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.away_player'
-        db.alter_column('tournaments_game', 'away_player_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, on_delete=models.SET_NULL, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.home_player'
-        db.alter_column('tournaments_game', 'home_player_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, on_delete=models.SET_NULL, to=orm['profiles.TeamMembership']))
         # Adding field 'Match.featured'
         db.add_column('tournaments_match', 'featured',
                       self.gf('django.db.models.fields.BooleanField')(default=False),
@@ -28,17 +17,6 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
 
-        # Changing field 'Game.winner'
-        db.alter_column('tournaments_game', 'winner_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.loser'
-        db.alter_column('tournaments_game', 'loser_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.away_player'
-        db.alter_column('tournaments_game', 'away_player_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['profiles.TeamMembership']))
-
-        # Changing field 'Game.home_player'
-        db.alter_column('tournaments_game', 'home_player_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['profiles.TeamMembership']))
         # Deleting field 'Match.featured'
         db.delete_column('tournaments_match', 'featured')
 
