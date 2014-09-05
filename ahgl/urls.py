@@ -23,11 +23,12 @@ from tournaments.models import Tournament
 
 from django.conf.urls import patterns, url, include
 from rest_framework import routers
-from ahgl.api.views import header, games, carousel
+from ahgl.api.views import header, games, matches, carousel
 
 router = routers.DefaultRouter()
 router.register(r'header', header.HeaderViewSet)
 router.register(r'games', games.GamesViewSet)
+router.register(r'featured_matches', matches.FeaturedMatchesViewSet)
 router.register(r'carousel', carousel.CarouselItemViewSet)
 
 urlpatterns = patterns('',
@@ -78,6 +79,7 @@ urlpatterns += patterns('',
     #url(r'^(?P<tournament>[\w_-]+)/matches/(?P<date>[\d\\-]+)/(?P<home>[\w_-]+)-vs-(?P<away>[\w_-]+)$', MatchDetailView.as_view(), name='match_page'),
     url(r'^(?P<tournament>[\w_-]+)/standings/$', StandingsView.as_view(), name='standings'),
     url(r'^(?P<tournament>[\w_-]+)/casters/$', CasterListView.as_view(), name='casters'),
+
     url(r'^', include('cms.urls')),
 )
 
