@@ -16,7 +16,7 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
 
         if hasattr(article, 'tournament'):
             game_queryset = Game.objects.filter(tournament=article.tournament)
-                if game_queryset.exists():
-                    image_url = game_queryset.get().image_url
+            if game_queryset.exists():
+                image_url = game_queryset.get().image_url
 
         return image_url
