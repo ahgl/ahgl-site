@@ -1,10 +1,7 @@
-<div class="logo"></div>
+<a href="/"><div class="logo"></div></a>
+
 <div class="bar" ng-controller="HeaderCtrl">
-    <img class="game1 game" ng-src="{{game1ImageSrc}}" />
-    <img class="game2 game" ng-src="{{game2ImageSrc}}" />
-    <img class="game3 game" ng-src="{{game3ImageSrc}}" />
-    <img class="game4 game" ng-src="{{game4ImageSrc}}" />
-    <img class="game5 game" ng-src="{{game5ImageSrc}}" />
+    <a ng-repeat="game in games" href="/tournament/{{ game.slug }}"><img class="game1 game" ng-src="{{ game.image_url}}"/></a>
 </div>
 <div class="navigation">
 	<ul>
