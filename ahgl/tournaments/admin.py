@@ -103,11 +103,11 @@ def cache_field(field_name, queryset, db_field, request, kwargs):
 
 
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ('name', 'winner__name', 'creation_date', 'publish_date', 'home_submission_date', 'away_submission_date', 'tournament_round', 'published',)
+    list_display = ('name', 'winner__name', 'creation_date', 'publish_date', 'home_submission_date', 'away_submission_date', 'tournament_round', 'published', 'featured')
     list_filter = ('tournament', 'home_submitted', 'away_submitted',)
     search_fields = ('home_team__name', 'away_team__name',)
     inlines = (GameInline,)
-    actions = ['publish_match', 'delete_and_update_stats']
+    actions = ['publish_match', 'delete_and_update_stats', 'mark_featured', 'mark_unfeatured']
     date_hierarchy = 'creation_date'
     readonly_fields = ('tournament', 'home_submission_date', 'away_submission_date', 'referee',)
 
@@ -153,9 +153,29 @@ class MatchAdmin(admin.ModelAdmin):
         return ret
     delete_and_update_stats.short_description = "Deletes matches and updates all team stats associated with those matches"
 
+
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'creation_date', 'publish_date', 'published',)
     fields = ('title', 'summary', 'published', 'tournaments')
+
+    def mark_featured(self, request, queryset):
+        rows_updated = queryset.update(featured=True)
+        if rows_updated == 1:
+            message_bit = "1 match was"
+        else:
+            message_bit = "%s match were" % rows_updated
+        self.message_user(request, "%s successfully marked as featured." % message_bit)
+    mark_featured.short_description = "Mark selected matches as featured"
+
+    def mark_unfeatured(self, request, queryset):
+        rows_updated = queryset.update(featured=False)
+        if rows_updated == 1:
+            message_bit = "1 featured match was"
+        else:
+            message_bit = "%s featured match were" % rows_updated
+        self.message_user(request, "%s successfully unmarked." % message_bit)
+
+    mark_unfeatured.short_description = "Unmark selected featured matches"
 
 
 admin.site.register(Tournament, TournamentAdmin)

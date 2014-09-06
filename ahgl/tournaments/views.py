@@ -219,7 +219,6 @@ class MatchListView(TournamentSlugContextView, ListView):
             queryset = queryset.filter(Q(home_team__slug=team) | Q(away_team__slug=team))
         return queryset
 
-
 class MatchDetailView(ObjectPermissionsCheckMixin, TournamentSlugContextView, DetailView):
     model = Match
     queryset = Match.objects.select_related('home_team', 'away_team')
