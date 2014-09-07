@@ -15,7 +15,7 @@ from profiles.views import (MVPView, TeamListView, TeamDetailView, TeamAdminView
                             StandingsView, TeamUpdateView, TeamSignupView,
                             MyProfileDetailView, TeamMembershipView,
                             TeamMembershipUpdateView, TeamMembershipCreateView,
-                            TeamMembershipDeleteView, CasterListView)
+                            TeamMembershipDeleteView, CasterListView, InviteTeamMember)
 from tournaments.views import (MatchDetailView, MatchListView, MatchReportView,
                                SubmitLineupView, GameListView, PlayerAdminView)
 from tournaments.models import Tournament
@@ -79,6 +79,7 @@ urlpatterns += patterns('',
     #url(r'^(?P<tournament>[\w_-]+)/matches/(?P<date>[\d\\-]+)/(?P<home>[\w_-]+)-vs-(?P<away>[\w_-]+)$', MatchDetailView.as_view(), name='match_page'),
     url(r'^(?P<tournament>[\w_-]+)/standings/$', StandingsView.as_view(), name='standings'),
     url(r'^(?P<tournament>[\w_-]+)/casters/$', CasterListView.as_view(), name='casters'),
+    url(r'^invite_member/(?P<team>[\w_-]+)/$', InviteTeamMember.as_view(), name='invite_member'),
 
     url(r'^', include('cms.urls')),
 )
