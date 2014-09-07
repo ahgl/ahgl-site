@@ -12,22 +12,23 @@
 {% block body %}
 <script>
     $(document).ready(function(){
-        $("#invite_member").click(function(){
+        $("#invite_member").click(function() {
+            var email = $("#invitee_email").val();
+            $("#email_message").text("");
             $.post("{% url invite_member team.slug %}",
                 { 
-                    email: $("#invitee_email").val(),
+                    email: email,
                     csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
                 },
                 function( data ) {
                     if (data['success'] == 0) {
                         for (index in data['errors']) {
-                            $("#email_message").append(data['errors'][index]);    
+                            $("#email_message").append("<div>" + data['errors'][index] + "</div>");    
                         }
                     } else {
-
+                        $("#email_message").text("Invitation sent to " + email);
+                        $("#invitee_email").val("");
                     }
-                    console.log(data['errors']);
-                    // $( ".result" ).html( data );
                 }
             );
 
