@@ -164,7 +164,6 @@ footer .misc .built-by {
   width: 1025px;
   margin-left: auto;
   margin-right: auto;
-  height: 300px;
 }
 .section .header {
   background-image: url('../images/header.png');
@@ -233,6 +232,7 @@ footer .misc .built-by {
   background-color: #aaaaaa;
 }
 .featured-matches {
+  height: 220px;
   font-family: 'AvianoFutureBold';
   margin-left: 10px;
   margin-right: 10px;
@@ -265,6 +265,7 @@ footer .misc .built-by {
   font-family: 'AvianoFutureBold';
   margin-left: 10px;
   margin-right: 10px;
+  height: 250px;
 }
 .latest-news .news {
   float: left;
@@ -312,8 +313,6 @@ footer .misc .built-by {
 }
 .carousel {
   height: 200px;
-  position: relative;
-  top: -26px;
 }
 .carousel img {
   display: block;
