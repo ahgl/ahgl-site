@@ -10,7 +10,7 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Article
-        fields = ('title', 'summary', 'tournaments', 'image_url', 'page_url',)
+        fields = ('title', 'summary', 'tournaments', 'image_url', 'page_url', 'publish_date',)
 
     def get_image_url(self, article):
         image_url = None
