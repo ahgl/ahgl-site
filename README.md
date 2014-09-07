@@ -7,39 +7,14 @@ This is the source for <http://afterhoursgaming.tv/>.
 
 *Want to contribute?* Check out [CONTRIBUTING.md](https://github.com/ahgl/ahgl-site/blob/master/CONTRIBUTING.md)!
 
-Getting Started
----------------
+Prerequisites
+-------------
 
-### 1. Install npm dependencies
-
-navigate to: 'ahgl/static/js/app'
-
-run the following:
-
-    $ npm install
-
-### 2. Install bower dependencies
-
-in 'ahgl/static/js/app'
-
-run the following:
-
-    $ bower install
-
-### 3. Run the app
-
-in 'ahgl/static/js/app'
-
-run the following:
-
-    $ grunt serve
-
-
-Old docs
--------------------------------------------------------------------------------------------------
-
-You should be familiar with [Python 2.7](http://www.python.org/download/releases/2.7/)
-and [Django 1.4](https://docs.djangoproject.com/en/1.4/). This site also makes use of Redis, Celery, South, Pinax, and a few other things.
+You should be familiar with
+[Python 2.7](http://www.python.org/download/releases/2.7/),
+[Django 1.4](https://docs.djangoproject.com/en/1.4/),
+and [NodeJS 0.10](http://nodejs.org).
+This site also makes use of Redis, Celery, South, Pinax, and a few other things.
 
 ### 1. Install the Python dependencies
 
@@ -107,13 +82,29 @@ Load some sample data:
     $ ./manage.py loaddata ahgl/fixtures/dev1.json
     $ ./manage.py loaddata ahgl/fixtures/dev2.json
 
-### 4. Run the server
+### 4. Run the Django backend
 
     $ ./manage.py runserver
 
-Now visit http://localhost:8000/ and you should see something that looks like AHGL!
+### 5. Set up and run the frontend
 
-### 5. Log into the admin panel
+First, install Grunt and Bower:
+
+    $ npm install -g bower grunt-cli
+
+Then install the frontend dependencies:
+
+    $ cd ahgl/static/js/app
+    $ npm install
+    $ bower install
+
+Run the frontend:
+
+    $ grunt serve
+
+Now visit http://localhost:9000/ and you should see something that looks like AHGL!
+
+### 6. Log into the admin panel
 
 Go to http://localhost:8000/admin and login with `admin` / `admin`.
 
