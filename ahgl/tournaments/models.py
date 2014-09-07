@@ -442,8 +442,8 @@ class Game(models.Model):
         ordering = ('order',)
 
 class Article(models.Model):
-    title = models.CharField(_("Title"), max_length=100)
-    summary = HTMLField(blank=True)
+    title = models.CharField(_("Title"), max_length=25)
+    summary = HTMLField(blank=True, max_length=1000)
     published = models.BooleanField(default=False)
     tournaments = models.ManyToManyField('Tournament', related_name='articles')
     publish_date = models.DateField(blank=True, null=True)  # set this when published
