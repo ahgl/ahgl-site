@@ -18,13 +18,12 @@ def create_and_send_invite(team, email):
     try:
         validate_email(email)
 
+        # Create the invites
+        is_saved = create_invite(team, email)
+        if not is_saved:
+            errors.append(_("Could not send an invite to %s") % email)
     except Exception as e:
         errors.append(_("Invalid email %s") % email)
-
-    # Create the invites
-    is_saved = create_invite(team, email)
-    if not is_saved:
-        errors.append(_("Could not send an invite to %s") % email)
 
     if len(errors) > 0:
         return False, errors
