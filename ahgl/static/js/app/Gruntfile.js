@@ -61,7 +61,7 @@ module.exports = function (grunt) {
         less: {
             all: {
                 options: {
-                    paths: ['<%= yeoman.app %>/styles'] 
+                    paths: ['<%= yeoman.app %>/styles']
                 },
                 files: {
                     '<%= yeoman.app %>/styles/main.css': 'app/styles/main.less'
@@ -115,7 +115,6 @@ module.exports = function (grunt) {
             },
             livereload: {
                 options: {
-                    open: true,
                     middleware: function (connect) {
                         return [
                             connect.static('<%= yeoman.app %>'),
