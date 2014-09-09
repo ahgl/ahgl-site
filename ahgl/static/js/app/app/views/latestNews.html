@@ -6,7 +6,7 @@
     <div ng-repeat="article in news" class="news">
         <div class="news-heading">
             <div class="date">Aug 15th, 2014</div>
-            <img ng-show="article.image_url" src="{{ article.image_url }}" /><div>{{ article.title }}</div>
+            <img ng-show="article.image_url" src="/{{ article.icon_image_url }}" /><div>{{ article.title }}</div>
             <div class="underline"></div>
         </div>
 

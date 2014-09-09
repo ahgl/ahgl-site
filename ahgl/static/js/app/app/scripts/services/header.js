@@ -13,7 +13,7 @@ angular.module('ahglApp')
         this.fetchHeaderInfo = function () {
             return $http.get(urlSvc.headerInfoUrl).then(function(resp) {    
                 var games =  _.map(resp.data.results, function(el) {
-                    return {slug: el.game_slug ,image_url: el.image_url};
+                    return {slug: el.game_slug, image_url: el.header_image_url};
                 });
                 return games;
             });

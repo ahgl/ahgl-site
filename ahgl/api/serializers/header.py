@@ -7,4 +7,4 @@ class HeaderSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('image_url', 'game_slug')
+        fields = ('header_image_url', 'game_slug')
