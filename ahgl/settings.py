@@ -299,6 +299,7 @@ CMS_TEMPLATES = (
     ('simple.html', 'Simple'),
     ('super_simple.html', 'Super Simple'),
     ('narrow.html', 'Narrow'),
+    ('article.html', 'Article Template'),
 )
 CMS_VIEW_PERMISSION = False
 CMS_MODERATOR = False

@@ -1,0 +1,25 @@
+{% extends "site_base.html" %}
+{% load cms_tags %}
+{% load menu_tags %}
+{% load cache %}
+
+{% block head_title %}{{ request.current_page.get_title }}{% endblock %}
+
+{% block content-class %}static-page{% endblock %}
+
+{% block tournament_nav %}
+{% show_menu 0 0 0 0 "_static_menu.html" %}
+{% endblock %}
+
+
+{% block body %}
+{% cache 300 cms_body request.path %}
+<h2 class="title title-1 t1">
+{{ request.current_page.get_title }}
+</h2>
+{% placeholder content %}
+<div class="hide">
+{% placeholder article %}
+</div>
+{% endcache %}
+{% endblock %}

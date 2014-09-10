@@ -16,4 +16,5 @@ angular.module('ahglApp')
         this.streamUrl = 'https://api.twitch.tv/kraken/streams/{{channelName}}?callback=JSON_CALLBACK';
         this.chatUrl = 'http://twitch.tv/chat/embed?channel={{channelName}}&amp;popout_chat=false';
         this.matchesUrl =  ENV.apiEndpoint + '/api/featured_matches/?format=json';
+        this.newsUrl =  ENV.apiEndpoint + '/api/latest_news/?format=json';
     });

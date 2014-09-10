@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.conf.urls.defaults import include, patterns, url
+from django.conf.urls import patterns, url, include
 from django.views.generic import ListView
 from django.conf.urls.static import static
 from django.forms import models as model_forms
@@ -7,7 +8,11 @@ from django.forms import models as model_forms
 from django.contrib import admin
 admin.autodiscover()
 
+from rest_framework import routers
+
 from idios.views import ProfileUpdateView
+from utils.views import StaticFileView
+
 from django_messages.views import compose
 
 from profiles.models import Profile
@@ -20,15 +25,13 @@ from tournaments.views import (MatchDetailView, MatchListView, MatchReportView,
                                SubmitLineupView, GameListView, PlayerAdminView)
 from tournaments.models import Tournament
 
-from utils.views import StaticFileView
+from ahgl.api.views import header, games, matches, carousel, articles
 
-from django.conf.urls import patterns, url, include
-from rest_framework import routers
-from ahgl.api.views import header, games, matches, carousel
 
 router = routers.DefaultRouter()
 router.register(r'header', header.HeaderViewSet)
 router.register(r'games', games.GamesViewSet)
+router.register(r'latest_news', articles.LatestNewsViewSet)
 router.register(r'featured_matches', matches.FeaturedMatchesViewSet)
 router.register(r'carousel', carousel.CarouselItemViewSet)
 
