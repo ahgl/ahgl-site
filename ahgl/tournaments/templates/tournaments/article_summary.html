@@ -1,0 +1,13 @@
+{% if article and article.title %}
+<div>
+	<span>Article Title: </span> {{ article.title }}
+</div>
+{% endif %}
+
+{% if tournaments %}
+	{% for tournament in tournaments %}
+		<div>
+		<span>Tournament Name: </span> {{ tournament.name }}
+		</div>
+	{% endfor %}
+{% endif %}
