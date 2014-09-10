@@ -9,10 +9,10 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'Game.featured_match_image_url'
-        db.add_column('api_game', 'featured_match_image_url',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=2048),
-                      keep_default=False)
-
+        #db.add_column('api_game', 'featured_match_image_url',
+        #              self.gf('django.db.models.fields.CharField')(default='', max_length=2048),
+        #              keep_default=False)
+        ""
 
     def backwards(self, orm):
         # Deleting field 'Game.featured_match_image_url'
