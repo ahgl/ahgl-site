@@ -167,6 +167,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "django.contrib.redirects",
     "django.contrib.sites",
+    "django_extensions",
 
     # theme
     "pinax_theme_bootstrap_account",
