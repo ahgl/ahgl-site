@@ -11,9 +11,6 @@ module.exports = function (grunt) {
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
 
-    // Time how long tasks take. Can help when optimizing build times
-    require('time-grunt')(grunt);
-
     // Configurable paths for the application
     var appConfig = {
         app: require('./bower.json').appPath || 'app',
@@ -49,7 +46,7 @@ module.exports = function (grunt) {
                 constants: {
                     ENV: {
                         name: 'production',
-                        apiEndpoint: 'http://127.0.0.1:8000'
+                        apiEndpoint: ''
                     }
                 }
             }
@@ -232,6 +229,42 @@ module.exports = function (grunt) {
             }
         },
 
+        // ngAnnotate tries to make the code safe for minification automatically by
+        // using the Angular long form for dependency injection.
+        ngAnnotate: {
+            dist: {
+                files: [{
+                    expand: true,
+                    src: '.tmp/concat/scripts/*.js'
+                }]
+            }
+        },
+
+        // ngtemplates prepopulates the Angular template cache with all of the
+        // HTML templates. It also prevents us from worrying about prefixing
+        // template URLs.
+        ngtemplates: {
+            dist: {
+                cwd: 'app/',
+                src: 'views/*.html',
+                dest: '<%= yeoman.dist %>/scripts/template.js',
+                options: {
+                    module: 'ahglApp',
+                    usemin: 'scripts/scripts.js', // From the build:js block for Angular.
+                    htmlmin: {
+                        collapseBooleanAttributes:      true,
+                        collapseWhitespace:             true,
+                        removeAttributeQuotes:          true,
+                        removeComments:                 true, // Only if you don't use comment directives!
+                        removeEmptyAttributes:          true,
+                        removeRedundantAttributes:      true,
+                        removeScriptTypeAttributes:     true,
+                        removeStyleLinkTypeAttributes:  true
+                    }
+                }
+            }
+        },
+
         // Reads HTML for usemin blocks to enable smart builds that automatically
         // concat, minify and revision files. Creates configurations in memory so
         // additional tasks can operate on them
@@ -326,24 +359,14 @@ module.exports = function (grunt) {
             }
         },
 
-        // ngmin tries to make the code safe for minification automatically by
-        // using the Angular long form for dependency injection. It doesn't work on
-        // things like resolve or inject so those have to be done manually.
-        ngmin: {
+        // Replaces URL prefixes that work with Django.
+        cdn: {
+            options: {
+                cdn: '/site_media/static/js/app/dist/',
+                flatten: true
+            },
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/concat/scripts',
-                    src: '*.js',
-                    dest: '<%= yeoman.app %>/concat/scripts'
-                }]
-            }
-        },
-
-        // Replace Google CDN references
-        cdnify: {
-            dist: {
-                html: ['<%= yeoman.dist %>/*.html']
+                src: ['<%= yeoman.dist %>/*.html']
             }
         },
 
@@ -438,18 +461,19 @@ module.exports = function (grunt) {
         'ngconstant:production',
         'wiredep',
         'useminPrepare',
+        'ngtemplates',
         'concurrent:dist',
         'autoprefixer',
         'concat',
-        'ngmin',
+        'less',
+        'ngAnnotate',
         'copy:dist',
-        'cdnify',
         'cssmin',
         'uglify',
         'filerev',
         'usemin',
         'htmlmin',
-        'less'
+        'cdn:dist'
     ]);
 
     grunt.registerTask('default', [

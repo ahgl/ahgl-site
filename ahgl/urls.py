@@ -20,6 +20,7 @@ from tournaments.views import (MatchDetailView, MatchListView, MatchReportView,
                                SubmitLineupView, GameListView, PlayerAdminView)
 from tournaments.models import Tournament
 
+from utils.views import StaticFileView
 
 from django.conf.urls import patterns, url, include
 from rest_framework import routers
@@ -80,6 +81,8 @@ urlpatterns += patterns('',
     url(r'^(?P<tournament>[\w_-]+)/standings/$', StandingsView.as_view(), name='standings'),
     url(r'^(?P<tournament>[\w_-]+)/casters/$', CasterListView.as_view(), name='casters'),
 
+    # Root of the site is the new Angular app, but keep the rest of the CMS pages around for posterity.
+    url(r'^/?$', StaticFileView.as_view(path='static/js/app/dist/index.html')),
     url(r'^', include('cms.urls')),
 )
 
