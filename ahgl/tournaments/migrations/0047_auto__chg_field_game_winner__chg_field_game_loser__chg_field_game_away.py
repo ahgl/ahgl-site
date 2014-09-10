@@ -10,10 +10,10 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
 
         # Adding field 'Match.featured'
-        db.add_column('tournaments_match', 'featured',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
-
+        #db.add_column('tournaments_match', 'featured',
+        #              self.gf('django.db.models.fields.BooleanField')(default=False),
+        #              keep_default=False)
+        ""
 
     def backwards(self, orm):
 
