@@ -9,30 +9,31 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'ArticlePluginModel'
-        db.create_table('cmsplugin_articlepluginmodel', (
-            ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
-            ('article', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tournaments.Article'], unique=True)),
-        ))
-        db.send_create_signal('tournaments', ['ArticlePluginModel'])
+        #db.create_table('cmsplugin_articlepluginmodel', (
+        #    ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
+        #    ('article', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tournaments.Article'], unique=True)),
+        #))
+        #db.send_create_signal('tournaments', ['ArticlePluginModel'])
 
         # Adding model 'Article'
-        db.create_table('tournaments_article', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('summary', self.gf('tinymce.models.HTMLField')(blank=True)),
-            ('published', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('publish_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('creation_date', self.gf('django.db.models.fields.DateField')()),
-        ))
-        db.send_create_signal('tournaments', ['Article'])
+        #db.create_table('tournaments_article', (
+        #    ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        #    ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
+        #    ('summary', self.gf('tinymce.models.HTMLField')(blank=True)),
+        #    ('published', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        #    ('publish_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
+        #    ('creation_date', self.gf('django.db.models.fields.DateField')()),
+        #))
+        #db.send_create_signal('tournaments', ['Article'])
 
         # Adding M2M table for field tournaments on 'Article'
-        db.create_table('tournaments_article_tournaments', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('article', models.ForeignKey(orm['tournaments.article'], null=False)),
-            ('tournament', models.ForeignKey(orm['tournaments.tournament'], null=False))
-        ))
-        db.create_unique('tournaments_article_tournaments', ['article_id', 'tournament_id'])
+        #db.create_table('tournaments_article_tournaments', (
+        #    ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+        #    ('article', models.ForeignKey(orm['tournaments.article'], null=False)),
+        #    ('tournament', models.ForeignKey(orm['tournaments.tournament'], null=False))
+        #))
+        #db.create_unique('tournaments_article_tournaments', ['article_id', 'tournament_id'])
+        ""
 
     def backwards(self, orm):
         # Deleting model 'ArticlePluginModel'
