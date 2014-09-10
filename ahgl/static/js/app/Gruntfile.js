@@ -362,7 +362,7 @@ module.exports = function (grunt) {
         // Replaces URL prefixes that work with Django.
         cdn: {
             options: {
-                cdn: '/site_media/static/js/app/dist/',
+                cdn: '../../../site_media/static/js/app/dist/',
                 flatten: true
             },
             dist: {
