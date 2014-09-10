@@ -432,7 +432,6 @@ module.exports = function (grunt) {
         }
 
         grunt.task.run([
-            'clean:server',
             'ngconstant:development',
             'wiredep',
             'concurrent:server',
