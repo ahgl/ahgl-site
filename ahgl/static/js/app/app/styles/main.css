@@ -1,14 +1,27 @@
-@font-face {
-  font-family: AvianoFutureBold;
-  src: url('fonts/AvianoFutureBold.otf');
-}
+@import url(http://fonts.googleapis.com/css?family=Nunito:400,700|Jura:400,600);
 * {
   margin: 0;
   padding: 0;
 }
 body {
-  background-color: white;
+  background-color: black;
   background-image: url('../images/background.jpg');
+}
+.font-regular {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+}
+.font-regular b,
+.font-regular strong {
+  font-weight: 700;
+}
+.font-display {
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+}
+.font-display b,
+.font-display strong {
+  font-weight: 600;
 }
 header {
   width: 986px;
@@ -18,13 +31,19 @@ header {
   position: relative;
   z-index: 9999;
   background: transparent;
-  font-family: 'AvianoFutureBold';
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+}
+header b,
+header strong {
+  font-weight: 600;
 }
 header .logo {
   display: inline-block;
   width: 107px;
   height: 212px;
   background-image: url('../images/logo.png');
+  cursor: pointer;
 }
 header .bar {
   display: inline-block;
@@ -66,8 +85,19 @@ header .navigation ul li {
   margin-right: 20px;
 }
 footer {
-  font-family: 'AvianoFutureBold';
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
   font-size: 12px;
+}
+footer a:link,
+footer a:visited {
+  color: inherit;
+  text-decoration: none;
+  background-color: inherit;
+}
+footer b,
+footer strong {
+  font-weight: 600;
 }
 footer .bar {
   padding: 15px;
@@ -113,7 +143,7 @@ footer .misc {
   margin-right: auto;
   font-size: 11px;
   line-height: 1.365;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 footer .misc .terms {
   display: inline-block;
@@ -137,7 +167,12 @@ footer .misc .built-by {
   height: 60px;
 }
 .livestream-container {
-  font-family: 'AvianoFutureBold';
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+}
+.livestream-container b,
+.livestream-container strong {
+  font-weight: 600;
 }
 .livestream-container .header {
   background-image: url('../images/livestream-header.png');
@@ -202,9 +237,14 @@ footer .misc .built-by {
   margin-right: auto;
 }
 .featured-matches .featured-matches-container {
-  font-family: 'AvianoFutureBold';
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
   margin-left: 10px;
   margin-right: 10px;
+}
+.featured-matches .featured-matches-container b,
+.featured-matches .featured-matches-container strong {
+  font-weight: 600;
 }
 .featured-matches .featured-matches-container .match {
   border: 2px solid #aaaaaa;
@@ -266,6 +306,34 @@ footer .misc .built-by {
   height: 75px;
   top: 135px;
   text-align: center;
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+.carousel .message b,
+.carousel .message strong {
+  font-weight: 600;
+}
+.carousel .message a {
+  padding: 4px;
+  border: 1px solid #e32d2e;
+  border-radius: 3px;
+  color: #e32d2e;
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+  font-size: 9px;
+  vertical-align: middle;
+}
+.carousel .message a b,
+.carousel .message a strong {
+  font-weight: 600;
+}
+.carousel .message a:link,
+.carousel .message a:visited {
+  color: #e32d2e;
+  text-decoration: none;
+  background-color: inherit;
 }
 .carousel .rn-carousel-controls {
   position: relative;
