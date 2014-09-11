@@ -28,6 +28,7 @@ from utils.views import ObjectPermissionsCheckMixin
 from .models import Team, TeamMembership, Profile, Caster, TeamMemberInvite
 from tournaments.models import TournamentRound, Tournament
 
+from django.db import connection
 from profiles import helpers
 from django.utils.translation import ugettext_lazy as _
 
@@ -46,11 +47,38 @@ class TeamDetailView(TournamentSlugContextView, DetailView):
     def get_context_data(self, **kwargs):
         context = super(TeamDetailView, self).get_context_data(**kwargs)
         context['is_captain'] = self.request.user.is_authenticated() and any((captain.profile.user_id == self.request.user.id for captain in self.object.captains))
+
+        context['show_join_button'] = False
+        if self.object.tournament.status == 'S' and not TeamMembership.objects.all().filter(profile__user=self.request.user.id, team=self.object).exists():
+            context['show_join_button'] = True
+
         return context
 
     def get_queryset(self):
         return Team.objects.filter(tournament=self.kwargs['tournament']).select_related('charity')
 
+class JoinTeamView(View):
+
+    def get(self, request, *args, **kwargs):
+        context = {'success': 1, 'errors': []}
+        team = get_object_or_404(Team, slug=kwargs['team'])
+        self.team = team
+
+        try:
+            membership = TeamMembership(team=team, profile=self.request.user.get_profile(), status='W', active=False)
+            membership.save()
+        except IntegrityError:
+            connection.close()
+            context['errors'].append(_("Error joining to the team"))
+            context['success'] = 0
+        except:
+            context['errors'].append(_("Error joining to the team"))
+            context['success'] = 0
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("team_page", kwargs={"tournament": self.team.tournament.slug, "slug": self.team.slug})
 
 class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, UpdateView):
     def get_queryset(self):

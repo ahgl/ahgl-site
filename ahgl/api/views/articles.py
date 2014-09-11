@@ -2,7 +2,6 @@ from ahgl.tournaments.models import Article
 from rest_framework import viewsets
 from ahgl.api.serializers import article
 
-from itertools import chain
 
 class LatestNewsViewSet(viewsets.ModelViewSet):
     model = Article

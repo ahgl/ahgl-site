@@ -441,9 +441,10 @@ class Game(models.Model):
         unique_together = (('order', 'match'),)
         ordering = ('order',)
 
+
 class Article(models.Model):
-    title = models.CharField(_("Title"), max_length=25)
-    summary = HTMLField(blank=True, max_length=1000)
+    title = models.CharField(_("Title"), max_length=256)
+    summary = HTMLField(blank=True, max_length=4000)
     published = models.BooleanField(default=False)
     tournaments = models.ManyToManyField('Tournament', related_name='articles')
     publish_date = models.DateField(blank=True, null=True)  # set this when published
@@ -484,6 +485,7 @@ class GamePluginModel(CMSPlugin):
 
 class TournamentPluginModel(CMSPlugin):
     tournament = models.ForeignKey('Tournament')
+
 
 class ArticlePluginModel(CMSPlugin):
     article = models.ForeignKey('Article', unique=True, related_name='cms_plugin')

@@ -173,6 +173,28 @@
                 </div>
                 <br/>
             {% endif %}
+            {% with team.team_membership.awaitings as awaiting_memberships %}
+                {% if awaiting_memberships|length %}
+                <div class="control-group">
+                    <h3>
+                        {{ awaiting_memberships|length }}
+                        awaiting member{{ awaiting_memberships|length|pluralize:"s" }}:
+                    </h3>
+                    <ul class="bulleted">
+                        {% for m in awaiting_memberships %}
+                            <li>
+                                <a href="{% url membership_edit m.id %}">{{m.profile}}</a>
+                                {{ m.fields }}
+                                {% if m.is_using_default_bio %}
+                                    <span class="label label-warning">Bio: Incomplete</span>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <br/>
+                {% endif %}
+            {% endwith %}
             <p>
                 Find and add players to your team
                 <a href="{% url profile_list %}">here</a>.
