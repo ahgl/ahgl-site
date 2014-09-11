@@ -14,6 +14,8 @@ from social_auth.signals import socialauth_registered
 from social_auth.backends.facebook import FacebookBackend
 from social_auth.backends.pipeline import USERNAME
 
+from celery.execute import send_task
+
 from idios.utils import get_profile_form
 from account.models import EmailAddress, Account
 from timezones.utils import coerce_timezone_value
@@ -23,9 +25,16 @@ if "sorl.thumbnail" in settings.INSTALLED_APPS:
 else:
     from django.db.models import ImageField
 
+if "notification" in settings.INSTALLED_APPS:
+    from notification import models as notification
+else:
+    notification = None
+
 from . import RACES
 from .fields import HTMLField
 from tournaments.models import Game
+
+from .managers import TeamMembershipManager
 
 logger = logging.getLogger(__name__)
 
@@ -165,6 +174,10 @@ class TeamMembership(models.Model):
     #league of legends data
     champion = models.CharField(max_length=60, blank=True)
 
+    status = models.CharField(max_length=1, choices=(('A', 'Approved'), ('W', 'Awaiting Approval'), ('R', 'Rejected')), default='A')
+
+    objects = TeamMembershipManager()
+
     @classmethod
     def get(self, team, tournament, profile):
         return TeamMembership.objects.select_related('team', 'profile') \
@@ -200,6 +213,15 @@ class TeamMembership(models.Model):
             'team': self.team.slug,
             'profile': self.profile.slug,
         })
+
+    def save(self, notify=True, *args, **kwargs):
+        created = self.id is None
+        super(TeamMembership, self).save(*args, **kwargs)
+        if self.status == 'W' and notification and created and notify:
+            send_task("profiles.tasks.notify_member_join_request", [self.team.tournament.name,
+                                                                  self.team.name,
+                                                                  self.profile.user.username,
+                                                                  self.team.captain_ids ])
 
     def __unicode__(self):
         return self.char_name
@@ -249,6 +271,11 @@ class Team(models.Model):
     @property
     def captains(self):
         return [membership for membership in self.membership_queryset if membership.captain]
+
+    @property
+    def captain_ids(self):
+        return [membership.profile.user_id for membership in self.membership_queryset if membership.captain]
+
 
     @property
     def is_complete(self):
