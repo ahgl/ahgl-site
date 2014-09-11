@@ -12,13 +12,18 @@
     <h2 class="title title-1 t1">{{team.name}}</h2>
     <div class="content-section-1">
     <p>
-	{% thumbnail team.photo "920x450" as im %}
+     {% thumbnail team.photo "920x450" as im %}
     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{team.name}}" />
-	{% empty %}
+     {% empty %}
     <img src="{{ STATIC_URL }}images/no-team-photo.jpg" alt="{{team.name}}" />
-	{% endthumbnail %}
+     {% endthumbnail %}
     </p>
-	</div>
+    <p>
+    {% if show_join_button %}
+    <a href="{% url join_team team=team.slug %}" class="btn">Join Team</a>
+    {% endif %}
+    </p>
+    </div>
 
 <div class="cf">
 
@@ -82,11 +87,11 @@
     {% for membership in memberships %}
     {% with player=membership.profile %}
         <li class="{% if forloop.counter|divisibleby:"6" %}last{% endif %}{% if not membership.active %} inactive{% endif %}"><a href="{% url player_profile tournament=tournament_slug team=team.slug profile=membership.profile.slug %}">
-		{% thumbnail player.thumbnail "150x170" crop="center" as im %}
-	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{player.name}}" class="alignnone size-full" />
-		{% empty %}
-	    <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{player.name}}" class="alignnone size-full" />
-		{% endthumbnail %}
+          {% thumbnail player.thumbnail "150x170" crop="center" as im %}
+         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{player.name}}" class="alignnone size-full" />
+          {% empty %}
+         <img src="{{ STATIC_URL }}images/default_profile.png" alt="{{player.name}}" class="alignnone size-full" />
+          {% endthumbnail %}
         </a>
         <h2 class="t2"><span style="font-size:22px">{{membership.char_name}}{% if membership.captain %} *{% endif %}</span></h2>
         <p>{{player.name}}</p>
