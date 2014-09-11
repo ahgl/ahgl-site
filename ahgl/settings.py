@@ -167,6 +167,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "django.contrib.redirects",
     "django.contrib.sites",
+    "django_extensions",
 
     # theme
     "pinax_theme_bootstrap_account",
@@ -299,6 +300,7 @@ CMS_TEMPLATES = (
     ('simple.html', 'Simple'),
     ('super_simple.html', 'Super Simple'),
     ('narrow.html', 'Narrow'),
+    ('article.html', 'Article Template'),
 )
 CMS_VIEW_PERMISSION = False
 CMS_MODERATOR = False

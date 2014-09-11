@@ -15,6 +15,10 @@ from django.core.exceptions import ValidationError
 from django.template.defaultfilters import date, slugify
 from django.utils import timezone
 
+from tinymce.models import HTMLField
+
+from cms.models.pagemodel import Page
+
 from cms.models.pluginmodel import CMSPlugin
 from celery.execute import send_task
 if "sorl.thumbnail" in settings.INSTALLED_APPS:
@@ -438,6 +442,31 @@ class Game(models.Model):
         ordering = ('order',)
 
 
+class Article(models.Model):
+    title = models.CharField(_("Title"), max_length=256)
+    summary = HTMLField(blank=True, max_length=4000)
+    published = models.BooleanField(default=False)
+    tournaments = models.ManyToManyField('Tournament', related_name='articles')
+    publish_date = models.DateField(blank=True, null=True)  # set this when published
+    creation_date = models.DateField()
+
+    def __unicode__(self):
+        return self.title
+
+    def save(self, notify=True, *args, **kwargs):
+        created = self.id is None
+        if created and not self.creation_date:  # set creation date if it wasn't set already
+            self.creation_date = timezone.now()
+
+        if self.published and not self.publish_date:
+            self.publish_date = timezone.now()
+
+        super(Article, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return self.cms_plugin.get().page.get_absolute_url()
+
+
 @receiver(post_save, sender=Match, dispatch_uid="tournaments_update_winloss")
 def update_winloss(sender, instance, created, **kwargs):
     if instance.published and instance.winner:
@@ -456,3 +485,8 @@ class GamePluginModel(CMSPlugin):
 
 class TournamentPluginModel(CMSPlugin):
     tournament = models.ForeignKey('Tournament')
+
+
+class ArticlePluginModel(CMSPlugin):
+    article = models.ForeignKey('Article', unique=True, related_name='cms_plugin')
+

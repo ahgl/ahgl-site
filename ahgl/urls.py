@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.conf.urls.defaults import include, patterns, url
+from django.conf.urls import patterns, url, include
 from django.views.generic import ListView
 from django.conf.urls.static import static
 from django.forms import models as model_forms
@@ -16,19 +17,21 @@ from profiles.views import (MVPView, TeamListView, TeamDetailView, TeamAdminView
                             MyProfileDetailView, TeamMembershipView,
                             TeamMembershipUpdateView, TeamMembershipCreateView,
                             TeamMembershipDeleteView, CasterListView,
-                            JoinTeamView)
+                            JoinTeamView, InviteTeamMember)
+
 from tournaments.views import (MatchDetailView, MatchListView, MatchReportView,
                                SubmitLineupView, GameListView, PlayerAdminView)
 from tournaments.models import Tournament
 
-
-from django.conf.urls import patterns, url, include
 from rest_framework import routers
-from ahgl.api.views import header, games, matches, carousel
+
+from ahgl.api.views import header, games, matches, carousel, articles
+
 
 router = routers.DefaultRouter()
 router.register(r'header', header.HeaderViewSet)
 router.register(r'games', games.GamesViewSet)
+router.register(r'latest_news', articles.LatestNewsViewSet)
 router.register(r'featured_matches', matches.FeaturedMatchesViewSet)
 router.register(r'carousel', carousel.CarouselItemViewSet)
 
@@ -80,6 +83,7 @@ urlpatterns += patterns('',
     #url(r'^(?P<tournament>[\w_-]+)/matches/(?P<date>[\d\\-]+)/(?P<home>[\w_-]+)-vs-(?P<away>[\w_-]+)$', MatchDetailView.as_view(), name='match_page'),
     url(r'^(?P<tournament>[\w_-]+)/standings/$', StandingsView.as_view(), name='standings'),
     url(r'^(?P<tournament>[\w_-]+)/casters/$', CasterListView.as_view(), name='casters'),
+    url(r'^invite_member/(?P<team>[\w_-]+)/$', InviteTeamMember.as_view(), name='invite_member'),
 
     url(r'^join_team/(?P<team>[\w_-]+)/$', JoinTeamView.as_view(), name='join_team'),
 

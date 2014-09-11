@@ -11,7 +11,7 @@ from profiles.models import Team, TeamMembership
 import settings
 
 class GameAdmin(admin.ModelAdmin):
-	list_display = ('name',)
+    list_display = ('name',)
 
 class CarouselItemAdmin(admin.ModelAdmin):
 	list_display = ('image_url',)

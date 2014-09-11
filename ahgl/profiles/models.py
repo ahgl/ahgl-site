@@ -9,6 +9,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db import IntegrityError, transaction
 from django.template.defaultfilters import slugify
+from django.db.models.signals import post_save
 
 from social_auth.signals import socialauth_registered
 from social_auth.backends.facebook import FacebookBackend
@@ -35,6 +36,13 @@ from .fields import HTMLField
 from tournaments.models import Game
 
 from .managers import TeamMembershipManager
+
+from django_extensions.db.fields import UUIDField
+
+from django.core.mail import EmailMessage
+from django.contrib.sites.models import Site
+
+from django.core.mail import send_mail
 
 logger = logging.getLogger(__name__)
 
@@ -231,6 +239,32 @@ class TeamMembership(models.Model):
         unique_together = (('team', 'profile'),)
         ordering = ('-active', '-captain', 'char_name',)
 
+class TeamMemberInvite(models.Model):
+    uuid = UUIDField()
+    email = models.EmailField(unique=True)
+    status = models.CharField(max_length=15, choices=(('accepted', 'Accepted'), ('cancelled', 'Cancelled'), ('pending', 'Pending')), default='pending')
+    team = models.ForeignKey('Team', related_name='team_invites')
+
+    def get_absolute_url(self):
+        return reverse("team-create-invite", kwargs={'uuid':self.uuid,
+                                                    'team_slug':self.team.slug,
+                                                    'tournament_slug':self.team.tournament.slug})
+
+    def __unicode__(self):
+        return "%s - %s"  % (self.team, self.email)
+
+@receiver(post_save, sender=TeamMemberInvite, dispatch_uid="profiles_create_team_invite")
+def send_team_member_invite(sender, instance, created, raw, using, **kwargs):
+    if created:
+        try:
+            team_url = Site.objects.get_current().domain + instance.team.get_absolute_url()
+            message_body = 'You have been invited to join a team. Click here: ' + team_url
+            send_mail('Invitation to join a Team', message_body, settings.DEFAULT_FROM_EMAIL,
+                [instance.email], fail_silently=False)
+        except Exception as e:
+            pass
+
+    return instance
 
 class Team(models.Model):
     """Per Tournament"""

@@ -25,10 +25,12 @@ from idios.utils import get_profile_model
 from account.models import EmailAddress
 
 from utils.views import ObjectPermissionsCheckMixin
-from .models import Team, TeamMembership, Profile, Caster
+from .models import Team, TeamMembership, Profile, Caster, TeamMemberInvite
 from tournaments.models import TournamentRound, Tournament
 
 from django.db import connection
+from profiles import helpers
+from django.utils.translation import ugettext_lazy as _
 
 class TournamentSlugContextView(object):
     def get_context_data(self, **kwargs):
@@ -128,6 +130,30 @@ class TeamUpdateView(ObjectPermissionsCheckMixin, TournamentSlugContextView, Upd
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(TeamUpdateView, self).dispatch(*args, **kwargs)
+
+class InviteTeamMember(View):
+    def post(self, request, *args, **kwargs):
+        context = {'success': 1, 'errors': []}
+
+        try:
+            team = get_object_or_404(Team, slug=kwargs['team'])
+            email = request.POST['email']
+
+            is_success, errors = helpers.create_and_send_invite(team, email)
+
+            # If an action fails set success to false, append errors to list
+            if not is_success:
+                context['errors'] = errors
+                context['success'] = 0
+
+        except Exception as e:
+            context['errors'].append(_("Error performing action"))
+            context['success'] = 0
+
+        return HttpResponse(
+            json.dumps(context),
+            content_type='application/json',
+        )
 
 class TeamSignupView(CreateView):
     model = Team

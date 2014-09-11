@@ -6,13 +6,41 @@
 {% load pagination_tags %}
 {% load show_snippet_tag %}
 
-{% block head_title %}{% if team %}{% trans "Edit Team" %}{% else %}{% trans "Create a Team" %}{% endif %}{% endblock %}
+{% block head_title %}{% if team %}{% trans "Edit Team" %}{% else %}{% trans "Create a Team" %}{% endif %}
+{% endblock %}
 
 {% block body %}
+<script>
+    $(document).ready(function(){
+        $("#invite_member").click(function() {
+            var email = $("#invitee_email").val();
+            $("#email_message").text("");
+            $.post("{% url invite_member team.slug %}",
+                { 
+                    email: email,
+                    csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+                },
+                function( data ) {
+                    if (data['success'] == 0) {
+                        for (index in data['errors']) {
+                            $("#email_message").append("<div>" + data['errors'][index] + "</div>");    
+                        }
+                    } else {
+                        $("#email_message").text("Invitation sent to " + email);
+                        $("#invitee_email").val("");
+                    }
+                }
+            );
+
+            return false;
+        });
+    });
+</script>
 
 {# NOTE: This page is used for both initial team creation and profile editing, hence all the "if team" stuff. #}
 
 <form enctype="multipart/form-data" method="post" class="form-horizontal well">
+    {% csrf_token %}
     {% if team %}
         <h1>{% trans "Edit" %} {{team}}</h1>
     {% else %}
@@ -116,34 +144,34 @@
     </fieldset>
 
     <fieldset>
-        {% with team.team_membership.get_query_set as memberships %}
-            <legend>
-                Team Roster
-                {% if team.has_minimum_members %}
-                    <span class="label label-success">Complete</span>
-                {% else %}
-                    <span class="label label-warning">Please add at least 8 players.</span>
-                {% endif %}
-            </legend>
+        <legend>
+            Team Roster
+            {% if team.has_minimum_members %}
+                <span class="label label-success">Complete</span>
+            {% else %}
+                <span class="label label-warning">Please add at least 8 players.</span>
+            {% endif %}
+        </legend>
+        {% with team.team_membership.all as memberships %}
             {% if memberships|length %}
-            <div class="control-group">
-                <h3>
-                    {{ memberships|length }}
-                    member{{ memberships|length|pluralize:"s" }}:
-                </h3>
-                <ul class="bulleted">
-                    {% for m in memberships %}
-                        <li>
-                            <a href="{% url membership_edit m.id %}">{{m}}</a>
-                            {{ m.fields }}
-                            {% if m.is_using_default_bio %}
-                                <span class="label label-warning">Bio: Incomplete</span>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <br/>
+                <div class="control-group">
+                    <h3>
+                        {{ memberships|length }}
+                        member{{ memberships|length|pluralize:"s" }}:
+                    </h3>
+                    <ul class="bulleted">
+                        {% for m in memberships %}
+                            <li>
+                                <a href="{% url membership_edit m.id %}">{{m}}</a>
+                                {{ m.fields }}
+                                {% if m.is_using_default_bio %}
+                                    <span class="label label-warning">Bio: Incomplete</span>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <br/>
             {% endif %}
             {% with team.team_membership.awaitings as awaiting_memberships %}
                 {% if awaiting_memberships|length %}
@@ -172,6 +200,21 @@
                 <a href="{% url profile_list %}">here</a>.
             </p>
         {% endwith %}
+        <p>
+            Or invite them via email below
+            <div class="control-group ">
+                <label for="id_motto" class="control-label">
+                    Invitee Email
+                </label>
+                <div class="controls">
+                    <input type="text" maxlength="70" id="invitee_email">
+                    <button id="invite_member" class="btn btn-primary">Add</button>
+                </div>
+                <div class="controls">
+                    <span id="email_message" class="help-inline"></span>
+                </div>
+            </div>
+        </p>
     </fieldset>
 
     <fieldset>
