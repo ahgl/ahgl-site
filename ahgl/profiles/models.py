@@ -218,9 +218,9 @@ class TeamMembership(models.Model):
         created = self.id is None
         super(TeamMembership, self).save(*args, **kwargs)
         if self.status == 'W' and notification and created and notify:
-            send_task("profiles.tasks.notify_member_join_request", [self.team.tournament.name,
-                                                                  self.team.name,
+            send_task("profiles.tasks.notify_member_join_request", [unicode(self.team),
                                                                   self.profile.user.username,
+                                                                  self.id,
                                                                   self.team.captain_ids ])
 
     def __unicode__(self):
