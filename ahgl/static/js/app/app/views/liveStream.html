@@ -1,9 +1,12 @@
 
 
 <div ng-controller="LiveStreamCtrl" class="live-stream" ng-show="liveStream">
+    
     <div class="header">
+        <img class="section-header-icon" ng-src="{{ sectionHeaderIconUrl }}"/>
         <span class="heavy">Live</span><span>stream</span>
     </div>
+
     <div class="title-container">
         <div class="title">{{streamTitle}}</div>
         <div class="currently-playing">Currently Playing</div>
