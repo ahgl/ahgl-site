@@ -7,7 +7,7 @@ angular.module('ahglApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/featuredMatches.html',
-    "<div class=header><span class=heavy>Featured</span><span>Matches</span></div><div ng-controller=FeaturedMatchesCtrl class=featured-matches><div ng-repeat=\"match in matches\" class=match style=\"background-image: url('{{match.background_image_url}}')\"><a href=\"{{ match.match_url }}\"><p>{{ match.home_team }}</p><p class=vs>vs</p><p>{{ match.away_team }}</p></a></div></div>"
+    "<div ng-controller=FeaturedMatchesCtrl><div class=header><img class=section-header-icon ng-src=\"{{ sectionHeaderIconUrl }}\"> <span class=heavy>Featured</span><span>Matches</span></div><div class=featured-matches><div ng-repeat=\"match in matches\" class=match style=\"background-image: url('{{match.background_image_url}}')\"><a href=\"{{ match.match_url }}\"><p>{{ match.home_team }}</p><p class=vs>vs</p><p>{{ match.away_team }}</p></a></div></div></div>"
   );
 
 
@@ -22,12 +22,12 @@ angular.module('ahglApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/latestNews.html',
-    "<div class=header><span class=heavy>Latest</span><span>Ahgl News</span></div><div ng-controller=LatestNewsCtrl class=latest-news><div ng-repeat=\"article in news\" class=news><div class=news-heading><div class=date>Aug 15th, 2014</div><img ng-show=article.image_url src=\"{{ article.image_url }}\"><div>{{ article.title }}</div><div class=underline></div></div><p ng-bind-html=article.summary></p><a href=\"{{ article.page_url }}\">Read More</a></div></div>"
+    "<div ng-controller=LatestNewsCtrl><div class=header><img class=section-header-icon ng-src=\"{{ sectionHeaderIconUrl }}\"> <span class=heavy>Latest</span><span>Ahgl News</span></div><div class=latest-news><div ng-repeat=\"article in news\" class=news><div class=news-heading><div class=date>Aug 15th, 2014</div><img ng-show=article.image_url src=\"/{{ article.icon_image_url }}\"><div>{{ article.title }}</div><div class=underline></div></div><p ng-bind-html=article.summary></p><a href=\"{{ article.page_url }}\">Read More</a></div></div></div>"
   );
 
 
   $templateCache.put('views/liveStream.html',
-    "<div ng-controller=LiveStreamCtrl class=live-stream ng-show=liveStream><div class=header><span class=heavy>Live</span><span>stream</span></div><div class=title-container><div class=title>{{streamTitle}}</div><div class=currently-playing>Currently Playing</div></div><div class=stream-container><object type=application/x-shockwave-flash height=500 width=600 id=live_embed_player_flash data=\"http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channel_name}}\" bgcolor=#000000 class=twitch-container><param name=allowFullScreen value=\"true\"><param name=allowScriptAccess value=\"always\"><param name=allowNetworking value=\"all\"><param name=movie value=\"http://www.twitch.tv/widgets/live_embed_player.swf\"><param name=flashvars value=\"hostname=www.twitch.tv&channel={{channel_name}}&auto_play=true&start_volume=50\"></object><iframe class=chat-container frameborder=0 scrolling=no id=chat_embed ng-src={{chat_url}}></iframe></div></div>"
+    "<div ng-controller=LiveStreamCtrl class=live-stream ng-show=liveStream><div class=header><img class=section-header-icon ng-src=\"{{ sectionHeaderIconUrl }}\"> <span class=heavy>Live</span><span>stream</span></div><div class=title-container><div class=title>{{streamTitle}}</div><div class=currently-playing>Currently Playing</div></div><div class=stream-container><object type=application/x-shockwave-flash height=500 width=600 id=live_embed_player_flash data=\"http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channel_name}}\" bgcolor=#000000 class=twitch-container><param name=allowFullScreen value=\"true\"><param name=allowScriptAccess value=\"always\"><param name=allowNetworking value=\"all\"><param name=movie value=\"http://www.twitch.tv/widgets/live_embed_player.swf\"><param name=flashvars value=\"hostname=www.twitch.tv&channel={{channel_name}}&auto_play=true&start_volume=50\"></object><iframe class=chat-container frameborder=0 scrolling=no id=chat_embed ng-src={{chat_url}}></iframe></div></div>"
   );
 
 
