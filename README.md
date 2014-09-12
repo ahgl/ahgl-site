@@ -115,3 +115,13 @@ Go to http://localhost:8000/admin and login with `admin` / `admin`.
 **The admin view** (http://localhost:8000/admin) is worth poking through.
 
 GLHF!
+
+Deployment
+----------
+
+We're currently checking in distribution files for ease of deployment.
+
+    $ grunt --gruntfile ahgl/static/js/app/Gruntfile.js build
+    $ git commit -A -m "Checking in production files to app/dist"
+    $ gondor deploy <env> HEAD
+

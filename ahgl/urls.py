@@ -21,6 +21,8 @@ from tournaments.views import (MatchDetailView, MatchListView, MatchReportView,
                                SubmitLineupView, GameListView, PlayerAdminView)
 from tournaments.models import Tournament
 
+from utils.views import StaticFileView
+
 from rest_framework import routers
 
 from ahgl.api.views import header, games, matches, carousel, articles
@@ -83,6 +85,8 @@ urlpatterns += patterns('',
     url(r'^(?P<tournament>[\w_-]+)/casters/$', CasterListView.as_view(), name='casters'),
     url(r'^invite_member/(?P<team>[\w_-]+)/$', InviteTeamMember.as_view(), name='invite_member'),
 
+    # Root of the site is the new Angular app, but keep the rest of the CMS pages around for posterity.
+    url(r'^/?$', StaticFileView.as_view(path='static/js/app/dist/index.html')),
     url(r'^', include('cms.urls')),
 )
 
