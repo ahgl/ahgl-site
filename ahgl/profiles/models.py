@@ -182,8 +182,6 @@ class TeamMembership(models.Model):
 
     status = models.CharField(max_length=1, choices=(('A', 'Approved'), ('W', 'Awaiting Approval'), ('R', 'Rejected')), default='A')
 
-    objects = TeamMembershipManager()
-
     @classmethod
     def get(self, team, tournament, profile):
         return TeamMembership.objects.select_related('team', 'profile') \
