@@ -33,6 +33,38 @@ class TeamMembershipAdmin(admin.ModelAdmin):
         HTMLField: {'widget': TinyMCE(mce_attrs={'theme': 'advanced'})},
     }
 
+class AwaitingTeamMembership(TeamMembership):
+    class Meta:
+        proxy = True
+
+class AwaitingTeamMembershipAdmin(admin.ModelAdmin):
+    list_display = ('profile', 'team', 'active', 'status',)
+    list_filter = ('team', 'race', 'champion', 'captain',)
+    actions = ['approve', 'reject']
+    formfield_overrides = {
+        HTMLField: {'widget': TinyMCE(mce_attrs={'theme': 'advanced'})},
+    }
+
+    def queryset(self, request):
+        return self.model.objects.awaitings()
+
+    def approve(self, request, queryset):
+        rows_updated = queryset.update(status='A')
+        if rows_updated == 1:
+            message_bit = "1 match was"
+        else:
+            message_bit = "%s match were" % rows_updated
+        self.message_user(request, "%s successfully approved." % message_bit)
+    approve.short_description = "Approve awaiting requests"
+
+    def reject(self, request, queryset):
+        rows_updated = queryset.update(status='R')
+        if rows_updated == 1:
+            message_bit = "1 membership was"
+        else:
+            message_bit = "%s membership were" % rows_updated
+        self.message_user(request, "%s successfully rejected." % message_bit)
+    reject.short_description = "Reject awaiting requests"
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', )
@@ -54,6 +86,7 @@ class CasterAdmin(admin.ModelAdmin):
         # self.message_user(request, "Votes successfully deleted.".format(rows_deleted))
 
 admin.site.register(TeamMembership, TeamMembershipAdmin)
+admin.site.register(AwaitingTeamMembership, AwaitingTeamMembershipAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Charity)
