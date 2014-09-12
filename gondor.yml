@@ -1,5 +1,5 @@
 # Version control system used locally for your project.
-vcs: git 
+vcs: git
 
 # Runtime of python to use
 #runtime: python-2.7.3
@@ -30,7 +30,7 @@ wsgi:
     # wsgi = the Python module which should be importable
     # application = the callable in the Python module
     entry_point: ahgl.wsgi:application
-    
+
     # Options for gunicorn which runs your WSGI project.
     gunicorn:
         # The worker class used to run gunicorn (possible values include:
