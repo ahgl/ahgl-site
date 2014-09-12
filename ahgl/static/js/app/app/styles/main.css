@@ -252,7 +252,9 @@ footer .misc .built-by {
 }
 .featured-matches {
   height: 220px;
-  font-family: 'AvianoFutureBold';
+  font-family: 'Nunito';
+  font-weight: 400;
+  letter-spacing: 2px;
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -281,7 +283,7 @@ footer .misc .built-by {
   font-weight: bold;
 }
 .latest-news {
-  font-family: 'AvianoFutureBold';
+  font-family: 'Nunito';
   margin-left: 10px;
   margin-right: 10px;
   height: 250px;
@@ -299,7 +301,6 @@ footer .misc .built-by {
 }
 .latest-news .news a {
   color: #e32d2e;
-  font-family: "Avenir";
 }
 .latest-news .news .date {
   width: 100%;
