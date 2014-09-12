@@ -8,8 +8,8 @@
  * Controller of the ahglApp
  */
 angular.module('ahglApp')
-    .controller('HeaderCtrl', function ($scope, GamesSvc) {
-        GamesSvc.fetchGames().then(function(games) {
+    .controller('HeaderCtrl', function ($scope, gamesSvc) {
+        gamesSvc.fetchGames().then(function(games) {
             $scope.games = games;
         });
     });

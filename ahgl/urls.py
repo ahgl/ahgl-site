@@ -27,11 +27,10 @@ from utils.views import StaticFileView
 
 from rest_framework import routers
 
-from ahgl.api.views import header, games, matches, carousel, articles
+from ahgl.api.views import games, matches, carousel, articles
 
 
 router = routers.DefaultRouter()
-router.register(r'header', header.HeaderViewSet)
 router.register(r'games', games.GamesViewSet)
 router.register(r'latest_news', articles.LatestNewsViewSet)
 router.register(r'featured_matches', matches.FeaturedMatchesViewSet)

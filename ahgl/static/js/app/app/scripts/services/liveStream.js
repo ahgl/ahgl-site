@@ -24,7 +24,7 @@ angular.module('ahglApp')
                                 if (response.data.stream) {
                                     var game = games.data.results[index],
                                         channelName = game.channel_name,
-                                        gameImageUrl = game.live_stream_image_url;
+                                        gameImageUrl = game.section_image_url;
                                     deferred.resolve({ channelName: channelName, gameImageUrl: gameImageUrl });
                                     return true;
                                 }

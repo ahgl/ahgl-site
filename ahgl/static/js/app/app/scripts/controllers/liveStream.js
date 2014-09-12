@@ -8,7 +8,7 @@
  * Controller of the ahglApp
  */
 angular.module('ahglApp')
-    .controller('LiveStreamCtrl', function ($scope, $sce, liveStreamSvc, urlSvc) {
+    .controller('LiveStreamCtrl', function ($scope, $sce, liveStreamSvc, urlSvc, GamesSvc) {
         liveStreamSvc.fetchStreams()
             .then(function(resp) {
                 $scope.liveStream = true;
@@ -17,4 +17,9 @@ angular.module('ahglApp')
                 $scope.live_stream_logo = $sce.trustAsResourceUrl(resp.gameImageUrl);
                 $scope.streamTitle = resp.channelName;
             });
+
+        GamesSvc.fetchGames().then(function(games) {
+            $scope.sectionHeaderIconUrl = GamesSvc.getRandomIcon("live_stream");
+        });
+
     });
