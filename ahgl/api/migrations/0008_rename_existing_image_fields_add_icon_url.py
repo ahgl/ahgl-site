@@ -9,34 +9,34 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Deleting field 'Game.live_stream_image_url'
-        db.delete_column('api_game', 'live_stream_image_url')
+        #db.delete_column('api_game', 'live_stream_image_url')
 
         # Deleting field 'Game.image_url'
-        db.delete_column('api_game', 'image_url')
+        #db.delete_column('api_game', 'image_url')
 
         # Deleting field 'Game.featured_match_image_url'
-        db.delete_column('api_game', 'featured_match_image_url')
+        #db.delete_column('api_game', 'featured_match_image_url')
 
         # Adding field 'Game.header_image_url'
-        db.add_column('api_game', 'header_image_url',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=2048),
-                      keep_default=False)
+        #db.add_column('api_game', 'header_image_url',
+        #              self.gf('django.db.models.fields.CharField')(default='', max_length=2048),
+        #              keep_default=False)
 
         # Adding field 'Game.section_image_url'
-        db.add_column('api_game', 'section_image_url',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=2048),
-                      keep_default=False)
+        #db.add_column('api_game', 'section_image_url',
+        #              self.gf('django.db.models.fields.CharField')(default='', max_length=2048),
+        #              keep_default=False)
 
         # Adding field 'Game.background_match_image_url'
-        db.add_column('api_game', 'background_match_image_url',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=2048),
-                      keep_default=False)
+        #db.add_column('api_game', 'background_match_image_url',
+        #              self.gf('django.db.models.fields.CharField')(default='', max_length=2048),
+        #              keep_default=False)
 
         # Adding field 'Game.icon_image_url'
-        db.add_column('api_game', 'icon_image_url',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=2048),
-                      keep_default=False)
-
+        #db.add_column('api_game', 'icon_image_url',
+        #              self.gf('django.db.models.fields.CharField')(default='', max_length=2048),
+        #              keep_default=False)
+        ""
 
     def backwards(self, orm):
         # Adding field 'Game.live_stream_image_url'
