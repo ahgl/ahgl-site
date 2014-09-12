@@ -15,6 +15,8 @@ from social_auth.signals import socialauth_registered
 from social_auth.backends.facebook import FacebookBackend
 from social_auth.backends.pipeline import USERNAME
 
+from celery.execute import send_task
+
 from idios.utils import get_profile_form
 from account.models import EmailAddress, Account
 from timezones.utils import coerce_timezone_value
@@ -23,6 +25,11 @@ if "sorl.thumbnail" in settings.INSTALLED_APPS:
     from sorl.thumbnail import ImageField
 else:
     from django.db.models import ImageField
+
+if "notification" in settings.INSTALLED_APPS:
+    from notification import models as notification
+else:
+    notification = None
 
 from . import RACES
 from .fields import HTMLField
@@ -173,6 +180,8 @@ class TeamMembership(models.Model):
     #league of legends data
     champion = models.CharField(max_length=60, blank=True)
 
+    status = models.CharField(max_length=1, choices=(('A', 'Approved'), ('W', 'Awaiting Approval'), ('R', 'Rejected')), default='A')
+
     @classmethod
     def get(self, team, tournament, profile):
         return TeamMembership.objects.select_related('team', 'profile') \
@@ -209,6 +218,15 @@ class TeamMembership(models.Model):
             'profile': self.profile.slug,
         })
 
+    def save(self, notify=True, *args, **kwargs):
+        created = self.id is None
+        super(TeamMembership, self).save(*args, **kwargs)
+        if self.status == 'W' and notification and created and notify:
+            send_task("profiles.tasks.notify_member_join_request", [unicode(self.team),
+                                                                  self.profile.user.username,
+                                                                  self.id,
+                                                                  self.team.captain_ids ])
+
     def __unicode__(self):
         return self.char_name
 
@@ -219,7 +237,7 @@ class TeamMembership(models.Model):
 
 class TeamMemberInvite(models.Model):
     uuid = UUIDField()
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     status = models.CharField(max_length=15, choices=(('accepted', 'Accepted'), ('cancelled', 'Cancelled'), ('pending', 'Pending')), default='pending')
     team = models.ForeignKey('Team', related_name='team_invites')
 
@@ -230,6 +248,9 @@ class TeamMemberInvite(models.Model):
 
     def __unicode__(self):
         return "%s - %s"  % (self.team, self.email)
+
+    class Meta:
+        unique_together = (('email', 'team'),)
 
 @receiver(post_save, sender=TeamMemberInvite, dispatch_uid="profiles_create_team_invite")
 def send_team_member_invite(sender, instance, created, raw, using, **kwargs):
@@ -281,8 +302,21 @@ class Team(models.Model):
         return self._team_membership_queryset
 
     @property
+    def approved_memberships(self):
+        return self.team_membership.filter(status='A')
+
+    @property
+    def awaiting_memberships(self):
+        return self.team_membership.filter(status='W')
+
+    @property
     def captains(self):
         return [membership for membership in self.membership_queryset if membership.captain]
+
+    @property
+    def captain_ids(self):
+        return [membership.profile.user_id for membership in self.membership_queryset if membership.captain]
+
 
     @property
     def is_complete(self):
