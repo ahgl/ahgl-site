@@ -12,28 +12,30 @@
 {% block body %}
 <script>
     $(document).ready(function(){
-        $("#invite_member").click(function() {
-            var email = $("#invitee_email").val();
-            $("#email_message").text("");
-            $.post("{% url invite_member team.slug %}",
-                { 
-                    email: email,
-                    csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
-                },
-                function( data ) {
-                    if (data['success'] == 0) {
-                        for (index in data['errors']) {
-                            $("#email_message").append("<div>" + data['errors'][index] + "</div>");    
+        {% if team %}
+            $("#invite_member").click(function() {
+                var email = $("#invitee_email").val();
+                $("#email_message").text("");
+                $.post("{% url invite_member team.slug %}",
+                    { 
+                        email: email,
+                        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+                    },
+                    function( data ) {
+                        if (data['success'] == 0) {
+                            for (index in data['errors']) {
+                                $("#email_message").append("<div>" + data['errors'][index] + "</div>");    
+                            }
+                        } else {
+                            $("#email_message").text("Invitation sent to " + email);
+                            $("#invitee_email").val("");
                         }
-                    } else {
-                        $("#email_message").text("Invitation sent to " + email);
-                        $("#invitee_email").val("");
                     }
-                }
-            );
+                );
 
-            return false;
-        });
+                return false;
+            });
+        {% endif %}
     });
 </script>
 
@@ -152,7 +154,7 @@
                 <span class="label label-warning">Please add at least 8 players.</span>
             {% endif %}
         </legend>
-        {% with team.team_membership.all as memberships %}
+        {% with team.approved_memberships as memberships %}
             {% if memberships|length %}
                 <div class="control-group">
                     <h3>
@@ -173,7 +175,8 @@
                 </div>
                 <br/>
             {% endif %}
-            {% with team.team_membership.awaitings as awaiting_memberships %}
+
+            {% with team.awaiting_memberships as awaiting_memberships %}
                 {% if awaiting_memberships|length %}
                 <div class="control-group">
                     <h3>

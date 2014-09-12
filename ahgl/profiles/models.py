@@ -241,7 +241,7 @@ class TeamMembership(models.Model):
 
 class TeamMemberInvite(models.Model):
     uuid = UUIDField()
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     status = models.CharField(max_length=15, choices=(('accepted', 'Accepted'), ('cancelled', 'Cancelled'), ('pending', 'Pending')), default='pending')
     team = models.ForeignKey('Team', related_name='team_invites')
 
@@ -252,6 +252,9 @@ class TeamMemberInvite(models.Model):
 
     def __unicode__(self):
         return "%s - %s"  % (self.team, self.email)
+
+    class Meta:
+        unique_together = (('email', 'team'),)
 
 @receiver(post_save, sender=TeamMemberInvite, dispatch_uid="profiles_create_team_invite")
 def send_team_member_invite(sender, instance, created, raw, using, **kwargs):
@@ -301,6 +304,14 @@ class Team(models.Model):
     def membership_queryset(self):
         self._team_membership_queryset = getattr(self, '_team_membership_queryset', None) or self.team_membership.select_related('profile').extra(select={'lower_char_name': 'lower(char_name)'}).order_by('-active', '-captain', 'lower_char_name')
         return self._team_membership_queryset
+
+    @property
+    def approved_memberships(self):
+        return self.team_membership.filter(status='A')
+
+    @property
+    def awaiting_memberships(self):
+        return self.team_membership.filter(status='W')
 
     @property
     def captains(self):

@@ -49,7 +49,7 @@ class TeamDetailView(TournamentSlugContextView, DetailView):
         context['is_captain'] = self.request.user.is_authenticated() and any((captain.profile.user_id == self.request.user.id for captain in self.object.captains))
 
         context['show_join_button'] = False
-        if self.object.tournament.status == 'S' and not TeamMembership.objects.all().filter(profile__user=self.request.user.id, team=self.object).exists():
+        if self.object.tournament.status == 'S' and not self.object.team_membership.filter(profile__user=self.request.user.id, team=self.object).exists():
             context['show_join_button'] = True
 
         return context
