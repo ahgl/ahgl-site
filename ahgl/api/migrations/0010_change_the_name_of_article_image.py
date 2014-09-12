@@ -8,8 +8,8 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        db.rename_column('api_game', 'news_section_image_url', 'article_section_image_url')
-
+        #db.rename_column('api_game', 'news_section_image_url', 'article_section_image_url')
+        ""
 
     def backwards(self, orm):
         db.rename_column('api_game', 'article_section_image_url', 'news_section_image_url')
