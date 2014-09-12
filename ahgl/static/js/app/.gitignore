@@ -1,8 +1,6 @@
-node_modules
-dist
-.tmp
+.htaccess
 .sass-cache
+.tmp
 bower_components
-.htaccess
 main.css
-.htaccess
+node_modules

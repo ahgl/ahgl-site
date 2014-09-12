@@ -4,18 +4,25 @@
         <meta charset="utf-8">
         <title></title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+
+        <!--
+            grunt-cdn messes this up, but we can live without it for now:
+            https://github.com/tactivos/grunt-cdn/issues/56
+            <meta name="viewport" content="width=device-width">
+        -->
+
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css(.) styles/vendor.css -->
         <!-- bower:css -->
         <link rel="stylesheet" href="bower_components/angular-carousel/dist/angular-carousel.css" />
         <!-- endbower -->
         <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
+        <!-- build:css styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
     </head>
     <body ng-app="ahglApp">
+
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -47,24 +54,23 @@
         <!-- endbower -->
         <!-- endbuild -->
 
-                <!-- build:js({.tmp,app}) scripts/scripts.js -->
-                <script src="scripts/config.js"></script>
-                <script src="scripts/app.js"></script>
-                
-                <script src="scripts/controllers/main.js"></script>
-                <script src="scripts/controllers/header.js"></script>
-                <script src="scripts/controllers/liveStream.js"></script>
-                <script src="scripts/controllers/carousel.js"></script>
-                <script src="scripts/controllers/featuredMatches.js"></script>
-                <script src="scripts/controllers/news.js"></script>
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/config.js"></script>
+        <script src="scripts/app.js"></script>
 
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/header.js"></script>
+        <script src="scripts/controllers/liveStream.js"></script>
+        <script src="scripts/controllers/carousel.js"></script>
+        <script src="scripts/controllers/featuredMatches.js"></script>
+        <script src="scripts/controllers/news.js"></script>
 
-                <script src="scripts/services/urls.js"></script>
-                <script src="scripts/services/games.js"></script>
-                <script src="scripts/services/liveStream.js"></script>
-                <script src="scripts/services/featuredMatches.js"></script>
-                <script src="scripts/services/carousel.js"></script>
-                <script src="scripts/services/news.js"></script>
-                <!-- endbuild -->
-</body>
+        <script src="scripts/services/urls.js"></script>
+        <script src="scripts/services/liveStream.js"></script>
+        <script src="scripts/services/featuredMatches.js"></script>
+        <script src="scripts/services/carousel.js"></script>
+        <script src="scripts/services/news.js"></script>
+        <script src="scripts/services/games.js"></script>
+        <!-- endbuild -->
+    </body>
 </html>

@@ -1,14 +1,27 @@
-@font-face {
-  font-family: AvianoFutureBold;
-  src: url('fonts/AvianoFutureBold.otf');
+@import url(http://fonts.googleapis.com/css?family=Jura:600,400|Nunito:400,700);
+* {
+  margin: 0;
+  padding: 0;
 }
-@font-face {
-  font-family: AvianoFutureRegular;
-  src: url('fonts/AvianoFutureRegular.otf');
+body {
+  background-color: black;
+  background-image: url('../images/background.jpg');
 }
-@font-face {
-  font-family: AvianoFutureBlack;
-  src: url('fonts/AvianoFutureBlack.otf');
+.font-regular {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+}
+.font-regular b,
+.font-regular strong {
+  font-weight: 700;
+}
+.font-display {
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+}
+.font-display b,
+.font-display strong {
+  font-weight: 600;
 }
 @font-face {
   font-family: AvianoFutureHeavy;
@@ -18,14 +31,6 @@
   font-family: Avenir;
   src: url('fonts/AvenirLTStd-Medium.otf');
 }
-* {
-  margin: 0;
-  padding: 0;
-}
-body {
-  background-color: white;
-  background-image: url('../images/background.jpg');
-}
 header {
   width: 986px;
   height: 175px;
@@ -34,7 +39,12 @@ header {
   position: relative;
   z-index: 9999;
   background: transparent;
-  font-family: 'AvianoFutureBold';
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+}
+header b,
+header strong {
+  font-weight: 600;
 }
 header .logo {
   display: inline-block;
@@ -86,7 +96,8 @@ header .navigation ul li {
 }
 footer {
   margin-top: 50px;
-  font-family: 'AvianoFutureBold';
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
   font-size: 12px;
 }
 footer a:link,
@@ -94,6 +105,10 @@ footer a:visited {
   color: inherit;
   text-decoration: none;
   background-color: inherit;
+}
+footer b,
+footer strong {
+  font-weight: 600;
 }
 footer .bar {
   padding: 15px;
@@ -139,7 +154,7 @@ footer .misc {
   margin-right: auto;
   font-size: 11px;
   line-height: 1.365;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 footer .misc .terms {
   display: inline-block;
@@ -354,18 +369,28 @@ footer .misc .built-by {
   height: 75px;
   top: 135px;
   text-align: center;
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
   font-size: 18px;
-  font-family: 'AvianoFutureBlack';
   text-transform: uppercase;
+}
+.carousel .message b,
+.carousel .message strong {
+  font-weight: 600;
 }
 .carousel .message a {
   padding: 4px;
   border: 1px solid #e32d2e;
   border-radius: 3px;
   color: #e32d2e;
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
   font-size: 9px;
-  font-family: 'AvianoFutureRegular';
   vertical-align: middle;
+}
+.carousel .message a b,
+.carousel .message a strong {
+  font-weight: 600;
 }
 .carousel .message a:link,
 .carousel .message a:visited {
