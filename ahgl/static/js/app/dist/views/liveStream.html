@@ -1,1 +1,35 @@
-<div ng-controller="LiveStreamCtrl" class="live-stream" ng-show="liveStream"> <div class="header"> <img class="section-header-icon" ng-src="{{ sectionHeaderIconUrl }}"> <span class="heavy">Live</span><span>stream</span> </div> <div class="title-container"> <div class="title">{{streamTitle}}</div> <div class="currently-playing">Currently Playing</div> </div> <div class="stream-container"> <object type="application/x-shockwave-flash" height="500" width="600" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channel_name}}" bgcolor="#000000" class="twitch-container"> <param name="allowFullScreen" value="true"> <param name="allowScriptAccess" value="always"> <param name="allowNetworking" value="all"> <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf"> <param name="flashvars" value="hostname=www.twitch.tv&channel={{channel_name}}&auto_play=true&start_volume=50"> </object> <iframe class="chat-container" frameborder="0" scrolling="no" id="chat_embed" ng-src="{{chat_url}}"></iframe> </div> </div>
+
+
+<div ng-controller="LiveStreamCtrl" class="live-stream" ng-show="liveStream">
+    
+    <div class="header">
+        <img class="section-header-icon" ng-src="{{ sectionHeaderIconUrl }}"/>
+        <span class="heavy">Live</span><span>stream</span>
+    </div>
+
+    <div class="title-container">
+        <div class="title">{{streamTitle}}</div>
+        <div class="currently-playing">Currently Playing</div>
+    </div>
+    <div class="stream-container">  
+        <object type="application/x-shockwave-flash" 
+                height="500" 
+                width="600" 
+                id="live_embed_player_flash" 
+                data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channel_name}}" 
+                bgcolor="#000000"
+                class="twitch-container">
+            <param name="allowFullScreen" 
+                   value="true" />
+            <param name="allowScriptAccess" 
+                   value="always" />
+            <param name="allowNetworking" 
+                   value="all" />
+            <param name="movie" 
+                   value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+            <param name="flashvars" 
+                   value="hostname=www.twitch.tv&channel={{channel_name}}&auto_play=true&start_volume=50" />
+        </object>
+        <iframe class="chat-container" frameborder="0" scrolling="no" id="chat_embed" ng-src="{{chat_url}}"></iframe>
+    </div>
+</div>
