@@ -35,8 +35,6 @@ from . import RACES
 from .fields import HTMLField
 from tournaments.models import Game
 
-from .managers import TeamMembershipManager
-
 from django_extensions.db.fields import UUIDField
 
 from django.core.mail import EmailMessage
