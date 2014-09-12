@@ -1,0 +1,5 @@
+{% load i18n %}
+
+<p>{{member}}{% trans " has requested to join to team " %}{{team}}<br>
+{% trans "Edit membership:" %} <a href="{% url membership_edit membership_id %}">http://{{current_site}}{% url membership_edit membership_id %}</a>
+</p>

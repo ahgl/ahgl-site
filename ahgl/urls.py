@@ -16,7 +16,9 @@ from profiles.views import (MVPView, TeamListView, TeamDetailView, TeamAdminView
                             StandingsView, TeamUpdateView, TeamSignupView,
                             MyProfileDetailView, TeamMembershipView,
                             TeamMembershipUpdateView, TeamMembershipCreateView,
-                            TeamMembershipDeleteView, CasterListView, InviteTeamMember)
+                            TeamMembershipDeleteView, CasterListView,
+                            JoinTeamView, InviteTeamMember)
+
 from tournaments.views import (MatchDetailView, MatchListView, MatchReportView,
                                SubmitLineupView, GameListView, PlayerAdminView)
 from tournaments.models import Tournament
@@ -84,6 +86,7 @@ urlpatterns += patterns('',
     url(r'^(?P<tournament>[\w_-]+)/standings/$', StandingsView.as_view(), name='standings'),
     url(r'^(?P<tournament>[\w_-]+)/casters/$', CasterListView.as_view(), name='casters'),
     url(r'^invite_member/(?P<team>[\w_-]+)/$', InviteTeamMember.as_view(), name='invite_member'),
+    url(r'^join_team/(?P<team>[\w_-]+)/$', JoinTeamView.as_view(), name='join_team'),
 
     # Root of the site is the new Angular app, but keep the rest of the CMS pages around for posterity.
     url(r'^/?$', StaticFileView.as_view(path='static/js/app/dist/index.html')),
