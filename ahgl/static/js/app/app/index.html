@@ -4,7 +4,13 @@
         <meta charset="utf-8">
         <title></title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+
+        <!--
+            grunt-cdn messes this up, but we can live without it for now:
+            https://github.com/tactivos/grunt-cdn/issues/56
+            <meta name="viewport" content="width=device-width">
+        -->
+
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css(.) styles/vendor.css -->
         <!-- bower:css -->
@@ -66,7 +72,6 @@
         <script src="scripts/services/carousel.js"></script>
         <script src="scripts/services/games.js"></script>
         <script src="scripts/services/news.js"></script>
-
         <!-- endbuild -->
 
     </body>
