@@ -9,10 +9,10 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'TeamMembership.status'
-        db.add_column('profiles_team_members', 'status',
-                      self.gf('django.db.models.fields.CharField')(default='A', max_length=1),
-                      keep_default=False)
-
+        #db.add_column('profiles_team_members', 'status',
+        #              self.gf('django.db.models.fields.CharField')(default='A', max_length=1),
+        #              keep_default=False)
+        ""
 
     def backwards(self, orm):
         # Deleting field 'TeamMembership.status'
