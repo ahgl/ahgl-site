@@ -16,6 +16,8 @@ angular.module('ahglApp')
                 $scope.chat_url = $sce.trustAsResourceUrl(urlSvc.chatUrl.replace('{{channelName}}', resp.channelName));
                 $scope.live_stream_logo = $sce.trustAsResourceUrl(resp.gameImageUrl);
                 $scope.streamTitle = resp.channelName;
+                $scope.gameName = resp.gameName;
+                $scope.username = resp.username;
             });
 
         GamesSvc.fetchGames().then(function(games) {

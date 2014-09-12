@@ -23,14 +23,6 @@ body {
 .font-display strong {
   font-weight: 600;
 }
-@font-face {
-  font-family: AvianoFutureHeavy;
-  src: url('fonts/AvianoFutureHeavy.otf');
-}
-@font-face {
-  font-family: Avenir;
-  src: url('fonts/AvenirLTStd-Medium.otf');
-}
 header {
   width: 986px;
   height: 175px;
@@ -121,6 +113,8 @@ footer .bar ul li {
   display: inline-block;
   text-transform: uppercase;
   cursor: pointer;
+  letter-spacing: 2px;
+  font-size: 20px;
 }
 footer .social {
   width: 174px;
@@ -148,11 +142,11 @@ footer .social ul li.twitch {
   background-image: url('../images/twitch.png');
 }
 footer .misc {
-  width: 568px;
+  width: 517px;
   margin-top: 15px;
   margin-left: auto;
   margin-right: auto;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.365;
   text-transform: uppercase;
 }
@@ -185,7 +179,7 @@ footer .misc .built-by {
 .section .header {
   background-image: url('../images/header.png');
   background-repeat: no-repeat;
-  height: 85px;
+  height: 82px;
   width: 990px;
   margin-left: auto;
   margin-right: auto;
@@ -201,17 +195,18 @@ footer .misc .built-by {
 }
 .section .header span {
   font-size: 19px;
-  font-family: "AvianoFutureBold";
+  font-family: "Nunito";
   color: #e32d2e;
   text-transform: uppercase;
   vertical-align: middle;
 }
 .section .header span.heavy {
-  font-family: "AvianoFutureHeavy";
+  font-size: 21px;
+  font-weight: 700;
   margin-right: 5px;
 }
 .live-stream {
-  font-family: 'AvianoFutureBold';
+  font-family: 'Nunito';
 }
 .live-stream .title-container {
   color: #e32d2e;
@@ -225,13 +220,13 @@ footer .misc .built-by {
   margin-right: 5px;
 }
 .live-stream .title-container .title {
-  font-size: 26px;
+  font-size: 23px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 .live-stream .title-container .currently-playing {
   color: #832325;
   font-size: 16px;
-  text-transform: uppercase;
 }
 .live-stream .stream-container {
   width: 977px;
@@ -312,7 +307,7 @@ footer .misc .built-by {
   color: white;
   font-size: 12px;
   text-transform: uppercase;
-  font-family: "Avenir";
+  font-family: "Nunito";
 }
 .latest-news .news img {
   float: left;
@@ -323,7 +318,7 @@ footer .misc .built-by {
 .latest-news .news .news-heading {
   color: white;
   font-size: 22px;
-  font-family: "AvianoFutureBlack";
+  font-family: "Nunito";
   text-transform: uppercase;
   width: auto;
   padding-bottom: 15px;
@@ -333,7 +328,7 @@ footer .misc .built-by {
   padding-top: 5px;
   color: white;
   font-size: 12px;
-  font-family: "Avenir";
+  font-family: "Nunito";
 }
 .carousel {
   height: 200px;
