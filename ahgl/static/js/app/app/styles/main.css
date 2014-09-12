@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Nunito:400,700|Jura:400,600);
+@import url(http://fonts.googleapis.com/css?family=Jura:600,400|Nunito:400,700);
 * {
   margin: 0;
   padding: 0;
@@ -22,6 +22,14 @@ body {
 .font-display b,
 .font-display strong {
   font-weight: 600;
+}
+@font-face {
+  font-family: AvianoFutureHeavy;
+  src: url('fonts/AvianoFutureHeavy.otf');
+}
+@font-face {
+  font-family: Avenir;
+  src: url('fonts/AvenirLTStd-Medium.otf');
 }
 header {
   width: 986px;
@@ -85,6 +93,7 @@ header .navigation ul li {
   margin-right: 20px;
 }
 footer {
+  margin-top: 50px;
   font-family: 'Jura', sans-serif;
   font-weight: 400;
   font-size: 12px;
@@ -166,87 +175,84 @@ footer .misc .built-by {
   vertical-align: middle;
   height: 60px;
 }
-.livestream-container {
-  font-family: 'Jura', sans-serif;
-  font-weight: 400;
-}
-.livestream-container b,
-.livestream-container strong {
-  font-weight: 600;
-}
-.livestream-container .header {
-  background-image: url('../images/livestream-header.png');
-  height: 105px;
-  width: 1026px;
+.section {
+  width: 1025px;
   margin-left: auto;
   margin-right: auto;
 }
-.livestream-container .title-container {
+.section .header {
+  background-image: url('../images/header.png');
+  background-repeat: no-repeat;
+  height: 65px;
+  width: 875px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 150px;
+  padding-top: 33px;
+}
+.section .header span {
+  font-size: 19px;
+  font-family: "AvianoFutureBold";
+  color: #e32d2e;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.section .header span.heavy {
+  font-family: "AvianoFutureHeavy";
+  margin-right: 5px;
+}
+.live-stream {
+  font-family: 'AvianoFutureBold';
+}
+.live-stream .title-container {
   color: #e32d2e;
   width: 977px;
   margin-left: auto;
   margin-right: auto;
 }
-.livestream-container .title-container img {
+.live-stream .title-container img {
   float: left;
   margin-top: 5px;
   margin-right: 5px;
 }
-.livestream-container .title-container .title {
+.live-stream .title-container .title {
   font-size: 26px;
   text-transform: uppercase;
 }
-.livestream-container .title-container .currently-playing {
+.live-stream .title-container .currently-playing {
   color: #832325;
   font-size: 16px;
   text-transform: uppercase;
 }
-.livestream-container .stream-container {
+.live-stream .stream-container {
   width: 977px;
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   border-top: 1px solid #676767;
 }
-.livestream-container .stream-container .twitch-container,
-.livestream-container .stream-container .chat-container {
+.live-stream .stream-container .twitch-container,
+.live-stream .stream-container .chat-container {
   display: inline-block;
   height: 500px;
   margin-top: 15px;
 }
-.livestream-container .stream-container .twitch-container {
+.live-stream .stream-container .twitch-container {
   width: 655px;
   margin-right: 15px;
   background-color: #aaaaaa;
 }
-.livestream-container .stream-container .chat-container {
+.live-stream .stream-container .chat-container {
   width: 300px;
   background-color: #aaaaaa;
 }
 .featured-matches {
-  width: 1036px;
-  height: 350px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.featured-matches .header {
-  background-image: url('../images/featuredmatches-header.png');
-  height: 105px;
-  width: 1026px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.featured-matches .featured-matches-container {
-  font-family: 'Jura', sans-serif;
-  font-weight: 400;
+  height: 220px;
+  font-family: 'AvianoFutureBold';
   margin-left: 10px;
   margin-right: 10px;
 }
-.featured-matches .featured-matches-container b,
-.featured-matches .featured-matches-container strong {
-  font-weight: 600;
-}
-.featured-matches .featured-matches-container .match {
+.featured-matches .match {
   border: 2px solid #aaaaaa;
   margin: 10px;
   float: left;
@@ -254,26 +260,74 @@ footer .misc .built-by {
   padding-top: 70px;
   padding-bottom: 70px;
 }
-.featured-matches .featured-matches-container .match a:link,
-.featured-matches .featured-matches-container .match a:visited {
+.featured-matches .match a:link,
+.featured-matches .match a:visited {
   color: inherit;
   text-decoration: none;
   background-color: inherit;
 }
-.featured-matches .featured-matches-container .match p {
+.featured-matches .match p {
   text-align: center;
   text-transform: uppercase;
   color: white;
   font-size: 11px;
 }
-.featured-matches .featured-matches-container .match p.vs {
+.featured-matches .match p.vs {
   font-size: 24px;
   font-weight: bold;
 }
+.latest-news {
+  font-family: 'AvianoFutureBold';
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 250px;
+}
+.latest-news .news {
+  float: left;
+  width: 45%;
+  padding: 5px 10px 5px 20px;
+}
+.latest-news .news a:link,
+.latest-news .news a:visited {
+  color: #e32d2e;
+  text-decoration: none;
+  background-color: inherit;
+}
+.latest-news .news a {
+  color: #e32d2e;
+  font-family: "Avenir";
+}
+.latest-news .news .date {
+  width: 100%;
+  text-align: right;
+  color: white;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-family: "Avenir";
+}
+.latest-news .news img {
+  float: left;
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+}
+.latest-news .news .news-heading {
+  color: white;
+  font-size: 22px;
+  font-family: "AvianoFutureBlack";
+  text-transform: uppercase;
+  width: auto;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #898989;
+}
+.latest-news .news p {
+  padding-top: 5px;
+  color: white;
+  font-size: 12px;
+  font-family: "Avenir";
+}
 .carousel {
   height: 200px;
-  position: relative;
-  top: -26px;
 }
 .carousel img {
   display: block;
