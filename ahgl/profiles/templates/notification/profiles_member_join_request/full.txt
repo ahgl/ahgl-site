@@ -1,0 +1,4 @@
+{% load i18n %}
+
+{{member}}{% trans " has requested to join to team " %}{{team}}
+http://{{current_site}}{% url membership_edit membership_id %}
