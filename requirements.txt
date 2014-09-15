@@ -72,6 +72,7 @@ django-social-auth==0.6.1
 django-tinymce==1.5.1b2
 django-cms==2.3.8
 phileo==1.0
+mercurial
 
 # Need to specify direct path to postmarkup it seems.
 https://postmarkup.googlecode.com/files/postmarkup-1.2.0.tar.gz
