@@ -3,6 +3,7 @@ from django.db import models
 
 class Game(models.Model):
     name = models.CharField(max_length=100)
+    slug = models.CharField(max_length=100)
 
     header_image_url = models.CharField(max_length=2048)
     

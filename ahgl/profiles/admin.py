@@ -46,7 +46,7 @@ class AwaitingTeamMembershipAdmin(admin.ModelAdmin):
     }
 
     def queryset(self, request):
-        return self.model.objects.awaitings()
+        return self.model.objects.filter(status='W')
 
     def approve(self, request, queryset):
         rows_updated = queryset.update(status='A')

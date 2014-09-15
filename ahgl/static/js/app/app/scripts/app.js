@@ -25,6 +25,10 @@ angular
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             })
+            .when('/game/:gamesSlug', {
+                templateUrl: 'views/main.html',
+                controller: 'GameCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

@@ -10,8 +10,12 @@
 angular.module('ahglApp')
     .service('MatchSvc', function ($sce, $http, $q, urlSvc) {
                 
-        this.fetchMatches = function () {
-            return $http.get(urlSvc.matchesUrl).then(function(resp) {    
+        this.fetchMatches = function (gameFilter) {
+            var data = {};
+            if (gameFilter) {
+                data.game = gameFilter;
+            }
+            return $http.get(urlSvc.matchesUrl, {params: data}).then(function(resp) {    
                 var matches =  _.map(resp.data.results, function(el) {
                     return el;
                 });

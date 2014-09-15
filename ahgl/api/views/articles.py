@@ -9,13 +9,13 @@ class LatestNewsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         limit = self.request.QUERY_PARAMS.get('limit', 2)
-        tournament = self.request.QUERY_PARAMS.get('tournament', None)
+        game = self.request.QUERY_PARAMS.get('game', None)
 
-        if tournament:
-            queryset = Article.objects.filter(tournaments=tournament, published=True).order_by('publish_date', 'creation_date')[:limit]
+        if game:
+            queryset = Article.objects.filter(tournaments__game__slug=game, published=True).order_by('publish_date', 'creation_date')[:limit]
 
             for article in queryset:
-                article.tournament = tournament
+                article.tournament = game
                     
         else:
             queryset = Article.objects.filter(published=True).order_by('publish_date', 'creation_date')[:limit]
