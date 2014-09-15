@@ -11,6 +11,7 @@ angular.module('ahglApp')
     .controller('CarouselCtrl', function ($scope, carouselSvc, $sce) {
         $scope.carouselInterval = 5000;
         $scope.slides = [];
+
         carouselSvc.fetchCarousels()
             .then(function(resp) {
                 resp.data.results.forEach(function(carousel) {

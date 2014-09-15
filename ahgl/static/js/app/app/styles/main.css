@@ -175,6 +175,7 @@ footer .misc .built-by {
   width: 1025px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 20px;
 }
 .section .header {
   background-image: url('../images/header.png');
@@ -333,6 +334,8 @@ footer .misc .built-by {
 }
 .carousel {
   height: 200px;
+  top: -15px;
+  position: relative;
 }
 .carousel img {
   display: block;

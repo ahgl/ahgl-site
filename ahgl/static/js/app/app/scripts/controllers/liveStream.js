@@ -9,7 +9,10 @@
  */
 angular.module('ahglApp')
     .controller('LiveStreamCtrl', function ($scope, $sce, liveStreamSvc, urlSvc, GamesSvc) {
-        liveStreamSvc.fetchStreams()
+        
+        var selectedGame = GamesSvc.getSelectedGame();
+
+        liveStreamSvc.fetchStreams(selectedGame)
             .then(function(resp) {
                 $scope.liveStream = true;
                 $scope.channel_name = resp.channelName;

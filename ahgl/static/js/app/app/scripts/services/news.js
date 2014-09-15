@@ -10,8 +10,12 @@
 angular.module('ahglApp')
     .service('NewsSvc', function ($sce, $http, $q, urlSvc) {
                 
-        this.fetchNews = function () {
-            return $http.get(urlSvc.newsUrl).then(function(resp) {    
+        this.fetchNews = function (gameFilter) {
+            var data = {};
+            if (gameFilter) {
+                data.game = gameFilter;
+            }
+            return $http.get(urlSvc.newsUrl, {params: data}).then(function(resp) {    
                 return resp.data.results;
             });
         };
