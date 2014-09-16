@@ -10,9 +10,12 @@
 angular.module('ahglApp')
     .controller('FeaturedMatchesCtrl', function ($scope, $sce, urlSvc, MatchSvc, GamesSvc) {
         $scope.localGamesSvc = GamesSvc;
+        $scope.featuredMatchesPresent = false;
 
-        MatchSvc.fetchMatches().then(function(matches) {
+        var selectedGame = GamesSvc.getSelectedGame();
+        MatchSvc.fetchMatches(selectedGame).then(function(matches) {
                 $scope.matches = matches;
+                $scope.featuredMatchesPresent = matches.length > 0;
         });
 
         GamesSvc.fetchGames().then(function(games) {
