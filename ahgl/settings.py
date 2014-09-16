@@ -406,41 +406,22 @@ DEBUG_TOOLBAR_CONFIG = {
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "root": {
-        "level": "WARNING",
-        "handlers": ["sentry"],
-    },
-    "formatters": {
-        "simple": {
-            "format": "%(levelname)s %(message)s"
-        },
-    },
     "handlers": {
-        "sentry": {
-            "level": "ERROR",
-            "class": "raven.contrib.django.handlers.SentryHandler",
-        },
         "console": {
             "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "simple"
+            "class": "logging.StreamHandler"
         },
-        "mail_admins": {
-            "level": "ERROR",
-            "class": "django.utils.log.AdminEmailHandler"
-        },
+        "null": {
+            "level": "DEBUG",
+            "class": "django.utils.log.NullHandler"
+        }
     },
     "loggers": {
-        "raven": {
-            "level": "DEBUG",
-            "handlers": ["console"],
+        "django.db.backends": {
+            "handlers": ["null"],
             "propagate": False,
-        },
-        "sentry.errors": {
-            "level": "DEBUG",
-            "handlers": ["console"],
-            "propagate": False,
-        },
+            "level": "DEBUG"
+        }
     }
 }
 
