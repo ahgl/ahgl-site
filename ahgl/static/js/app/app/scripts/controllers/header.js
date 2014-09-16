@@ -14,14 +14,14 @@ angular.module('ahglApp')
             $scope.games = games;
         });
 
-        $scope.isGameSelected = GamesSvc.getSelectedGame() !== null ;
+        $scope.isGameSelected = GamesSvc.isGameSelected();
         
         $scope.isSelected = function(game) {
-            var selectedGame = GamesSvc.getSelectedGame();
-            if (!selectedGame) {
+            var selectedGameSlug = GamesSvc.getSelectedGameSlug();
+            if (!selectedGameSlug) {
                 return false;
             }
-            return game.slug === selectedGame;
+            return game.slug === selectedGameSlug;
         };
 
         $scope.getImageUrl = function(game) {

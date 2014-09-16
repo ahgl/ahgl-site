@@ -17,7 +17,7 @@ angular.module('ahglApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/header.html',
-    "<a href=\"/\"><div class=logo></div></a><div class=bar ng-controller=HeaderCtrl><a ng-repeat=\"game in games\" href=\"/#/game/{{ game.slug }}\"><img class=\"game1 game\" ng-src=\"{{ getImageUrl(game) }}\"></a></div><div class=navigation ng-show=isGameSelected><ul><li>VIDEOS</li><li>CASTERS</li><li>TEAMS</li><li>SCHEDULE</li><li>STANDINGS</li></ul></div>"
+    "<div ng-controller=HeaderCtrl><a href=\"/\"><div class=logo></div></a><div class=bar><a ng-repeat=\"game in games\" href=\"/#/game/{{ game.slug }}\"><img class=\"game1 game\" ng-src=\"{{ getImageUrl(game) }}\"></a></div><div class=navigation ng-show={{isGameSelected}}><ul><li>VIDEOS</li><li>CASTERS</li><li>TEAMS</li><li>SCHEDULE</li><li>STANDINGS</li></ul></div></div>"
   );
 
 
