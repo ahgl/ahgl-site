@@ -11,7 +11,7 @@ angular.module('ahglApp')
     .service('GamesSvc', function ($sce, $http, $q, $route, urlSvc) {
         var games = null;
         var gamesPopulated = false;
-        var selectedGame = null;
+        var selectedGameSlug = null;
 
         var fetchGames = function () {
             if (gamesPopulated) {
@@ -33,21 +33,37 @@ angular.module('ahglApp')
             });
         };
 
-        var selectGame = function(gameSlug) {
-            selectedGame = gameSlug;
+        var selectGameSlug = function(gameSlug) {
+            selectedGameSlug = gameSlug;
         };
 
-        var getSelectedGame = function () {
-            return selectedGame;
+        var getSelectedGameSlug = function () {
+            return selectedGameSlug;
         };
 
-        var getRandomIcon = function (section) {
+        var isGameSelected = function() {
+            return getSelectedGameSlug() !== null;
+        };
+
+        var getIcon = function(section, gameSlug) {
             if (games === null) {
                 return "";
             }
+
             if (!(section === 'article' || section === 'match' || section === 'live_stream')) {
                 throw Exception('Invalid section provided');
             }
+
+            if (typeof gameSlug === 'undefined' || gameSlug === null) {
+                return getRandomIcon(section);
+            }
+            var game = _.find(games, function(g) { 
+                return g.slug === gameSlug;
+            });
+            return game[section + '_section_image_url'];
+        };
+
+        var getRandomIcon = function (section) {
             var numGames = games.length;
             var randomGamePos = Math.floor((Math.random() * numGames));  // 0-based index
             var imageUrl = games[randomGamePos][section + '_section_image_url'];
@@ -55,5 +71,10 @@ angular.module('ahglApp')
             return imageUrl;
         };
 
-        return {games: games, selectGame: selectGame, getSelectedGame: getSelectedGame, gamesPopulated: gamesPopulated, fetchGames: fetchGames, getRandomIcon: getRandomIcon};    
+        return {games: games, 
+                selectGameSlug: selectGameSlug,
+                getSelectedGameSlug: getSelectedGameSlug,
+                isGameSelected: isGameSelected,
+                fetchGames: fetchGames,
+                getIcon: getIcon};    
     });

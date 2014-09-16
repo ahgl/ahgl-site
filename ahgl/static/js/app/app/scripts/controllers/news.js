@@ -5,14 +5,14 @@ angular.module('ahglApp')
         $scope.localGamesSvc = GamesSvc;
         $scope.newsPresent = false;
 
-        var selectedGame = GamesSvc.getSelectedGame();
+        var selectedGameSlug = GamesSvc.getSelectedGameSlug();
 
-        NewsSvc.fetchNews(selectedGame).then(function(news) {
+        NewsSvc.fetchNews(selectedGameSlug).then(function(news) {
                 $scope.news = news;
                 $scope.newsPresent = news.length > 0;
         });
 
         GamesSvc.fetchGames().then(function(games) {
-            $scope.sectionHeaderIconUrl = GamesSvc.getRandomIcon("article");
+            $scope.sectionHeaderIconUrl = GamesSvc.getIcon("article", selectedGameSlug);
         });
     });

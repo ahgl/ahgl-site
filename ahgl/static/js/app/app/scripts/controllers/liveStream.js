@@ -10,9 +10,9 @@
 angular.module('ahglApp')
     .controller('LiveStreamCtrl', function ($scope, $sce, liveStreamSvc, urlSvc, GamesSvc) {
         
-        var selectedGame = GamesSvc.getSelectedGame();
+        var selectedGameSlug = GamesSvc.getSelectedGameSlug();
 
-        liveStreamSvc.fetchStreams(selectedGame)
+        liveStreamSvc.fetchStreams(selectedGameSlug)
             .then(function(resp) {
                 $scope.liveStream = true;
                 $scope.channel_name = resp.channelName;
@@ -24,7 +24,7 @@ angular.module('ahglApp')
             });
 
         GamesSvc.fetchGames().then(function(games) {
-            $scope.sectionHeaderIconUrl = GamesSvc.getRandomIcon("live_stream");
+            $scope.sectionHeaderIconUrl = GamesSvc.getIcon("live_stream", selectedGameSlug);
         });
 
     });

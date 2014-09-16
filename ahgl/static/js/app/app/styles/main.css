@@ -71,7 +71,7 @@ header .bar .more {
   cursor: pointer;
 }
 header .navigation {
-  width: 520px;
+  width: 420px;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -84,6 +84,8 @@ header .navigation ul li {
   display: inline-block;
   color: lightgrey;
   font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
   margin-right: 20px;
 }
 footer {
@@ -172,6 +174,7 @@ footer .misc .built-by {
   height: 60px;
 }
 .section {
+  z-index: 10;
   width: 1025px;
   margin-left: auto;
   margin-right: auto;
@@ -333,13 +336,13 @@ footer .misc .built-by {
   font-family: "Nunito";
 }
 .carousel {
-  height: 200px;
-  top: -15px;
+  height: 340px;
+  top: -27px;
   position: relative;
 }
 .carousel img {
   display: block;
-  height: 200px;
+  height: 400px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -353,12 +356,12 @@ footer .misc .built-by {
   background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 80%, rgba(0, 0, 0, 0) 100%);
 }
 .carousel .mask {
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 20%, rgba(0, 0, 0, 0.9) 100%);
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 20%, rgba(0, 0, 0, 0.9) 100%);
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5) 20%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.9) 100%);
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5) 20%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.9) 100%);
   width: 100%;
-  height: 75px;
+  height: 130px;
   position: absolute;
-  top: 125px;
+  top: 270px;
 }
 .carousel .message {
   position: absolute;
@@ -366,11 +369,13 @@ footer .misc .built-by {
   color: white;
   width: 100%;
   height: 75px;
-  top: 135px;
+  top: 315px;
   text-align: center;
   font-family: 'Jura', sans-serif;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 28px;
+  letter-spacing: 2px;
+  font-weight: 700;
   text-transform: uppercase;
 }
 .carousel .message b,
@@ -406,7 +411,7 @@ footer .misc .built-by {
 .carousel .rn-carousel-controls .rn-carousel-control.rn-carousel-control-next {
   width: 30px;
   height: 50px;
-  margin-top: -50px;
+  margin-top: -90px;
   background: url('../images/carousel-right-arrow.png');
 }
 .carousel .rn-carousel-controls .rn-carousel-control.rn-carousel-control-next:before {
@@ -415,7 +420,7 @@ footer .misc .built-by {
 .carousel .rn-carousel-controls .rn-carousel-control.rn-carousel-control-prev {
   width: 30px;
   height: 50px;
-  margin-top: -50px;
+  margin-top: -90px;
   background: url('../images/carousel-left-arrow.png');
 }
 .carousel .rn-carousel-controls .rn-carousel-control.rn-carousel-control-prev:before {

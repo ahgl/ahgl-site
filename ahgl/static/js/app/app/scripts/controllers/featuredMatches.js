@@ -12,13 +12,13 @@ angular.module('ahglApp')
         $scope.localGamesSvc = GamesSvc;
         $scope.featuredMatchesPresent = false;
 
-        var selectedGame = GamesSvc.getSelectedGame();
-        MatchSvc.fetchMatches(selectedGame).then(function(matches) {
+        var selectedGameSlug = GamesSvc.getSelectedGameSlug();
+        MatchSvc.fetchMatches(selectedGameSlug).then(function(matches) {
                 $scope.matches = matches;
                 $scope.featuredMatchesPresent = matches.length > 0;
         });
 
         GamesSvc.fetchGames().then(function(games) {
-            $scope.sectionHeaderIconUrl = GamesSvc.getRandomIcon("match");
+            $scope.sectionHeaderIconUrl = GamesSvc.getIcon("match", selectedGameSlug);
         });
     });
