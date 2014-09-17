@@ -406,10 +406,16 @@ DEBUG_TOOLBAR_CONFIG = {
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {
+            "format": '[%(levelname)s] %(name)s: %(message)s'
+        }
+    },
     "handlers": {
         "console": {
             "level": "INFO",
-            "class": "logging.StreamHandler"
+            "class": "logging.StreamHandler",
+            "formatter": "simple"
         },
         "null": {
             "level": "DEBUG",
@@ -422,6 +428,10 @@ LOGGING = {
             "propagate": False,
             "level": "DEBUG"
         }
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO"
     }
 }
 
