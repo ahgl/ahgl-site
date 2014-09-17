@@ -117,6 +117,12 @@ footer .bar ul li {
   cursor: pointer;
   letter-spacing: 2px;
   font-size: 20px;
+  padding-right: 5px;
+  margin-right: 5px;
+  border-right: 2px solid #aaaaaa;
+}
+footer .bar ul li:last-child {
+  border-right: none;
 }
 footer .social {
   width: 174px;
