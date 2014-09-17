@@ -49,6 +49,8 @@ class Tournament(models.Model):
     games_per_match = models.PositiveSmallIntegerField(default=5, verbose_name="Default Games per Match", validators=[validate_wholenumber])
     structure = models.CharField(max_length=1, choices=(('I', 'Individual'), ('T', 'Team'),), default='I')
 
+    game = models.ForeignKey('api.Game', null=True)
+
     def random_teams(self, amount=7):
         return self.teams.order_by('?')[:amount]
 
@@ -314,10 +316,10 @@ class Match(models.Model):
         return self.winner.name
 
     def get_background_image_url(self, *args, **kwargs):
-        games = self.tournament.game_set.all()
-        if games.count() < 1:
+        if self.tournament.game is None:
             return ""
-        return games[0].background_match_image_url
+
+        return self.tournament.game.background_match_image_url
 
     def __unicode__(self):
         return u" ".join((unicode(self.tournament), u" vs ".join((unicode(self.home_team.name), unicode(self.away_team.name))), date(self.publish_date or self.creation_date, "M d, Y")))

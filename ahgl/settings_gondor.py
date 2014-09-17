@@ -6,6 +6,47 @@ from .settings import *  # noqa
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "root": {
+        "level": "WARNING",
+        "handlers": ["sentry"],
+    },
+    "formatters": {
+        "simple": {
+            "format": "%(levelname)s %(message)s"
+        },
+    },
+    "handlers": {
+        "sentry": {
+            "level": "ERROR",
+            "class": "raven.contrib.django.handlers.SentryHandler",
+        },
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple"
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler"
+        },
+    },
+    "loggers": {
+        "raven": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+            "propagate": False,
+        },
+        "sentry.errors": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+            "propagate": False,
+        },
+    }
+}
+
 if "GONDOR_DATABASE_URL" in os.environ:
     urlparse.uses_netloc.append("postgres")
     url = urlparse.urlparse(os.environ["GONDOR_DATABASE_URL"])

@@ -19,7 +19,7 @@ angular.module('ahglApp')
                 deferred.resolve(games);
                 return deferred.promise;
             }
-            return $http.get(urlSvc.gamesUrl).then(function(resp) {    
+            return $http.get(urlSvc.gamesUrl).then(function(resp) {
                 games =  _.map(resp.data.results, function(el) {
                     return {slug: el.slug,
                             image_url: el.header_image_url,
@@ -67,7 +67,6 @@ angular.module('ahglApp')
             var numGames = games.length;
             var randomGamePos = Math.floor((Math.random() * numGames));  // 0-based index
             var imageUrl = games[randomGamePos][section + '_section_image_url'];
-            console.log(imageUrl);
             return imageUrl;
         };
 
@@ -76,5 +75,5 @@ angular.module('ahglApp')
                 getSelectedGameSlug: getSelectedGameSlug,
                 isGameSelected: isGameSelected,
                 fetchGames: fetchGames,
-                getIcon: getIcon};    
+                getIcon: getIcon}; 
     });
