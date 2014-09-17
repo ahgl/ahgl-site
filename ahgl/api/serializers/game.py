@@ -3,7 +3,8 @@ from rest_framework import serializers
 
 
 class GameSerializer(serializers.HyperlinkedModelSerializer):
-    tournament_slug = serializers.CharField(source='tournament.slug', read_only=True)
+    tournament_slug = serializers.CharField(source='get_tournament_slug')
+    channel_name = serializers.CharField(source='channel_name')
 
     class Meta:
         model = Game
