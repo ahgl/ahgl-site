@@ -51,5 +51,7 @@ class CarouselItem(models.Model):
     message = models.CharField(max_length=2048)
     image_url = models.CharField(max_length=2048)
 
+    tournaments = models.ManyToManyField('tournaments.Tournament', related_name='carousel_items')
+
     def __unicode__(self):
         return self.image_url
