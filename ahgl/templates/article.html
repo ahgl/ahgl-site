@@ -7,11 +7,6 @@
 
 {% block content-class %}static-page{% endblock %}
 
-{% block tournament_nav %}
-{% show_menu 0 0 0 0 "_static_menu.html" %}
-{% endblock %}
-
-
 {% block body %}
 {% cache 300 cms_body request.path %}
 <h2 class="title title-1 t1">

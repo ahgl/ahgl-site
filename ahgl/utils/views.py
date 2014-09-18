@@ -30,11 +30,17 @@ class ObjectPermissionsCheckMixin(object):
 #
 # TODO: In production, do something smarter, like use X-Sendfile.
 # See http://stackoverflow.com/questions/2294507
+#
+# The file contents will be cached in memory if DEBUG is not set.
 class StaticFileView(View):
 
     path = None
+    _cache = None
 
-    def get(self, request, *args, **kwargs):
+    def _get_contents(self):
+        if self._cache is not None:
+            return self._cache
+
         if self.path is None:
             raise Exception("StaticFileView path attribute must be defined.")
         abspath = os.path.join(settings.PROJECT_ROOT, self.path)
@@ -43,4 +49,11 @@ class StaticFileView(View):
             contents = fh.read()
         except Exception as e:
             raise Exception("StaticFileView could not read file at %s: %s" % (self.path, e))
-        return HttpResponse(contents)
+
+        if not settings.DEBUG:
+            self._cache = contents
+
+        return contents
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(self._get_contents())

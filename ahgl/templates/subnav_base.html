@@ -4,12 +4,20 @@
 
 {% block body_base %}
     <div id="wrapper">
-        {% include "_messages.html" %}
-        {% block tournament_nav %}
-        {% include "tournaments/_tournament_nav.html" %}
+        <div style="width:920px;margin:0 auto;">{% include "_messages.html" %}</div>
+        {% block topbar_base %}
+
+            {# No idea why this needs to be copied from site_base.html! #}
+            <div id="static-navheader" class="navbar">
+            {% block account_bar %}{% include "_account_bar.html" %}{% endblock %}
+            </div>
+
         {% endblock %}
-        
-        <div id="main-content" class="{% block content-class %}{% endblock %} row">
+        {% block tournament_nav %}{% endblock %}
+        <header id="newsite-header" ng-include="'views/header.html'"></header>
+
+        <div id="main-content" class="well {% block content-class %}{% endblock %} row">
+          <br/>
           <div class="span2 columns">
               {% block subnav %}
               {% endblock %}
