@@ -7,7 +7,7 @@ angular.module('ahglApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/featuredMatches.html',
-    "<div ng-controller=FeaturedMatchesCtrl ng-show=featuredMatchesPresent><div class=header><img class=section-header-icon ng-src=\"{{ sectionHeaderIconUrl }}\"> <span class=heavy>Featured</span><span>Matches</span></div><div class=featured-matches><div ng-repeat=\"match in matches\" class=match style=\"background-image: url('{{match.background_image_url}}')\"><a href=\"{{ match.match_url }}\"><p>{{ match.home_team }}</p><p class=vs>vs</p><p>{{ match.away_team }}</p></a></div></div></div>"
+    "<div ng-controller=FeaturedMatchesCtrl ng-show=featuredMatchesPresent><div class=header><img class=section-header-icon ng-src=\"{{ sectionHeaderIconUrl }}\"> <span class=heavy>Featured</span><span>Matches</span></div><div class=featured-matches><div ng-repeat=\"match in matches\" class=match style=\"{ 'background-image': 'url(\\'' + match.background_image_url '\\');' }\"><a href=\"{{ match.match_url }}\"><p>{{ match.home_team }}</p><p class=vs>vs</p><p>{{ match.away_team }}</p></a></div></div></div>"
   );
 
 
@@ -22,7 +22,7 @@ angular.module('ahglApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/latestNews.html',
-    "<div ng-controller=LatestNewsCtrl ng-show=newsPresent><div class=header><img class=section-header-icon ng-src=\"{{ sectionHeaderIconUrl }}\"> <span class=heavy>Latest</span><span>Ahgl News</span></div><div class=latest-news><div ng-repeat=\"article in news\" class=news><div class=news-heading><div class=date>Aug 15th, 2014</div><img ng-show=article.image_url src=\"/{{ article.icon_image_url }}\"><div>{{ article.title }}</div><div class=underline></div></div><p ng-bind-html=article.summary></p><a href=\"{{ article.page_url }}\">Read More</a></div></div></div>"
+    "<div ng-controller=LatestNewsCtrl ng-show=newsPresent><div class=header><img class=section-header-icon ng-src=\"{{ sectionHeaderIconUrl }}\"> <span class=heavy>Latest</span><span>Ahgl News</span></div><div class=latest-news><div ng-repeat=\"article in news\" class=news><div class=news-heading><div class=date>Aug 15th, 2014</div><img ng-show=article.image_url ng-src=\"/{{ article.icon_image_url }}\"><div>{{ article.title }}</div><div class=underline></div></div><p ng-bind-html=article.summary></p><a href=\"{{ article.page_url }}\">Read More</a></div></div></div>"
   );
 
 
