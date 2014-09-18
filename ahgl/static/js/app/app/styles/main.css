@@ -260,12 +260,15 @@ footer .misc .built-by {
   margin-right: 10px;
 }
 .featured-matches .match {
-  border: 2px solid #aaaaaa;
   margin: 10px;
   float: left;
-  width: 310px;
-  padding-top: 70px;
-  padding-bottom: 70px;
+  width: 314px;
+  height: 177px;
+}
+.featured-matches .match a {
+  display: block;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 .featured-matches .match a:link,
 .featured-matches .match a:visited {
@@ -358,7 +361,11 @@ footer .misc .built-by {
   width: 100%;
   height: 75px;
   position: absolute;
+<<<<<<< Updated upstream
   top: 125px;
+=======
+  top: 340px;
+>>>>>>> Stashed changes
 }
 .carousel .message {
   position: absolute;
@@ -366,7 +373,11 @@ footer .misc .built-by {
   color: white;
   width: 100%;
   height: 75px;
+<<<<<<< Updated upstream
   top: 135px;
+=======
+  top: 375px;
+>>>>>>> Stashed changes
   text-align: center;
   font-family: 'Jura', sans-serif;
   font-weight: 400;

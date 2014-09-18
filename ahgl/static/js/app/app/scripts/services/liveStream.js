@@ -21,7 +21,7 @@ angular.module('ahglApp')
                     }
 
                     games.forEach(function (game) {
-                        endpoints.push($http.jsonp(urlSvc.streamUrl.replace('{{channelName}}', game.channel_name)));
+                        endpoints.push($http.jsonp(urlSvc.streamUrl.replace('{{channelName}}', game.channel_name)));    
                     });
                     $q.all(endpoints)
                         .then(function(responses) {
@@ -29,11 +29,13 @@ angular.module('ahglApp')
                                 if (response.data.stream) {
                                     var game = games[index],
                                         channelName = game.channel_name,
+                                        streamTitle = response.data.stream.channel.status,
                                         gameImageUrl = game.section_image_url;
                                     deferred.resolve({ channelName: channelName,
                                                        gameImageUrl: gameImageUrl,
                                                        username: response.data.stream.channel.display_name,
-                                                       gameName: response.data.stream.game});
+                                                       gameName: response.data.stream.game,
+                                                       streamTitle: streamTitle});
                                     return true;
                                 }
                             });
