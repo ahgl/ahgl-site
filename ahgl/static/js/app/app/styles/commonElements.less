@@ -1,5 +1,9 @@
+.content {
+  position: relative;
+  top: 270px;
+}
 .section {
-    
+
     width: 1025px;
     margin-left: auto;
     margin-right: auto;
@@ -16,7 +20,12 @@
         margin-right: auto;
         padding-left: 30px;
         padding-top: 33px;
-        
+
+        &.no-icon {
+          background-image: url('../images/header-noicon.png');
+          padding-left: 40px;
+        }
+
         .section-header-icon {
           width: 143px;
           height: 82px;
@@ -25,7 +34,7 @@
           top: -45px;
         }
 
-        span {
+        span, .inner {
           font-size: 19px;
           font-family: "Nunito";
           color: @bright-red;
@@ -35,7 +44,7 @@
             font-size: 21px;
             font-weight: 700;
             margin-right: 5px;
-          } 
+          }
         }
     }
 }

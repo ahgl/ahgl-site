@@ -212,7 +212,7 @@ module.exports = function (grunt) {
                 cwd: '<%= yeoman.app %>'
             },
             app: {
-                src: ['<%= yeoman.app %>/index.html'],
+                src: ['<%= yeoman.app %>/*.html'],
                 ignorePath:  /\.\.\//
             }
         },
@@ -267,7 +267,7 @@ module.exports = function (grunt) {
         // concat, minify and revision files. Creates configurations in memory so
         // additional tasks can operate on them
         useminPrepare: {
-            html: '<%= yeoman.app %>/index.html',
+            html: '<%= yeoman.app %>/*.html',
             options: {
                 dest: '<%= yeoman.dist %>',
                 flow: {
@@ -316,6 +316,13 @@ module.exports = function (grunt) {
         // concat: {
         //   dist: {}
         // },
+
+        includes: {
+            files: {
+                src: ['<%= yeoman.dist %>/{,*/}*.html'],
+                dest: '.'
+            }
+        },
 
         imagemin: {
             dist: {
@@ -465,6 +472,7 @@ module.exports = function (grunt) {
         'less',
         'ngAnnotate',
         'copy:dist',
+        'includes',
         'cssmin',
         'uglify',
         'filerev',
