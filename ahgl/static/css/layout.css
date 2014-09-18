@@ -142,9 +142,6 @@ p {
 /* ============================================================================================ */
 /* ======================================================= global id based styles ============= */
 /* ============================================================================================ */
-#wrapper {
-	min-height:100%;
-}
 #main-header {
 	background:url(../images/background/global/header-bkg.jpg) no-repeat center top;
 	height:292px;
@@ -519,115 +516,6 @@ ol p:first-child {
 }
 
 /* ============================================================================================ */
-/* ======================================================= title styles ======================= */
-/* ============================================================================================ */
-/* apply to element to get the trapazoidal header, can be used on different element types: h2, span, a, etc */
-.title,
-.title:before,
-.title:after {
-	background-image:url(../images/background/global/title-bkg.png);
-}
-.title {
-	background-position:0 0;
-	background-repeat:repeat-x;
-	display:block;
-	line-height:103px;
-	margin:0 103px 50px 103px;
-	position:relative;
-	text-align:center;
-}
-.title:before,
-.title:after {
-	width:103px;
-	background-repeat:no-repeat;
-	content:"";
-	height:103px;
-	left:-103px;
-	position:absolute;
-	top:0;
-}
-.title:after {
-	left:auto;
-	right:-103px;
-}
-a.title:hover {
-	background-position:0 -103px;
-}
-
-/* title-1 styles: standard white trapazoid banner */
-.title-1:before {
-	background-position:-103px -206px;
-}
-.title-1:after {
-	background-position:-103px -309px;
-}
-a.title-1:hover:before {
-	background-position:0 -206px;
-}
-a.title-1:hover:after {
-	background-position:0 -309px;
-}
-
-/* title-2 styles: used on match page when there are two trapazoid headers on the same row */
-.title-2 {
-	width:200px;
-	float:left;
-}
-.first-title:before {
-	background-position:-103px -206px;
-}
-.first-title:after {
-	background-position:-103px -412px;
-}
-a.first-title:hover:before {
-	background-position:0 -206px;
-}
-a.first-title:hover:after {
-	background-position:0 -412px;
-}
-.second-title:before {
-	background-position:-103px -515px;
-}
-.second-title:after {
-	background-position:-103px -309px;
-}
-a.second-title:hover:before {
-	background-position:0 -515px;
-}
-a.second-title:hover:after {
-	background-position:0 -309px;
-}
-
-/* title-3 styles: used on home page, this does not use title sprite */
-.title-3 {
-	background:#ff5b47;
-	float:left;
-	line-height:42px;
-	margin:0 42px 0 0;
-	min-width:130px;
-	padding:0 12px;
-	position:relative;
-}
-.title-3:before {
-	width:0;
-	background:none;
-	border-color:transparent transparent #ff5b47 #ff5b47;
-	border-style:solid;
-	border-width:21px;
-	content:"";
-	height:0;
-	left:auto;
-	position:absolute;
-	right:-42px;
-	top:0;
-}
-.title-3:after {
-	background:none;
-	height:0;
-	width:0;
-}
-
-/* ============================================================================================ */
 /* ======================================================= @font-face styles ================== */
 /* ============================================================================================ */
 @font-face {
@@ -655,21 +543,8 @@ a.second-title:hover:after {
 /* ============================================================================================ */
 /* ======================================================= font styles ======================== */
 /* ============================================================================================ */
-/* header fonts */
-.heading1 {
-	color:#fff;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
-	font-size:25px;
-	text-transform:uppercase;
-	padding-bottom: 5px;
-	padding-left: 10px;
-	padding-top: 0;
-}
 .t1 {
-	color:#FFFFFF;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
-	font-size:30px;
-	text-transform:uppercase;
+    /* Superceded by new Angular site styles. */
 }
 .t2 {
 	color:#fff;
@@ -683,8 +558,6 @@ a.second-title:hover:after {
 	font-size:30px;
 	text-transform:uppercase;
 }
-a.t1:hover,
-a:hover .t1,
 a.t3:hover,
 a:hover .t3 {
 	color:#fff;

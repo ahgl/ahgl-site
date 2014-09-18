@@ -3,13 +3,12 @@
 {% load metron_tags %}
 {% load i18n %}
 {% load compress %}
+{% load include_static_file %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
         <meta charset="utf-8" />
         <title>{% block head_title_base %}{% if SITE_NAME %}{{ SITE_NAME }} &#8212; {% endif %}{% block head_title %}{% endblock %}{% endblock %}</title>
-        
-        {% include "redbull_header1.html" %}
 
         {% block viewport %}
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,28 +45,18 @@
             })();
         </script>
 
-
-
+        {% include_static_file "static/js/app/dist/include_header.html" %}
 
     </head>
     <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
-
-    {% include "redbull_header_analytics.html" %}
-
-    {% include "redbull_header2.html" %}
-
-
 
         {% block body_base %}
             <div id="wrapper">
                 <div style="width:920px;margin:0 auto;">{% include "_messages.html" %}</div>
                 {% block topbar_base %}{% endblock %}
-                {% block tournament_nav %}
-                <div id="main-header">
-                {% include "tournaments/_tournament_nav.html" %}
-                </div>
-                {% endblock %}
-                
+                {% block tournament_nav %}{% endblock %}
+                <header id="newsite-header" ng-include="'views/header.html'"></header>
+
                 <div id="main-content" class="{% block content-class %}{% endblock %}">
                 {% block body %}
                 {% endblock %}
@@ -76,20 +65,16 @@
         {% endblock %}
 
         {% block footer_base %}
-            <div id="main-footer">
-                <div id="main-footer-inner">
-                        {% block footer %}{% include "_footer.html" %}{% endblock %}
-                </div>
-                {% include "redbull_footer1.html" %}
-            </div>
+            <footer id="newsite-footer" ng-include="'views/footer.html'"></footer>
+            {% block footer %}{% endblock %}
         {% endblock %}
 
-        {% block extra_body_base %} 
+        {% block extra_body_base %}
             {% analytics %}
             {% block extra_body %}{% endblock %}
         {% endblock %}
-        
-        
+
+
             <script src="{% static "js/base.js" %}"></script>
         {% compress js %}
         {% block script_base %}
@@ -102,12 +87,19 @@
         {% endblock %}
         {% endcompress %}
         {% render_block "js" %}
-        
-    <!--[if lt IE 9]>
 
-    <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+        <script>
+            // We need to initialize just the header and footer because, if the whole <body> is
+            // initialized as an Angular app, <button> clicks will be blocked, and other stuff will
+            // probably stop working.
+            angular.element(document).ready(function() {
+                angular.bootstrap(document.getElementById('newsite-header'), ['ahglApp']);
+                angular.bootstrap(document.getElementById('newsite-footer'), ['ahglApp']);
+            });
+        </script>
 
-    <![endif]-->
-    <!-- Place this tag in your head or just before your close body tag -->
+        <!--[if lt IE 9]>
+        <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+        <![endif]-->
     </body>
 </html>
