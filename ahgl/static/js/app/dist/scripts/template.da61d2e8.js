@@ -12,7 +12,7 @@ angular.module('ahglApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/footer.html',
-    "<div class=bar><ul><li><a href=/ahgl-handbook>HANDBOOK</a> |</li><li><a href=/faq>FAQ</a> |</li><li><a href=/press>PRESS</a> |</li><li><a href=/archive>PAST SEASONS</a> |</li><li><a href=/leadership>LEADERSHIP</a> |</li><li><a href=/messages/compose/ahgltv>CONTACT</a></li></ul></div><div class=social><ul><a href=http://www.facebook.com/AHGLtv><li class=facebook></li></a> <a href=http://twitter.com/ahgltv><li class=twitter></li></a> <a href=http://www.youtube.com/afterhoursgamingtv><li class=youtube></li></a> <a href=http://www.twitch.tv/ahgltv><li class=twitch></li></a></ul></div><div class=misc><div class=terms><div><a href=/terms-of-use>TERMS OF USE</a></div><div>©2014 JINK.TV. ALL RIGHTS RESERVED</div></div><div class=icon></div><div class=built-by><div>SITE BUILT BY <b><a href=\"http://ntucker.me/\">NATHANIEL TUCKER</a></b></div><div>AND DESIGNED BY <b><a href=\"http://rediceinteractive.com/\">REDICE</a></b></div></div></div>"
+    "<div class=bar><ul><li><a href=/ahgl-handbook>HANDBOOK</a></li><li><a href=/faq>FAQ</a></li><li><a href=/press>PRESS</a></li><li><a href=/archive>PAST SEASONS</a></li><li><a href=/leadership>LEADERSHIP</a></li><li><a href=/messages/compose/ahgltv>CONTACT</a></li></ul></div><div class=social><ul><a href=http://www.facebook.com/AHGLtv><li class=facebook></li></a> <a href=http://twitter.com/ahgltv><li class=twitter></li></a> <a href=http://www.youtube.com/afterhoursgamingtv><li class=youtube></li></a> <a href=http://www.twitch.tv/ahgltv><li class=twitch></li></a></ul></div><div class=misc><div class=terms><div><a href=/terms-of-use>TERMS OF USE</a></div><div>©2014 JINK.TV. ALL RIGHTS RESERVED</div></div><div class=icon></div><div class=built-by><div>SITE BUILT BY <b><a href=\"http://ntucker.me/\">NATHANIEL TUCKER</a></b></div><div>AND DESIGNED BY <b><a href=\"http://rediceinteractive.com/\">REDICE</a></b></div></div></div>"
   );
 
 
@@ -32,7 +32,7 @@ angular.module('ahglApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/main.html',
-    "<header ng-include=\"'views/header.html'\"></header><div class=carousel ng-include=\"'views/carousel.html'\"></div><div class=\"section live-stream\" ng-include=\"'views/liveStream.html'\"></div><div class=section ng-include=\"'views/featuredMatches.html'\"></div><div class=section ng-include=\"'views/latestNews.html'\"></div><footer ng-include=\"'views/footer.html'\"></footer>"
+    "<header ng-include=\"'views/header.html'\"></header><div class=carousel ng-include=\"'views/carousel.html'\"></div><div class=content><div class=\"section live-stream\" ng-include=\"'views/liveStream.html'\"></div><div class=section ng-include=\"'views/featuredMatches.html'\"></div><div class=section ng-include=\"'views/latestNews.html'\"></div><footer ng-include=\"'views/footer.html'\"></footer></div>"
   );
 
 }]);
