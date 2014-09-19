@@ -32,4 +32,13 @@ angular.module('ahglApp')
             }
             return imageUrl;
         };
-    });
+
+        $scope.getSelectedIconUrl = function(game) {
+            if ($scope.isSelected(game)) {
+                var imageUrl = game.image_url;
+                imageUrl = imageUrl.replace('.png', '');
+                return imageUrl + '-active.png';
+            }
+            return "";
+        };
+    }); 
