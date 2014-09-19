@@ -21,22 +21,24 @@ header {
         position: absolute;
         top: 32px;
         background-image: url('../images/header-background.png');
-        img {
-            width: 137px;
-            height: 115px;
-            margin: 0 18px;
-            cursor: pointer;
-            position: relative;
-            top: -15px;
-        }
-        .more {
-            position: absolute;
-            background-image: url('../images/more.png');
-            right: 8px;
-            top: 17px;
-            height: 92px;
-            width: 60px;
-            cursor: pointer;
+
+        div {
+            float: left;
+            width: 173px;
+            img.game {
+                width: 137px;
+                height: 115px;
+                margin: 0 18px;
+                cursor: pointer;
+                position: relative;
+                top: -15px;
+            }            
+            .game-active-icon {
+                position: relative;
+                top: -29px;
+                margin-left: auto;
+                margin-right: auto;
+            }
         }
     }
     .navigation {
