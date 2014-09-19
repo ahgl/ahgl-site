@@ -15,4 +15,14 @@ angular.module('ahglApp')
         GamesSvc.fetchGames().then(function(games) {
             $scope.sectionHeaderIconUrl = GamesSvc.getRandomIcon("article");
         });
+
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        $scope.formatDate = function(article) {
+            var date = new Date(article.publish_date);
+            if (!date) {
+                return "";
+            }
+            var dateStr = monthNames[date.getMonth() - 1] + " " + date.getDay() + ", " + date.getFullYear()
+            return dateStr;
+        };
     });

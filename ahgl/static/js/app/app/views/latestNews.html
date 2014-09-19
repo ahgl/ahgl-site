@@ -8,7 +8,7 @@
     <div class="latest-news">
         <div ng-repeat="article in news" class="news">
             <div class="news-heading">
-                <div class="date">Aug 15th, 2014</div>
+                <div class="date">{{ formatDate(article) }}</div>
                 <img ng-show="article.image_url" ng-src="/{{ article.icon_image_url }}" /><div>{{ article.title }}</div>
                 <div class="underline"></div>
             </div>
