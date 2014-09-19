@@ -116,12 +116,28 @@ Go to http://localhost:8000/admin and login with `admin` / `admin`.
 
 GLHF!
 
+### 7. (Optional) Django development
+
+If you're working on parts of the site that use Django templates, you'll probably want to keep the Angular assets in sync since all of the Django templates use the Angular header and footer.
+
+First, install Nodemon:
+
+    $ npm install -g nodemon
+
+Then run this, which will run the production-ready `grunt build` when important Angular assets change:
+
+    $ cd ahgl/static/js/app
+    $ nodemon --verbose -e .html -e .less -i dist/\* -i .tmp/\* -i app/scripts/config.js -i app/styles/main.css `which grunt` build
+
 Deployment
 ----------
 
-We're currently checking in distribution files for ease of deployment.
+Basically, create a fresh branch, run grunt to build static files, add them as a commit, and push the branch:
 
+    $ git branch -D staging
+    $ git checkout -b staging
     $ grunt --gruntfile ahgl/static/js/app/Gruntfile.js build
-    $ git commit -A -m "Checking in production files to app/dist"
+    $ git add --force ahgl/static/js/{dist,app/scripts/config.js}
+    $ git commit -m "Checking in production files to app/dist"
     $ gondor deploy <env> HEAD
 
