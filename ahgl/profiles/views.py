@@ -63,14 +63,17 @@ class JoinTeamView(View):
         team = get_object_or_404(Team, slug=kwargs['team'])
         self.team = team
 
-        try:
-            membership = TeamMembership(team=team, profile=self.request.user.get_profile(), status='W', active=False)
-            membership.save()
-        except IntegrityError:
-            connection.close()
-            messages.error(request, 'Error joining to the team', extra_tags='join_button_error')
-        except:
-            messages.error(request, 'Error joining to the team', extra_tags='join_button_error')
+        if not request.user.is_authenticated():
+            messages.error(request, 'Error joining to the team. You are not logged in.', extra_tags='join_button_error')
+        else:
+            try:
+                membership = TeamMembership(team=team, profile=self.request.user.get_profile(), status='W', active=False)
+                membership.save()
+            except IntegrityError:
+                connection.close()
+                messages.error(request, 'Error joining to the team')
+            except Exception as e:
+                messages.error(request, 'Error joining to the team')
 
         return HttpResponseRedirect(self.get_success_url())
 
