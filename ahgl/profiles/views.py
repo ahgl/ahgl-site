@@ -60,7 +60,6 @@ class TeamDetailView(TournamentSlugContextView, DetailView):
 class JoinTeamView(View):
 
     def get(self, request, *args, **kwargs):
-        context = {'success': 1, 'errors': []}
         team = get_object_or_404(Team, slug=kwargs['team'])
         self.team = team
 
@@ -69,11 +68,9 @@ class JoinTeamView(View):
             membership.save()
         except IntegrityError:
             connection.close()
-            context['errors'].append(_("Error joining to the team"))
-            context['success'] = 0
+            messages.error(request, 'Error joining to the team', extra_tags='join_button_error')
         except:
-            context['errors'].append(_("Error joining to the team"))
-            context['success'] = 0
+            messages.error(request, 'Error joining to the team', extra_tags='join_button_error')
 
         return HttpResponseRedirect(self.get_success_url())
 
