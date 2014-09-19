@@ -98,7 +98,8 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/{,*/}*.html',
                     '<%= yeoman.app %>/styles/{,*/}*.css',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-                ]
+                ],
+                tasks: ['livereload', 'includes:server']
             }
         },
 
@@ -318,7 +319,13 @@ module.exports = function (grunt) {
         // },
 
         includes: {
-            files: {
+            server: {
+                cwd: '<%= yeoman.app %>',
+                src: ['*.html'],
+                dest: '.tmp/'
+            },
+            dist: {
+                cwd: '.',
                 src: ['<%= yeoman.dist %>/{,*/}*.html'],
                 dest: '.'
             }
@@ -442,6 +449,7 @@ module.exports = function (grunt) {
             'concurrent:server',
             'autoprefixer',
             'less',
+            'includes:server',
             'connect:livereload',
             'watch'
         ]);
@@ -472,7 +480,7 @@ module.exports = function (grunt) {
         'less',
         'ngAnnotate',
         'copy:dist',
-        'includes',
+        'includes:dist',
         'cssmin',
         'uglify',
         'filerev',
