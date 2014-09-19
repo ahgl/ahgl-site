@@ -276,12 +276,15 @@ footer .misc .built-by {
   margin-right: 10px;
 }
 .featured-matches .match {
-  border: 2px solid #aaaaaa;
   margin: 10px;
   float: left;
-  width: 310px;
-  padding-top: 70px;
-  padding-bottom: 70px;
+  width: 314px;
+  height: 177px;
+}
+.featured-matches .match a {
+  display: block;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 .featured-matches .match a:link,
 .featured-matches .match a:visited {

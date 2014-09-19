@@ -2,7 +2,7 @@ angular.module('ahglApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('views/carousel.html',
-    "<div ng-controller=CarouselCtrl class=carousel-container><ul rn-carousel rn-carousel-control><li ng-repeat=\"slide in slides\"><img ng-src=\"{{slide.image_url}}\"><div class=mask></div><div class=fade></div><div class=message><span ng-bind-html=slide.message></span></div></li></ul></div>"
+    "<div ng-controller=CarouselCtrl class=carousel-container><ul rn-carousel rn-carousel-control><li ng-repeat=\"slide in slides\"><img ng-src=\"{{ slide.image_url }}\"><div class=mask></div><div class=fade></div><div class=message><span ng-bind-html=slide.message></span></div></li></ul></div>"
   );
 
 
