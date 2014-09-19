@@ -40,7 +40,9 @@ from django_extensions.db.fields import UUIDField
 from django.core.mail import EmailMessage
 from django.contrib.sites.models import Site
 
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.template import Context
 
 logger = logging.getLogger(__name__)
 
@@ -257,9 +259,23 @@ def send_team_member_invite(sender, instance, created, raw, using, **kwargs):
     if created:
         try:
             team_url = Site.objects.get_current().domain + instance.team.get_absolute_url()
-            message_body = 'You have been invited to join a team. Click here: ' + team_url
-            send_mail('Invitation to join a Team', message_body, settings.DEFAULT_FROM_EMAIL,
-                [instance.email], fail_silently=False)
+            template_context = Context({ 
+                'current_site': Site.objects.get_current().domain,
+                'team': instance.team })
+
+            plain_template = get_template('email/team_invitation/content.txt')
+            html_template = get_template('email/team_invitation/content.html')
+
+            text_content = plain_template.render(template_context)
+            html_content = html_template.render(template_context)
+
+            msg = EmailMultiAlternatives(
+                'Invitation to join a Team', 
+                text_content, 
+                settings.DEFAULT_FROM_EMAIL, 
+                [instance.email])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
         except Exception as e:
             pass
 
