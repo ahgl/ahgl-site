@@ -329,7 +329,7 @@ class Team(models.Model):
 
     @property
     def has_minimum_members(self):
-        return self.team_membership.count() >= 8
+        return self.team_membership.count() >= 7
 
     def __unicode__(self):
         return u" : ".join((self.name, self.tournament.name))
