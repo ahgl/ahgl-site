@@ -127,7 +127,9 @@ First, install Nodemon:
 Then run this, which will run the production-ready `grunt build` when important Angular assets change:
 
     $ cd ahgl/static/js/app
-    $ nodemon --verbose -e .html -e .less -i dist/\* -i .tmp/\* -i app/scripts/config.js -i app/styles/main.css `which grunt` build
+    $ nodemon --verbose -e .html -e .less \
+        -i dist/\* -i .tmp/\* -i app/scripts/config.js -i app/styles/main.css \
+        `which grunt` build
 
 Deployment
 ----------
