@@ -1,6 +1,8 @@
 .htaccess
 .sass-cache
 .tmp
+app/scripts/config.js
 bower_components
+dist
 main.css
 node_modules
