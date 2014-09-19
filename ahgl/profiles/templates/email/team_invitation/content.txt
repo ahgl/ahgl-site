@@ -1,0 +1,5 @@
+A captain has invited you to join their team in the After Hours Gaming League.
+
+To join, follow this link and click the "Join Team" button while signed in: http://{{current_site}}{{ team.get_absolute_url }}
+
+To sign up for an account, go here: http://{{current_site}}{% url account_signup %}
