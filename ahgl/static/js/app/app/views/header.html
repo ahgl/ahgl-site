@@ -1,20 +1,24 @@
-<a href="/"><div class="logo"></div></a>
+<div ng-controller="HeaderCtrl">
 
-<div class="bar" ng-controller="HeaderCtrl">
-    <div ng-repeat="game in games">
-        <a  href="/#/game/{{ game.slug }}">
-            <img class="game1 game" ng-src="{{ getImageUrl(game) }}"/>
-        </a>
-        <img class="game-active-icon" ng-if="isSelected(game)" ng-src="{{ getSelectedIconUrl(game) }}" />"
+    <a href="/"><div class="logo"></div></a>
+
+    <div class="bar">
+        <div ng-repeat="game in games">
+            <a  href="/#/game/{{ game.slug }}">
+                <img class="game1 game" ng-src="{{ getImageUrl(game) }}"/>
+            </a>
+            <img class="game-active-icon" ng-if="isSelected(game)" ng-src="{{ getSelectedIconUrl(game) }}" />
+        </div>
     </div>
-</div>
 
-<div class="navigation" ng-show="isGameSelected">
-    <ul>
-        <li>VIDEOS</li>
-        <li>CASTERS</li>
-        <li>TEAMS</li>
-        <li>SCHEDULE</li>
-        <li>STANDINGS</li>
-    </ul>
+    <div class="navigation" ng-show="isGameSelected">
+        <ul>
+            <li><a href="/{{ selectedGame }}/videos" ng-class="{ selected: selectedTab == 'videos' }">Videos</a></li>
+            <li><a href="/{{ selectedGame }}/casters" ng-class="{ selected: selectedTab == 'casters' }">Casters</a></li>
+            <li><a href="/{{ selectedGame }}/teams" ng-class="{ selected: selectedTab == 'teams' }">Teams</a></li>
+            <li><a href="/{{ selectedGame }}/schedule" ng-class="{ selected: selectedTab == 'schedule' }">Schedule</a></li>
+            <li><a href="/{{ selectedGame }}/standings" ng-class="{ selected: selectedTab == 'standings' }">Standings</a></li>
+        </ul>
+    </div>
+
 </div>

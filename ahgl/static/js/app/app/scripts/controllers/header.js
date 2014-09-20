@@ -14,7 +14,21 @@ angular.module('ahglApp')
             $scope.games = games;
         });
 
-        $scope.isGameSelected = GamesSvc.getSelectedGame() !== null;
+        $scope.$watch('GamesSvc.getSelectedGame()', function() {
+            $scope.selectedGame = GamesSvc.getSelectedGame();
+            $scope.isGameSelected = $scope.selectedGame !== null;
+        });
+
+        // Populate this if we're being loaded from a Django template.
+        $scope.selectedTab = (function() {
+            if (typeof document === 'undefined') return; // Can't use $location and make sure this is testable.
+            var match = document.location.pathname.match(/^\/([^\/]+)\/(\w+)\/?$/);
+            if (match) {
+                return match[2];
+            } else {
+                return null;
+            }
+        })();
 
         $scope.isSelected = function(game) {
             var selectedGame = GamesSvc.getSelectedGame();
