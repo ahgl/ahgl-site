@@ -53,7 +53,11 @@ header .bar {
   top: 32px;
   background-image: url('../images/header-background.png');
 }
-header .bar img {
+header .bar div {
+  float: left;
+  width: 173px;
+}
+header .bar div img.game {
   width: 137px;
   height: 115px;
   margin: 0 18px;
@@ -61,14 +65,10 @@ header .bar img {
   position: relative;
   top: -15px;
 }
-header .bar .more {
-  position: absolute;
-  background-image: url('../images/more.png');
-  right: 8px;
-  top: 17px;
-  height: 92px;
-  width: 60px;
-  cursor: pointer;
+header .bar div .game-active-icon {
+  position: relative;
+  top: -29px;
+  left: 10px;
 }
 header .navigation {
   width: 520px;

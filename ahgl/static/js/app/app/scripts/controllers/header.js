@@ -14,8 +14,8 @@ angular.module('ahglApp')
             $scope.games = games;
         });
 
-        $scope.isGameSelected = GamesSvc.getSelectedGame() !== null ;
-        
+        $scope.isGameSelected = GamesSvc.getSelectedGame() !== null;
+
         $scope.isSelected = function(game) {
             var selectedGame = GamesSvc.getSelectedGame();
             if (!selectedGame) {
@@ -39,6 +39,6 @@ angular.module('ahglApp')
                 imageUrl = imageUrl.replace('.png', '');
                 return imageUrl + '-active.png';
             }
-            return "";
+            return null;
         };
-    }); 
+    });
