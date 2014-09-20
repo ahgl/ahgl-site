@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<p>
+    {% trans "Thanks for starting registration for the After Hours Gaming League! Registration closes November 7th, so start early!" %}
+</p>
+<p>
+    {% trans "AHGL Handbook for more information:" %} <a href="/ahgl-handbook">http://{{current_site}}/ahgl-handbook/</a>
+</p>
+<p>
+    {% trans "Team and players editing:" %} <a href="/team_admin">http://{{current_site}}/ahgl-team_admin/</a>
+</p>
+<p>
+    {% trans "If you have any questions, contact:" %} <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+</p>

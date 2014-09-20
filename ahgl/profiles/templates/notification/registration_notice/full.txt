@@ -1,0 +1,9 @@
+{% load i18n %}
+
+{% trans "Thanks for starting registration for the After Hours Gaming League! Registration closes November 7th, so start early!" %}
+
+{% trans "AHGL Handbook for more information:" %} http://{{current_site}}/ahgl-handbook/
+
+{% trans "Team and players editing:" %} http://{{current_site}}/team_admin/
+
+{% trans "If you have any questions, contact:" %} {{ contact_email }}
