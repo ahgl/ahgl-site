@@ -84,18 +84,16 @@ header .navigation {
   text-transform: uppercase;
   text-shadow: 0 0 4px black, 0 0 4px black, 0 0 10px black, 0 0 10px black;
   text-align: center;
+  color: lightgrey;
 }
-header .navigation,
 header .navigation a {
   color: lightgrey;
   text-decoration: none;
 }
-header .navigation:hover,
 header .navigation a:hover {
   color: white;
 }
-header .navigation .selected,
-header .navigation a .selected {
+header .navigation a.selected {
   color: white;
   text-decoration: underline;
 }
