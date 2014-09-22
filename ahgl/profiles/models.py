@@ -357,6 +357,12 @@ class Team(models.Model):
             'slug': self.slug,
         })
 
+    def save(self, notify=True, *args, **kwargs):
+        created = self.id is None
+        super(Team, self).save(*args, **kwargs)
+        if notification and created and notify:
+            send_task("profiles.tasks.notify_team_registration", [self.captain_id, settings.CONTACT_EMAIL])
+
     class Meta:
         unique_together = (('name', 'tournament'), ('slug', 'tournament'),)
         ordering = ('name',)
