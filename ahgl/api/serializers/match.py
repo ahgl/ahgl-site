@@ -19,12 +19,12 @@ class MatchSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_icon_image_url(self, match):
         if match.tournament.game is None:
-            return ""
+            return None
 
         return match.tournament.game.icon_image_url
 
     def get_background_image_url(self, match):
         if match.tournament.game is None:
-            return ""
+            return None
 
         return match.tournament.game.background_match_image_url
