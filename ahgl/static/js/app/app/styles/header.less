@@ -32,7 +32,7 @@ header {
                 cursor: pointer;
                 position: relative;
                 top: -15px;
-            }            
+            }
             .game-active-icon {
                 position: relative;
                 top: -29px;
@@ -46,13 +46,27 @@ header {
         margin-right: auto;
         position: relative;
         top: -61px;
+        .font-display.strong();
+        font-size: 18px;
+        text-transform: uppercase;
+        text-shadow: 0 0 4px black, 0 0 4px black, 0 0 10px black, 0 0 10px black;
+        text-align: center;
+        &, a {
+            color: lightgrey;
+            text-decoration: none;
+            &:hover {
+                color: white;
+            }
+            .selected {
+                color: white;
+                text-decoration: underline;
+            }
+        }
         ul {
             list-style-type: none;
             li {
                 display: inline-block;
-                color: lightgrey;
-                font-size: 12px;
-                margin-right: 20px;
+                margin: 0 10px;
             }
         }
     }

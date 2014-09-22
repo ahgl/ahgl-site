@@ -11,7 +11,17 @@ angular.module('ahglApp')
     .service('GamesSvc', function ($sce, $http, $q, $route, urlSvc) {
         var games = null;
         var gamesPopulated = false;
-        var selectedGame = null;
+
+        // Populate this if we're being loaded from a Django template.
+        var selectedGame = (function() {
+            if (typeof document === 'undefined') return; // Can't use $location and make sure this is testable.
+            var match = document.location.pathname.match(/^\/([^\/]+)\/(videos|casters|teams|schedule|standings)\/?$/);
+            if (match) {
+                return match[1];
+            } else {
+                return null;
+            }
+        })();
 
         var fetchGames = function () {
             if (gamesPopulated) {
@@ -43,7 +53,7 @@ angular.module('ahglApp')
 
         var getRandomIcon = function (section) {
             if (games === null) {
-                return "";
+                return '';
             }
             if (!(section === 'article' || section === 'match' || section === 'live_stream')) {
                 throw Exception('Invalid section provided');
@@ -54,5 +64,12 @@ angular.module('ahglApp')
             return imageUrl;
         };
 
-        return {games: games, selectGame: selectGame, getSelectedGame: getSelectedGame, gamesPopulated: gamesPopulated, fetchGames: fetchGames, getRandomIcon: getRandomIcon};
+        return {
+            games: games,
+            selectGame: selectGame,
+            getSelectedGame: getSelectedGame,
+            gamesPopulated: gamesPopulated,
+            fetchGames: fetchGames,
+            getRandomIcon: getRandomIcon
+        };
     });

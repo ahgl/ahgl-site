@@ -12,7 +12,8 @@ body {
   font-weight: 400;
 }
 .font-regular b,
-.font-regular strong {
+.font-regular strong,
+.font-regular .strong {
   font-weight: 700;
 }
 .font-display {
@@ -20,7 +21,8 @@ body {
   font-weight: 400;
 }
 .font-display b,
-.font-display strong {
+.font-display strong,
+.font-display .strong {
   font-weight: 600;
 }
 header {
@@ -35,7 +37,8 @@ header {
   font-weight: 400;
 }
 header b,
-header strong {
+header strong,
+header .strong {
   font-weight: 600;
 }
 header .logo {
@@ -76,15 +79,32 @@ header .navigation {
   margin-right: auto;
   position: relative;
   top: -61px;
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
+  text-shadow: 0 0 4px black, 0 0 4px black, 0 0 10px black, 0 0 10px black;
+  text-align: center;
+}
+header .navigation,
+header .navigation a {
+  color: lightgrey;
+  text-decoration: none;
+}
+header .navigation:hover,
+header .navigation a:hover {
+  color: white;
+}
+header .navigation .selected,
+header .navigation a .selected {
+  color: white;
+  text-decoration: underline;
 }
 header .navigation ul {
   list-style-type: none;
 }
 header .navigation ul li {
   display: inline-block;
-  color: lightgrey;
-  font-size: 12px;
-  margin-right: 20px;
+  margin: 0 10px;
 }
 footer {
   margin-top: 50px;
@@ -99,7 +119,8 @@ footer a:visited {
   background-color: inherit;
 }
 footer b,
-footer strong {
+footer strong,
+footer .strong {
   font-weight: 600;
 }
 footer .bar {
@@ -393,7 +414,8 @@ footer .misc .built-by {
   text-transform: uppercase;
 }
 .carousel .message b,
-.carousel .message strong {
+.carousel .message strong,
+.carousel .message .strong {
   font-weight: 600;
 }
 .carousel .message a {
@@ -407,7 +429,8 @@ footer .misc .built-by {
   vertical-align: middle;
 }
 .carousel .message a b,
-.carousel .message a strong {
+.carousel .message a strong,
+.carousel .message a .strong {
   font-weight: 600;
 }
 .carousel .message a:link,
