@@ -19,6 +19,14 @@ angular.module('ahglApp')
             $scope.isGameSelected = $scope.selectedGame !== null;
         });
 
+        $scope.tabs = [
+            { title: 'Videos', slug: 'videos' },
+            { title: 'Casters', slug: 'casters' },
+            { title: 'Teams', slug: 'teams' },
+            { title: 'Schedule', slug: 'schedule' },
+            { title: 'Standings', slug: 'videos' }
+        ];
+
         // Populate this if we're being loaded from a Django template.
         $scope.selectedTab = (function() {
             if (typeof document === 'undefined') return; // Can't use $location and make sure this is testable.

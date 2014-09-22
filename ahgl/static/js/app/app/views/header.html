@@ -13,11 +13,9 @@
 
     <div class="navigation" ng-show="isGameSelected">
         <ul>
-            <li><a href="/{{ selectedGame }}/videos" ng-class="{ selected: selectedTab == 'videos' }">Videos</a></li>
-            <li><a href="/{{ selectedGame }}/casters" ng-class="{ selected: selectedTab == 'casters' }">Casters</a></li>
-            <li><a href="/{{ selectedGame }}/teams" ng-class="{ selected: selectedTab == 'teams' }">Teams</a></li>
-            <li><a href="/{{ selectedGame }}/schedule" ng-class="{ selected: selectedTab == 'schedule' }">Schedule</a></li>
-            <li><a href="/{{ selectedGame }}/standings" ng-class="{ selected: selectedTab == 'standings' }">Standings</a></li>
+            <li ng-repeat="tab in tabs">
+                <a href="/{{ selectedGame }}/{{ tab.slug }}" ng-class="{ selected: selectedTab == tab.slug }">{{ tab.title }}</a>
+            </li>
         </ul>
     </div>
 
