@@ -315,12 +315,6 @@ class Match(models.Model):
     def winner__name(self):
         return self.winner.name
 
-    def get_background_image_url(self, *args, **kwargs):
-        if self.tournament.game is None:
-            return ""
-
-        return self.tournament.game.background_match_image_url
-
     def __unicode__(self):
         return u" ".join((unicode(self.tournament), u" vs ".join((unicode(self.home_team.name), unicode(self.away_team.name))), date(self.publish_date or self.creation_date, "M d, Y")))
 
