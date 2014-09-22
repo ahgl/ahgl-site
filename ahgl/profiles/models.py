@@ -258,7 +258,6 @@ class TeamMemberInvite(models.Model):
 def send_team_member_invite(sender, instance, created, raw, using, **kwargs):
     if created:
         try:
-            team_url = Site.objects.get_current().domain + instance.team.get_absolute_url()
             template_context = Context({ 
                 'current_site': Site.objects.get_current().domain,
                 'team': instance.team })
@@ -283,7 +282,7 @@ def send_team_member_invite(sender, instance, created, raw, using, **kwargs):
 
 class Team(models.Model):
     """Per Tournament"""
-    name = models.CharField(_("company name"), max_length=50)
+    name = models.CharField(_("company name"), max_length=35)
     slug = models.SlugField(_("slug"), max_length=50)
     photo = ImageField(_("team photo"), upload_to='team_photos', null=True, blank=True, help_text=u"Must be 920px x 450px")
     charity = models.ForeignKey('profiles.Charity', null=True, blank=True, on_delete=models.SET_NULL, related_name='teams', help_text=u"To add a charity not in this list, get written or email permission from the charity and <a href='/messages/compose/ahgltv/'>contact us</a>.")
