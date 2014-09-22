@@ -304,7 +304,7 @@ footer .misc .built-by {
 }
 .featured-matches .match a {
   display: block;
-  padding-top: 50px;
+  padding-top: 15px;
   padding-bottom: 50px;
 }
 .featured-matches .match a:link,
@@ -353,8 +353,8 @@ footer .misc .built-by {
 }
 .latest-news .news img {
   float: left;
-  height: 20px;
-  width: 20px;
+  height: 28px;
+  width: 28px;
   margin-right: 5px;
 }
 .latest-news .news .news-heading {
