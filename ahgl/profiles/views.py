@@ -181,6 +181,7 @@ class TeamSignupView(CreateView):
 
             def save(self, *args, **kwargs):
                 view.slug = self.instance.slug = slugify(self.cleaned_data['name'])
+                self.instance.captain_id = view.request.user.id
                 try:
                     super(TeamSignupForm, self).save(*args, **kwargs)
                 except IntegrityError:

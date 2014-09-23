@@ -16,3 +16,9 @@ def notify_member_join_request(team, member, membership_id, captains):
                         'team': team,
                         'member': member,
                         'membership_id': membership_id})
+
+@task(ignore_result=True)
+def notify_team_registration(captain_id, contact_email):
+    notification.send(User.objects.filter(pk=captain_id),
+                      "registration_notice",
+                      {'contact_email': contact_email})

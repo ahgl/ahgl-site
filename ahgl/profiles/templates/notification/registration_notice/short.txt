@@ -1,0 +1,2 @@
+{% load i18n %}
+{% trans "You created a new team" %}
