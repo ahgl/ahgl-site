@@ -8,7 +8,8 @@
  * Controller of the ahglApp
  */
 angular.module('ahglApp')
-    .controller('MainCtrl', function () {
-        
-        
+    .controller('MainCtrl', function ($scope, GamesSvc) {
+
+        GamesSvc.selectGame(null);
+
     });
