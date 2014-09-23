@@ -220,15 +220,6 @@ class TeamMembership(models.Model):
             'profile': self.profile.slug,
         })
 
-    def save(self, notify=True, *args, **kwargs):
-        created = self.id is None
-        super(TeamMembership, self).save(*args, **kwargs)
-        if self.status == 'W' and notification and created and notify:
-            send_task("profiles.tasks.notify_member_join_request", [unicode(self.team),
-                                                                  self.profile.user.username,
-                                                                  self.id,
-                                                                  self.team.captain_ids ])
-
     def __unicode__(self):
         return self.char_name
 
@@ -236,6 +227,15 @@ class TeamMembership(models.Model):
         db_table = 'profiles_team_members'
         unique_together = (('team', 'profile'),)
         ordering = ('-active', '-captain', 'char_name',)
+
+@receiver(post_save, sender=TeamMembership, dispatch_uid="notify_member_join_request")
+def send_join_request_notification(sender, instance, created, raw, using, **kwargs):
+    if created and instance.status == 'W' and notification:
+        send_task("profiles.tasks.notify_member_join_request", [unicode(instance.team),
+                                                                  instance.profile.user.username,
+                                                                  instance.id,
+                                                                  instance.team.captain_ids ])
+    return instance
 
 class TeamMemberInvite(models.Model):
     uuid = UUIDField()
@@ -357,16 +357,16 @@ class Team(models.Model):
             'slug': self.slug,
         })
 
-    def save(self, notify=True, *args, **kwargs):
-        created = self.id is None
-        super(Team, self).save(*args, **kwargs)
-        if notification and created and notify:
-            send_task("profiles.tasks.notify_team_registration", [self.captain_id, settings.CONTACT_EMAIL])
-
     class Meta:
         unique_together = (('name', 'tournament'), ('slug', 'tournament'),)
         ordering = ('name',)
 
+@receiver(post_save, sender=Team, dispatch_uid="notify_team_registration")
+def send_team_registration_notification(sender, instance, created, raw, using, **kwargs):
+    if created and notification:
+        send_task("profiles.tasks.notify_team_registration", [instance.captain_id, settings.CONTACT_EMAIL])
+
+    return instance
 
 class Charity(models.Model):
     name = models.CharField(_("name"), max_length=60)
