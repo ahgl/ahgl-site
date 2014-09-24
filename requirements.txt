@@ -16,7 +16,7 @@ django-debug-toolbar==0.9.4
 django-staticfiles==1.2.1
 django_compressor==1.3
 
--e git+https://github.com/ntucker/django-user-accounts.git@2adaeefea133c41357a178bb5581a446d15852b5#egg=django-user-accounts
+-e git+https://github.com/tumanyanani/django-user-accounts.git@c36dbbd560b45642d3203b101f58508867f4234b#egg=django-user-accounts
 django-timezones==0.2
 pytz==2012j
 django-openid==0.3a1

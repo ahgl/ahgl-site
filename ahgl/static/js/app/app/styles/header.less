@@ -6,6 +6,8 @@ header {
     position: relative;
     z-index: 9999;
     background: transparent;
+    position: relative;
+    top: -300px;
     .font-display;
     .logo {
         display: inline-block;
@@ -51,13 +53,14 @@ header {
         text-transform: uppercase;
         text-shadow: 0 0 4px black, 0 0 4px black, 0 0 10px black, 0 0 10px black;
         text-align: center;
-        &, a {
+        color: lightgrey;
+        a {
             color: lightgrey;
             text-decoration: none;
             &:hover {
                 color: white;
             }
-            .selected {
+            &.selected {
                 color: white;
                 text-decoration: underline;
             }

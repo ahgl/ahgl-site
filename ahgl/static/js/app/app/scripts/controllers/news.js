@@ -25,4 +25,11 @@ angular.module('ahglApp')
             var dateStr = monthNames[date.getMonth() - 1] + " " + date.getDay() + ", " + date.getFullYear()
             return dateStr;
         };
+
+        $scope.isVisible = function(article) {
+            if (article.icon_image_url === null) {
+                return false;
+            }
+            return true;
+        };
     });
