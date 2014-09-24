@@ -30,9 +30,10 @@ header {
   height: 175px;
   margin-left: auto;
   margin-right: auto;
-  position: relative;
   z-index: 9999;
   background: transparent;
+  position: relative;
+  top: -300px;
   font-family: 'Jura', sans-serif;
   font-weight: 400;
 }
@@ -198,7 +199,7 @@ footer .misc .built-by {
 }
 .content {
   position: relative;
-  top: 270px;
+  top: -60px;
 }
 .section {
   width: 1025px;
@@ -372,15 +373,16 @@ footer .misc .built-by {
 }
 .carousel {
   height: 340px;
-  position: absolute;
-  top: 0px;
+  /*
+    img {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    */
 }
 .carousel img {
-  display: block;
   height: 479px;
   width: 100%;
-  margin-left: auto;
-  margin-right: auto;
 }
 .carousel .fade {
   width: 100%;

@@ -9,7 +9,7 @@
         <div ng-repeat="article in news" class="news">
             <div class="news-heading">
                 <div class="date">{{ formatDate(article) }}</div>
-                <img ng-show="article.icon_image_url" ng-src="{{ article.icon_image_url }}" /><div>{{ article.title }}</div>
+                <img ng-show="{{ isVisible(article) }}" ng-src="{{ article.icon_image_url }}" /><div>{{ article.title }}</div>
                 <div class="underline"></div>
             </div>
 
