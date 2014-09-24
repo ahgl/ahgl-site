@@ -1,0 +1,23 @@
+{% extends "account/base.html" %}
+
+{% load url from future %}
+{% load bootstrap_tags %}
+
+{% block head_title %}Account{% endblock %}
+
+{% block body %}
+    <form method="POST" action="{% url "account_settings" %}">
+        <legend>Account</legend>
+        {% csrf_token %}
+        {% if not verified %}
+        <p>
+            <span>Please confirm email</span>
+            <a href="/profiles/resend_confirmation?next={{ request.path }}" class="btn">Resend</a>
+        </p>
+        {% endif %}
+        {{ form|as_bootstrap }}
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+    </form>
+{% endblock %}
