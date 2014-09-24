@@ -8,12 +8,10 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        ""
-
         # Adding field 'Tournament.game'
-        #db.add_column('tournaments_tournament', 'game',
-        #              self.gf('django.db.models.fields.related.ForeignKey')(to=orm['api.Game'], null=True),
-        #              keep_default=False)
+        db.add_column('tournaments_tournament', 'game',
+                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['api.Game'], null=True),
+                      keep_default=False)
 
 
     def backwards(self, orm):
