@@ -30,7 +30,7 @@
 {% if not profile.verified %}
 <p>
     <span>Please confirm email</span>
-    <a href="{% url resend_confirmation %}" class="btn">Resend</a>
+    <a href="{% url resend_confirmation %}?next={{ request.path }}" class="btn">Resend</a>
 </p>
 {% endif %}
 </div>
