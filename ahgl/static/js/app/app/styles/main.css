@@ -373,12 +373,6 @@ footer .misc .built-by {
 }
 .carousel {
   height: 340px;
-  /*
-    img {
-        margin-left: auto;
-        margin-right: auto;
-    }
-    */
 }
 .carousel img {
   height: 479px;
