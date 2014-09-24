@@ -394,15 +394,13 @@ class MyProfileDetailView(ProfileDetailView):
 
 class ResendEmailConfirmation(View):
     def get(self, request, *args, **kwargs):
+        redirect_to = request.REQUEST.get('next', '')
         self.slug = request.user.get_profile().slug
         email_address_queryset = EmailAddress.objects.filter(user=request.user, verified=False)
         if email_address_queryset.exists():
             email_address_queryset[0].send_confirmation(site=get_current_site(request))
 
-        return HttpResponseRedirect(self.get_success_url())
-
-    def get_success_url(self):
-        return reverse("profile_detail", kwargs={"slug": self.slug})
+        return HttpResponseRedirect(redirect_to)
 
 class CasterListView(ListView):
     template_name = "profiles/casters.html"
