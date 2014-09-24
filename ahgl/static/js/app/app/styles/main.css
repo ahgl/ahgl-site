@@ -200,6 +200,18 @@ footer .misc .built-by {
   position: relative;
   top: 270px;
 }
+.account-bar {
+  position: absolute;
+  top: 20px;
+  right: -200px;
+  color: #676767;
+}
+.account-bar a:link,
+.account-bar a:visited {
+  color: inherit;
+  text-decoration: none;
+  background-color: inherit;
+}
 .section {
   width: 1025px;
   margin-left: auto;
