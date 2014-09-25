@@ -27,9 +27,6 @@ angular.module('ahglApp')
         };
 
         $scope.isVisible = function(article) {
-            if (article.icon_image_url === null) {
-                return false;
-            }
-            return true;
+            return article.icon_image_url !== null;
         };
     });
