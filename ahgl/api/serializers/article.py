@@ -1,6 +1,7 @@
 from ahgl.tournaments.models import Article
 from ahgl.api.models import Game
 from rest_framework import serializers
+from tournaments.models import ACTIVE_TOURNAMENT_STATUS
 
 
 class ArticleSerializer(serializers.HyperlinkedModelSerializer):
@@ -24,7 +25,7 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
     def get_tournaments(self, article):
         tournaments = []
         for tournament in article.tournaments.all():
-            if tournament.status == 'A' or tournament.status == 'S':
+            if tournament.status in ACTIVE_TOURNAMENT_STATUS:
                 tournaments.append(tournament.name)
 
         return tournaments

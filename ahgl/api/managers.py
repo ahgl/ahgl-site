@@ -1,10 +1,13 @@
 from django.db import models
-from django.db.models import Q
+
+from tournaments.models import ACTIVE_TOURNAMENT_STATUS
+
 
 class GameManager(models.Manager):
     def active(self):
-        return super(GameManager, self).get_query_set().filter(Q(tournament__status='A') | Q(tournament__status='S'))
+        return super(GameManager, self).get_query_set().filter(tournament__status__in=ACTIVE_TOURNAMENT_STATUS)
+
 
 class CarouselItemManager(models.Manager):
     def active(self):
-        return super(CarouselItemManager, self).get_query_set().filter(Q(tournaments__status='A') | Q(tournaments__status='S'))
+        return super(CarouselItemManager, self).get_query_set().filter(tournaments__status__in=ACTIVE_TOURNAMENT_STATUS)

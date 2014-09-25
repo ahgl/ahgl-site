@@ -43,6 +43,9 @@ def validate_wholenumber(value):
         raise ValidationError(u'{0} is not a whole number'.format(value))
 
 
+ACTIVE_TOURNAMENT_STATUS = ['A', 'S']
+
+
 class Tournament(models.Model):
     name = models.CharField(_("name"), max_length=50)
     slug = models.SlugField(max_length=50, primary_key=True)

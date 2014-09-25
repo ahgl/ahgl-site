@@ -15,6 +15,6 @@ angular.module('ahglApp')
             if (tournamentFilter) {
                 data.tournament = tournamentFilter;
             }
-            return $http.get(urlSvc.carouselUrl);
+            return $http.get(urlSvc.carouselUrl, {params: data});
         }
     });
