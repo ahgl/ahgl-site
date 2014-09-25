@@ -10,7 +10,11 @@
 angular.module('ahglApp')
     .service('carouselSvc', function ($sce, $http, $q, urlSvc) {
         
-        this.fetchCarousels = function () {
+        this.fetchCarousels = function (tournamentFilter) {
+            var data = {};
+            if (tournamentFilter) {
+                data.tournament = tournamentFilter;
+            }
             return $http.get(urlSvc.carouselUrl);
         }
     });

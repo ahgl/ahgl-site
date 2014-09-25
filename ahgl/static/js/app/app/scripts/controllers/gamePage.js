@@ -9,6 +9,5 @@
  */
 angular.module('ahglApp')
     .controller('GameCtrl', function ($routeParams, GamesSvc) {
-        console.log($routeParams.tournamentSlug);
         GamesSvc.selectGame($routeParams.tournamentSlug);
     });
