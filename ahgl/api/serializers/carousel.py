@@ -3,9 +3,17 @@ from rest_framework import serializers
 
 
 class CarouselItemSerializer(serializers.HyperlinkedModelSerializer):
-    tournaments = serializers.SlugRelatedField(many=True, read_only=True, slug_field='name')
+    tournaments = serializers.SerializerMethodField('get_tournaments')
 
     class Meta:
         model = CarouselItem
         fields = ('order', 'image_url', 'message', 'tournaments',)
+
+    def get_tournaments(self, carousel):
+        tournaments = []
+        for tournament in carousel.tournaments.all():
+            if tournament.status == 'A':
+                tournaments.append(tournament.name)
+
+        return tournaments
 

@@ -1,4 +1,5 @@
 from ahgl.api.models import CarouselItem
+from ahgl.tournaments.models import Tournament
 from rest_framework import viewsets
 from ahgl.api.serializers import carousel
 
@@ -7,15 +8,16 @@ class CarouselItemViewSet(viewsets.ModelViewSet):
     serializer_class = carousel.CarouselItemSerializer
 
     def get_queryset(self):
-        game = self.request.QUERY_PARAMS.get('game', None)
+        tournament_slug = self.request.QUERY_PARAMS.get('tournament', None)
 
-        if game:
-            queryset = CarouselItem.objects.filter(tournaments__game__slug=game)
+        if tournament_slug:
+            tournament = Tournament.objects.filter(slug=tournament_slug, status='A')
+            queryset = CarouselItem.objects.filter(tournaments=tournament)
 
             for item in queryset:
-                item.tournament = game
+                item.tournaments = tournament
                     
         else:
-            queryset = CarouselItem.objects.all()
+            queryset = CarouselItem.objects.filter(tournaments__status='A')
 
         return queryset
