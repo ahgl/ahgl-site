@@ -21,4 +21,9 @@ angular.module('ahglApp')
         GamesSvc.fetchGames().then(function(games) {
             $scope.sectionHeaderIconUrl = GamesSvc.getRandomIcon("match");
         });
+
+
+        $scope.isVisible = function(match) {
+            return match.icon_image_url !== null;
+        };
     });
