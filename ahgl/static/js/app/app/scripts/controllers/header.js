@@ -43,7 +43,7 @@ angular.module('ahglApp')
             if (!selectedGame) {
                 return false;
             }
-            return game.slug === selectedGame;
+            return game.tournament_slug === selectedGame;
         };
 
         $scope.getImageUrl = function(game) {

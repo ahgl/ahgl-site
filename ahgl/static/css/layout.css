@@ -1133,6 +1133,7 @@ div#static-navheader {
 	margin: 0;
 	padding: 0;
 	color: white;
+	z-index: 100000;
 }
 
 div#static-navheader a {

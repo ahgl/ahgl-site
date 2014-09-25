@@ -10,14 +10,14 @@
 angular.module('ahglApp')
     .service('liveStreamSvc', function ($sce, $http, $q, urlSvc, GamesSvc) {
         
-        this.fetchStreams = function (gameFilter) {
+        this.fetchStreams = function (tournamentFilter) {
             var deferred = $q.defer();
 
             GamesSvc.fetchGames()
                 .then(function (games) {
                     var endpoints = [];
-                    if (gameFilter) {
-                        games = _.filter(games, function(g){ return g.slug === gameFilter});
+                    if (tournamentFilter) {
+                        games = _.filter(games, function(g){ return g.tournament_slug === tournamentFilter});
                     }
 
                     games.forEach(function (game) {
