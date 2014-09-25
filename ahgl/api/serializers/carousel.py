@@ -12,7 +12,7 @@ class CarouselItemSerializer(serializers.HyperlinkedModelSerializer):
     def get_tournaments(self, carousel):
         tournaments = []
         for tournament in carousel.tournaments.all():
-            if tournament.status == 'A':
+            if tournament.status == 'A' or tournament.status == 'S':
                 tournaments.append(tournament.name)
 
         return tournaments

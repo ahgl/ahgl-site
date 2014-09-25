@@ -24,7 +24,7 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
     def get_tournaments(self, article):
         tournaments = []
         for tournament in article.tournaments.all():
-            if tournament.status == 'A':
+            if tournament.status == 'A' or tournament.status == 'S':
                 tournaments.append(tournament.name)
 
         return tournaments
