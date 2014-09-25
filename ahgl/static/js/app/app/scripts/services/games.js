@@ -31,7 +31,7 @@ angular.module('ahglApp')
             }
             return $http.get(urlSvc.gamesUrl).then(function(resp) {
                 games =  _.map(resp.data.results, function(el) {
-                    return {slug: el.tournament_slug,
+                    return {tournament_slug: el.tournament_slug,
                             image_url: el.header_image_url,
                             article_section_image_url: el.article_section_image_url,
                             live_stream_section_image_url: el.live_stream_section_image_url,
