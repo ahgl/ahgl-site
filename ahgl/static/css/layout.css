@@ -238,6 +238,10 @@ p {
 	background: url(../images/ahgl2-openingscreen-lolside.png);
 }
 
+header#newsite-header {
+	top: 0px;
+}
+
 #main-footer {
 	/*background:url(../images/background/global/footer-bkg.jpg) no-repeat center top;*/
 	margin:35px 0 0 0;

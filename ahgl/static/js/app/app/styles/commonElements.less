@@ -1,7 +1,63 @@
+
+
 .content {
   position: relative;
   top: -60px;
 }
+
+.account-bar {
+  padding: 5px 10px 5px 10px;
+  color: @medium-grey;
+  background-color: @dark-grey;
+  font-size: 12px;
+  text-align: right;
+  z-index: 100000;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-family: "Nunito";
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    text-transform: uppercase;
+    color: @light-grey;
+    &:hover {
+      color: @dark-red;
+    }
+  }
+  a:link, a:visited {
+    text-decoration: none;
+    color: @light-grey;
+    background-color: inherit;
+    &:hover {
+      color: @dark-red;
+    }
+  }
+  
+  .dropdown {
+    ul.dropdown-menu {
+      display: none;
+      
+      &:hover {
+        display: block;
+      }
+
+      li.divider {
+        border: 1px solid @light-grey;
+        margin-bottom: 3px;
+      }
+    }
+
+    &:hover ul {
+      display: block;
+    }
+  }
+  
+}
+
 .section {
 
     width: 1025px;
