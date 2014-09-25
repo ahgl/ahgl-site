@@ -24,7 +24,8 @@ angular.module('ahglApp')
             { title: 'Casters', slug: 'casters' },
             { title: 'Teams', slug: 'teams' },
             { title: 'Schedule', slug: 'schedule' },
-            { title: 'Standings', slug: 'videos' }
+            { title: 'Standings', slug: 'standings' },
+            { title: 'Rules', slug: 'rules' }
         ];
 
         // Populate this if we're being loaded from a Django template.
