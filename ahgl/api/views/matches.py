@@ -10,11 +10,11 @@ class FeaturedMatchesViewSet(viewsets.ModelViewSet):
     serializer_class = match.MatchSerializer
 
     def get_queryset(self):
-        limit = self.request.QUERY_PARAMS.get('limit', 4)
-        game = self.request.QUERY_PARAMS.get('game', None)
+        limit = int(self.request.QUERY_PARAMS.get('limit', 4))
+        tournament = self.request.QUERY_PARAMS.get('tournament', None)
 
-        if game:
-            queryset = (Match.objects.filter(tournament__game__slug=game, featured=True)
+        if tournament:
+            queryset = (Match.objects.filter(tournament__status='A', tournament__slug=tournament, featured=True)
                         .order_by('publish_date', 'creation_date', 'tournament_round')
                         .select_related('home_team', 'away_team', 'tournament_round'))[:limit]
         else:
