@@ -49,7 +49,7 @@ class Tournament(models.Model):
     games_per_match = models.PositiveSmallIntegerField(default=5, verbose_name="Default Games per Match", validators=[validate_wholenumber])
     structure = models.CharField(max_length=1, choices=(('I', 'Individual'), ('T', 'Team'),), default='I')
 
-    game = models.ForeignKey('api.Game', null=True)
+    game = models.OneToOneField('api.Game', null=True)
 
     def random_teams(self, amount=7):
         return self.teams.order_by('?')[:amount]
