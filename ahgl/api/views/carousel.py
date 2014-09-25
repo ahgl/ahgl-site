@@ -12,13 +12,13 @@ class CarouselItemViewSet(viewsets.ModelViewSet):
         tournament_slug = self.request.QUERY_PARAMS.get('tournament', None)
 
         if tournament_slug:
-            tournament = Tournament.objects.filter(Q(status='A') | Q(status='S'), slug=tournament_slug)
-            queryset = CarouselItem.objects.filter(tournaments=tournament)
+            tournament = Tournament.objects.filter(slug=tournament_slug)
+            queryset = CarouselItem.objects.active().filter(tournaments=tournament)
 
             for item in queryset:
                 item.tournaments = tournament
                     
         else:
-            queryset = CarouselItem.objects.filter(Q(tournaments__status='A') | Q(tournaments__status='S'))
+            queryset = CarouselItem.objects.active()
 
         return queryset

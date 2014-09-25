@@ -32,6 +32,8 @@ else:
 
 from profiles import RACES
 
+from .managers import ArticleManager, MatchManager
+
 
 logger = logging.getLogger(__name__)
 
@@ -203,6 +205,8 @@ class Match(models.Model):
     loser = models.ForeignKey('profiles.Team', related_name="match_losses", blank=True, null=True, editable=False)
 
     featured = models.BooleanField(default=False)
+
+    objects = MatchManager()
 
     def update_winloss(self):
         for team in (self.home_team, self.away_team):
@@ -445,6 +449,8 @@ class Article(models.Model):
     tournaments = models.ManyToManyField('Tournament', related_name='articles')
     publish_date = models.DateField(blank=True, null=True)  # set this when published
     creation_date = models.DateField()
+
+    objects = ArticleManager()
 
     def __unicode__(self):
         return self.title
