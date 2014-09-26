@@ -32,6 +32,8 @@ from django.db import connection
 from profiles import helpers
 from django.utils.translation import ugettext_lazy as _
 
+from django.contrib.sites.models import get_current_site
+
 class TournamentSlugContextView(object):
     def get_context_data(self, **kwargs):
         context = super(TournamentSlugContextView, self).get_context_data(**kwargs)
@@ -378,11 +380,27 @@ class MyProfileDetailView(ProfileDetailView):
             if slug:
                 profile = get_object_or_404(queryset, slug=slug)
                 self.page_user = profile.user
+                profile.verified = True
+
+                # If it's my profile page
+                if self.request.user.is_authenticated() and self.request.user.id == profile.user_id:
+                    if EmailAddress.objects.filter(user=profile.user, verified=False).exists():
+                        profile.verified = False
+
                 return profile
         except:
             self.kwargs['username'] = slug
             return super(MyProfileDetailView, self).get_object()
 
+class ResendEmailConfirmation(View):
+    def get(self, request, *args, **kwargs):
+        redirect_to = request.REQUEST.get('next', '')
+        self.slug = request.user.get_profile().slug
+        email_address_queryset = EmailAddress.objects.filter(user=request.user, verified=False)
+        if email_address_queryset.exists():
+            email_address_queryset[0].send_confirmation(site=get_current_site(request))
+
+        return HttpResponseRedirect(redirect_to)
 
 class CasterListView(ListView):
     template_name = "profiles/casters.html"

@@ -14,7 +14,7 @@ from django_messages.views import compose
 from profiles.models import Profile
 from profiles.views import (MVPView, TeamListView, TeamDetailView, TeamAdminView,
                             StandingsView, TeamUpdateView, TeamSignupView,
-                            MyProfileDetailView, TeamMembershipView,
+                            MyProfileDetailView, ResendEmailConfirmation, TeamMembershipView,
                             TeamMembershipUpdateView, TeamMembershipCreateView,
                             TeamMembershipDeleteView, CasterListView,
                             JoinTeamView, InviteTeamMember)
@@ -45,6 +45,7 @@ urlpatterns += patterns('',
     url(r"^account/", include("recaptcha_form.account_backend.urls")),
     url(r'^social/', include('social_auth.urls')),
     url(r"^profiles/profile/(?P<slug>[\w\._-]+)/$", MyProfileDetailView.as_view(), name="profile_detail"),
+    url(r"^profiles/resend_confirmation/", ResendEmailConfirmation.as_view(), name="resend_confirmation"),
     url(r"^profiles/profile/(?P<slug>[\w\._-]+)/add_membership/$", TeamMembershipCreateView.as_view(), name="membership_create"),
     url(r"^profiles/edit/$", ProfileUpdateView.as_view(form_class=model_forms.modelform_factory(Profile, exclude=('user', 'signature', 'signature_html', 'time_zone', 'language', 'post_count', 'avatar',))), name="profile_edit"),
     url(r"^profiles/membership_edit/(?P<pk>[\d]+)/$", TeamMembershipUpdateView.as_view(), name="membership_edit"),
