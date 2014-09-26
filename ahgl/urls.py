@@ -85,8 +85,8 @@ urlpatterns += patterns('',
     #url(r'^(?P<tournament>[\w_-]+)/matches/(?P<date>[\d\\-]+)/(?P<home>[\w_-]+)-vs-(?P<away>[\w_-]+)$', MatchDetailView.as_view(), name='match_page'),
     url(r'^(?P<tournament>[\w_-]+)/standings/$', StandingsView.as_view(), name='standings'),
     url(r'^(?P<tournament>[\w_-]+)/casters/$', CasterListView.as_view(), name='casters'),
-    url(r'^invite_member/(?P<team>[\w_-]+)/$', InviteTeamMember.as_view(), name='invite_member'),
-    url(r'^join_team/(?P<team>[\w_-]+)/$', JoinTeamView.as_view(), name='join_team'),
+    url(r'^(?P<tournament>[\w_-]+)/invite_member/(?P<team>[\w_-]+)/$', InviteTeamMember.as_view(), name='invite_member'),
+    url(r'^(?P<tournament>[\w_-]+)/join_team/(?P<team>[\w_-]+)/$', JoinTeamView.as_view(), name='join_team'),
 
     # Root of the site is the new Angular app, but keep the rest of the CMS pages around for posterity.
     url(r'^account/account_bar/$', AccountBarView.as_view()),

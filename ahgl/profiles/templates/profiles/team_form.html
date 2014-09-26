@@ -16,7 +16,7 @@
             $("#invite_member").click(function() {
                 var email = $("#invitee_email").val();
                 $("#email_message").text("");
-                $.post("{% url invite_member team.slug %}",
+                $.post("{% url invite_member tournament=team.tournament.slug team=team.slug %}",
                     { 
                         email: email,
                         csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
