@@ -1,3 +1,5 @@
+import logging
+
 from django.core.validators import validate_email
 from django.utils.translation import ugettext_lazy as _
 
@@ -8,6 +10,7 @@ def create_invite(team, email):
         invite = TeamMemberInvite(team=team, email=email)
         invite.save()
     except Exception as e:
+        logging.exception("Exception saving TeamMemberInvite: %s" % e)
         return False
 
     return True
