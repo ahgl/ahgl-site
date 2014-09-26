@@ -15,9 +15,9 @@ class Migration(SchemaMigration):
         db.create_unique('profiles_teammemberinvite', ['email', 'team_id'])
 
         # Adding field 'TeamMembership.status'
-        db.add_column('profiles_team_members', 'status',
-                      self.gf('django.db.models.fields.CharField')(default='A', max_length=1),
-                      keep_default=False)
+        #db.add_column('profiles_team_members', 'status',
+        #              self.gf('django.db.models.fields.CharField')(default='A', max_length=1),
+        #              keep_default=False)
         
     def backwards(self, orm):
         # Removing unique constraint on 'TeamMemberInvite', fields ['email', 'team']
