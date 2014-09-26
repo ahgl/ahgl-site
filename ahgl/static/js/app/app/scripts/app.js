@@ -25,7 +25,7 @@ angular
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             })
-            .when('/game/:gamesSlug', {
+            .when('/tournament/:tournamentSlug', {
                 templateUrl: 'views/main.html',
                 controller: 'GameCtrl'
             })

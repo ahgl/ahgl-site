@@ -2,7 +2,8 @@ import os
 
 from django.conf import settings
 from django.http import HttpResponse
-from django.views.generic.base import View
+from django.views.generic.base import View, TemplateView
+
 
 class ObjectPermissionsCheckMixin(object):
     def check_permissions(self):
@@ -57,3 +58,10 @@ class StaticFileView(View):
 
     def get(self, request, *args, **kwargs):
         return HttpResponse(self._get_contents())
+
+
+class AccountBarView(TemplateView):
+    """
+    Simple view to return HTML for Login/Logout integration with Angular.js
+    """
+    template_name = "_account_bar.html"

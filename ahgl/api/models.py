@@ -1,11 +1,11 @@
 from django.db import models
 
 from .fields import ColourField
+from .managers import GameManager, CarouselItemManager
 
 
 class Game(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.CharField(max_length=100)
 
     header_image_url = models.CharField(max_length=2048)
     
@@ -20,15 +20,17 @@ class Game(models.Model):
 
     header_image_glow_hex_color = ColourField()
 
+    objects = GameManager()
+
 
     def __unicode__(self):
         return self.name
 
     def get_tournament_slug(self, *args, **kwargs):
-        tournaments = self.tournament_set.all()
-        if tournaments.count() < 1:
+        if self.tournament is None:
             return ""
-        return tournaments[0].slug
+
+        return self.tournament.slug
 
     @property
     def channel_name(self):
@@ -52,6 +54,8 @@ class CarouselItem(models.Model):
     image_url = models.CharField(max_length=2048)
 
     tournaments = models.ManyToManyField('tournaments.Tournament', related_name='carousel_items')
+
+    objects = CarouselItemManager()
 
     def __unicode__(self):
         return self.image_url

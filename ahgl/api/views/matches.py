@@ -1,6 +1,7 @@
 from ahgl.tournaments.models import Match
 from rest_framework import viewsets
 from ahgl.api.serializers import match
+from django.db.models import Q
 
 from itertools import chain
 
@@ -10,20 +11,20 @@ class FeaturedMatchesViewSet(viewsets.ModelViewSet):
     serializer_class = match.MatchSerializer
 
     def get_queryset(self):
-        limit = self.request.QUERY_PARAMS.get('limit', 4)
-        game = self.request.QUERY_PARAMS.get('game', None)
+        limit = int(self.request.QUERY_PARAMS.get('limit', 4))
+        tournament = self.request.QUERY_PARAMS.get('tournament', None)
 
-        if game:
-            queryset = (Match.objects.filter(tournament__game__slug=game, featured=True)
+        if tournament:
+            queryset = (Match.objects.active().filter(tournament__slug=tournament, featured=True)
                         .order_by('publish_date', 'creation_date', 'tournament_round')
                         .select_related('home_team', 'away_team', 'tournament_round'))[:limit]
         else:
-            queryset = (Match.objects.filter(tournament__status='A', featured=True)
+            queryset = (Match.objects.active().filter(featured=True)
                         .order_by('publish_date', 'creation_date', 'tournament_round')
                         .select_related('home_team', 'away_team', 'tournament_round'))[:limit]
 
             if queryset.count() < limit:
-                additional_queryset = (Match.objects.filter(tournament__status='A', featured=False)
+                additional_queryset = (Match.objects.active().filter(featured=False)
                                        .order_by('publish_date', 'creation_date', 'tournament_round')
                                        .select_related('home_team', 'away_team', 'tournament_round'))
 

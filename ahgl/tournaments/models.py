@@ -32,6 +32,8 @@ else:
 
 from profiles import RACES
 
+from .managers import ArticleManager, MatchManager
+
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +41,9 @@ logger = logging.getLogger(__name__)
 def validate_wholenumber(value):
     if value < 1:
         raise ValidationError(u'{0} is not a whole number'.format(value))
+
+
+ACTIVE_TOURNAMENT_STATUS = ['A', 'S']
 
 
 class Tournament(models.Model):
@@ -49,7 +54,7 @@ class Tournament(models.Model):
     games_per_match = models.PositiveSmallIntegerField(default=5, verbose_name="Default Games per Match", validators=[validate_wholenumber])
     structure = models.CharField(max_length=1, choices=(('I', 'Individual'), ('T', 'Team'),), default='I')
 
-    game = models.ForeignKey('api.Game', null=True)
+    game = models.OneToOneField('api.Game', null=True)
 
     def random_teams(self, amount=7):
         return self.teams.order_by('?')[:amount]
@@ -203,6 +208,8 @@ class Match(models.Model):
     loser = models.ForeignKey('profiles.Team', related_name="match_losses", blank=True, null=True, editable=False)
 
     featured = models.BooleanField(default=False)
+
+    objects = MatchManager()
 
     def update_winloss(self):
         for team in (self.home_team, self.away_team):
@@ -445,6 +452,8 @@ class Article(models.Model):
     tournaments = models.ManyToManyField('Tournament', related_name='articles')
     publish_date = models.DateField(blank=True, null=True)  # set this when published
     creation_date = models.DateField()
+
+    objects = ArticleManager()
 
     def __unicode__(self):
         return self.title
