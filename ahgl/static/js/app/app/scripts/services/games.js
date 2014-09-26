@@ -51,7 +51,7 @@ angular.module('ahglApp')
             return selectedGame;
         };
 
-        var getIcon = function(section, gameSlug) {
+        var getIcon = function(section, tournamentSlug) {
             if (games === null) {
                 return "";
             }
@@ -60,11 +60,11 @@ angular.module('ahglApp')
                 throw Exception('Invalid section provided');
             }
 
-            if (typeof gameSlug === 'undefined' || gameSlug === null) {
+            if (typeof tournamentSlug === 'undefined' || tournamentSlug === null) {
                 return getRandomIcon(section);
             }
             var game = _.find(games, function(g) { 
-                return g.slug === gameSlug;
+                return g.tournament_slug === tournamentSlug;
             });
             return game[section + '_section_image_url'];
         };
