@@ -9,15 +9,14 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'TeamMemberInvite'
-        #db.create_table('profiles_teammemberinvite', (
-        #    ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-        #    ('uuid', self.gf('django.db.models.fields.CharField')(max_length=36, blank=True)),
-        #    ('email', self.gf('django.db.models.fields.EmailField')(unique=True, max_length=75)),
-        #    ('status', self.gf('django.db.models.fields.CharField')(default='pending', max_length=15)),
-        #    ('team', self.gf('django.db.models.fields.related.ForeignKey')(related_name='team_invites', to=orm['profiles.Team'])),
-        #))
-        #db.send_create_signal('profiles', ['TeamMemberInvite'])
-        ""
+        db.create_table('profiles_teammemberinvite', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('uuid', self.gf('django.db.models.fields.CharField')(max_length=36, blank=True)),
+            ('email', self.gf('django.db.models.fields.EmailField')(unique=True, max_length=75)),
+            ('status', self.gf('django.db.models.fields.CharField')(default='pending', max_length=15)),
+            ('team', self.gf('django.db.models.fields.related.ForeignKey')(related_name='team_invites', to=orm['profiles.Team'])),
+        ))
+        db.send_create_signal('profiles', ['TeamMemberInvite'])
 
     def backwards(self, orm):
         # Deleting model 'TeamMemberInvite'
