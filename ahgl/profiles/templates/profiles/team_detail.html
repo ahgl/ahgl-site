@@ -20,7 +20,7 @@
     </p>
     <p>
     {% if show_join_button %}
-    <a href="{% url join_team team=team.slug %}" class="btn">Join Team</a>
+    <a href="{% url join_team tournament=team.tournament.slug team=team.slug %}" class="btn">Join Team</a>
     {% for message in messages %}
       {% if 'join_button_error' in message.tags %}
         <p>You must <a href="{% url account_signup %}">sign up</a> or <a href="{% url account_login %}">log in</a> to join a team.</p>
