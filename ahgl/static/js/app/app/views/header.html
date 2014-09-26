@@ -1,10 +1,9 @@
 <div ng-controller="HeaderCtrl">
-
     <a href="/"><div class="logo"></div></a>
 
     <div class="bar">
         <div ng-repeat="game in games">
-            <a  href="/#/game/{{ game.slug }}">
+            <a  ng-href="/#/tournament/{{ game.tournament_slug }}">
                 <img class="game1 game" ng-src="{{ getImageUrl(game) }}"/>
             </a>
             <img class="game-active-icon" ng-if="isSelected(game)" ng-src="{{ getSelectedIconUrl(game) }}" />

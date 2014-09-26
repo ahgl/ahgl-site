@@ -23,7 +23,7 @@ from tournaments.views import (MatchDetailView, MatchListView, MatchReportView,
                                SubmitLineupView, GameListView, PlayerAdminView)
 from tournaments.models import Tournament
 
-from utils.views import StaticFileView
+from utils.views import StaticFileView, AccountBarView
 
 from rest_framework import routers
 
@@ -89,7 +89,9 @@ urlpatterns += patterns('',
     url(r'^join_team/(?P<team>[\w_-]+)/$', JoinTeamView.as_view(), name='join_team'),
 
     # Root of the site is the new Angular app, but keep the rest of the CMS pages around for posterity.
+    url(r'^account/account_bar/$', AccountBarView.as_view()),
     url(r'^/?$', StaticFileView.as_view(path='static/js/app/dist/index.html')),
+    
     url(r'^', include('cms.urls')),
 )
 

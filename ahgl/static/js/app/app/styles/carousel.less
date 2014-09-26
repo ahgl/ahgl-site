@@ -1,16 +1,14 @@
+@carousel-width: 100%;
 .carousel {
     height: 340px;
-    position: absolute;
-    top: 0px;
+
     img {
-        display: block;
         height: 479px;
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
+        width: @carousel-width;
     }
+
     .fade {
-        width: 100%;
+        width: @carousel-width;
         height: 50px;
         position: absolute;
         top: 0px;
@@ -32,7 +30,7 @@
             rgba(0,0,0,0.5) 20%, 
             rgba(0,0,0,0.8) 80%,
             rgba(0,0,0,0.9) 100%);
-        width: 100%;
+        width: @carousel-width;
         height: 130px;
         position: absolute;
         top: 349px;
@@ -41,7 +39,7 @@
         position: absolute;
         background: transparent;
         color: white;
-        width: 100%;
+        width: @carousel-width;
         height: 75px;
         top: 394px;
         text-align: center;
@@ -64,9 +62,10 @@
             background-color: inherit;
         }
     }
+    
     .rn-carousel-controls {
         position: relative;
-        width: 100%;
+        width: @carousel-width;
         margin-left: auto;
         margin-right: auto;
         .rn-carousel-control.rn-carousel-control-next {
@@ -88,5 +87,4 @@
             }
         }
     }
-    
 }

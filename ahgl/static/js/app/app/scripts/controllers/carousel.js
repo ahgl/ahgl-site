@@ -8,11 +8,12 @@
  * Controller of the ahglApp
  */
 angular.module('ahglApp')
-    .controller('CarouselCtrl', function ($scope, carouselSvc, $sce) {
+    .controller('CarouselCtrl', function ($scope, carouselSvc, $sce, GamesSvc) {
         $scope.carouselInterval = 5000;
         $scope.slides = [];
-
-        carouselSvc.fetchCarousels()
+        
+        var selectedGame = GamesSvc.getSelectedGame();
+        carouselSvc.fetchCarousels(selectedGame)
             .then(function(resp) {
                 resp.data.results.forEach(function(carousel) {
                     carousel.message = $sce.trustAsHtml(carousel.message);
