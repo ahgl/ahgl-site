@@ -9,7 +9,7 @@
     <form method="POST" action="{% url "account_settings" %}">
         <legend>Account</legend>
         {% csrf_token %}
-        {% if not verified %}
+        {% if verified != None and not verified %}
         <p>
             <span>Please confirm email</span>
             <a href="/profiles/resend_confirmation?next={{ request.path }}" class="btn">Resend</a>
