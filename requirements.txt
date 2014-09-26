@@ -16,7 +16,7 @@ django-debug-toolbar==0.9.4
 django-staticfiles==1.2.1
 django_compressor==1.3
 
--e git+https://github.com/artillery/django-user-accounts.git@bc7b3d519adfc473fb242dd67954a6f1df5fc8d6#egg=django-user-accounts
+-e git+https://github.com/artillery/django-user-accounts.git@8795430f6a67436352017b6158d212b995f68498#egg=django-user-accounts
 django-timezones==0.2
 pytz==2012j
 django-openid==0.3a1
