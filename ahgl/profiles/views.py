@@ -62,7 +62,8 @@ class TeamDetailView(TournamentSlugContextView, DetailView):
 class JoinTeamView(View):
 
     def get(self, request, *args, **kwargs):
-        team = get_object_or_404(Team, slug=kwargs['team'])
+        team = get_object_or_404(Team, tournament__slug=kwargs['tournament'], slug=kwargs['team'])
+
         self.team = team
 
         if not request.user.is_authenticated():
@@ -138,7 +139,7 @@ class InviteTeamMember(View):
         context = {'success': 1, 'errors': []}
 
         try:
-            team = get_object_or_404(Team, slug=kwargs['team'])
+            team = get_object_or_404(Team, tournament__slug=kwargs['tournament'], slug=kwargs['team'])
             email = request.POST['email']
 
             is_success, errors = helpers.create_and_send_invite(team, email)

@@ -16,10 +16,6 @@ class LatestNewsViewSet(viewsets.ModelViewSet):
         if tournament_slug:
             tournament = Tournament.objects.filter(slug=tournament_slug)
             queryset = Article.objects.active().filter(tournaments=tournament, published=True).order_by('publish_date', 'creation_date')[:limit]
-
-            for article in queryset:
-                article.tournaments = tournament
-                    
         else:
             queryset = Article.objects.active().filter(published=True).distinct().order_by('publish_date', 'creation_date')[:limit]
 
