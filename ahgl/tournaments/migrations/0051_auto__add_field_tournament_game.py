@@ -16,9 +16,8 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         # Deleting field 'Tournament.game'
-        #db.delete_column('tournaments_tournament', 'game_id')
-        ""
-
+        db.delete_column('tournaments_tournament', 'game_id')
+        
     models = {
         'api.game': {
             'Meta': {'object_name': 'Game'},
