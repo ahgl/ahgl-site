@@ -14,10 +14,6 @@ class CarouselItemViewSet(viewsets.ModelViewSet):
         if tournament_slug:
             tournament = Tournament.objects.filter(slug=tournament_slug)
             queryset = CarouselItem.objects.active().filter(tournaments=tournament)
-
-            for item in queryset:
-                item.tournaments = tournament
-                    
         else:
             queryset = CarouselItem.objects.active()
 
