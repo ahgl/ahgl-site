@@ -51,13 +51,25 @@ angular.module('ahglApp')
             return selectedGame;
         };
 
-        var getRandomIcon = function (section) {
+        var getIcon = function(section, tournamentSlug) {
             if (games === null) {
-                return '';
+                return "";
             }
+
             if (!(section === 'article' || section === 'match' || section === 'live_stream')) {
                 throw Exception('Invalid section provided');
             }
+
+            if (typeof tournamentSlug === 'undefined' || tournamentSlug === null) {
+                return getRandomIcon(section);
+            }
+            var game = _.find(games, function(g) { 
+                return g.tournament_slug === tournamentSlug;
+            });
+            return game[section + '_section_image_url'];
+        };
+
+        var getRandomIcon = function (section) {
             var numGames = games.length;
             var randomGamePos = Math.floor((Math.random() * numGames));  // 0-based index
             var imageUrl = games[randomGamePos][section + '_section_image_url'];
@@ -70,6 +82,6 @@ angular.module('ahglApp')
             getSelectedGame: getSelectedGame,
             gamesPopulated: gamesPopulated,
             fetchGames: fetchGames,
-            getRandomIcon: getRandomIcon
+            getIcon: getIcon
         };
     });
