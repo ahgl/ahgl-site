@@ -27,7 +27,8 @@
 {% endif %}
 {% if request.user.is_authenticated and profile != request.user.get_profile and profile.user.username != "master" %}<a href="{% url messages_compose_to profile.user %}" class="btn">Send Message</a>{% endif %}
 <a href="{% url membership_create slug=profile.slug %}" class="btn">Add to team</a>
-{% if not profile.verified %}
+
+{% if profile.verified != None and not profile.verified %}
 <p>
     <span>Please confirm email</span>
     <a href="{% url resend_confirmation %}?next={{ request.path }}" class="btn">Resend</a>
