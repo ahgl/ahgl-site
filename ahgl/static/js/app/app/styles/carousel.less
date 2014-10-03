@@ -1,25 +1,26 @@
 
-.translate (@x, @y:0) {
-  -webkit-transform:       translate(@x, @y);
-  -moz-transform:    translate(@x, @y);
-  -ms-transform:     translate(@x, @y);
-  -o-transform:      translate(@x, @y);
+@natural-img-width: 1340px;
+
+.carousel-width {
+    width: @natural-img-width;
+    @media (max-width: @natural-img-width) {
+        width: 100%;
+    }
 }
 
-
-@carousel-width: 1340px;
 .carousel {
     height: 340px;
     img {
         height: 479px;
-        width: @carousel-width;
+        width: @natural-img-width;
         margin-left: auto;
         margin-right: auto;
         display: block;
     }
 
     .fade {
-        width: @carousel-width;
+        .carousel-width;
+        
         height: 50px;
         position: absolute;
         top: 0px;
@@ -41,7 +42,8 @@
             rgba(0,0,0,0.5) 20%, 
             rgba(0,0,0,0.8) 80%,
             rgba(0,0,0,0.9) 100%);
-        width: @carousel-width;
+        .carousel-width;
+
         height: 130px;
         position: relative;
         top: -130px;
@@ -52,7 +54,9 @@
         position: relative;
         background: transparent;
         color: white;
-        width: @carousel-width;
+        .carousel-width;
+
+
         height: 75px;
         top: -220px;
         text-align: center;
@@ -80,7 +84,9 @@
     
     .rn-carousel-controls {
         position: relative;
-        width: @carousel-width;
+        .carousel-width;
+
+
         margin-left: auto;
         margin-right: auto;
         .rn-carousel-control.rn-carousel-control-next {
