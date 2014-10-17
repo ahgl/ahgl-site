@@ -222,6 +222,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
+    'bandit'
 ]
 
 REST_FRAMEWORK = {

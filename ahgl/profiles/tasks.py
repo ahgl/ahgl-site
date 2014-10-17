@@ -28,9 +28,7 @@ def notify_team_registration(captain_id, contact_email):
 
 
 @task(ignore_result=True)
-def notify_announcement(announcement, request):
-    description = announcement.content
-    title = announcement.title
+def notify_announcement(title, description):
     notification.send(User.objects.all(),
                       "announcement",
                       {'description': description, 'title': title})
@@ -38,8 +36,9 @@ def notify_announcement(announcement, request):
 
 def wrapper_notify_announcement(**kwargs):
     announcement = kwargs['announcement']
-    request = kwargs['request']
-    notify_announcement.delay(announcement, request)
+    description = announcement.content
+    title = announcement.title
+    notify_announcement.delay(title, description)
 
 # Connect django-announcement creation with django-notification send
 signals.announcement_created.connect(wrapper_notify_announcement)
