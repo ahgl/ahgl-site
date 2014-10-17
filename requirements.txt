@@ -88,3 +88,4 @@ django-cors-headers
 django-filter
 requests==2.3.0
 django-extensions==1.4
+django-email-bandit==1.0

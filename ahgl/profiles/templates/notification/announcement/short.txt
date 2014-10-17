@@ -1,1 +1,1 @@
-Announcement Short
+{{title}}

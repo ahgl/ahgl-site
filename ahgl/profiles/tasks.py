@@ -30,9 +30,10 @@ def notify_team_registration(captain_id, contact_email):
 @task(ignore_result=True)
 def notify_announcement(announcement, request):
     description = announcement.content
+    title = announcement.title
     notification.send(User.objects.all(),
                       "announcement",
-                      {'description': description})
+                      {'description': description, 'title': title})
 
 
 def wrapper_notify_announcement(**kwargs):
