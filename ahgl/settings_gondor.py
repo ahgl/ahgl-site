@@ -147,6 +147,7 @@ EMAIL_DEBUG = DEBUG
 
 FILE_UPLOAD_PERMISSIONS = 0640
 
+
 # Gondor stores secret settings in environ variables, load them up here
 SECRET_KEY = os.environ['SECRET_KEY']
 FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
@@ -159,3 +160,9 @@ if os.environ.get('INTERNAL_IPS'):
     INTERNAL_IPS = INTERNAL_IPS + tuple(os.environ['INTERNAL_IPS'].split(":"))
 DB_POOL_SIZE = int(os.environ.get('DB_POOL_SIZE', 4))
 USE_DB_CONNECTION_POOLING = os.environ.get('USE_DB_CONNECTION_POOLING', "True") == "True"
+
+
+if 'SERVER_ENV' in os.environ and os.environ['SERVER_ENV'] == 'STAGING':
+    INSTALLED_APPS += ('bandit',)
+    EMAIL_BACKEND = 'bandit.backends.smtp.HijackSMTPBackend'
+    BANDIT_EMAIL = 'eric@artillery.com'
