@@ -165,4 +165,4 @@ USE_DB_CONNECTION_POOLING = os.environ.get('USE_DB_CONNECTION_POOLING', "True") 
 if 'SERVER_ENV' in os.environ and os.environ['SERVER_ENV'] == 'STAGING':
     INSTALLED_APPS += ('bandit',)
     EMAIL_BACKEND = 'bandit.backends.smtp.HijackSMTPBackend'
-    BANDIT_EMAIL = 'eric@artillery.com'
+    BANDIT_EMAIL = 'dimitri.gnidash@gmail.com'
