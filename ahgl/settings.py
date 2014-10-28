@@ -151,6 +151,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "notification.context_processors.notification",
     "django_messages.context_processors.inbox",
+    "context_processors.account",
 
     #"pybb.context_processors.processor",
 
