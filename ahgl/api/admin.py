@@ -8,6 +8,9 @@ from django.utils import timezone
 from .models import Game, CarouselItem, Channel
 from profiles.models import Team, TeamMembership
 
+from tinymce.widgets import TinyMCE
+from profiles.fields import HTMLField
+
 import settings
 
 class ChannelInline(admin.TabularInline):
@@ -20,6 +23,9 @@ class ChannelInline(admin.TabularInline):
 class GameAdmin(admin.ModelAdmin):
     list_display = ('name',)
     inlines = (ChannelInline,)
+    formfield_overrides = {
+        HTMLField: {'widget': TinyMCE(mce_attrs={'theme': 'advanced'})},
+    }
 
 class CarouselItemAdmin(admin.ModelAdmin):
 	list_display = ('image_url',)

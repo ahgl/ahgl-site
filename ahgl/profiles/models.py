@@ -136,43 +136,7 @@ class TeamMembership(models.Model):
     char_name = models.CharField(max_length=20)
     active = models.BooleanField(default=True)
     captain = models.BooleanField(default=False)
-    questions_answers = HTMLField(tags=['ol', 'ul', 'li', 'strong', 'em', 'p'], blank=True, default="""<ol><li>
-<p>Why did you choose this race/champion?</p>
-<p>-</p>
-</li>
-<li>
-<p>What do you do for a living?  What do you love about your job?</p>
-<p>-</p>
-</li>
-<li>
-<p>What other hobbies do you have?</p>
-<p>-</p>
-</li>
-<li>
-<p>Why do you play StarCraft/League of Legends?</p>
-<p>-</p>
-</li>
-<li>
-<p>How long have you been playing?</p>
-<p>-</p>
-</li>
-<li>
-<p>What have you done to prepare for the momentous challenge that is the AHGL Tournament?</p>
-<p>-</p>
-</li>
-<li>
-<p>Why is your team going to win?</p>
-<p>-</p>
-</li>
-<li>
-<p>Who is the best player on your team?  Why?</p>
-<p>-</p>
-</li>
-<li>
-<p>Whom do you fear most amongst the competition and why?</p>
-<p>-</p>
-</li>
-</ol>""")
+    questions_answers = HTMLField(tags=['ol', 'ul', 'li', 'strong', 'em', 'p'], blank=True)
     game_profile = models.URLField(null=True, blank=True)
 
     #starcraft data
@@ -209,8 +173,7 @@ class TeamMembership(models.Model):
 
     @property
     def is_using_default_bio(self):
-        default = self._meta.get_field('questions_answers').default
-        return default[100:] == self.questions_answers[100:]
+        return self.team.tournament.game.questions == self.questions_answers
 
     @models.permalink
     def get_absolute_url(self, group=None):
@@ -219,6 +182,15 @@ class TeamMembership(models.Model):
             'team': self.team.slug,
             'profile': self.profile.slug,
         })
+
+    def save(self, *args, **kwargs):
+        try:
+            if not self.pk:
+                self.questions_answers = self.team.tournament.game.questions
+        except Exception as e:
+            pass
+
+        super(TeamMembership, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.char_name
