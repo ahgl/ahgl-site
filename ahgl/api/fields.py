@@ -20,12 +20,9 @@ class ColourFormField(forms.CharField):
  
         if not re.match('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$', value):
             raise forms.ValidationError(self.error_messages['invalid'])
-        
-
-        value = int(value[1:], 16)
 
         super(ColourFormField, self).clean(value)
- 
+
         return value
  
 class ColourField(models.CharField):
@@ -40,11 +37,12 @@ class ColourField(models.CharField):
         super(ColourField, self).to_python(value)
  
         try:
+            value = int(value[1:], 16)
             string = (hex(value)[2:]).zfill(6)
- 
+
             if string == "0":
                 string = "000000"
- 
+
             return "#"+string.upper()
         except TypeError:
             return None
