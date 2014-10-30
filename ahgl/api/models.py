@@ -5,6 +5,8 @@ from .managers import GameManager, CarouselItemManager
 
 from profiles.fields import HTMLField
 
+from profiles.models import TeamMembership
+
 
 class Game(models.Model):
     name = models.CharField(max_length=100)
@@ -71,6 +73,19 @@ class Game(models.Model):
             return ""
 
         return self.tournament.slug
+
+    def __init__(self, *args, **kw):
+        super(Game, self).__init__(*args, **kw) 
+        self._old_questions = self.questions
+
+    def save(self, *args, **kwargs):
+        try:
+            if self.questions != self._old_questions:
+                TeamMembership.objects.filter(team__tournament=self.tournament).update(questions_answers=self.questions);
+        except Exception as e:
+            pass
+
+        super(Game, self).save(*args, **kwargs)
 
     @property
     def channel_name(self):
