@@ -22,7 +22,7 @@ pytz==2012j
 django-openid==0.3a1
 python-openid==2.2.5
 
--e git+https://github.com/ntucker/django-announcements.git@6208103674f89942559827ba6fbf029671e7e9ab#egg=django-announcements
+-e git+https://github.com/artillery/django-announcements.git@039be10eac34be197142287bcded9b1d5b5f8da5#egg=django-announcements
 django-pagination==1.0.7
 -e git+https://github.com/ntucker/django-notification.git@8ad545ae85ce1f41985aa824457844c7632cac04#egg=django-notification
 -e git+https://github.com/ntucker/idios.git@07c6d21a681cd640259af6f3d2070588dc72aa04#egg=idios
@@ -88,3 +88,4 @@ django-cors-headers
 django-filter
 requests==2.3.0
 django-extensions==1.4
+django-email-bandit==1.0
