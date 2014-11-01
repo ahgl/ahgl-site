@@ -28,7 +28,6 @@ class TeamMembershipAdminInline(admin.TabularInline):
 class TeamMembershipAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'active', 'captain',)
     list_filter = ('team', 'race', 'champion', 'captain',)
-    exclude = ('questions_answers',)
     search_fields = ('char_name',)
     formfield_overrides = {
         HTMLField: {'widget': TinyMCE(mce_attrs={'theme': 'advanced'})},
@@ -41,7 +40,6 @@ class AwaitingTeamMembership(TeamMembership):
 class AwaitingTeamMembershipAdmin(admin.ModelAdmin):
     list_display = ('profile', 'team', 'active', 'status',)
     list_filter = ('team', 'race', 'champion', 'captain',)
-    exclude = ('questions_answers',)
     actions = ['approve', 'reject']
     formfield_overrides = {
         HTMLField: {'widget': TinyMCE(mce_attrs={'theme': 'advanced'})},
