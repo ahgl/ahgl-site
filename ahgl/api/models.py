@@ -3,6 +3,10 @@ from django.db import models
 from .fields import ColourField
 from .managers import GameManager, CarouselItemManager
 
+from profiles.fields import HTMLField
+
+from profiles.models import TeamMembership
+
 
 class Game(models.Model):
     name = models.CharField(max_length=100)
@@ -19,6 +23,44 @@ class Game(models.Model):
     small_game_thumbnail = models.CharField(max_length=2048)
 
     header_image_glow_hex_color = ColourField()
+
+    questions = HTMLField(tags=['ol', 'ul', 'li', 'strong', 'em', 'p'], blank=True, default="""<ol><li>
+<p>Why did you choose this race/champion?</p>
+<p>-</p>
+</li>
+<li>
+<p>What do you do for a living?  What do you love about your job?</p>
+<p>-</p>
+</li>
+<li>
+<p>What other hobbies do you have?</p>
+<p>-</p>
+</li>
+<li>
+<p>Why do you play StarCraft/League of Legends?</p>
+<p>-</p>
+</li>
+<li>
+<p>How long have you been playing?</p>
+<p>-</p>
+</li>
+<li>
+<p>What have you done to prepare for the momentous challenge that is the AHGL Tournament?</p>
+<p>-</p>
+</li>
+<li>
+<p>Why is your team going to win?</p>
+<p>-</p>
+</li>
+<li>
+<p>Who is the best player on your team?  Why?</p>
+<p>-</p>
+</li>
+<li>
+<p>Whom do you fear most amongst the competition and why?</p>
+<p>-</p>
+</li>
+</ol>""")
 
     objects = GameManager()
 

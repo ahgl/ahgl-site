@@ -10,4 +10,4 @@ class GameSerializer(serializers.HyperlinkedModelSerializer):
         model = Game
         fields = ('name', 'header_image_url', 'live_stream_section_image_url',
                   'match_section_image_url', 'article_section_image_url',
-                  'channel_name', 'tournament_slug')
+                  'channel_name', 'tournament_slug', 'questions')
