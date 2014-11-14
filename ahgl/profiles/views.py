@@ -167,6 +167,7 @@ class TeamSignupView(CreateView):
         class TeamSignupForm(ModelForm):
             char_name = forms.CharField(max_length=TeamMembership._meta.get_field('char_name').max_length,
                     required=True, label="Your character name", help_text=u"or Summoner name")
+            slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
             def __init__(self, *args, **kwargs):
                 super(TeamSignupForm, self).__init__(*args, **kwargs)
@@ -180,14 +181,23 @@ class TeamSignupView(CreateView):
                         'tournament',
                         'name', # Company name
                         'char_name',
+                        'slug',
                         ]
 
+            def clean(self):
+                self.cleaned_data['slug'] = slugify(self.cleaned_data['name'])
+                super(TeamSignupForm, self).clean()
+                return self.cleaned_data
+
             def save(self, *args, **kwargs):
-                view.slug = self.instance.slug = slugify(self.cleaned_data['name'])
+                view.slug = self.instance.slug = self.cleaned_data['slug']
+
                 self.instance.captain_id = view.request.user.id
+
                 try:
                     super(TeamSignupForm, self).save(*args, **kwargs)
                 except IntegrityError:
+                    connection.close()
                     messages.error(view.request, "Team not created - already exists for this tournament.")
                 else:
                     membership = TeamMembership(team=self.instance, profile=view.request.user.get_profile(), char_name=self.cleaned_data['char_name'], active=True, captain=True)
