@@ -1,3 +1,53 @@
-<!-- This is also used by Django templates to inlclude the new Angular app. --> <link rel="stylesheet" href="/site_media/static/js/app/dist/styles/vendor.13d527db.css"> <link rel="stylesheet" href="/site_media/static/js/app/dist/styles/main.5c0ed804.css"> <!--[if lt IE 9]>
-<script src="/site_media/static/js/app/dist/scripts/oldieshim.ff90b0fb.js"></script>
-<![endif]--> <script src="/site_media/static/js/app/dist/scripts/vendor.468c4669.js"></script> <script src="/site_media/static/js/app/dist/scripts/scripts.2f36131b.js"></script>
+<!-- This is also used by Django templates to inlclude the new Angular app. -->
+
+<!-- build:css(.) styles/vendor.css -->
+<!-- bower:css -->
+<link rel="stylesheet" href="bower_components/angular-carousel/dist/angular-carousel.css" />
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:css styles/main.css -->
+<link rel="stylesheet" href="styles/main.css">
+<!-- endbuild -->
+
+<!-- build:js(.) scripts/oldieshim.js -->
+<!--[if lt IE 9]>
+<script src="bower_components/es5-shim/es5-shim.js"></script>
+<script src="bower_components/json3/lib/json3.min.js"></script>
+<![endif]-->
+<!-- endbuild -->
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/json3/lib/json3.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-carousel/dist/angular-carousel.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/config.js"></script>
+<script src="scripts/app.js"></script>
+
+<script src="scripts/controllers/main.js"></script>
+<script src="scripts/controllers/header.js"></script>
+<script src="scripts/controllers/liveStream.js"></script>
+<script src="scripts/controllers/carousel.js"></script>
+<script src="scripts/controllers/featuredMatches.js"></script>
+<script src="scripts/controllers/news.js"></script>
+<script src="scripts/controllers/gamePage.js"></script>
+
+<script src="scripts/services/urls.js"></script>
+<script src="scripts/services/liveStream.js"></script>
+<script src="scripts/services/featuredMatches.js"></script>
+<script src="scripts/services/carousel.js"></script>
+<script src="scripts/services/news.js"></script>
+<script src="scripts/services/games.js"></script>
+<!-- endbuild -->
