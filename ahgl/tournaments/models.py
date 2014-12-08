@@ -433,6 +433,19 @@ class Game(models.Model):
                 self.match.full_clean()
                 self.match.save()
 
+    def get_comma_separated_characters(self, characters):
+        races = []
+        for character in characters:
+            races.append(character.name)
+
+        return ", ".join(races)
+
+    def get_home_races(self):
+        return self.get_comma_separated_characters(self.home_race.all())
+
+    def get_away_races(self):
+        return self.get_comma_separated_characters(self.away_race.all())
+
     def __unicode__(self):
         if self.home_player and self.away_player:
             ret = u" vs ".join((unicode(self.home_player), unicode(self.away_player)))
