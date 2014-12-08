@@ -1,6 +1,8 @@
 from django.forms.models import BaseModelFormSet
 
-from .models import Match
+from .models import Match, Game
+from api.models import Character
+from django.forms import ModelForm, ModelChoiceField
 
 
 class BaseMatchFormSet(BaseModelFormSet):
@@ -46,3 +48,16 @@ class MultipleFormSetBase(object):
     def save(self, commit=True):
         return tuple(form.save(commit) for form in self.forms if hasattr(form, "save"))
     save.alters_data = True
+
+class GameForm(ModelForm):
+    """Form for adding and editing games."""
+    
+    def __init__(self, *args, **kwargs):
+        super(GameForm,self).__init__(*args,**kwargs)
+        # TODO: For some reason accessing self.instance raises some issues
+        if self.instance:
+            self.fields['home_race'].label = self.instance.match.tournament.game.home_character_diplay_name
+            self.fields['away_race'].label = self.instance.match.tournament.game.away_character_diplay_name
+
+    class Meta:
+        model = Game
