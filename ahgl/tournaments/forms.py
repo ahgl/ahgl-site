@@ -56,8 +56,8 @@ class GameForm(ModelForm):
         super(GameForm,self).__init__(*args,**kwargs)
         # TODO: For some reason accessing self.instance raises some issues
         if self.instance:
-            self.fields['home_race'].label = self.instance.match.tournament.game.home_character_diplay_name
-            self.fields['away_race'].label = self.instance.match.tournament.game.away_character_diplay_name
+            self.fields['home_race'].label = self.instance.tournament.game.home_character_diplay_name
+            self.fields['away_race'].label = self.instance.tournament.game.away_character_diplay_name
 
     class Meta:
         model = Game
