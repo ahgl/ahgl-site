@@ -62,6 +62,10 @@ class Game(models.Model):
 </li>
 </ol>""")
 
+    home_character_diplay_name = models.CharField(max_length=2048, default="Home Race")
+    away_character_diplay_name = models.CharField(max_length=2048, default="Away Race")
+    character_number = models.PositiveIntegerField(default=1)
+
     objects = GameManager()
 
 
@@ -82,7 +86,13 @@ class Game(models.Model):
             return ""
 
         return channels[0].name
-        
+     
+class Character(models.Model):
+    game = models.ForeignKey('Game', related_name='options')
+    name = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.name
 
 class Channel(models.Model):
     name = models.CharField(max_length=100)

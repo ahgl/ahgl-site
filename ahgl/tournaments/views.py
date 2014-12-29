@@ -34,6 +34,9 @@ from profiles.views import TournamentSlugContextView
 from .models import Tournament, Match, Game, TournamentRound
 from .forms import BaseMatchFormSet, MultipleFormSetBase
 
+from api.models import Character
+from .forms import GameForm
+
 logger = logging.getLogger(__name__)
 
 
@@ -285,7 +288,7 @@ class MatchReportView(UpdateView):
     def get_form_class(self):
         match = self.object
         if match.structure == "I":
-            class ReportMatchForm(ModelForm):
+            class ReportMatchForm(GameForm):
                 winner = forms.ModelChoiceField(required=False,
                                                 queryset=TeamMembership.objects.all(),
                                                 widget=forms.RadioSelect,
@@ -310,6 +313,12 @@ class MatchReportView(UpdateView):
                                                                        queryset=TeamMembership.objects.filter(active=True, team__pk__in=(match.home_team_id, match.away_team_id,)),
                                                                        empty_label="Not played"
                                                                        )
+                        self.fields['home_race'] = forms.ModelMultipleChoiceField(required=False,
+                                                                                  queryset=Character.objects.filter(game=match.tournament.game),
+                                                                                  label=match.tournament.game.home_character_diplay_name)
+                        self.fields['away_race'] = forms.ModelMultipleChoiceField(required=False,
+                                                                                  queryset=Character.objects.filter(game=match.tournament.game),
+                                                                                  label=match.tournament.game.away_character_diplay_name)
 
                 class Meta:
                     model = Game

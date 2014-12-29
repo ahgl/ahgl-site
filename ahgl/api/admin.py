@@ -5,7 +5,7 @@ from django.db.models.fields.related import RelatedField
 from django.contrib.admin.actions import delete_selected
 from django.utils import timezone
 
-from .models import Game, CarouselItem, Channel
+from .models import Game, CarouselItem, Channel, Character
 from profiles.models import Team, TeamMembership
 
 from tinymce.widgets import TinyMCE
@@ -20,9 +20,12 @@ class ChannelInline(admin.TabularInline):
         self.parent = obj
         return super(ChannelInline, self).get_formset(request, obj=obj, **kwargs)
 
+class CharacterInline(admin.TabularInline):
+    model = Character
+
 class GameAdmin(admin.ModelAdmin):
     list_display = ('name',)
-    inlines = (ChannelInline,)
+    inlines = (CharacterInline, ChannelInline,)
     formfield_overrides = {
         HTMLField: {'widget': TinyMCE(mce_attrs={'theme': 'advanced'})},
     }

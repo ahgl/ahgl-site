@@ -7,6 +7,8 @@ from django.utils import timezone
 
 from .views import NewTournamentRoundView
 from .models import Article, Tournament, TournamentRound, Map, Match, Game
+from .forms import GameForm
+from api.models import Character
 from profiles.models import Team, TeamMembership
 
 from .tasks import update_round_stats
@@ -60,10 +62,12 @@ class TournamentAdmin(admin.ModelAdmin):
 
 class GameInline(admin.TabularInline):
     model = Game
+    form = GameForm
     extra = 1
 
     team_field_removals = set(('home_player', 'away_player', 'home_race', 'away_race', 'winner', 'replay',))
     individual_field_removals = set(('winner_team',))
+
 
     def get_formset(self, request, obj=None, **kwargs):
         self.parent = obj
@@ -72,6 +76,7 @@ class GameInline(admin.TabularInline):
                 self.exclude = self.individual_field_removals
             elif obj.structure == "T":
                 self.exclude = self.team_field_removals
+
         return super(GameInline, self).get_formset(request, obj=obj, **kwargs)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -83,6 +88,16 @@ class GameInline(admin.TabularInline):
         cache_field("team", Team.objects.filter(tournament=self.parent.tournament_id) if self.parent else Team.objects.all(), db_field, request, kwargs)
         cache_field("map", self.parent.tournament.map_pool.all() if self.parent else Map.objects.all(), db_field, request, kwargs)
         return super(GameInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == 'home_race' or db_field.name == 'away_race':
+            cache_field(db_field.name, Character.objects.filter(game=self.parent.tournament.game) if self.parent else Character.objects.all(), db_field, request, kwargs)
+            if db_field.name == 'home_race':
+                db_field.verbose_name = self.parent.tournament.game.home_character_diplay_name
+            else:
+                db_field.verbose_name = self.parent.tournament.game.away_character_diplay_name
+        
+        return super(GameInline, self).formfield_for_manytomany(db_field, request, **kwargs)
 
     def queryset(self, request):
         queryset = super(GameInline, self).queryset(request) \
