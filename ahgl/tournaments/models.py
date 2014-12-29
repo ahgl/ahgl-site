@@ -353,9 +353,9 @@ class Game(models.Model):
     map = models.ForeignKey('Map')  # add verification that this is in map pool for tournament
     order = models.PositiveSmallIntegerField()
     home_player = models.ForeignKey('profiles.TeamMembership', related_name="home_games", null=True, blank=True, on_delete=models.SET_NULL)
-    home_race = models.ManyToManyField('api.Character', blank=True, related_name="match_home_games")
+    home_race = models.ManyToManyField('api.Character', blank=True, null=True, related_name="match_home_games")
     away_player = models.ForeignKey('profiles.TeamMembership', related_name="away_games", null=True, blank=True, on_delete=models.SET_NULL)
-    away_race = models.ManyToManyField('api.Character', blank=True, related_name="match_away_games")
+    away_race = models.ManyToManyField('api.Character', blank=True, null=True, related_name="match_away_games")
     winner = models.ForeignKey('profiles.TeamMembership', related_name="game_wins", blank=True, null=True, on_delete=models.SET_NULL)
     loser = models.ForeignKey('profiles.TeamMembership', related_name="game_losses", blank=True, null=True, editable=False, on_delete=models.SET_NULL)
     winner_team = models.ForeignKey('profiles.Team', related_name="game_wins", blank=True, null=True)
