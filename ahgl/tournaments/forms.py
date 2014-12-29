@@ -4,6 +4,8 @@ from .models import Match, Game
 from api.models import Character
 from django.forms import ModelForm, ModelChoiceField
 
+from django.utils.translation import ugettext_lazy as _
+
 
 class BaseMatchFormSet(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
@@ -51,13 +53,26 @@ class MultipleFormSetBase(object):
 
 class GameForm(ModelForm):
     """Form for adding and editing games."""
-    
-    def __init__(self, *args, **kwargs):
-        super(GameForm,self).__init__(*args,**kwargs)
-        # TODO: For some reason accessing self.instance raises some issues
-        if self.instance:
-            self.fields['home_race'].label = self.instance.tournament.game.home_character_diplay_name
-            self.fields['away_race'].label = self.instance.tournament.game.away_character_diplay_name
+
+    def clean(self):
+        super(GameForm, self).clean()
+        from django.core.exceptions import ValidationError
+        match = self.cleaned_data.get('match')
+        home_race = self.cleaned_data.get('home_race')
+        away_race = self.cleaned_data.get('away_race')
+
+        if match:
+            if home_race and home_race:
+                # Check that the number of selected characters match to the character_number from api.Game
+                if home_race.count() != match.tournament.game.character_number or away_race.count() != match.tournament.game.character_number:
+                    raise ValidationError(_('Please, select %d characters for %s and %s fields') 
+                        % (match.tournament.game.character_number, 
+                            match.tournament.game.home_character_diplay_name, 
+                            match.tournament.game.away_character_diplay_name))
+
+        return self.cleaned_data
 
     class Meta:
         model = Game
+        fields = ('map', 'order', 'home_player', 'home_race', 'away_player', 'away_race', 'winner', 
+            'winner_team', 'forfeit', 'replay', 'vod', 'is_ace', 'victory_screen',)
