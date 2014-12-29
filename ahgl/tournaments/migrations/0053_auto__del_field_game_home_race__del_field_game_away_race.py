@@ -33,20 +33,21 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         # Adding field 'Game.home_race'
-        db.add_column('tournaments_game', 'home_race',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=1, blank=True),
-                      keep_default=False)
+        #db.add_column('tournaments_game', 'home_race',
+        #              self.gf('django.db.models.fields.CharField')(default='', max_length=1, blank=True),
+        #              keep_default=False)
 
         # Adding field 'Game.away_race'
-        db.add_column('tournaments_game', 'away_race',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=1, blank=True),
-                      keep_default=False)
+        #db.add_column('tournaments_game', 'away_race',
+        #              self.gf('django.db.models.fields.CharField')(default='', max_length=1, blank=True),
+        #              keep_default=False)
 
         # Removing M2M table for field home_race on 'Game'
-        db.delete_table('tournaments_game_home_race')
+        #db.delete_table('tournaments_game_home_race')
 
         # Removing M2M table for field away_race on 'Game'
-        db.delete_table('tournaments_game_away_race')
+        #db.delete_table('tournaments_game_away_race')
+        pass
 
 
     models = {
