@@ -23,9 +23,9 @@
     {% if game.is_ace %}
     <td>ACE</td><td></td><td></td>
     {% else %}
-    <td><a href="{{game.home_player.get_absolute_url}}">{{game.home_player}}.{{game.home_player.char_code|default_if_none:"xxx"}}</a> as {{game.get_home_races}}</td>
+    <td><a href="{{game.home_player.get_absolute_url}}">{{game.home_player}}.{{game.home_player.char_code|default_if_none:"xxx"}}</a> as {{game.get_home_races|join:", "}}</td>
     <td>vs</td>
-    <td><a href="{{game.away_player.get_absolute_url}}">{{game.get_away_races}}.{{game.away_player.char_code|default_if_none:"xxx"}}</a> as {{game.get_away_race_display}}</td>
+    <td><a href="{{game.away_player.get_absolute_url}}">{{game.get_away_races|join:", "}}.{{game.away_player.char_code|default_if_none:"xxx"}}</a> as {{game.get_away_race_display}}</td>
     {% endif %}
     {% endfor %}
     </table>

@@ -438,7 +438,7 @@ class Game(models.Model):
         for character in characters:
             races.append(character.name)
 
-        return ", ".join(races)
+        return races
 
     def get_home_races(self):
         return self.get_comma_separated_characters(self.home_race.all())
