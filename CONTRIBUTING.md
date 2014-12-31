@@ -6,7 +6,6 @@ Volunteers are an integral part of making the AHGL what it is.
 
 ## Getting Started
 
-* Join the [ahgl-dev mailing list](https://groups.google.com/forum/#!forum/ahgl-dev)
 * Make sure you have a [GitHub account](https://github.com/signup/free)
 * Go through the README and get the site up and running.
 
