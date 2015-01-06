@@ -9,26 +9,27 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Deleting field 'Game.home_race'
-        db.delete_column('tournaments_game', 'home_race')
+        #db.delete_column('tournaments_game', 'home_race')
 
         # Deleting field 'Game.away_race'
-        db.delete_column('tournaments_game', 'away_race')
+        #db.delete_column('tournaments_game', 'away_race')
 
         # Adding M2M table for field home_race on 'Game'
-        db.create_table('tournaments_game_home_race', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('game', models.ForeignKey(orm['tournaments.game'], null=False)),
-            ('character', models.ForeignKey(orm['api.character'], null=False))
-        ))
-        db.create_unique('tournaments_game_home_race', ['game_id', 'character_id'])
+        #db.create_table('tournaments_game_home_race', (
+        #    ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+        #    ('game', models.ForeignKey(orm['tournaments.game'], null=False)),
+        #    ('character', models.ForeignKey(orm['api.character'], null=False))
+        #))
+        #db.create_unique('tournaments_game_home_race', ['game_id', 'character_id'])
 
         # Adding M2M table for field away_race on 'Game'
-        db.create_table('tournaments_game_away_race', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('game', models.ForeignKey(orm['tournaments.game'], null=False)),
-            ('character', models.ForeignKey(orm['api.character'], null=False))
-        ))
-        db.create_unique('tournaments_game_away_race', ['game_id', 'character_id'])
+        #db.create_table('tournaments_game_away_race', (
+        #    ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+        #    ('game', models.ForeignKey(orm['tournaments.game'], null=False)),
+        #    ('character', models.ForeignKey(orm['api.character'], null=False))
+        #))
+        #db.create_unique('tournaments_game_away_race', ['game_id', 'character_id'])
+        pass
         
     def backwards(self, orm):
         # Adding field 'Game.home_race'
