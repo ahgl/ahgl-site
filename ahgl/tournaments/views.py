@@ -34,6 +34,9 @@ from profiles.views import TournamentSlugContextView
 from .models import Tournament, Match, Game, TournamentRound
 from .forms import BaseMatchFormSet, MultipleFormSetBase
 
+from api.models import Character
+from .forms import GameForm
+
 logger = logging.getLogger(__name__)
 
 
@@ -118,6 +121,7 @@ class NewTournamentRoundView(TemplateResponseMixin, FormMixin, ProcessFormView):
                             for i, map_form in enumerate(map_formset, start=1):
                                 if 'map' in map_form.cleaned_data and map_form.cleaned_data['map']:
                                     match_form.instance.games.create(order=i, **map_form.cleaned_data)
+
                 return ret
         return NewTournamentRoundForm
 
@@ -285,7 +289,7 @@ class MatchReportView(UpdateView):
     def get_form_class(self):
         match = self.object
         if match.structure == "I":
-            class ReportMatchForm(ModelForm):
+            class ReportMatchForm(GameForm):
                 winner = forms.ModelChoiceField(required=False,
                                                 queryset=TeamMembership.objects.all(),
                                                 widget=forms.RadioSelect,
@@ -310,6 +314,12 @@ class MatchReportView(UpdateView):
                                                                        queryset=TeamMembership.objects.filter(active=True, team__pk__in=(match.home_team_id, match.away_team_id,)),
                                                                        empty_label="Not played"
                                                                        )
+                        self.fields['home_race'] = forms.ModelMultipleChoiceField(required=False,
+                                                                                  queryset=Character.objects.filter(game=match.tournament.game),
+                                                                                  label=match.tournament.game.home_character_diplay_name)
+                        self.fields['away_race'] = forms.ModelMultipleChoiceField(required=False,
+                                                                                  queryset=Character.objects.filter(game=match.tournament.game),
+                                                                                  label=match.tournament.game.away_character_diplay_name)
 
                 class Meta:
                     model = Game
@@ -375,28 +385,30 @@ class SubmitLineupView(ObjectPermissionsCheckMixin, UpdateView):
         return context
 
     def get_form_class(self):
+        team = self.team
+        match = self.object
         if self.home_team:
             side = "home"
+            race_label = match.tournament.game.home_character_diplay_name
         else:
             side = "away"
-        queryset = TeamMembership.objects.filter(team=self.team, active=True)
-        if self.team.tournament.structure == "I":
-            queryset = queryset.filter(char_code__isnull=False)
-        player = forms.ModelChoiceField(queryset=queryset, label='Player')
-        race = forms.ChoiceField(label='Race',
-                                 choices=[('', '---------')] + list(RACES))
-        namespace = {
-            'base_fields': {
-                side + '_player': player,
-                side + '_race': race
-            },
-            '_meta': ModelFormOptions({
-                'model': Game,
-                'fields': (side + '_player', side + '_race')
-            })
-        }
-        form = type('SubmitLineupForm', (BaseModelForm,), namespace)
-        return inlineformset_factory(Match, Game, extra=0, can_delete=False, form=form)
+            race_label = match.tournament.game.away_character_diplay_name
+
+        class SubmitLineupForm(GameForm):
+            def __init__(self, *args, **kwargs):
+                super(SubmitLineupForm, self).__init__(*args, **kwargs)
+
+                queryset = TeamMembership.objects.filter(team=team, active=True)
+
+                self.fields[side + '_player'] = forms.ModelChoiceField(queryset=TeamMembership.objects.filter(team=team, active=True),
+                                                                        label='%s Player' % (side.title()))
+                self.fields[side + '_race'] = forms.ModelMultipleChoiceField(queryset=Character.objects.filter(game=match.tournament.game),
+                                                                              label=race_label)
+            class Meta:
+                model = Game
+                fields = (side + '_player', side + '_race')
+
+        return inlineformset_factory(Match, Game, extra=0, can_delete=False, form=SubmitLineupForm)
 
     def form_valid(self, *args, **kwargs):
         if self.home_team:

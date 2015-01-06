@@ -353,9 +353,9 @@ class Game(models.Model):
     map = models.ForeignKey('Map')  # add verification that this is in map pool for tournament
     order = models.PositiveSmallIntegerField()
     home_player = models.ForeignKey('profiles.TeamMembership', related_name="home_games", null=True, blank=True, on_delete=models.SET_NULL)
-    home_race = models.CharField(max_length=1, choices=RACES, blank=True)  # TODO: default to player's race in UI
+    home_race = models.ManyToManyField('api.Character', blank=True, null=True, related_name="match_home_games")
     away_player = models.ForeignKey('profiles.TeamMembership', related_name="away_games", null=True, blank=True, on_delete=models.SET_NULL)
-    away_race = models.CharField(max_length=1, choices=RACES, blank=True)  # TODO: default to player's race in UI
+    away_race = models.ManyToManyField('api.Character', blank=True, null=True, related_name="match_away_games")
     winner = models.ForeignKey('profiles.TeamMembership', related_name="game_wins", blank=True, null=True, on_delete=models.SET_NULL)
     loser = models.ForeignKey('profiles.TeamMembership', related_name="game_losses", blank=True, null=True, editable=False, on_delete=models.SET_NULL)
     winner_team = models.ForeignKey('profiles.Team', related_name="game_wins", blank=True, null=True)
@@ -432,6 +432,19 @@ class Game(models.Model):
                 self.match.winner = None
                 self.match.full_clean()
                 self.match.save()
+
+    def get_comma_separated_characters(self, characters):
+        races = []
+        for character in characters:
+            races.append(character.name)
+
+        return races
+
+    def get_home_races(self):
+        return self.get_comma_separated_characters(self.home_race.all())
+
+    def get_away_races(self):
+        return self.get_comma_separated_characters(self.away_race.all())
 
     def __unicode__(self):
         if self.home_player and self.away_player:
