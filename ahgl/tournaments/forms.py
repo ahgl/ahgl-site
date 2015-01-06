@@ -62,12 +62,16 @@ class GameForm(ModelForm):
         away_race = self.cleaned_data.get('away_race')
 
         if match:
-            if home_race and home_race:
-                # Check that the number of selected characters match to the character_number from api.Game
-                if home_race.count() != match.tournament.game.character_number or away_race.count() != match.tournament.game.character_number:
-                    raise ValidationError(_('Please, select %d characters for %s and %s fields') 
+            if home_race:
+                if home_race.count() != match.tournament.game.character_number:
+                    raise ValidationError(_('Please, select %d characters for %s field') 
                         % (match.tournament.game.character_number, 
-                            match.tournament.game.home_character_diplay_name, 
+                            match.tournament.game.home_character_diplay_name))
+
+            if away_race:
+                if away_race.count() != match.tournament.game.character_number:
+                    raise ValidationError(_('Please, select %d characters for %s field') 
+                        % (match.tournament.game.character_number,
                             match.tournament.game.away_character_diplay_name))
 
         return self.cleaned_data
