@@ -22,7 +22,7 @@ angular.module('ahglApp')
             if (!date) {
                 return "";
             }
-            var dateStr = monthNames[date.getMonth() - 1] + " " + date.getDay() + ", " + date.getFullYear()
+            var dateStr = monthNames[date.getMonth()] + " " + date.getDay() + ", " + date.getFullYear()
             return dateStr;
         };
 
