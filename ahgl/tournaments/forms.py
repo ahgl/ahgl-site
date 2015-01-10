@@ -61,7 +61,7 @@ class GameForm(ModelForm):
         home_race = self.cleaned_data.get('home_race')
         away_race = self.cleaned_data.get('away_race')
 
-        if match:
+        if match and match.tournament.game:
             if home_race:
                 if home_race.count() != match.tournament.game.character_number:
                     raise ValidationError(_('Please, select %d characters for %s field') 

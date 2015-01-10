@@ -92,10 +92,11 @@ class GameInline(admin.TabularInline):
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == 'home_race' or db_field.name == 'away_race':
             cache_field(db_field.name, Character.objects.filter(game=self.parent.tournament.game) if self.parent else Character.objects.all(), db_field, request, kwargs)
-            if db_field.name == 'home_race':
-                db_field.verbose_name = self.parent.tournament.game.home_character_diplay_name
-            else:
-                db_field.verbose_name = self.parent.tournament.game.away_character_diplay_name
+            if self.parent.tournament.game:
+                if db_field.name == 'home_race':
+                    db_field.verbose_name = self.parent.tournament.game.home_character_diplay_name
+                else:
+                    db_field.verbose_name = self.parent.tournament.game.away_character_diplay_name
         
         return super(GameInline, self).formfield_for_manytomany(db_field, request, **kwargs)
 
