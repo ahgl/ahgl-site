@@ -226,6 +226,7 @@ class Match(models.Model):
                 membership.save()
 
     def update_tiebreaker(self):
+        self.remove_extra_victories()
         for team in (self.home_team, self.away_team):
             team.tiebreaker = team.game_wins.filter(match__published=True).count() - team.game_losses.filter(match__published=True).count()
             team.save()
