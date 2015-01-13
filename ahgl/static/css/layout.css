@@ -862,12 +862,6 @@ a:hover .t3 {
 /* =========================================================================== */
 /* ====================================== match template styles ============== */
 /* =========================================================================== */
-.match-post-template .versus {
-	width:108px;
-	float:left;
-	line-height:80px;
-	text-align:center;
-}
 .match-post-template .post-title-tag {
 	margin:0;
 	position:relative;
