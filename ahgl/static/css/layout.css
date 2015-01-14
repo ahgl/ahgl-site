@@ -553,13 +553,13 @@ ol p:first-child {
 }
 .t2 {
 	color:#fff;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:28px;
 	text-transform:uppercase;
 }
 .t3 {
 	color:#d2d2d2;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:30px;
 	text-transform:uppercase;
 }
@@ -570,64 +570,64 @@ a:hover .t3 {
 /* used for team ranking */
 .t4 {
 	color:#fff;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:122px;
 	text-transform:uppercase;
 }
 /* used for team points/record */
 .t5 {
 	color:#fff;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:40px;
 	text-transform:uppercase;
 }
 /* used for "VS" on match page */
 .t6 {
 	color:#ff5b47;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:50px;
 	text-transform:uppercase;
 }
 .t7 {
 	color:#ff5b47;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:45px;
 	text-transform:uppercase;
 }
 .t8 {
 	color:#fff;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:20px;
 	text-transform:uppercase;
 }
 .t9 {
 	color:#fff;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:56px;
 	text-transform:uppercase;
 }
 .t10 {
 	color:#fff;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:27px;
 	text-transform:uppercase;
 }
 .t11 {
 	color:#fff;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:18px;
 	text-transform:uppercase;
 }
 /* used for "VS" on schedule page */
 .t12 {
 	color:#ff5b47;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:30px;
 	text-transform:uppercase;
 }
 .t13, .latest-twitter h2 {
 	color:#ff5b47;
-	font-family:"PublicGothicSquareRegular", Arial, Sans-Seriff;
+	font-family:"PublicGothicSquareRegular", Arial, Sans-Serif;
 	font-size:17px;
 	text-transform:uppercase;
 }
@@ -642,29 +642,29 @@ a:hover .t3 {
 	font-size:13px;
 }
 .f3, .footer-list-1 a {
-	font-family:"TheinhardtMedium", Arial, Sans-Seriff;
+	font-family:"TheinhardtMedium", Arial, Sans-Serif;
 	font-size:13px;
 	letter-spacing:.5px;
 }
 .f4 {
-	font-family:"TheinhardtMedium", Arial, Sans-Seriff;
+	font-family:"TheinhardtMedium", Arial, Sans-Serif;
 	font-size:22px;
 	letter-spacing:.5px;
 }
 .f5 {
 	color:#fff;
-	font-family:Arial, Sans-Seriff;
+	font-family:Arial, Sans-Serif;
 	font-size:20px;
 }
 .f6 {
 	color:#595959;
-	font-family:Arial, Sans-Seriff;
+	font-family:Arial, Sans-Serif;
 	font-size:20px;
 	text-transform:uppercase;
 }
 .f7 {
 	color:#ff5b47;
-	font-family:Arial, Sans-Seriff;
+	font-family:Arial, Sans-Serif;
 	font-size:20px;
 }
 
@@ -862,12 +862,6 @@ a:hover .t3 {
 /* =========================================================================== */
 /* ====================================== match template styles ============== */
 /* =========================================================================== */
-.match-post-template .versus {
-	width:108px;
-	float:left;
-	line-height:80px;
-	text-align:center;
-}
 .match-post-template .post-title-tag {
 	margin:0;
 	position:relative;
@@ -1139,7 +1133,7 @@ div#static-navheader {
 
 div#static-navheader a {
     font-size: 1.2em;
-    font-family: "PublicGothicSquareRegular", Arial, Sans-Seriff;
+    font-family: "PublicGothicSquareRegular", Arial, Sans-Serif;
 }
 
 div#static-navheader li.dropdown {
