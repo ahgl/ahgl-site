@@ -226,7 +226,7 @@ class Match(models.Model):
                 membership.save()
 
     def update_tiebreaker(self):
-        self.remove_extra_victories()
+        self.remove_extra_games()
         for team in (self.home_team, self.away_team):
             team.tiebreaker = team.game_wins.filter(match__published=True).count() - team.game_losses.filter(match__published=True).count()
             team.save()
@@ -251,7 +251,7 @@ class Match(models.Model):
             else:
                 raise ValidationError("Winner must be one of the teams playing")
 
-    def remove_extra_victories(self):
+    def remove_extra_games(self):
         """only count the games that matter to win and set the others to have no winner"""
         games = list(self.games.all())
         home_wins, away_wins = 0, 0
@@ -261,6 +261,8 @@ class Match(models.Model):
             if (home_wins >= win_point or away_wins >= win_point) and (game.winner or game.winner_team):
                 game.winner = None
                 game.winner_team = None
+                game.loser = None
+                game.loser_team = None
                 game.full_clean()
                 game.save()
             if game.winner_team == self.home_team:
