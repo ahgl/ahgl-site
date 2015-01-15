@@ -314,12 +314,16 @@ class MatchReportView(UpdateView):
                                                                        queryset=TeamMembership.objects.filter(active=True, team__pk__in=(match.home_team_id, match.away_team_id,)),
                                                                        empty_label="Not played"
                                                                        )
+                        
+                        characters = Character.objects.filter(game=match.tournament.game)
                         self.fields['home_race'] = forms.ModelMultipleChoiceField(required=False,
-                                                                                  queryset=Character.objects.filter(game=match.tournament.game),
-                                                                                  label=match.tournament.game.home_character_diplay_name)
+                                                                                  queryset=characters)
                         self.fields['away_race'] = forms.ModelMultipleChoiceField(required=False,
-                                                                                  queryset=Character.objects.filter(game=match.tournament.game),
-                                                                                  label=match.tournament.game.away_character_diplay_name)
+                                                                                  queryset=characters)
+
+                        if match.tournament.game:
+                            self.fields['home_race'].label = match.tournament.game.home_character_diplay_name
+                            self.fields['away_race'].label = match.tournament.game.away_character_diplay_name
 
                 class Meta:
                     model = Game
@@ -387,12 +391,15 @@ class SubmitLineupView(ObjectPermissionsCheckMixin, UpdateView):
     def get_form_class(self):
         team = self.team
         match = self.object
+        race_label = None
         if self.home_team:
             side = "home"
-            race_label = match.tournament.game.home_character_diplay_name
+            if match.tournament.game:
+                race_label = match.tournament.game.home_character_diplay_name
         else:
             side = "away"
-            race_label = match.tournament.game.away_character_diplay_name
+            if match.tournament.game:
+                race_label = match.tournament.game.away_character_diplay_name
 
         class SubmitLineupForm(GameForm):
             def __init__(self, *args, **kwargs):
@@ -402,8 +409,11 @@ class SubmitLineupView(ObjectPermissionsCheckMixin, UpdateView):
 
                 self.fields[side + '_player'] = forms.ModelChoiceField(queryset=TeamMembership.objects.filter(team=team, active=True),
                                                                         label='%s Player' % (side.title()))
-                self.fields[side + '_race'] = forms.ModelMultipleChoiceField(queryset=Character.objects.filter(game=match.tournament.game),
-                                                                              label=race_label)
+                self.fields[side + '_race'] = forms.ModelMultipleChoiceField(queryset=Character.objects.filter(game=match.tournament.game))
+
+                if race_label:
+                    self.fields[side + '_race'] = race_label
+
             class Meta:
                 model = Game
                 fields = (side + '_player', side + '_race')
