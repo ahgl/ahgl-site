@@ -214,6 +214,8 @@ module.exports = function (grunt) {
                 bowerJson: 'bower.json',
                 directory: 'bower_components'
             },
+
+
             app: {
                 src: ['<%= yeoman.app %>/*.html'],
                 ignorePath:  /\.\.\//
