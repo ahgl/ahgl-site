@@ -363,7 +363,7 @@ class MatchReportView(UpdateView):
 
     def form_valid(self, form):
         self.object.referee = self.user.get_profile()
-        self.object.remove_extra_victories()
+        self.object.remove_extra_games()
         messages.success(self.request, 'Result submission successful.')
         return super(MatchReportView, self).form_valid(form)
 
