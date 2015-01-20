@@ -412,7 +412,7 @@ class SubmitLineupView(ObjectPermissionsCheckMixin, UpdateView):
                 self.fields[side + '_race'] = forms.ModelMultipleChoiceField(queryset=Character.objects.filter(game=match.tournament.game))
 
                 if race_label:
-                    self.fields[side + '_race'] = race_label
+                    self.fields[side + '_race'].label = race_label
 
             class Meta:
                 model = Game
