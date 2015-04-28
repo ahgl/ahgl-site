@@ -139,7 +139,7 @@ EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "AHGLtv"
+EMAIL_HOST_USER = "AHGLGondor"
 SERVER_EMAIL = "support@afterhoursgaming.tv"
 DEFAULT_FROM_EMAIL = "support@afterhoursgaming.tv"
 EMAIL_CONFIRMATION_DAYS = 2
