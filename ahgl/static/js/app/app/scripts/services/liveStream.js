@@ -21,8 +21,11 @@ angular.module('ahglApp')
                     }
 
                     games.forEach(function (game) {
-                        endpoints.push($http.jsonp(urlSvc.streamUrl.replace('{{channelName}}', game.channel_name)));    
+                        _.each(game.channels, function(channel) {
+                            endpoints.push($http.jsonp(urlSvc.streamUrl.replace('{{channelName}}', channel.name)));    
+                        });
                     });
+
                     $q.all(endpoints)
                         .then(function(responses) {
                             responses.some(function (response, index) {

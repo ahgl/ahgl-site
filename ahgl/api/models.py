@@ -12,11 +12,11 @@ class Game(models.Model):
     name = models.CharField(max_length=100)
 
     header_image_url = models.CharField(max_length=2048)
-    
+
     live_stream_section_image_url = models.CharField(max_length=2048)
     match_section_image_url = models.CharField(max_length=2048)
     article_section_image_url = models.CharField(max_length=2048)
-    
+
     background_match_image_url = models.CharField(max_length=2048)
     icon_image_url = models.CharField(max_length=2048)
 
@@ -68,7 +68,6 @@ class Game(models.Model):
 
     objects = GameManager()
 
-
     def __unicode__(self):
         return self.name
 
@@ -81,18 +80,16 @@ class Game(models.Model):
     @property
     def channel_name(self):
         channels = self.channel_names.filter(primary=True)
+        return channels.values("name")
 
-        if channels.count() < 1:
-            return ""
 
-        return channels[0].name
-     
 class Character(models.Model):
     game = models.ForeignKey('Game', related_name='options')
     name = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.name
+
 
 class Channel(models.Model):
     name = models.CharField(max_length=100)
